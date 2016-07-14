@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/app/bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/app/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/../node_modules/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="/app/assets/app.css"/>
+
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
+    authDomain: "mercurio-39a44.firebaseapp.com",
+    databaseURL: "https://mercurio-39a44.firebaseio.com",
+    storageBucket: "mercurio-39a44.appspot.com",
+  };
+  firebase.initializeApp(config);
+    </script>
+
+    <script type="text/javascript">
+    function checkUrl(){firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("Conectau");
+      if(location.pathname.search("login")!=-1){
+        location.replace("/app/index.html");
+      }
+    } else {
+      console.log("desconectao");
+      if(location.pathname.search("login")==-1){
+        location.replace("login.html");
+      }
+    }
+  });
+  }
+  </script>
+</head>
+<body ng-app="starterApp" style="overflow-x: hidden; background-color:rgba(0, 0, 0, 0.5);" ng-controller="AuthenticationController" ng-cloak onload="checkUrl()">
+    <div class="row" style="padding-top: 5%;" ng-cloak>
+        <div class="col-lg-4 col-md-4 col-lg-push-4 col-md-push-4" style="background-color:#eee; border-radius:9px;">
+            <div class="row" style="height:50px; background-color:#1565c0;"></div>
+            <div class="row" style="padding-top: 8%;">
+                <div style="margin-top:5%;" class="col-lg-1 col-md-1">
+                    <i class="fa fa-envelope" style="font-size:20px;"></i>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <md-input-container class="md-icon-float md-block">
+                        <!-- Use floating label instead of placeholder -->
+                        <label>Email</label>
+                        <input id="email" type="email">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 1%;">
+                <div style="margin-top:5%;" class="col-lg-1 col-md-1">
+                    <i class="fa fa-unlock-alt" style="font-size:20px;"></i>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <md-input-container class="md-icon-float md-block">
+                        <!-- Use floating label instead of placeholder -->
+                        <label>Password</label>
+                        <input id="password" type="password">
+                        <a href="" ng-click="resetPassword()">forgot password?</a>
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-11 col-md-11 col-lg-push-1 col-md-push-1">
+                    <p style="color:red; font-weight:bold;" id="feedback" href=""></p>
+                </div>
+                <div class="col-lg-8 col-md-8 col-lg-push-2 col-md-push-2" style="margin-bottom:5%;">
+                    <div class="row">
+                        <button class="col-lg-12 col-md-12 btn btn-info" style="width:100%; margin-bottom:2%;" ng-click="signIn()">Launch Mercurio<i id="icon" style="color:yellow; font-size:16px; padding-left:10%;" class="fa fa-rocket"></i></button>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row" style="padding-top:2px; padding-bottom:10px;">-->
+                <!--<div class="col-lg-3 col-md-3 col-lg-push-9 col-md-push-9">-->
+                    <!--<button class="btn btn-info" style="width:100%" ng-click="signUp()">Sign Up</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+
+</body>
+<script src="/../node_modules/angular/angular.js"></script>
+<script src="/../node_modules/angular-animate/angular-animate.js"></script>
+<script src="/../node_modules/angular-aria/angular-aria.js"></script>
+<script type="text/javascript" src="/../node_modules/angular-material/angular-material.js"></script>
+<script src="/./app/src/users/Users.js"></script>
+<script src="/./app/src/login/authenticationController.js"></script>
+<script src="/./app/src/users/UserService.js"></script>
+<script src="/./app/src/users/Contacts.js"></script>
+<script src="/./app/src/calls/userProvider.js"></script>
+<script src="/./app/src/calls/recents.js"></script>
+<script src="/./app/src/chat/chats.js"></script>
+<script src="/app/bower_components/angular-route/angular-route.js"></script>
+<script type="text/javascript">
+
+          angular
+              .module('starterApp', ['ngMaterial', 'users'])
+              .config(function($mdThemingProvider, $mdIconProvider){
+
+                  $mdIconProvider
+                      .defaultIconSet("./assets/svg/avatars.svg", 128)
+                      .icon("menu"       , "./assets/svg/menu.svg"        , 24)
+                      .icon("share"      , "./assets/svg/share.svg"       , 24)
+                      .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
+                      .icon("hangouts"   , "./assets/svg/hangouts.svg"    , 512)
+                      .icon("twitter"    , "./assets/svg/twitter.svg"     , 512)
+                      .icon("phone"      , "./assets/svg/phone.svg"       , 512);
+
+                      $mdThemingProvider.theme('default')
+                          .primaryPalette('blue')
+                          .accentPalette('red');
+
+              });
+
+</script>
+
+</html>

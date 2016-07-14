@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Angular Material - Starter App</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="../node_modules/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="assets/app.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link  href="bower_components/cropper/cropper.css" rel="stylesheet">
+    <script src="bower_components/cropper/cropper.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+      apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
+      authDomain: "mercurio-39a44.firebaseapp.com",
+      databaseURL: "https://mercurio-39a44.firebaseio.com",
+      storageBucket: "mercurio-39a44.appspot.com",
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script type="text/javascript">
+      function checkUrl(){
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            console.log("Conectau");
+            if(location.pathname.search("login")!=-1){
+              location.replace("src/index.html");
+            }
+          } else {
+            console.log("desconectao");
+            if(location.pathname.search("login")==-1){
+              location.replace("src/login/login.html");
+            }
+          }
+        });
+      }
+    </script>
+    <style type="text/css">
+        /**
+         * Hide when Angular is not yet loaded and initialized
+         */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+          display: none !important;
+        }
+    </style>
+  </head>
+
+
+  <body ng-app="mercurioApp" layout="column" ng-controller="UserController as ul" ng-cloak onload="checkUrl()">
+    <nav-bar></nav-bar>
+    <div flex layout="row">
+      <left-sidebar></left-sidebar>
+      <dialer ng-if="ul.dialerStatus" flex="75"></dialer>
+      <chat ng-if="ul.chatStatus" flex="75"></chat>
+      <contacts style="overflow-y:scroll;" ng-if="ul.contactsStatus" flex="75"></contacts>
+      <edit-profile ng-controller="EditProfileController" ng-if="ul.editProfileStatus" flex="75"></edit-profile>
+      <right-sidebar style="rgb(250,250,250);" flex="25"></right-sidebar>
+    </div>
+
+    <!-- Customize Modal -->
+    <div class="modal fade" id="customizeModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title text-center">Customize Drawer</h3>
+          </div>
+          <div class="modal-body">
+            <md-input-container class="md-icon-float md-block">
+              <label>Display Name</label>
+              <md-icon class="fa fa-user"></md-icon>
+              <input id="displayName" type="text">
+            </md-input-container>
+            <md-input-container class="md-icon-float md-block">
+              <md-icon class="fa fa-comment-o"></md-icon>
+              <input id="statusMessage" type="text" placeholder="Status Message">
+            </md-input-container>
+            <h4 style="padding-left:5%;">Background Image</h4>
+            <form style="padding-bottom: 3%; border-bottom: 1px solid #eee;" class="row" id="form1" runat="server">
+              <input style="visibility:hidden;" type="file" name="file" id="drawerImage" />
+              <div style="color:gray;" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" id="backgroundFeedback">Select a .jpg format image.</div>
+              <label style="margin-top: -1%;" class="btn btn-info col-lg-4 col-md-4 col-lg-push-2 col-md-push-2" for="drawerImage">Choose an Image</label>
+            </form>
+            <h4 style="padding-left:5%;">Profile Image</h4>
+            <form class="row" id="form2" runat="server">
+              <input style="visibility:hidden;" type="file" name="file" id="profileImage" />
+              <div style="color:gray;" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" id="profileFeedback">Select a .jpg format image.</div>
+              <label style="margin-top: -1%;" class="btn btn-info col-lg-4 col-md-4 col-lg-push-2 col-md-push-2" for="profileImage">Choose an Image</label>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button ng-click="saveDrawer()" data-dismiss="modal" class="btn btn-success">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Phone Settings Modal-->
+    <div class="modal fade" id="phone-settings-modal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title text-center">Phone Settings</h3>
+          </div>
+          <div class="row modal-body">
+            <div class="col-lg-12 col-md-12 row" style="border-bottom:1px solid #eee; margin-left:0px;">
+              <md-switch class="col-lg-6 col-md-6 col-lg-push-3 col-md-push-3 md-primary" style="font-size:20px; padding-bottom:5%; padding-top:3%;" md-no-ink aria-label="Notification Sound">
+                Notifications
+              </md-switch>
+            </div>
+            <div class="col-lg-12 col-md-12 row" style="margin-left:0px;">
+              <md-input-container style="margin-top:-5%;">
+                <md-icon style="left:7%;" class="fa fa-volume-up"></md-icon>
+                <md-select ng-model="contact.ringtone">
+                  <md-option id="{{ringtone}}" onmouseover="playSound(this.id)" onclick="stopSound()" ng-repeat="ringtone in ringtones" value="{{ringtone}}">
+                    {{ringtone}}
+                  </md-option>
+                </md-select></md-input-container>
+            </div>
+            <div class="col-lg-12 col-md-12 row" style="margin-left:0px;">
+              <md-switch class="col-lg-6 col-md-6 col-lg-push-3 col-md-push-3 md-primary" style="font-size:20px;" md-no-ink aria-label="VideoCall Notifications">
+                Mute
+              </md-switch>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button data-dismiss="modal" class="btn btn-success">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <script>
+      jQuery("input#drawerImage").change(function () {
+        var file = document.getElementById('drawerImage').files[0]; //sames as here
+        var reader  = new FileReader();
+
+        if(file.name.search("jpg")==-1){
+            document.getElementById("backgroundFeedback").style.color = "red";
+            document.getElementById("backgroundFeedback").innerHTML = "Image must be in .jpg format"
+        }
+        else{
+            document.getElementById("backgroundFeedback").style.color = "green";
+            document.getElementById("backgroundFeedback").innerHTML = file.name;
+            self.background = window.URL.createObjectURL(file);
+        }
+      });
+
+      jQuery("input#profileImage").change(function () {
+        var file = document.getElementById('profileImage').files[0]; //sames as here
+        var reader  = new FileReader();
+        if(file.name.search("jpg")==-1){
+          document.getElementById("profileFeedback").style.color = "red";
+          document.getElementById("profileFeedback").innerHTML = "Image must be in .jpg format"
+        }
+        else{
+          document.getElementById("profileFeedback").style.color = "green";
+          document.getElementById("profileFeedback").innerHTML = file.name;
+          self.profileImage = window.URL.createObjectURL(file);
+        }
+      });
+    </script>
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../node_modules/angular-animate/angular-animate.js"></script>
+  <script src="../node_modules/angular-aria/angular-aria.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-material/angular-material.js"></script>
+  <script src="./src/users/Users.js"></script>
+  <script src="./src/users/UserController.js"></script>
+  <script src="./src/users/UserService.js"></script>
+  <script src="./src/users/Contacts.js"></script>
+  <script src="./src/calls/userProvider.js"></script>
+  <script src="./src/login/authenticationController.js"></script>
+  <script src="./src/calls/recents.js"></script>
+  <script src="./src/navBarDirective.js"></script>
+  <script src="./src/leftSidebarDirective.js"></script>
+  <script src="./src/rightSidebarDirective.js"></script>
+  <script src="./src/dialer/dialerDirective.js"></script>
+  <script src="./src/contacts/contactsDirective.js"></script>
+  <script src="./src/contacts/contactsController.js"></script>
+  <script src="./src/contacts/editProfileDirective.js"></script>
+  <script src="./src/contacts/editProfileController.js"></script>
+  <script src="./src/chat/chatController.js"></script>
+  <script src="./src/chat/chatDirective.js"></script>
+  <script src="./src/chat/chats.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+
+  <script type="text/javascript">
+
+          angular
+              .module('mercurioApp', ['ngMaterial', 'users'])
+              .config(function($mdThemingProvider, $mdIconProvider){
+
+                  $mdIconProvider
+                      .defaultIconSet("./assets/svg/avatars.svg", 128)
+                      .icon("menu"       , "./assets/svg/menu.svg"        , 24)
+                      .icon("share"      , "./assets/svg/share.svg"       , 24)
+                      .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
+                      .icon("hangouts"   , "./assets/svg/hangouts.svg"    , 512)
+                      .icon("twitter"    , "./assets/svg/twitter.svg"     , 512)
+                      .icon("phone"      , "./assets/svg/phone.svg"       , 512);
+
+                      $mdThemingProvider.theme('default')
+                          .primaryPalette('blue')
+                          .accentPalette('red');
+
+              });
+
+    </script>
+  <script>
+    var sound = new Audio("audio/alert.mp3");
+    function playSound(ringtone){
+        stopSound();
+        sound = new Audio("audio/"+ ringtone + ".mp3");
+        sound.play();
+        sound.currentTime=0;
+    }
+
+    function stopSound(){
+        sound.pause();
+    }
+</script>
+
+</html>
