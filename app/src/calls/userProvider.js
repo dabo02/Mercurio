@@ -61,7 +61,7 @@ app.controller('RecentCtrl', function($scope, $compile) {
 
 });
 
-app.controller('ChatController', function($scope, $compile) {
+app.controller('ChatsController', function($scope, $compile) {
 
   this.desktopNotifications=true
   this.desktopNotificationIcon="fa fa-bell-slash";

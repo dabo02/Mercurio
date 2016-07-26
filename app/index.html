@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
     <link rel="stylesheet" href="../node_modules/angular-material/angular-material.css"/>
     <link rel="stylesheet" href="assets/app.css"/>
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link  href="bower_components/cropper/cropper.css" rel="stylesheet">
+
     <script src="bower_components/cropper/cropper.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -44,6 +46,7 @@
         });
       }
     </script>
+
     <style type="text/css">
         /**
          * Hide when Angular is not yet loaded and initialized
@@ -54,16 +57,19 @@
     </style>
   </head>
 
-
-  <body ng-app="mercurioApp" layout="column" ng-controller="UserController as ul" ng-cloak onload="checkUrl()">
+  <body ng-app="mercurioApp" layout="column" ng-controller="UserController as user" ng-cloak onload="checkUrl()">
     <nav-bar></nav-bar>
     <div flex layout="row">
       <left-sidebar></left-sidebar>
-      <dialer ng-if="ul.dialerStatus" flex="75"></dialer>
-      <chat ng-if="ul.chatStatus" flex="75"></chat>
-      <contacts style="overflow-y:scroll;" ng-if="ul.contactsStatus" flex="75"></contacts>
-      <edit-profile ng-controller="EditProfileController" ng-if="ul.editProfileStatus" flex="75"></edit-profile>
+
+      <dialer ng-if="user.dialerStatus" flex="75"></dialer>
+      <chat ng-if="user.chatStatus" flex="75"></chat>
+      <contacts style="overflow-y:scroll;" ng-if="user.contactsStatus" flex="75"></contacts>
+      <edit-profile ng-controller="EditProfileController" ng-if="user.editProfileStatus" flex="75"></edit-profile>
+      <call ng-if="user.callStatus" flex="75"></call>
+
       <right-sidebar style="rgb(250,250,250);" flex="25"></right-sidebar>
+
     </div>
 
     <!-- Customize Modal -->
@@ -143,8 +149,8 @@
         </div>
       </div>
     </div>
-
   </body>
+
   <script>
       jQuery("input#drawerImage").change(function () {
         var file = document.getElementById('drawerImage').files[0]; //sames as here
@@ -175,6 +181,7 @@
         }
       });
     </script>
+
   <script src="../node_modules/angular/angular.js"></script>
   <script src="../node_modules/angular-animate/angular-animate.js"></script>
   <script src="../node_modules/angular-aria/angular-aria.js"></script>
@@ -197,6 +204,9 @@
   <script src="./src/chat/chatController.js"></script>
   <script src="./src/chat/chatDirective.js"></script>
   <script src="./src/chat/chats.js"></script>
+  <script src="./src/chat/optionController.js"></script>
+  <script src="./src/calls/callDirective.js"></script>
+  <script src="./src/dialer/dialerController.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
 
   <script type="text/javascript">
@@ -220,7 +230,8 @@
 
               });
 
-    </script>
+  </script>
+
   <script>
     var sound = new Audio("audio/alert.mp3");
     function playSound(ringtone){
@@ -233,6 +244,6 @@
     function stopSound(){
         sound.pause();
     }
-</script>
+  </script>
 
 </html>

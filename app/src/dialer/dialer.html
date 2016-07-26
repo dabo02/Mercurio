@@ -1,6 +1,6 @@
-<md-content style="padding-bottom:10%; background-color:#e1f5fe;">
+<md-content ng-controller="DialerController as dialer" style="padding-bottom:10%; background-color:#e1f5fe;">
     <div style="padding-top:5%; padding-bottom:1%;">
-        <p flex-offset="15" flex="70">Hi, {{ul.displayName}}!</p>
+        <p flex-offset="15" flex="70">Hi, {{user.displayName}}!</p>
         <p flex-offset="15" flex="70">Welcome to Mercurio. Let's get stared!</p>
     </div>
     <md-card flex-offset="20" flex="60" style="background-color:white" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
@@ -11,7 +11,7 @@
               </span>
 
             <p style="font-size: 20px; line-height: 40px;" flex="80">
-                {{ul.displayName}}
+                {{user.displayName}}
             </p>
         </md-card-title>
         <md-card-title style="padding-top: 0%; margin-top: -8%;">
@@ -45,15 +45,15 @@
             <div class="row">
                 <div style="padding-right:10%" class="col-lg-8 col-lg-push-1 col-md-8 col-md-push-1">
                     <div class="row">
-                        <div id="1" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="1" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 style="padding-bottom:45%;" class="text-center">1</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center"> </p></md-button>
                         </div>
-                        <div id="2" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="2" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">2</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">ABC</p></md-button>
                         </div>
-                        <div id="3" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="3" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">3</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">DEF</p></md-button>
                         </div>
@@ -72,15 +72,15 @@
             <div class="row">
                 <div style="padding-right:10%" class="col-lg-8 col-lg-push-1 col-md-8 col-md-push-1">
                     <div class="row">
-                        <div id="4" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="4" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">4</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">GHI</p></md-button>
                         </div>
-                        <div id="5" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="5" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">5</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">JKL</p></md-button>
                         </div>
-                        <div id="6" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="6" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">6</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">MNO</p></md-button>
                         </div>
@@ -99,15 +99,15 @@
             <div class="row">
                 <div style="padding-right:10%" class="col-lg-8 col-lg-push-1 col-md-8 col-md-push-1">
                     <div class="row">
-                        <div id="7" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="7" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">7</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">PQRS</p></md-button>
                         </div>
-                        <div id="8" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="8" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">8</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">TUV</p></md-button>
                         </div>
-                        <div id="9" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="9" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">9</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">WXYZ</p></md-button>
                         </div>
@@ -119,14 +119,14 @@
             <div class="row">
                 <div style="padding-right:10%;" class="col-lg-8 col-lg-push-1 col-md-8 col-md-push-1">
                     <div class="row">
-                        <div id="*" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="*" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">*</h3></md-button>
                         </div>
-                        <div id="0" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="0" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">0</h3>
                                 <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">+</p></md-button>
                         </div>
-                        <div id="#" onclick="dial(this.id)" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
+                        <div id="#" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">
                             <md-button><h3 class="text-center">#</h3></md-button>
                         </div>
                     </div>

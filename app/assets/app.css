@@ -223,6 +223,14 @@ md-nav-bar.md-default-theme md-nav-ink-bar, md-nav-bar md-nav-ink-bar {
   	color: #909090;
   }
 
+#callIcon{
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
 #callIcon:hover{
     border:2px solid white;
 }
@@ -343,6 +351,60 @@ animation: mymove 5s infinite;
     width:35px;
 }
 
+#microphone{
+    -webkit-transition: all 2.9s ease-in-out;
+    -moz-transition: all 2.9s ease-in-out;
+    -ms-transition: all 2.9s ease-in-out;
+    -o-transition: all 2.9s ease-in-out;
+    transition: all 2.9s ease-in-out;
+}
+
+#call-button md-icon{
+    color:#1565c0;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+#call-button md-icon:hover{
+    color:#4caf50;
+}
+
+#call-button p{
+    color:gray;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+#call-button p:hover{
+    color:#1565c0;
+}
+
+#dialer-image{
+    width:35px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+#dialer-image:hover{
+    width:40px;
+}
+
+#center-card{
+    -webkit-transition: all 2s ease-in-out;
+    -moz-transition: all 2s ease-in-out;
+    -ms-transition: all 2s ease-in-out;
+    -o-transition: all 2s ease-in-out;
+    transition: all 2s ease-in-out;
+}
 
 /* ICONS */
 

@@ -1,19 +1,19 @@
 
-<md-sidenav id="sidenav" ng-click="ul.toggleList()" md-component-id="left" class="md-whiteframe-z2" >
+<md-sidenav id="sidenav" ng-click="user.toggleList()" md-component-id="left" class="md-whiteframe-z2" >
     <md-list>
 
-        <md-card style="margin:0px; margin-bottom:4%; background-image:url({{ul.background}});" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card style="margin:0px; margin-bottom:4%; background-image:url({{user.background}});" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
             <md-card-title>
                 <md-card-title-media flex="40">
-                    <div class="md-media-sm card-media"><md-icon class="avatar"><img style="border-radius:70px;" src="{{ul.profileImage}}"></md-icon></div>
+                    <div class="md-media-sm card-media"><md-icon class="avatar"><img style="border-radius:70px;" src="{{user.profileImage}}"></md-icon></div>
                 </md-card-title-media>
                 <md-card-title-text style="padding-top:5%" flex="60">
-                    <span class="md-headline">{{ul.displayName}}</span>
+                    <span class="md-headline">{{user.displayName}}</span>
                     <span class="md-subhead">Available</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-actions style="padding-left:4%;" layout="row">
-                <p style="word-break: break-all" flex="65">{{ul.statusMessage}}</p>
+                <p style="word-break: break-all" flex="65">{{user.statusMessage}}</p>
             </md-card-actions>
         </md-card>
 

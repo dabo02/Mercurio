@@ -15,10 +15,11 @@
    */
   function UserController( userService, $mdSidenav, $mdBottomSheet, $timeout, $log, $scope, $mdDialog ) {
     var self = this;
-    self.dialerStatus = false;
+    self.callStatus = false;
+    self.dialerStatus = true;
     self.chatStatus = false;
     self.contactsStatus = false;
-    self.editProfileStatus = true;
+    self.editProfileStatus = false;
     self.background = "images/background.jpg";
     self.recentsView = true;
     self.chatsView = false;
