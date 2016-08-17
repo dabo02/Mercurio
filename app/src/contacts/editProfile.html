@@ -1,5 +1,5 @@
 
-<div style="background-color:#e1f5fe;">
+<div ng-controller="EditProfileController" style="background-color:#e1f5fe;">
     <div style="padding-top:3%" class="row">
         <div class="col-lg-2 col-md-2 col-lg-push-5 col-md-push-5">
             <span style="display:table;margin:0 auto;" class="dialer-icons">
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="row">
-        <h3 class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" style="color:#1565c0">Contacts</h3>
+        <h3 ng-click="displayContacts()" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" style="color:#1565c0">Contacts</h3>
     </div>
     <div style="padding-top:3%;" class="row">
         <div style="margin-left: -4%;border-radius:8px; border:1px solid #1565c0; margin-bottom:3%; background-color:white;" class="col-lg-5 col-md-5 col-lg-push-4 col-md-push-4">
@@ -27,74 +27,68 @@
             <div class="row">
                 <div layout="row">
                     <md-input-container class=" md-icon-float md-block">
-                        <label>Name</label>
+                        <label>{{selectedContact.name}}</label>
                         <md-icon style="left:7%;" class="fa fa-user"></md-icon>
                         <input id="name" type="text">
                     </md-input-container>
 
                     <md-input-container class="md-icon-float md-block">
                         <md-icon style="left:7%;" class="fa fa-phone"></md-icon>
-                        <input id="phone-number" type="text" placeholder="Phone">
+                        <input id="phone-number" type="text" placeholder="{{selectedContact.phone}}">
                     </md-input-container>
                 </div>
                 <div layout="row">
                     <md-input-container style="margin-top:-5%;" class="md-icon-float md-block">
-                        <label>Email</label>
+                        <label>{{selectedContact.email}}</label>
                         <md-icon style="left:7%;" class="fa fa-envelope"></md-icon>
                         <input id="email" type="text">
                     </md-input-container>
 
                     <md-input-container style="margin-top:-5%;">
                     <md-icon style="left:7%;" class="fa fa-volume-up"></md-icon>
-                    <md-select ng-model="contact.ringtone">
+                    <md-select ng-model="selectedContact.ringtone">
                         <md-option id="{{ringtone}}" onmouseover="playSound(this.id)" onclick="stopSound()" ng-repeat="ringtone in ringtones" value="{{ringtone}}">
                         {{ringtone}}
                         </md-option>
                     </md-select></md-input-container>
-
-
-
-
                 </div>
                     <md-input-container style="margin-top:-5%;" flex="95" class="md-icon-float md-block">
                         <md-icon style="left:3.5%" class="fa fa-map-marker"></md-icon>
-                        <input id="location" type="text" placeholder="Address">
+                        <input id="location" type="text" placeholder="{{selectedContact.address}}">
                     </md-input-container>
 
                     <md-input-container style="margin-top:-5%;" flex="95" class="md-icon-float md-block">
                         <md-icon style="left:3.5%;" class="fa fa-plus"></md-icon>
-                        <input id="notes" type="text" placeholder="Notes">
+                        <input id="notes" type="text" placeholder="{{selectedContact.notes}}">
                     </md-input-container>
 
                 <div layout="row">
                     <md-input-container style="margin-top:-5%;" class=" md-icon-float md-block">
-                        <label>Facebook</label>
+                        <label>{{selectedContact.facebook}}</label>
                         <md-icon style="left:7%;" class="fa fa-facebook"></md-icon>
                         <input id="facebook" type="text">
                     </md-input-container>
 
                     <md-input-container style="margin-top:-5%;" class="md-icon-float md-block">
                         <md-icon style="left:7%;" class="fa fa-twitter"></md-icon>
-                        <input id="twitter" type="text" placeholder="Twitter">
+                        <input id="twitter" type="text" placeholder="{{selectedContact.twitter}}">
                     </md-input-container>
                 </div>
                 <div layout="row">
                     <md-input-container style="margin-top:-5%;" class="md-icon-float md-block">
-                        <label>Linked-In</label>
+                        <label>{{selectedContact.linkedin}}</label>
                         <md-icon style="left:7%;" class="fa fa-linkedin"></md-icon>
                         <input id="linkedin" type="text">
                     </md-input-container>
 
                     <md-input-container id="zoho-container" style="margin-top:-5%;" class="md-icon-float md-block">
-                        <label>CRM</label>
+                        <label>{{selectedContact.crm}}</label>
                         <md-icon id="zoho-icon" style="left:7%;" class="fa fa-square"></md-icon>
                         <span id="zoho-letter" style="color:white">Z</span>
                         <input id="crm" type="text">
                     </md-input-container>
 
-
                 </div>
-
                 <a href=""><p class="text-center" style="margin-top: -5%; font-size:18px; color:red;" class="col-lg-8 col-md-8 col-lg-push-2 col-md-push-2">
                     Delete Contact
                 </p></a>

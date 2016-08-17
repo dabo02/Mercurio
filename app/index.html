@@ -33,12 +33,10 @@
       function checkUrl(){
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
-            console.log("Conectau");
             if(location.pathname.search("login")!=-1){
               location.replace("src/index.html");
             }
           } else {
-            console.log("desconectao");
             if(location.pathname.search("login")==-1){
               location.replace("src/login/login.html");
             }
@@ -61,13 +59,17 @@
     <nav-bar></nav-bar>
     <div flex layout="row">
       <left-sidebar></left-sidebar>
+      <md-content style="position:relative;" flex="75" id="main-content">
+        <!-- -->
+        <!--<dialer ng-if="user.dialerStatus"></dialer>-->
+        <!--<chat class="fade-in-out" ng-if="user.chatStatus"></chat>-->
+        <!--<contacts style="overflow-y:scroll;" ng-if="user.contactsStatus"></contacts>-->
+        <!--<edit-profile class="fade-in-out" ng-controller="EditProfileController" ng-if="user.editProfileStatus"></edit-profile>-->
+        <!--<call ng-if="user.callStatus"></call>-->
 
-      <dialer ng-if="user.dialerStatus" flex="75"></dialer>
-      <chat ng-if="user.chatStatus" flex="75"></chat>
-      <contacts style="overflow-y:scroll;" ng-if="user.contactsStatus" flex="75"></contacts>
-      <edit-profile ng-controller="EditProfileController" ng-if="user.editProfileStatus" flex="75"></edit-profile>
-      <call ng-if="user.callStatus" flex="75"></call>
+        <div style="width:100%" ng-view> </div>
 
+      </md-content>
       <right-sidebar style="rgb(250,250,250);" flex="25"></right-sidebar>
 
     </div>
@@ -94,7 +96,7 @@
             <h4 style="padding-left:5%;">Background Image</h4>
             <form style="padding-bottom: 3%; border-bottom: 1px solid #eee;" class="row" id="form1" runat="server">
               <input style="visibility:hidden;" type="file" name="file" id="drawerImage" />
-              <div style="color:gray;" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" id="backgroundFeedback">Select a .jpg format image.</div>
+              <div style="color:gray;" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" id="pictureFeedback">Select a .jpg format image.</div>
               <label style="margin-top: -1%;" class="btn btn-info col-lg-4 col-md-4 col-lg-push-2 col-md-push-2" for="drawerImage">Choose an Image</label>
             </form>
             <h4 style="padding-left:5%;">Profile Image</h4>
@@ -128,13 +130,14 @@
               </md-switch>
             </div>
             <div class="col-lg-12 col-md-12 row" style="margin-left:0px;">
-              <md-input-container style="margin-top:-5%;">
-                <md-icon style="left:7%;" class="fa fa-volume-up"></md-icon>
-                <md-select ng-model="contact.ringtone">
-                  <md-option id="{{ringtone}}" onmouseover="playSound(this.id)" onclick="stopSound()" ng-repeat="ringtone in ringtones" value="{{ringtone}}">
-                    {{ringtone}}
-                  </md-option>
-                </md-select></md-input-container>
+              <!--<md-input-container style="margin-top:-5%;">-->
+                <!--<md-icon style="left:7%;" class="fa fa-volume-up"></md-icon>-->
+                <!--<md-select ng-model="contact.ringtone">-->
+                  <!--<md-option id="{{ringtone}}" onmouseover="playSound(this.id)" onclick="stopSound()" ng-repeat="ringtone in ringtones" value="{{ringtone}}">-->
+                    <!--{{ringtone}}-->
+                  <!--</md-option>-->
+                <!--</md-select>-->
+              <!--</md-input-container>-->
             </div>
             <div class="col-lg-12 col-md-12 row" style="margin-left:0px;">
               <md-switch class="col-lg-6 col-md-6 col-lg-push-3 col-md-push-3 md-primary" style="font-size:20px;" md-no-ink aria-label="VideoCall Notifications">
@@ -149,6 +152,72 @@
         </div>
       </div>
     </div>
+
+    <!-- Add contact Modal -->
+    <div class="modal fade" id="addContactModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title text-center">New Contact</h3>
+          </div>
+          <div class="modal-body">
+            <md-input-container class="md-icon-float md-block">
+              <label>Name</label>
+              <md-icon class="fa fa-user"></md-icon>
+              <input ng-model="newContact.name" type="text">
+            </md-input-container>
+            <h4 style="padding-left:5%;">Contact Image</h4>
+            <form style="padding-bottom: 3%; border-bottom: 1px solid #eee;" class="row" id="form1" runat="server">
+              <input id="contact-image" ng-model="newContact.image" style="visibility:hidden;" type="file" name="file"/>
+              <div style="color:gray;" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" id="backgroundFeedback">Select a .jpg format image.</div>
+              <label style="margin-top: -1%;" class="btn btn-info col-lg-4 col-md-4 col-lg-push-2 col-md-push-2" for="contact-image">Choose an Image</label>
+            </form>
+            <md-content layout="row">
+              <md-content style="background-color:white" flex="50" layout="column">
+                <md-input-container class="md-icon-float md-block">
+                  <md-icon class="fa fa-envelope"></md-icon>
+                  <input ng-model="newContact.email" type="text" placeholder="Email">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                  <md-icon class="fa fa-phone"></md-icon>
+                  <input ng-model="newContact.phone" type="number" placeholder="Phone Number">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                  <md-icon class="fa fa-map-marker"></md-icon>
+                  <input ng-model="newContact.address" type="text" placeholder="Address">
+                </md-input-container>
+              </md-content>
+              <md-content style="background-color:white" flex="50" layout="column">
+                <md-input-container class="md-icon-float md-block">
+                  <md-icon class="fa fa-facebook"></md-icon>
+                  <input ng-model="newContact.facebook" type="text" placeholder="Facebook">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                  <md-icon class="fa fa-twitter"></md-icon>
+                  <input ng-model="newContact.twitter" type="text" placeholder="Twitter">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                  <md-icon class="fa fa-linkedin"></md-icon>
+                  <input ng-model="newContact.linkedin" type="text" placeholder="LinkedIn">
+                </md-input-container>
+              </md-content>
+            </md-content>
+            <md-input-container class="md-icon-float md-block">
+              <md-icon class="fa fa-plus"></md-icon>
+              <input ng-model="newContact.notes" type="text" placeholder="Notes">
+            </md-input-container>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button ng-click="addNewContact()" data-dismiss="modal" class="btn btn-success">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </body>
 
   <script>
@@ -185,12 +254,13 @@
   <script src="../node_modules/angular/angular.js"></script>
   <script src="../node_modules/angular-animate/angular-animate.js"></script>
   <script src="../node_modules/angular-aria/angular-aria.js"></script>
+  <script src="../node_modules/angular/spin.js"></script>
   <script type="text/javascript" src="../node_modules/angular-material/angular-material.js"></script>
   <script src="./src/users/Users.js"></script>
   <script src="./src/users/UserController.js"></script>
   <script src="./src/users/UserService.js"></script>
-  <script src="./src/users/Contacts.js"></script>
-  <script src="./src/calls/userProvider.js"></script>
+  <script src="./src/users/userContent.js"></script>
+  <script src="./src/userProvider.js"></script>
   <script src="./src/login/authenticationController.js"></script>
   <script src="./src/calls/recents.js"></script>
   <script src="./src/navBarDirective.js"></script>

@@ -7,6 +7,7 @@ html, body {
   scrollbar-base-color:pink;
 }
 
+
 /* Toolbar area */
 
 .menu {
@@ -405,6 +406,69 @@ animation: mymove 5s infinite;
     -o-transition: all 2s ease-in-out;
     transition: all 2s ease-in-out;
 }
+
+.fade-in-out {
+  transition: 0.5s ease all;
+  -webkit-transition: 0.5s ease all;
+}
+
+.fade-in-out.ng-enter {
+  opacity: 0;
+}
+
+.fade-in-out.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+.fade-in-out.ng-leave {
+  opacity: 1;
+}
+
+.fade-in-out.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+
+$offset: 187;
+$duration: 1.4s;
+
+.spinner {
+  animation: rotator $duration linear infinite;
+}
+
+@keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+.path {
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation:
+    dash $duration ease-in-out infinite,
+    colors ($duration*4) ease-in-out infinite;
+}
+
+@keyframes colors {
+	0% { stroke: #4285F4; }
+	25% { stroke: #DE3E35; }
+	50% { stroke: #F7C223; }
+	75% { stroke: #1B9A59; }
+  100% { stroke: #4285F4; }
+}
+
+@keyframes dash {
+ 0% { stroke-dashoffset: $offset; }
+ 50% {
+   stroke-dashoffset: $offset/4;
+   transform:rotate(135deg);
+ }
+ 100% {
+   stroke-dashoffset: $offset;
+   transform:rotate(450deg);
+ }
+}
+
 
 /* ICONS */
 

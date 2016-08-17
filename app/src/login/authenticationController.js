@@ -3,12 +3,10 @@ angular.module('users')
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      console.log("Conectau");
       if(location.pathname.search("login")!=-1){
         location.replace("/app/index.html");
       }
     } else {
-      console.log("desconectao");
       if(location.pathname.search("login")==-1){
         location.replace("/app/src/login/login.html");
       }
@@ -21,8 +19,8 @@ angular.module('users')
     setTimeout(function() {
             rocket.setAttribute("id", "icon");
           }, 3600);
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
+    var email = $scope.email;
+    var password = $scope.password;
     console.log("Signing in " + email + " with " + password + " as password.");
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
@@ -49,14 +47,14 @@ angular.module('users')
   }
 
   $scope.resetPassword = function() {
-//        var email = document.getElementById("email").value;
+//        var email = $scope.email;
 //        firebase.auth().sendPasswordResetEmail(email).catch(function(error){
 //            document.getElementById("feedback").innerHTML = "Error: "+error.message;
 //                  setTimeout(function() {
 //                    document.getElementById("feedback").innerHTML = "";
 //                  }, 3600);
 //        });
-    var email = document.getElementById("email").value;
+    var email = $scope.email;
     firebase.auth().sendPasswordResetEmail(email).then(function() {
         document.getElementById("feedback").style.color="green";
         document.getElementById("feedback").innerHTML = "An email to reset your password was sent to: "+email;
@@ -73,8 +71,4 @@ angular.module('users')
         }, 3600);
     });
   }
-
-
-
-
 });

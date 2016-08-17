@@ -1,8 +1,8 @@
 <md-content ng-controller="NavCtrl" style="padding-left:5px; padding-right:5px; border:1px solid #eee;" id="content">
     <div ng-if="user.recentsView"><md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <a flex="33" href='#/edit'><md-nav-item md-nav-click="goto('page1')" name="/edit">Edit</md-nav-item></a>
-        <a flex="33" href='#/all'><md-nav-item md-nav-click="goto('page2')" name="/all">All</md-nav-item></a>
-        <a flex="33" href='#/missed'><md-nav-item md-nav-click="goto('page3')" name="/missed">Missed</md-nav-item></a>
+        <a flex="33" ><md-nav-item md-nav-click="goto('page1')" name="/edit">Edit</md-nav-item></a>
+        <a flex="33" ><md-nav-item md-nav-click="goto('page2')" name="/all">All</md-nav-item></a>
+        <a flex="33" ><md-nav-item md-nav-click="goto('page3')" name="/missed">Missed</md-nav-item></a>
         <!-- these require actual routing with ui-router or ng-route, so they won't work in the demo
         <md-nav-item md-nav-sref="app.page4" name="page4">Page Four</md-nav-item>
         <md-nav-item md-nav-href="#page5" name="page5">Page Five</md-nav-item>
@@ -21,7 +21,7 @@
                          md-floating-label="Search">
         </md-autocomplete>
 
-        <div style="width:100%" ng-view> </div>
+        <!--<div style="width:100%" ng-view> </div>-->
     </div>
     <chats ng-controller="ChatsController as ChatCtrl" ng-if="user.chatsView"></chats>
     <!--<recents></recents>-->

@@ -10,32 +10,32 @@
 
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
-    authDomain: "mercurio-39a44.firebaseapp.com",
-    databaseURL: "https://mercurio-39a44.firebaseio.com",
-    storageBucket: "mercurio-39a44.appspot.com",
-  };
-  firebase.initializeApp(config);
+        // Initialize Firebase
+        var config = {
+        apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
+        authDomain: "mercurio-39a44.firebaseapp.com",
+        databaseURL: "https://mercurio-39a44.firebaseio.com",
+        storageBucket: "mercurio-39a44.appspot.com",
+        };
+        firebase.initializeApp(config);
     </script>
 
     <script type="text/javascript">
-    function checkUrl(){firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      console.log("Conectau");
-      if(location.pathname.search("login")!=-1){
-        location.replace("/app/index.html");
-      }
-    } else {
-      console.log("desconectao");
-      if(location.pathname.search("login")==-1){
-        location.replace("login.html");
-      }
-    }
-  });
-  }
-  </script>
+        function checkUrl(){firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                console.log("Conectau");
+                if(location.pathname.search("login")!=-1){
+                    location.replace("/app/index.html");
+                }
+            }
+            else {
+                console.log("desconectao");
+                if(location.pathname.search("login")==-1){
+                    location.replace("login.html");
+                }
+            }
+        });}
+    </script>
 </head>
 <body ng-app="starterApp" style="overflow-x: hidden; background-color:rgba(0, 0, 0, 0.5);" ng-controller="AuthenticationController" ng-cloak onload="checkUrl()">
     <div class="row" style="padding-top: 5%;" ng-cloak>
@@ -49,7 +49,7 @@
                     <md-input-container class="md-icon-float md-block">
                         <!-- Use floating label instead of placeholder -->
                         <label>Email</label>
-                        <input id="email" type="email">
+                        <input ng-model="email" type="email">
                     </md-input-container>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     <md-input-container class="md-icon-float md-block">
                         <!-- Use floating label instead of placeholder -->
                         <label>Password</label>
-                        <input id="password" type="password">
+                        <input ng-model="password" type="password">
                         <a href="" ng-click="resetPassword()">forgot password?</a>
                     </md-input-container>
                 </div>
@@ -76,11 +76,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="row" style="padding-top:2px; padding-bottom:10px;">-->
-                <!--<div class="col-lg-3 col-md-3 col-lg-push-9 col-md-push-9">-->
-                    <!--<button class="btn btn-info" style="width:100%" ng-click="signUp()">Sign Up</button>-->
-                <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
 

@@ -22,8 +22,6 @@
                             ng-model="ContactCtrl.asyncContacts"
                             md-contacts="ContactCtrl.delayedQuerySearch($query)"
                             md-contact-name="name"
-                            md-contact-image="image"
-                            md-contact-email="email"
                             md-require-match="false"
                             md-highlight-flags="i"
                             filter-selected="ContactCtrl.filterSelected"
@@ -34,7 +32,7 @@
                 </md-content>
                 <md-button style="border-radius:40px; min-width:0px;">
                 <span class="dialer-icons">
-                  <a style="margin-right:0px; background-color:#1565c0;"><i style="color:#ffc107;margin-left: 3px; line-height: 19px;" class="fa fa-user-plus fa-lg"></i></a>
+                  <a data-toggle="modal" data-target='#addContactModal' style="margin-right:0px; background-color:#1565c0;"><i style="color:#ffc107;margin-left: 3px; line-height: 19px;" class="fa fa-user-plus fa-lg"></i></a>
                 </span>
                 </md-button>
             </md-card-title-text>

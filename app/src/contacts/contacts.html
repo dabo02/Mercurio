@@ -3,7 +3,7 @@
     <div style="padding-top:3%" class="row">
         <div class="col-lg-2 col-md-2 col-lg-push-5 col-md-push-5">
             <span style="display:table;margin:0 auto;" class="dialer-icons">
-			    <a href="" id="dialer-circle" style="width:50px; height:50px; margin-right:0px;"><img id="dialer" src="images/dialer.png"></a>
+			    <a href="#/dialer" id="dialer-circle" style="width:50px; height:50px; margin-right:0px;"><img id="dialer" src="images/dialer.png"></a>
             </span>
         </div>
     </div>
@@ -21,7 +21,34 @@
                              md-item-text="item.display"
                              md-floating-label="Search">
             </md-autocomplete>
-            <div style="margin-top:-5%" id="contacts-list" ng-cloak></div>
+            <!--<div style="margin-top:-5%" id="contacts-list" ng-cloak></div>-->
+
+            <!--Test-->
+
+            <div style="margin-top:-5%; margin-bottom:10%;" ng-repeat="letter in user.alphabet">
+                <div ng-if="setContacts(letter)">
+                    <a id=contact-initial> <h2>{{letter}}</h2> </a>
+                    <md-content style="overflow-y:hidden" ng-repeat="contact in tempContacts" id="contacts-content">
+                        <md-button ng-click="showContact(contact)" style="width:100%;">
+                            <md-list id="contacts-card" flex>
+                                <md-list-item class="row">
+                                    <div style="margin-left:5%;" class="col-lg-2 col-md-2">
+                                        <img style="width:50px; height:50px; border-radius:35px;" ng-src="{{contact.image}}"/>
+                                    </div>
+                                    <div style="margin-left: 2%; margin-top: 2%;" class="col-lg-7 col-md-7" layout="column">
+                                        <p style="font-size:20px; word-break: break-all" flex="50">{{contact.name}}</p>
+                                        <p>{{contact.status}}</p>
+                                    </div>
+                                    <p class="col-lg-3 col-md-3"> Mobile </p>
+                                </md-list-item>
+                            </md-list>
+                        </md-button>
+                    </md-content>
+                </div>
+            </div>
+
+            <!--finish test-->
+
         </div>
     </div>
 
