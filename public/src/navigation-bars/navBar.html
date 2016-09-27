@@ -1,0 +1,14 @@
+<md-toolbar style="background-color:#1565c0;" layout="row">
+    <md-button flex="5" class="menu" ng-click="navCtrl.toggleLeftSidebar()" aria-label="Show User List">
+        <md-icon md-svg-icon="menu" ></md-icon>
+    </md-button>
+    <h1 flex="15">Mercurio</h1>
+    <md-container flex-offset="60" flex="10">
+        <div ng-click='navCtrl.viewRecentCallsButtonClicked()' ng-class="{rightSidebarSelection:navCtrl.viewingRecentCalls, rightSidebarRejection:navCtrl.viewingRecentChats}"  style="font-size:36px; line-height:55px;" class="fa fa-clock-o"></div>
+        <p ng-click='navCtrl.viewRecentCallsButtonClicked()' ng-class="{rightSidebarSelection:navCtrl.viewingRecentCalls, rightSidebarRejection:navCtrl.viewingRecentChats}" style="padding-left: 2%; font-size: 12px;">Calls</p>
+    </md-container>
+    <md-container flex="10">
+        <div ng-click='navCtrl.viewRecentChatsButtonClicked()' ng-class="{rightSidebarSelection:navCtrl.viewingRecentChats, rightSidebarRejection:navCtrl.viewingRecentCalls}" style="font-size:36px; line-height:55px;" class="fa fa-comments"></div>
+        <p ng-click='navCtrl.viewRecentChatsButtonClicked()' ng-class="{rightSidebarSelection:navCtrl.viewingRecentChats, rightSidebarRejection:navCtrl.viewingRecentCalls}" style="padding-left: 2%; font-size: 12px;">Chats</p>
+    </md-container>
+</md-toolbar>

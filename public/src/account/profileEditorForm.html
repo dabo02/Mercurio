@@ -1,0 +1,70 @@
+<div class="modal fade" id="customizeModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title text-center">Profile Editor</h3>
+            </div>
+            <div class="modal-body">
+
+                <div layout="row">
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Status Message</label>
+                        <md-icon class="fa fa-comment-o"></md-icon>
+                        <input id="statusMessage" type="text" ng-model="profileCtrl.statusMessage" placeholder="{{profileCtrl.getStatusMessage()}}">
+                    </md-input-container>
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Availability</label>
+                        <md-icon class="fa fa-circle-o"></md-icon>
+                        <input id="availablity" type="text" ng-model="profileCtrl.availability" placeholder="{{profileCtrl.getAvailability()}}">
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class=" md-icon-float md-block">
+                        <label>First Name</label>
+                        <md-icon style="left:7%;" class="fa fa-user"></md-icon>
+                        <input id="firstName" type="text" ng-model="profileCtrl.firstName" placeholder="{{profileCtrl.getFirstName()}}">
+                    </md-input-container>
+                    <md-input-container class=" md-icon-float md-block">
+                        <label>Last Name</label>
+                        <md-icon style="left:7%;" class="fa fa-user"></md-icon>
+                        <input id="lastName" type="text" ng-model="profileCtrl.lastName" placeholder="{{profileCtrl.getLastName()}}">
+                    </md-input-container>
+
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Email</label>
+                        <md-icon class="fa fa-envelope"></md-icon>
+                        <input id="email" type="text" ng-model="profileCtrl.email" placeholder="{{profileCtrl.getEmail()}}">
+                    </md-input-container>
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Phone</label>
+                        <md-icon class="fa fa-phone"></md-icon>
+                        <input id="phone" type="text" ng-model="profileCtrl.phone" placeholder="{{profileCtrl.getPhone()}}">
+                    </md-input-container>
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Ext.</label>
+                        <md-icon class="fa fa-hashtag"></md-icon>
+                        <input id="extension" type="text" ng-model="profileCtrl.extension" placeholder="{{profileCtrl.getExtension()}}">
+                    </md-input-container>
+                </div>
+
+                <h4 style="padding-left:5%;">Profile Picture</h4>
+
+                <form class="row" id="form2" runat="server">
+                    <input style="visibility:hidden;" type="file" name="file" id="profileImage" />
+                    <div style="color:gray;" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" id="profileFeedback">Select a .jpg format image.</div>
+                    <label style="margin-top: -1%;" class="btn btn-info col-lg-4 col-md-4 col-lg-push-2 col-md-push-2" for="profileImage">Choose an Image</label>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="profileCtrl.saveProfileInfo()" data-dismiss="modal" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
