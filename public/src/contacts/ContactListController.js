@@ -97,8 +97,10 @@ angular.module('users')
 
     $scope.selectedContact;
 
-    $scope.showContact = function(contact){
+    self.showContact = function(contact){
         $scope.selectedContact = contact;
         location.replace("#/contact-profile");
     }
+
+
 }]);

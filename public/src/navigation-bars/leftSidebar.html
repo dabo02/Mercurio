@@ -5,7 +5,7 @@
         <md-card ng-controller="ProfileEditorController as profileCtrl" style="margin:0px; margin-bottom:4%; background-image:url({{user.background}});" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
             <md-card-title>
                 <md-card-title-media flex="40">
-                    <div class="md-media-sm card-media"><md-icon class="avatar"><img style="border-radius:70px;" src=""></md-icon></div>
+                    <div class="md-media-sm card-media"><md-icon class="avatar"><img style="border-radius:70px;" ng-src="{{profileCtrl.getProfilePicture()}}"></md-icon></div>
                 </md-card-title-media>
                 <md-card-title-text style="padding-top:5%" flex="60">
                     <span class="md-headline">{{profileCtrl.getFirstName() + ' ' + profileCtrl.getLastName()}}</span>

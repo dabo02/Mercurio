@@ -10,9 +10,11 @@
 
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
+        self.chatClient = chatClientService.chatClient;
 
         self.saveGroupInfo = function(){
             console.log($stateParams);
         }
+
     }]);
 })();

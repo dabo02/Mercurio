@@ -4,10 +4,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title text-center">Group Details</h3>
+                <h3 class="modal-title text-center">{{chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].title}}</h3>
                 <img ng-src="images/contact3.jpg" class="md-avatar"/>
             </div>
             <div class="modal-body">
+                <md-list>
+                    <md-list-item ng-repeat="participant in chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].participantList track by $index" style="padding:0%; width:100%" id="chat-conversation" class="md-2-line">
+                        <img ng-src="images/contact3.jpg" class="md-avatar"/>
+                        <div style="width:100%" class="md-list-item-text" layout="column">
+                            <div style="width:100%" layout="row">
+                                <h3 flex="70">{{participant.firstName}} {{participant.lastName}}</h3>
+                            </div>
+                        </div>
+                        <md-divider ></md-divider>
+                    </md-list-item>
+                </md-list>
+
                 <!--
                 <div layout="row">
                     <md-input-container class="md-icon-float md-block">

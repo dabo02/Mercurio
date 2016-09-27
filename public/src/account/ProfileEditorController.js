@@ -65,7 +65,7 @@
             }
         }
 
-        self.getPathToProfilePicture = function(){
+        self.getProfilePicture = function(){
             if(accountService.isAccountAvailable()) {
                 return accountService.activeAccount.picture;
             }

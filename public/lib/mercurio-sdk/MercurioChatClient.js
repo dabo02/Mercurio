@@ -15,7 +15,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	var pageNumber = 1;
 	var limit = 50;
 	
-	firebase.database().ref('user-chats/' + this.chatClientOwner).on('child_changed', function(snapshot) {
+	firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('lastMessage/timeStamp').on('child_changed', function(snapshot) {
 	  	//compare contact ids from local contact list to snapshot keys in order to find local 
 		//reference to contact; use that contact's setters to update the local reference
 	  
@@ -62,7 +62,7 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
 	
-	firebase.database().ref('user-chats/' + self.chatClientOwner).limitToFirst(1 * pageNumber * limit).on("child_added", function(snapshot) {
+	firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('lastMessage/timeStamp').limitToFirst(1 * pageNumber * limit).on("child_added", function(snapshot) {
 	
 		if(snapshot.exists()){
 		
@@ -74,12 +74,12 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 			chat = new MercurioChat(snapshot.key, snapshot.val().participantCount, self.participantsAreReadyObserver,
 					snapshot.val().lastMessage, snapshot.val().settings, snapshot.val().timeStamp, snapshot.val().title);
 			
-			self.chatList.push(chat);
+			self.chatList.unshift(chat);
 		}
 
 	});
 	
-	firebase.database().ref('user-chats/' + self.chatClientOwner).limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
+	firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('lastMessage/timeStamp').limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
 	
 		//compare chat ids from local chat list to snapshot keys in order to find local 
 		//reference to chat; remove chat from local contacts list

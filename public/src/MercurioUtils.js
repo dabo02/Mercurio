@@ -54,6 +54,28 @@
         };
     })
 
+    .filter('chatListAvatarFilter', function () {
+        return function (chat, chatClientOwner) {
+
+            var avatarUrl = '';
+
+            if(chat.participantList.length > 2){
+
+                avatarUrl = '';
+            }
+            else{
+                chat.participantList.forEach(function (participant) {
+                    if (chatClientOwner !== participant.userId) {
+                        avatarUrl = participant.picture;
+                    }
+                });
+            }
+
+            return avatarUrl;
+
+        };
+    })
+
     .filter('timeStampFilter', function () {
         return function (timeStamp) {
 
@@ -66,7 +88,9 @@
                 var minutes = Math.floor((totalSeconds % 3600) / 60);
 
                 return hours + ':' + minutes;8*/
-                return 'Today';
+                var hour = date.getHours();
+                var min = date.getMinutes();
+                return hour + ':' + min;
             }
             else if((today.getDate() - date.getDate()) == 1){
                 return 'Yesterday';

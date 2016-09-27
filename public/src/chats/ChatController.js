@@ -52,7 +52,6 @@
             return message.from === self.chatClient.chatClientOwner;
         }
 
-
         self.chatClient.markAllMessagesAsRead(self.chatIndex);
         $location.hash('bottom');
         $anchorScroll();

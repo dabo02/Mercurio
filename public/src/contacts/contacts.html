@@ -34,7 +34,7 @@
                         <div ng-if="contactListCtrl.setContacts(letter)">
                             <a id=contact-initial> <h2>{{letter}}</h2> </a>
                             <md-content style="overflow-y:hidden" ng-repeat="contact in contactListCtrl.tempContacts" id="contacts-content">
-                                <md-button ng-click="showContact(contact)" style="width:100%;">
+                                <md-button ng-click="contactListCtrl.showContact(contact)" style="width:100%;">
                                     <md-list id="contacts-card" flex>
                                         <md-list-item class="row">
                                             <div style="margin-left:5%;" class="col-lg-2 col-md-2">

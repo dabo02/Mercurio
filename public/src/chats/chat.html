@@ -15,36 +15,46 @@
                 <chat-group-details ng-controller="ChatGroupDetailsController as chatGroupCtrl"></chat-group-details>
                 <md-content style="margin-bottom:10%;overflow-x:hidden;border-radius:8px;" flex="80" flex-offset="10">
                 <div ng-controller ="OptionController as options" style="border-radius:8px; border:1px solid #1565c0; background-color:ghostwhite;">
-                    <div class="row" style="margin-bottom: -30%;">
-                        <a href="">
-                            <h4 ng-if="chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title.length > 0" class="col-lg-7 col-md-7 col-lg-push-1 col-md-push-1"
-                                data-toggle="modal" data-target='#chatGroupDetailsModal'>{{chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title}}</h4>
-                            <h4 ng-if="chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title.length === 0" class="col-lg-7 col-md-7 col-lg-push-1 col-md-push-1"
-                                >{{chatCtrl.chatClient.chatList[chatCtrl.chatIndex] | chatTitleFilter : chatCtrl.chatClient.chatClientOwner}}</h4>
-                        </a>
+                    <div class="row">
 
-                            <md-fab-speed-dial md-open="options.isOpen" md-direction="{{options.selectedDirection}}"
-                                               ng-class="options.selectedMode">
-                                <md-fab-trigger>
-                                    <md-button style="min-width: 0px;border-radius: 60px;min-height: 0px;padding: 0;margin: 0;" aria-label="menu">
-                                        <md-icon style="font-size:22px;" class="fa fa-paperclip"></md-icon>
-                                    </md-button>
-                                </md-fab-trigger>
-                                <md-fab-actions>
-                                    <md-button ng-show="options.isOpen" aria-label="Twitter" class="md-fab md-primary md-raised md-mini">
-                                        <md-icon style="font-size:20px" class="fa fa-file-picture-o"></md-icon>
-                                    </md-button>
-                                    <md-button ng-show="options.isOpen" aria-label="Facebook" class="md-fab md-warn md-raised md-mini">
-                                        <md-icon style="font-size:20px" class="fa fa-file-movie-o"></md-icon>
-                                    </md-button>
-                                    <md-button ng-show="options.isOpen" aria-label="Google Hangout" class="md-fab md-accent md-raised md-mini">
-                                        <md-icon style="font-size:20px" class="fa fa-file-audio-o"></md-icon>
-                                    </md-button>
-                                </md-fab-actions>
-                            </md-fab-speed-dial>
-                            <md-button style="min-width: 0px;border-radius: 60px;min-height: 0px;padding: 0;margin: 0;" aria-label="menu">
-                                <md-icon style="font-size:22px;" class="fa fa-ellipsis-v"></md-icon>
-                            </md-button>
+                        <md-list flex="90" flex-offset="5">
+                            <md-list-item class="md-1-line">
+                                <img ng-src="{{chatCtrl.chatClient.chatList[chatCtrl.chatIndex] | chatListAvatarFilter : chatCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
+                                <div class="md-list-item-text" layout="column">
+                                    <h4 ng-if="chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title.length > 0"
+                                        data-toggle="modal" data-target='#chatGroupDetailsModal'>
+                                            {{chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title}}
+                                    </h4>
+                                    <h4 ng-if="chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title.length === 0">
+                                        {{chatCtrl.chatClient.chatList[chatCtrl.chatIndex] | chatTitleFilter : chatCtrl.chatClient.chatClientOwner}}
+                                    </h4>
+                                </div>
+
+                                <md-fab-speed-dial class="md-secondary" md-open="options.isOpen" md-direction="{{options.selectedDirection}}"
+                                                   ng-class="options.selectedMode">
+                                    <md-fab-trigger>
+                                        <md-button style="min-width: 0px;border-radius: 60px;min-height: 0px;padding: 0;margin: 0;" aria-label="menu">
+                                            <md-icon style="font-size:22px;" class="fa fa-paperclip"></md-icon>
+                                        </md-button>
+                                    </md-fab-trigger>
+                                    <md-fab-actions>
+                                        <md-button ng-show="options.isOpen" aria-label="Twitter" class="md-fab md-primary md-raised md-mini">
+                                            <md-icon style="font-size:20px" class="fa fa-file-picture-o"></md-icon>
+                                        </md-button>
+                                        <md-button ng-show="options.isOpen" aria-label="Facebook" class="md-fab md-warn md-raised md-mini">
+                                            <md-icon style="font-size:20px" class="fa fa-file-movie-o"></md-icon>
+                                        </md-button>
+                                        <md-button ng-show="options.isOpen" aria-label="Google Hangout" class="md-fab md-accent md-raised md-mini">
+                                            <md-icon style="font-size:20px" class="fa fa-file-audio-o"></md-icon>
+                                        </md-button>
+                                    </md-fab-actions>
+                                </md-fab-speed-dial>
+                                <md-button class="md-secondary" style="min-width: 0px;border-radius: 60px;min-height: 0px;padding: 0;margin: 0;" aria-label="menu">
+                                    <md-icon style="font-size:22px;" class="fa fa-ellipsis-v"></md-icon>
+                                </md-button>
+                            </md-list-item>
+
+                        </md-list>
 
                     </div>
                     <div id="conversation" class="wrapper" style="overflow-x: hidden; overflow-y:scroll; width: 100%; height: 450px; background-size: 100% 100%; background-image:url(images/chat-background-opaque.png);" class="col-lg-12 col-md-12" style="width:100%;">
