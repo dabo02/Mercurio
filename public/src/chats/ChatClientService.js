@@ -28,6 +28,7 @@
                 sound.currentTime=0;
             }
 
+            $('#chatListSearch').click();
             //$scope.apply();
 
             /*function playSound(ringtone){

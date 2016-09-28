@@ -30,7 +30,9 @@ function MercurioChatClient(userId, messageReceivedObserver){
 				if(chat.lastMessage !== snapshot.val().lastMessage){
 			
 					chat.lastMessage = snapshot.val().lastMessage;
-			
+					self.chatList.sort(function(a, b){
+						return b.lastMessage.timeStamp - a.lastMessage.timeStamp
+					});
 					// call observer to notify view that a new chat message has been received
 					self.messageReceivedObserver(chat.lastMessage);					
 				}
