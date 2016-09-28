@@ -82,15 +82,29 @@
             var date = new Date(timeStamp);
             var today = new Date();
 
-            if(date.toDateString() === today.toDateString()){
-                /*var totalSeconds = parseInt(timeStamp, 10); // don't forget the second param
-                var hours   = Math.floor(totalSeconds % 3600);
-                var minutes = Math.floor((totalSeconds % 3600) / 60);
 
-                return hours + ':' + minutes;8*/
+            if(date.toDateString() === today.toDateString()){
+
                 var hour = date.getHours();
                 var min = date.getMinutes();
-                return hour + ':' + min;
+
+                if(min < 10){
+                    min = '0' + min;
+                }
+
+                if(hour == 0){
+                    return '12:' + min + ' am';
+                }
+                else if(hour == 12 ){
+                    return '12:' + min + ' pm';
+                }
+                else if(hour > 12){
+                    return (hour - 12) + ':' + min + ' pm';
+                }
+                else{
+                    return hour + ':' + min + ' am';
+                }
+
             }
             else if((today.getDate() - date.getDate()) == 1){
                 return 'Yesterday';
