@@ -19,7 +19,9 @@
     <script src="/bower_components/cropper/cropper.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+
     <script>
       // Initialize Firebase
       var config = {
@@ -58,9 +60,11 @@
 
   <body ng-app="mercurio" ng-controller="NavigationController as navCtrl" ng-cloak onload="checkUrl()" >
 
-    <div style="height:100%" ui-view></div>
+    <div style="height:100%;" ui-view></div>
 
     <profile-editor-form ng-controller="ProfileEditorController as profileCtrl"></profile-editor-form>
+
+    <manage-crm-form ng-controller="ManageCRMController as crmCtrl"></manage-crm-form>
 
     <!--Phone Settings Modal-->
     <div class="modal fade" id="phone-settings-modal" role="dialog">
@@ -210,7 +214,13 @@
   <script src="/lib/mercurio-sdk/MercurioContact.js"></script>
   <script src="/lib/mercurio-sdk/MercurioContactManager.js"></script>
   <script src="/lib/mercurio-sdk/Message.js"></script>
+  <script src="/lib/mercurio-sdk/MercurioPhone.js"></script>
+  <script src="/lib/mercurio-sdk/RecentCall.js"></script>
   <script src="/lib/mercurio-sdk/MissingImplementationError.js"></script>
+  <script src="/lib/mercurio-sdk/AbstractCRMManager.js"></script>
+  <script src="/lib/mercurio-sdk/MercurioCRMManager.js"></script>
+  <script src="/lib/mercurio-sdk/AbstractCRM.js"></script>
+  <script src="/lib/mercurio-sdk/ZohoCRM.js"></script>
 
   <script src="/node_modules/angular/angular.js"></script>
   <script src="/node_modules/angular-animate/angular-animate.js"></script>
@@ -219,6 +229,9 @@
   <script src="/node_modules/angular-material/angular-material.js"></script>
   <script src="/node_modules/oclazyload/dist/ocLazyLoad.js"></script>
   <script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="/node_modules/angularjs-scroll-glue/src/scrollglue.js"></script>
+  <script src="/node_modules/angularfire/dist/angularfire.min.js"></script>
+  <script src="/node_modules/jssip/dist/jssip.min.js"></script>
 
   <script src="/src/users/Users.js"></script>
   <script src="/src/mercurio-ng.js"></script>
@@ -230,10 +243,10 @@
 
   <script src="/src/MercurioUtils.js"></script>
 
-  <script src="/src/login/AuthenticationController.js"></script>
-  <script src="/src/login/AuthenticationService.js"></script>
+  <script src="/src/account/AuthenticationController.js"></script>
+  <script src="/src/account/AuthenticationService.js"></script>
 
-  <script src="/src/calls/recents.js"></script>
+  <script src="/src/phone/recents.js"></script>
 
   <script src="/src/navigation-bars/navBarDirective.js"></script>
   <script src="/src/navigation-bars/leftSidebarDirective.js"></script>
@@ -242,11 +255,13 @@
 
   <script src="/src/contacts/contactsDirective.js"></script>
   <script src="/src/contacts/ContactListController.js"></script>
+  <script src="/src/contacts/ContactController.js"></script>
   <script src="/src/contacts/editProfileDirective.js"></script>
   <script src="/src/contacts/editProfileController.js"></script>
 
 
   <script src="/src/chats/ChatClientService.js"></script>
+  <script src="/src/chats/directives.js"></script>
   <script src="/src/chats/ChatListDirective.js"></script>
   <script src="/src/chats/ChatListController.js"></script>
   <script src="/src/chats/ChatController.js"></script>
@@ -254,10 +269,19 @@
   <script src="/src/chats/ChatGroupDetailsDirective.js"></script>
   <script src="/src/chats/ChatGroupDetailsController.js"></script>
 
-  <script src="/src/calls/callDirective.js"></script>
+  <script src="/src/phone/callDirective.js"></script>
 
-  <script src="/src/dialer/dialerDirective.js"></script>
-  <script src="/src/dialer/dialerController.js"></script>
+  <script src="/src/phone/dialerDirective.js"></script>
+  <script src="/src/phone/dialerController.js"></script>
+  <script src="/src/phone/directives.js"></script>
+  <script src="/src/phone/PhoneService.js"></script>
+  <script src="/src/phone/RecentCallListController.js"></script>
+
+  <script src="/src/crm/directives.js"></script>
+  <script src="/src/crm/CRMService.js"></script>
+  <script src="/src/crm/CRMListController.js"></script>
+  <script src="/src/crm/AddCallToCRMController.js"></script>
+  <script src="/src/crm/ManageCRMController.js"></script>
 
   <script src="/src/account/AccountService.js"></script>
   <script src="/src/account/ProfileEditorDirective.js"></script>
@@ -277,6 +301,7 @@
     function stopSound(){
         sound.pause();
     }
+//    }
   </script>
 
 </html>

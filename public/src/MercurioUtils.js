@@ -57,7 +57,7 @@
     .filter('chatListAvatarFilter', function () {
         return function (chat, chatClientOwner) {
 
-            var avatarUrl = '';
+            var avatarUrl = 'images/contacts.png';
 
             if(chat.participantList.length > 2){
 
@@ -146,6 +146,75 @@
             }
 
         };
+    })
+
+    .filter('callListDirectionFilter', function () {
+        return function (incoming, answered) {
+
+            if(incoming && answered){
+                return 'images/in.png';
+            }
+            else if(incoming){
+                return 'images/missed.png';
+            }
+            else{
+                return 'images/out.png';
+            }
+
+        };
+    })
+
+    .filter('callListNameFilter', function () {
+        return function (from, to, incoming, contactList) {
+
+            var participant;
+            if(incoming){
+                participant = from;
+            }
+            else{
+                participant = to;
+            }
+            contactList.forEach(function(contact){
+                if(contact.phone == participant){
+                    participant = contact.firstName + " " + contact.lastName ;
+                }
+            })
+
+            return participant;
+
+        };
+    })
+
+    .filter('callListAvatarFilter', function () {
+        return function (from, contactList) {
+
+            var avatarUrl = 'images/contacts.png'
+            contactList.forEach(function(contact){
+                if(contact.phone == from){
+                    avatarUrl = contact.picture;
+                }
+            })
+
+            return avatarUrl;
+
+        };
+    })
+
+    .filter('callableRecordsFilter', function(){
+        return function(callableRecords, type){
+
+            var records = [];
+            for(var list in callableRecords){
+                switch(list){
+                    case 'Leads':
+                        break;
+                    case 'Contacts':
+                        break;
+                    case 'Accounts':
+                        break;
+                }
+            }
+        }
     })
 
     .directive('scrollToBottom', function () {

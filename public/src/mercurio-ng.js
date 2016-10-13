@@ -5,7 +5,7 @@
 
     'use_strict';
 
-    angular.module('mercurio', ['ngMaterial', 'users', 'oc.lazyLoad', 'ui.router'])
+    angular.module('mercurio', ['ngMaterial', 'users', 'oc.lazyLoad', 'ui.router', 'luegg.directives', 'firebase'])
         .config(function($mdThemingProvider, $mdIconProvider){
 
             $mdIconProvider
@@ -21,7 +21,12 @@
                 .primaryPalette('blue')
                 .accentPalette('red');
 
-        }).config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+        }).factory("Auth", ["$firebaseAuth",
+            function($firebaseAuth) {
+                var ref = new firebase.database().ref();
+                return $firebaseAuth(ref);
+            }
+        ]).config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
 
             $ocLazyLoadProvider.config({
                 debug: false,
@@ -33,14 +38,14 @@
             $stateProvider
                 .state('dialer', {
                     url: '/dialer',
-                    templateUrl: '/src/dialer/dialer.html'
+                    templateUrl: '/src/phone/dialer.html'
                 })
                 .state('contacts', {
                     url: '/contacts',
                     templateUrl: '/src/contacts/contacts.html'
                 })
                 .state('contact-profile', {
-                    url: '/contact-profile',
+                    url: '/contact-profile/:contactIndex',
                     templateUrl: '/src/contacts/contactProfile.html'
                 })
                 .state('edit-profile', {
@@ -51,18 +56,28 @@
                     url: '/chat/:chatIndex/:chatClientOwner',
                     templateUrl: '/src/chats/chat.html'
                 })
+                .state('crm-manager', {
+                    url: '/crm-manager',
+                    templateUrl: '/src/crm/crmList.html'
+                })
                 .state('login', {
                     url: '/login',
-                    templateUrl: '/src/login/loginForm.html'
+                    templateUrl: '/src/account/loginForm.html'
                 });
-        }]).run(function($rootScope, $state, $location, accountService){
-             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-                 if (toState.name !== 'login' && !accountService.isAccountAvailable()){
-                     $location.url('/login');
-                     //$state.go('login');
-                 }
-             });
-        });
+        }])
+
+        .run(['$rootScope', '$state', '$location', 'accountService', '$timeout', function($rootScope, $state, $location, accountService, $timeout){
+            $rootScope.spinnerActivated = true;
+            //$timeout(function() {
+                $rootScope.spinnerActivated = false;
+                $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+                    if (toState.name != 'login' && !accountService.isAccountAvailable()){
+                        $location.url('/login');
+                        //$state.go('login');
+                    }
+                });
+            //}, 4000);
+        }]);
 
 
 }());

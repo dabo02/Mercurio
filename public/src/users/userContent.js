@@ -13,6 +13,11 @@
       self.filterSelected = true;
       self.querySearch = querySearch;
       self.delayedQuerySearch = delayedQuerySearch;
+
+        $scope.getChipInfo= function(chip_info) {
+            console.log(chip_info);
+        }
+
       self.userCallHistory = [
       {
            name: 'Wilfredo Nieves',
@@ -45,7 +50,8 @@
        */
       function querySearch (criteria) {
         cachedQuery = cachedQuery || criteria;
-        return cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];
+        var answer = cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];;
+        return answer;
       }
       /**
        * Async search for contacts

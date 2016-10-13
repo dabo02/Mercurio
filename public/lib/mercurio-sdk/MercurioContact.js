@@ -19,7 +19,7 @@ function MercurioContact(){
 	this.contactId;
 }
 
-function MercurioContact(firstName, lastName, emails, picture, phoneNumbers, userId, status, availability, contactId){
+function MercurioContact(firstName, lastName, emails, picture, phone, userId, status, availability, contactId){
 	
 	AbstractContact.apply(this, arguments);
 	

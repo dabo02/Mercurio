@@ -189,6 +189,8 @@ MercurioChatClient.prototype.sendMessage = function(chatIndex, message){
 		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
 		
 		var updates = {};
+		message.messageId = newMessageKey;
+		
 		updates['/user-chats/' + participant.userId + "/" + self.chatList[chatIndex].chatId + "/lastMessage"] = message;
 
 		firebase.database().ref().update(updates);

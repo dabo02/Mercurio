@@ -10,14 +10,14 @@ function MercurioContactManager(userId){
 	AbstractContactManager.apply(self, arguments);
 	
 	//check if parameter types are correct
-	firebase.database().ref('user-contacts/' + userId).on("child_added", function(snapshot) {
+	self.contactListQuery = firebase.database().ref('user-contacts/' + userId).on("child_added", function(snapshot) {
 	
 		if(snapshot.exists()){
 		
 			var contact;
-				contact = new MercurioContact(snapshot.val().firstName, snapshot.val().lastName, 
-				snapshot.val().email, snapshot.val().picture, snapshot.val().phoneNumbers,
-				snapshot.val().userId, snapshot.val().status, snapshot.val().availability, snapshot.key);
+			contact = new MercurioContact(snapshot.val().firstName, snapshot.val().lastName, 
+			snapshot.val().email, snapshot.val().picture, snapshot.val().phone,
+			snapshot.val().userId, snapshot.val().status, snapshot.val().availability, snapshot.key);
 				
 			self.contactList.push(contact);
 		}

@@ -14,11 +14,15 @@
         self.picture = '',
         self.statusMessage = '',
         self.availability = '';
+        self.pictureChosen = true;
+
+        self.activeAccount = accountService.activeAccount;
 
         self.saveProfileInfo = function(){
             if(accountService.isAccountAvailable()) {
-                accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email, self.picture,
+                accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
                     self.statusMessage, self.availability);
+                accountService.activeAccount.savePicture(self.picture);
                 console.log('Profile info is being saved');
             }
         }
@@ -70,5 +74,25 @@
                 return accountService.activeAccount.picture;
             }
         }
+
+        self.profilePictureChosen = function(){
+            console.log('picture chosen');
+        }
+
+        $scope.file_changed = function(element) {
+
+            self.pictureChosen = true;
+
+            $scope.$apply(function(scope) {
+
+                self.picture = element.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // handle onload
+                    angular.element('#profilePicturePreview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(self.picture);
+            });
+        };
     }]);
 })();

@@ -1,80 +1,143 @@
 angular.module('users')
-.controller('ContactListController', ['$scope', 'accountService', function($scope, accountService) {
+.controller('ContactListController', ['$scope', 'accountService', '$q', '$timeout', '$state', function ($scope, accountService, $q, $timeout, $state) {
 
     var self = this;
     self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
     self.tempContacts = [];
 
-
     var contacts = accountService.activeAccount.contactManager.contactList;
+    self.contactList = accountService.activeAccount.contactManager.contactList;
 
-    /*[
+    var pendingSearch, cancelSearch = angular.noop;
+    var cachedQuery, lastSearch;
+    self.allContacts = loadContacts();
+    self.contacts = [self.allContacts[0]];
+    self.asyncContacts = [];
+    self.filterSelected = true;
+    self.querySearch = querySearch;
+    self.delayedQuerySearch = delayedQuerySearch;
+
+    $scope.getChipInfo= function(chip_info) {
+        console.log(chip_info);
+    }
+
+    self.userCallHistory = [
         {
-            name: "Israel Figueroa",
-            email: "israel.figueroa1@upr.edu",
-            image: "images/contact0Dressed.jpg",
-            phone: "787-518-1788",
-            address: "Comerio",
-            ringtone: "medieval",
-            notes: "tol tol",
-            facebook: "www.facebook.com/ralo",
-            twitter: "www.twitter.com/ralo",
-            linkedin: "www.linkedin.com/ralo",
-            crm: "www.crm.com/ralo"
+            name: 'Wilfredo Nieves',
+            time: '10:41 PM',
+            call: 'received',
+            image: 'images/contact3.jpg',
+            type: 'fa fa-phone',
+            icon:'images/in.png'
         },
         {
-            name: "Brian Landron",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Bruno Camacho",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Darwin Martinez",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Emilio Rodriguez",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Esther Rivera",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Alberto Nieves",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Jovany Nieves",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Luis Vega",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Luis Prados",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Luis 7",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Luis el de cuca",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Miguelito",
-            image: "images/contact0Dressed.jpg"
-        },
-        {
-            name: "Zuania Colon",
-            image: "images/contact0Dressed.jpg"
+            name: 'Luis Prados',
+            time: '6:43 AM',
+            call: 'missed',
+            image: 'images/contact5.jpg',
+            type: 'fa fa-video-camera',
+            icon:'images/miss.png'
+        }];
+
+    //Get missed calls from call history
+    self.missedCallHistory = [ ];
+    self.userCallHistory.forEach(function(entry) {
+        if(entry.call =='missed'){
+            self.missedCallHistory.push(entry);
         }
-    ];*/
+    });
+
+
+    /**
+     * Search for contacts; use a random delay to simulate a remote call
+     */
+    function querySearch (criteria) {
+        cachedQuery = cachedQuery || criteria;
+        var answer = cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];;
+        return answer;
+    }
+    /**
+     * Async search for contacts
+     * Also debounce the queries; since the md-contact-chips does not support this
+     */
+    function delayedQuerySearch(criteria) {
+        cachedQuery = criteria;
+        if ( !pendingSearch || !debounceSearch() )  {
+            cancelSearch();
+            return pendingSearch = $q(function(resolve, reject) {
+                // Simulate async search... (after debouncing)
+                cancelSearch = reject;
+                $timeout(function() {
+                    resolve( self.querySearch() );
+                    refreshDebounce();
+                }, Math.random() * 500, true)
+            });
+        }
+        return pendingSearch;
+    }
+    function refreshDebounce() {
+        lastSearch = 0;
+        pendingSearch = null;
+        cancelSearch = angular.noop;
+    }
+    /**
+     * Debounce if querying faster than 300ms
+     */
+    function debounceSearch() {
+        var now = new Date().getMilliseconds();
+        lastSearch = lastSearch || now;
+        return ((now - lastSearch) < 300);
+    }
+    /**
+     * Create filter function for a query string
+     */
+    function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+        return function filterFn(contact) {
+            return (contact._lowername.indexOf(lowercaseQuery) != -1);;
+        };
+    }
+    function loadContacts() {
+
+        contacts.forEach(function(contact){
+            contact.name = contact.firstName + " " + contact.lastName;
+            contact._lowername = contact.name.toLowerCase();
+        })
+        return contacts;
+    }
+
+    $scope.items = self.userCallHistory;
+    $scope.selected = [ ];
+
+    $scope.toggle = function (item, list) {
+        var idx = list.indexOf(item);
+        if (idx > -1) {
+            list.splice(idx, 1);
+        }
+        else {
+            list.push(item);
+        }
+    };
+    $scope.exists = function (item, list) {
+        return list.indexOf(item) > -1;
+    };
+    $scope.isIndeterminate = function() {
+        return ($scope.selected.length !== 0 &&
+        $scope.selected.length !== $scope.items.length);
+    };
+    $scope.isChecked = function() {
+        return $scope.selected.length === $scope.items.length;
+    };
+    $scope.toggleAll = function() {
+        if ($scope.selected.length === $scope.items.length) {
+            $scope.selected = [];
+        } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
+            $scope.selected = $scope.items.slice(0);
+        }
+    };
+    $scope.areItemsSelected = function(){
+        return $scope.selected.length > 0
+    };
 
     self.isContactListAvailable = function(){
         return accountService.isContactListAvailable();
@@ -97,10 +160,17 @@ angular.module('users')
 
     $scope.selectedContact;
 
-    self.showContact = function(contact){
-        $scope.selectedContact = contact;
-        location.replace("#/contact-profile");
+    self.viewContact = function(contactIndex){
+        console.log('view contact clicked: contact index = ' + contactIndex);
+        $state.go('contact-profile', {'contactIndex' : contactIndex});
     }
 
+    self.getContactByNumber = function(number){
+        contacts.forEach(function(contact){
+            if(contact.phone == number){
+                return contact;
+            }
+        })
+    }
 
 }]);

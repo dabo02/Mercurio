@@ -26,8 +26,15 @@
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.contactsLinkClicked()" layout="row">
-                <p flex="20" data-toggle="modal"><img ng-src="images/contacts.png" alt=""></p>
-                <p flex="80" data-toggle="modal">Contacts</p>
+                <p flex="20"><img ng-src="images/contacts.png" alt=""></p>
+                <p flex="80">Contacts</p>
+            </md-button>
+        </md-list-item>
+
+        <md-list-item layout="row">
+            <md-button layout="row">
+                <p flex="20" data-toggle="modal" data-target='#manageCRMModal'><img ng-src="images/contacts.png" alt=""></p>
+                <p flex="80" data-toggle="modal" data-target='#manageCRMModal'>CRM Manager</p>
             </md-button>
         </md-list-item>
 

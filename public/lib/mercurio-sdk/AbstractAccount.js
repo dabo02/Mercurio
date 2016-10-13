@@ -15,7 +15,7 @@
 */
 
 function AbstractAccount(userId, firstName, lastName, phone, picture, status, availability, 
-	email, extension, contactManager, sipUsername, sipPassword,accountSettings){
+	email, extension, sipUsername, sipPassword,accountSettings){
 	
 	if(this.constructor === AbstractAccount){
 		throw new ConstructorError("Cannot instantiate AbstractAccount class!");
@@ -34,7 +34,7 @@ function AbstractAccount(userId, firstName, lastName, phone, picture, status, av
     this.availability = availability;
     this.email = email;
     this.accountSettings = accountSettings
-    this.contactManager = contactManager;
+    //this.contactManager = contactManager;
     this.extension = extension;
     
 }
@@ -99,7 +99,7 @@ Requests server to save user profile information in database
 		 password - String
 */
 
-AbstractAccount.prototype.saveProfileInfo = function(firstName, lastName, email, picture, status, availability){
+AbstractAccount.prototype.saveProfileInfo = function(firstName, lastName, email, status, availability){
 	throw new AbstractFunctionError("Cannot call abstract function saveProfile!");
 }
 

@@ -29,6 +29,10 @@
             location.replace("#/contacts");
         };
 
+        self.crmManagerLinkClicked = function () {
+            location.replace("#/crm-manager");
+        };
+
         self.toggleLeftSidebar = function(){
             $mdSidenav('left').toggle();
         };

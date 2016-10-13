@@ -24,8 +24,8 @@ function MercurioAccount(user, accountReadyCallback){
 				AbstractAccount.apply(self, [snapshot.key, snapshot.val().firstName, 
 					snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture, 
 					snapshot.val().status, snapshot.val().availability, snapshot.val().email, 
-					snapshot.val().extension], new MercurioContactManager(snapshot.key), 
-					snapshot.val().sipUsername, snapshot.val().sipPassword, snapshot.val().settings);
+					snapshot.val().extension], snapshot.val().sipUsername, 
+					snapshot.val().sipPassword, snapshot.val().settings);
 				accountReadyCallback(self);
 			}
 			else{
@@ -37,17 +37,6 @@ function MercurioAccount(user, accountReadyCallback){
 			}
 		}
 	});			
-	
-	// firebase.database().ref('account/' + user.uid).on('child_changed', function(snapshot) {
-// 
-// 		if (snapshot.exists()) {
-// 			self.firstName = snapshot.val().firstName;
-// 			self.lastName = snapshot.val().lastName;
-// 			self.email = snapshot.val().email;
-// 			self.status = snapshot.val().status;
-// 			self.availability = snapshot.val().availability;
-// 		}
-// 	});	
 }
 
 MercurioAccount.prototype = Object.create(AbstractAccount.prototype);
@@ -63,10 +52,16 @@ Requests server to save profile picture and update database to reflect these cha
 MercurioAccount.prototype.savePicture = function(picture){
 	// TODO - upload picture to firebase and retrieve url to uploaded file
 	
-	var updates = {};
-	updates['account/' + this.userId + '/picture'] = picture;
+	var self = this;
 	
-	firebase.database().ref().update(updates);
+	var updates = {};
+	firebase.storage().ref().child('user/' + this.userId + '/profile/profile_picture').put(picture)
+		.then(function(snapshot) {
+			console.log(snapshot.downloadURL);
+		  	updates['account/' + self.userId + '/picture'] = snapshot.downloadURL;
+		  	firebase.database().ref().update(updates);
+		  	
+		});
 	
 	// TODO - add error management callback
 }
@@ -134,9 +129,10 @@ Requests server to save user profile information in database
 		 password - String
 */
 
-MercurioAccount.prototype.saveProfileInfo = function(firstName, lastName, email, picture, status, availability){
+MercurioAccount.prototype.saveProfileInfo = function(firstName, lastName, email, status, availability){
 	
 	var updates = {};
+	var updateFlag = false;
 	
 	if(firstName !== ''){
 		updates['account/' + this.userId + '/firstName'] = firstName;
@@ -158,7 +154,9 @@ MercurioAccount.prototype.saveProfileInfo = function(firstName, lastName, email,
 		updates['account/' + this.userId + '/availability'] = availability;
 	}
 	
+	
 	firebase.database().ref().update(updates);
+	
 	
 	// TODO - add error management callback
 }

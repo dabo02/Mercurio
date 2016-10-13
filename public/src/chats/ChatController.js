@@ -52,6 +52,15 @@
             return message.from === self.chatClient.chatClientOwner;
         }
 
+        self.showUploadForm = function(){
+            angular.element('.fa-paperclip > input[type=file]').trigger('click');
+            //angular.element('.hiddenFileInput').trigger('click');
+        }
+
+        self.showImagePreview = function(){
+            alert('image selected');
+        }
+
         self.chatClient.markAllMessagesAsRead(self.chatIndex);
         $location.hash('bottom');
         $anchorScroll();

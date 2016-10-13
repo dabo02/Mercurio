@@ -1,0 +1,28 @@
+<div class="modal fade" id="addChatModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title text-center">Add Chat</h3>
+            </div>
+            <div class="modal-body">
+                <md-autocomplete id='chatListSearch' style="margin-top:2%;" flex
+                                 md-input-name="autocompleteField"
+                                 md-input-minlength="2"
+                                 md-input-maxlength="18"
+                                 md-no-cache="ctrl.noCache"
+                                 md-selected-item="ctrl.selectedItem"
+                                 md-search-text="ctrl.searchText"
+                                 md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                 md-item-text="item.display"
+                                 md-floating-label="Search">
+                </md-autocomplete>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button data-dismiss="modal" class="btn btn-success">Add</button>
+            </div>
+        </div>
+    </div>
+</div>

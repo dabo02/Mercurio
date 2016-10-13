@@ -1,9 +1,9 @@
-<div style="height:100%" ng-show="navCtrl.userAvailable()" layout="column" ng-controller="UserController as user">
+<div style="height:100%" ng-show="navCtrl.isAccountAvailable()" layout="column" ng-controller="UserController as user">
     <nav-bar></nav-bar>
     <div flex layout="row">
         <left-sidebar></left-sidebar>
 
-        <md-content flex="75" id="main-content" ng-controller="DialerController as dialer" style="position:relative;padding-bottom:10%; background-color:#e1f5fe;">
+        <md-content flex="75" id="main-content" ng-controller="DialerController as dialer" style="position:relative;padding0%; background-color:#e1f5fe;">
             <div style="padding-top:3%" class="row">
                 <div class="col-lg-2 col-md-2 col-lg-push-3 col-md-push-3">
                     <span style="display:table;margin:0 auto;" class="dialer-icons">
@@ -26,67 +26,65 @@
                     </span>
                 </div>
             </div>
-            <div class="row">
-                <h3 ng-click="displayContacts()" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" style="color:#1565c0">Contacts</h3>
-            </div>
+
             <div style="padding-top:3%;" class="row">
-                <div style="margin-left: -4%;border-radius:8px; border:1px solid #1565c0; margin-bottom:3%; background-color:white;" class="col-lg-5 col-md-5 col-lg-push-4 col-md-push-4">
+                <div ng-controller="ContactController as contactCtrl" style="margin-left: -4%;border-radius:8px; border:1px solid #1565c0; margin-bottom:3%; background-color:white;" class="col-lg-5 col-md-5 col-lg-push-4 col-md-push-4">
                     <div style="padding-bottom: 3px; padding-top: 3px;" class="row">
                         <div class="col-lg-2 col-md-2">
                             <a href="#/contacts"><i style="color:#1565c0;" class="glyphicon glyphicon-arrow-left"></i></a>
                         </div>
                         <div class="col-lg-2 col-md-2 col-lg-push-9 col-md-push-9">
-                            <a href="#/edit-profile"><i style="color:#1565c0;" class="glyphicon glyphicon-pencil"></i></a>
+                            <a href=""><i style="color:#1565c0;" class="glyphicon glyphicon-pencil"></i></a>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="wrapper" style="width: 100%; height: 250px; background-size: 100% 100%; background-image:url(images/contact0Dressed.jpg);" class="col-lg-12 col-md-12" style="width:100%;">
+                        <md-card class="wrapper" style="width: 97%; height: 500px; background-size: 100% 100%; background-image:url({{contactCtrl.contact.picture}});" class="col-lg-12 col-md-12" >
                             <ul style="padding-top:1%" layout="column"  class="col-lg-2 col-md-2 col-lg-push-10 col-md-push-10 social-icons icon-circle icon-rotate list-unstyled list-inline">
                                 <li>
-                                    <a href="{{selectedContact.facebook}}"><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
                                 </li>
                                 <li>
-                                    <a href="{{selectedContact.twitter}}"><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-twitter"></i></a>
                                 </li>
                                 <li>
-                                    <a href="{{selectedContact.linkedin}}"><i class="fa fa-linkedin"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
                                 </li>
                             </ul>
-                        </div>
+                        </md-card>
                     </div>
                     <div style="padding-left: 3%;" class="row">
                         <md-input-container class="md-icon-float md-block">
-                            <label>{{selectedContact.name}}</label>
+                            <label>{{contactCtrl.contact.firstName}} {{contactCtrl.contact.lastName}}</label>
                             <md-icon class="fa fa-user"></md-icon>
                             <input id="name" type="text" disabled>
                         </md-input-container>
 
                         <md-input-container style="margin-top: -5%;" class="md-icon-float md-block">
                             <md-icon class="fa fa-phone"></md-icon>
-                            <input id="phone-number" type="text" placeholder="{{selectedContact.phone}}" disabled>
+                            <input id="phone-number" type="text" placeholder="{{contactCtrl.contact.phone}}" disabled>
                         </md-input-container>
 
                         <md-input-container style="margin-top: -5%;" class="md-icon-float md-block">
-                            <label>{{selectedContact.email}}</label>
+                            <label>{{contactCtrl.contact.email}}</label>
                             <md-icon class="fa fa-envelope"></md-icon>
                             <input id="email" type="text" disabled>
                         </md-input-container>
-
+                        <!--
                         <md-input-container style="margin-top: -5%;" class="md-icon-float md-block">
                             <md-icon class="fa fa-map-marker"></md-icon>
-                            <input id="location" type="text" placeholder="{{selectedContact.address}}" disabled>
+                            <input id="location" type="text" placeholder="{{contactCtrl.contact.address}}" disabled>
                         </md-input-container>
 
                         <md-input-container style="margin-top: -5%;" class="md-icon-float md-block">
-                            <label>{{selectedContact.ringtone}}</label>
+                            <label>{{contactCtrl.contact.ringtone}}</label>
                             <md-icon class="fa fa-volume-up"></md-icon>
                             <input id="ringtone" type="text" disabled>
                         </md-input-container>
 
                         <md-input-container style="margin-top: -5%;" class="md-icon-float md-block">
                             <md-icon class="fa fa-plus"></md-icon>
-                            <input id="notes" type="text" placeholder="{{selectedContact.notes}}" disabled>
-                        </md-input-container>
+                            <input id="notes" type="text" placeholder="{{contactCtrl.contact.notes}}" disabled>
+                        </md-input-container>-->
                         <a href=""><p class="text-center" style="margin-top: -5%; font-size:18px; color:red;" class="col-lg-8 col-md-8 col-lg-push-2 col-md-push-2">
                             Delete Contact
                         </p></a>
@@ -94,7 +92,7 @@
                 </div>
             </div>
         </md-content>
-        <right-sidebar style="rgb(250,250,250);" flex="25"></right-sidebar>
+        <right-sidebar class="scrollableList" flex="25"></right-sidebar>
 
     </div>
 </div>

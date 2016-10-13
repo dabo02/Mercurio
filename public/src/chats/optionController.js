@@ -8,6 +8,6 @@
       this.availableModes = ['md-fling', 'md-scale'];
       this.selectedMode = 'md-fling';
       this.availableDirections = ['up', 'down', 'left', 'right'];
-      this.selectedDirection = 'down';
+      this.selectedDirection = 'left';
     });
 })();

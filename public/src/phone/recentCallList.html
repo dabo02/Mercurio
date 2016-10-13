@@ -1,0 +1,127 @@
+<!--
+<md-list style="margin-left:-10px; margin-right:-10px; margin-top:-3px; background-color:lightgoldenrodyellow; padding:0%;">
+    <md-list-item class="md-2-line">
+        <div style="font-size: 25px; line-height: 65px;" flex="20" class="{{ChatCtrl.desktopNotificationIcon}}"></div>
+        <div flex="80" style="width:100%" class="md-list-item-text" layout="column">
+            <h3 style="font-size:14px; font-weight:bold;" flex="100">{{ChatCtrl.desktopNotificationHeader}}</h3>
+            <p style="text-decoration: underline; font-color:#eee" ng-click='ChatCtrl.toggleNotifications()' flex="100">{{ChatCtrl.desktopNotificationParagraph}}</p>
+        </div>
+        <md-divider ></md-divider>
+    </md-list-item>
+</md-list>
+-->
+<md-content>
+
+
+    <script type="text/ng-template" id="fetchingCallableRecordsProgress">
+        <md-dialog aria-label="Fetching your CRM Records" ng-controller="AddCallToCRMController as crmCtrl">
+            <form ng-cloak>
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h2>Fetching your CRM Records</h2>
+                        <span flex></span>
+                        <md-button class="md-icon-button" ng-click="crmCtrl.closeAddCallToCRMDialog()">
+                            &times;
+                        </md-button>
+                    </div>
+                </md-toolbar>
+
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <md-content>
+                            <md-progress-linear md-mode="query" ng-disabled="crmCtrl.isCallableRecordListAvailable()"></md-progress-linear>
+                        </md-content>
+                        <md-content ng-if="!crmCtrl.isCallableRecordListAvailable()">
+                            <h3>There are no records in your CRM that match the selected phone number.</h3>
+                        </md-content>
+                    </div>
+                </md-dialog-content>
+            </form>
+        </md-dialog>
+    </script>
+
+    <script type="text/ng-template" id="addCallToCRMForm">
+        <md-dialog aria-label="Add Call To CRM" ng-controller="AddCallToCRMController as crmCtrl">
+            <form ng-cloak>
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h2>Add Call To CRM</h2>
+                        <span flex></span>
+                        <md-button class="md-icon-button" ng-click="crmCtrl.closeAddCallToCRMDialog()">
+                            &times;
+                        </md-button>
+                    </div>
+                </md-toolbar>
+
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <md-input-container ng-if="crmCtrl.isCallableRecordListAvailable()">
+                            <label>Choose a CRM entry</label>
+                            <md-select ng-model="crmCtrl.selectedRecords" multiple="true">
+                                <md-optgroup ng-if="crmCtrl.isCallableLeadListAvailable()" label="Leads">
+                                    <md-option ng-value="lead" ng-repeat="lead in crmCtrl.crmService.callableRecords['Leads']">{{lead.name}}</md-option>
+                                </md-optgroup>
+                                <md-optgroup ng-if="crmCtrl.isCallableContactListAvailable()" label="Contacts">
+                                    <md-option ng-value="contact" ng-repeat="contact in crmCtrl.crmService.callableRecords['Contacts']">{{contact.name}}</md-option>
+                                </md-optgroup>
+                                <md-optgroup ng-if="crmCtrl.isCallableAccountListAvailable()" label="Accounts">
+                                    <md-option ng-value="account" ng-repeat="account in crmCtrl.crmService.callableRecords['Accounts']">{{account.name}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container ng-if="crmCtrl.isCallableRecordListAvailable()" class="md-icon-float md-block" flex="100">
+                            <label>Notes</label>
+                            <md-icon class="fa fa-circle-o"></md-icon>
+                            <textarea rows="5" cols="100" ng-model="crmCtrl.notes"></textarea>
+                        </md-input-container>
+                    </div>
+                </md-dialog-content>
+
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button ng-click="crmCtrl.closeAddCallToCRMDialog()">
+                        Close
+                    </md-button>
+                    <md-button ng-if="crmCtrl.isCallableRecordListAvailable()" ng-click="crmCtrl.addCallToCRM()">
+                        Add Call
+                    </md-button>
+                </md-dialog-actions>
+            </form>
+        </md-dialog>
+    </script>
+
+    <md-autocomplete id='chatListSearch' style="margin-top:2%;" flex
+                     md-input-name="autocompleteField"
+                     md-input-minlength="2"
+                     md-input-maxlength="18"
+                     md-no-cache="ctrl.noCache"
+                     md-selected-item="ctrl.selectedItem"
+                     md-search-text="ctrl.searchText"
+                     md-items="item in ctrl.querySearch(ctrl.searchText)"
+                     md-item-text="item.display"
+                     md-floating-label="Search">
+    </md-autocomplete>
+
+    <md-button ng-repeat="call in recentCallListCtrl.phone.recentCallList track by $index" style="margin-left:0%; margin-bottom:7%; margin-top:-7%; width:100%; border-bottom:1px solid #eee">
+        <md-list ng-click="selectUserIndex($index)" style="padding:0%;">
+            <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
+                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
+                <p style="font-size:12px; margin-top:5%; word-break: break-all;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</p>
+                <div flex="25" layout="column">
+                    <p class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
+                    <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}">
+                </div>
+                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
+            </md-list-item>
+        </md-list>
+        <md-divider layout-fill ng-show="$index == selectedUserIndex"></md-divider>
+        <div layout="column" ng-show="$index == selectedUserIndex" layout-fill class="expanded">
+            <span ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.markCallAsSelected($event, call)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <br/>
+            <span>Send Text Message</span>
+            <br/>
+            <span>Delete</span>
+        </div>
+    </md-button>
+
+</md-content>

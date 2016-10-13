@@ -33,8 +33,8 @@
                     <div style="margin-top:-5%; margin-bottom:10%;" ng-repeat="letter in contactListCtrl.alphabet">
                         <div ng-if="contactListCtrl.setContacts(letter)">
                             <a id=contact-initial> <h2>{{letter}}</h2> </a>
-                            <md-content style="overflow-y:hidden" ng-repeat="contact in contactListCtrl.tempContacts" id="contacts-content">
-                                <md-button ng-click="contactListCtrl.showContact(contact)" style="width:100%;">
+                            <md-content style="overflow-y:hidden" ng-repeat="contact in contactListCtrl.tempContacts track by $index" id="contacts-content">
+                                <md-button ng-click="contactListCtrl.viewContact($index)" style="width:100%;">
                                     <md-list id="contacts-card" flex>
                                         <md-list-item class="row">
                                             <div style="margin-left:5%;" class="col-lg-2 col-md-2">
@@ -58,6 +58,6 @@
             </div>
 
         </md-content>
-        <right-sidebar style="rgb(250,250,250);" flex="25"></right-sidebar>
+        <right-sidebar class="scrollableList" flex="25"></right-sidebar>
     </div>
 </div>

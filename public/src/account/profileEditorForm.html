@@ -53,13 +53,15 @@
                     </md-input-container>
                 </div>
 
-                <h4 style="padding-left:5%;">Profile Picture</h4>
+                <md-card>
+                    <img id="profilePicturePreview" class="md-card-image" alt="Washed Out" style="height:300px;" ng-src="{{profileCtrl.getProfilePicture()}}"/>
+                    <md-card-actions layout="row" layout-align="end center">
 
-                <form class="row" id="form2" runat="server">
-                    <input style="visibility:hidden;" type="file" name="file" id="profileImage" />
-                    <div style="color:gray;" class="col-lg-4 col-md-4 col-lg-push-1 col-md-push-1" id="profileFeedback">Select a .jpg format image.</div>
-                    <label style="margin-top: -1%;" class="btn btn-info col-lg-4 col-md-4 col-lg-push-2 col-md-push-2" for="profileImage">Choose an Image</label>
-                </form>
+                            <input style="visibility:hidden;" onchange="angular.element(this).scope().file_changed(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
+                            <label style="margin-top: -1%;" class="btn btn-info" for="profileImage">Choose an Image</label>
+
+                    </md-card-actions>
+                </md-card>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -574,6 +574,11 @@ $duration: 1.4s;
     color:#ffc107;
 }
 
+.scrollableList{
+    overflow-x: hidden;
+    overflow-y:scroll;
+}
+
 .rightSidebarRejection{
     color:white;
 }
@@ -608,7 +613,19 @@ $duration: 1.4s;
     font-size: 11px;
 }
 
+.recentCallListTimeStamp{
+    font-size: 11px;
+}
+
 .unread{
     font-weight: bold;
+}
+
+md-backdrop.md-select-backdrop {
+    z-index:103;
+}
+
+.md-select-menu-container {
+    z-index:104;
 }
 

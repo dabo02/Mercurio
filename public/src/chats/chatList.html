@@ -10,7 +10,19 @@
     </md-list-item>
 </md-list>
 -->
-<div>
+<md-content>
+
+    <add-chat-form></add-chat-form>
+    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+        <a flex="33" ><md-nav-item md-nav-click="goto('page1')" name="page1">Edit</md-nav-item></a>
+        <p><md-nav-item name="Chat List">Chat List</md-nav-item></p>
+        <a flex="33" ><md-nav-item md-nav-click="goto('page3')" name="page3" data-toggle="modal" data-target='#addChatModal'>Add</md-nav-item></a>
+        <!-- these require actual routing with ui-router or ng-route, so they won't work in the demo
+        <md-nav-item md-nav-sref="app.page4" name="page4">Page Four</md-nav-item>
+        <md-nav-item md-nav-href="#page5" name="page5">Page Five</md-nav-item>
+        -->
+    </md-nav-bar>
+
     <md-autocomplete id='chatListSearch' style="margin-top:2%;" flex
                      md-input-name="autocompleteField"
                      md-input-minlength="2"
@@ -38,4 +50,4 @@
             <md-divider ></md-divider>
         </md-list-item>
     </md-list>
-</div>
+</md-content>

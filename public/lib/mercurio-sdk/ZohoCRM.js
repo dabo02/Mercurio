@@ -1,0 +1,213 @@
+/*
+@constructor
+@params: title - string containing title of message
+@params: participants - array containing a collection of particpants
+*/
+
+function ZohoCRM(crmId, insertCalls, name, token, type, validated){
+
+    AbstractCRM.apply(this, arguments);
+	this.validateToken(token);
+}
+
+ZohoCRM.prototype = Object.create(AbstractCRM.prototype);
+
+ZohoCRM.prototype.constructor = ZohoCRM;
+
+/*
+
+Requests server to login to CRM
+@method
+@abstract
+*/
+
+ZohoCRM.prototype.crmLogin = function(username, password, appName){
+    throw new MissingImplementationError("Function login() is missing it's implementation!");
+}
+
+/*
+
+ Requests CRM server to add a call to CRM
+ @method
+ @abstract
+ @params: callInfo - JSON object with call attributes
+
+ */
+ZohoCRM.prototype.validateToken = function(token) {
+
+	var self = this;
+  var route = "/validateToken";
+  var url = "crm.zoho.com";
+  var succ = [];
+  var data = {
+    token: token,
+    url: url
+  };
+  $.ajax({
+    url: route,
+    type: "post",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(data),
+    dataType: "json",
+    success: function (response) {
+      succ.push(response);
+      if (succ[0].response.error) {
+        self.validated = false;
+        // save validation state to firebase
+      } else {
+        self.validated = true;
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus, errorThrown);
+      console.warn(jqXHR.responseText);
+    }
+
+  });
+
+}
+
+
+ZohoCRM.prototype.addCall = function(callInfo, cb) {
+
+  var route = "/insertCalls";
+  var url = "crm.zoho.com";
+  var succ = [];
+  var data = {
+    token: this.token,
+    callInfo: callInfo,
+    url: url
+  };
+  $.ajax({
+    url: route,
+    type: "post",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(data),
+    dataType: "json",
+    success: function (response) {
+      succ.push(response);
+      if (succ) {
+        cb(succ);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus, errorThrown);
+      console.warn(jqXHR.responseText);
+    }
+
+  });
+
+}
+
+/*
+
+Requests CRM server to add a lead to CRM
+@method
+@abstract leadInfo = {
+  firstName: First name of lead entry
+  lastName: Last name of lead entry *Required Field
+  phone: phone of lead entry
+  email: email of lead entry
+  company: company of lead entry * Required Field
+  title: title of lead entry
+  * Other info about fields on ZOHO api documentation
+  }
+@params: leadInfo - JSON object with lead attributes
+@params: cb - callback function
+
+*/
+
+ZohoCRM.prototype.addLead = function(leadInfo, cb) {
+
+  var route = "/insertLead";
+  var url = "crm.zoho.com";
+  var succ = [];
+  var data = {
+    token: this.token,
+    leadInfo: leadInfo,
+    url: url
+};
+    $.ajax({
+      url: route,
+      type: "post",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(data),
+      dataType: "json",
+      success: function (response) {
+        succ.push(response);
+        if (succ) {
+          cb(succ);
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
+        console.warn(jqXHR.responseText);
+      }
+
+    });
+
+}
+
+ZohoCRM.prototype.addAccount = function(acctInfo, cb) {
+
+  var route = "/insertAccount";
+  var url = "crm.zoho.com";
+  var succ = [];
+  var data = {
+    token: this.token,
+    acctInfo: acctInfo,
+    url: url
+  };
+  $.ajax({
+    url: route,
+    type: "post",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(data),
+    dataType: "json",
+    success: function (response) {
+      succ.push(response);
+      if (succ) {
+        cb(succ);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus, errorThrown);
+      console.warn(jqXHR.responseText);
+    }
+
+  });
+
+}
+/*
+
+ Requests CRM server to search a callable entity from the CRM Account
+ @method
+ @abstract
+ @params: callInfo - string with telephone number for CRM query
+
+ */
+
+ZohoCRM.prototype.searchCallableRecords = function(phone, cb){
+    var route = "/fetchRecords";
+    var url = "crm.zoho.com";
+    var callableRecords = [];
+    var data = {
+        token: this.token,
+        telNumber: phone,
+        url: url
+    };
+    $.ajax({
+        url: route,
+        type: "post",
+        data: data,
+        success: function (response) {
+          callableRecords = response;
+          cb(callableRecords);
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+           console.log(textStatus, errorThrown);
+        }
+
+    });
+}
