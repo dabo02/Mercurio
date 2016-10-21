@@ -109,9 +109,9 @@
                     result: 'Successful'
                 };
 
-                crmService.crmManager.crmList[0].addCall(info, function(call){
-                    console.log(call);
-                });
+                //crmService.crmManager.crmList[0].addCall(info, function(call){
+                //    console.log(call);
+                //});
             });
 
             //$mdDialog.hide();

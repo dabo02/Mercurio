@@ -7,6 +7,7 @@ angular.module('users')
 
     var contacts = accountService.activeAccount.contactManager.contactList;
     self.contactList = accountService.activeAccount.contactManager.contactList;
+    self.accountService = accountService;
 
     var pendingSearch, cancelSearch = angular.noop;
     var cachedQuery, lastSearch;
@@ -20,33 +21,6 @@ angular.module('users')
     $scope.getChipInfo= function(chip_info) {
         console.log(chip_info);
     }
-
-    self.userCallHistory = [
-        {
-            name: 'Wilfredo Nieves',
-            time: '10:41 PM',
-            call: 'received',
-            image: 'images/contact3.jpg',
-            type: 'fa fa-phone',
-            icon:'images/in.png'
-        },
-        {
-            name: 'Luis Prados',
-            time: '6:43 AM',
-            call: 'missed',
-            image: 'images/contact5.jpg',
-            type: 'fa fa-video-camera',
-            icon:'images/miss.png'
-        }];
-
-    //Get missed calls from call history
-    self.missedCallHistory = [ ];
-    self.userCallHistory.forEach(function(entry) {
-        if(entry.call =='missed'){
-            self.missedCallHistory.push(entry);
-        }
-    });
-
 
     /**
      * Search for contacts; use a random delay to simulate a remote call
@@ -98,7 +72,7 @@ angular.module('users')
         };
     }
     function loadContacts() {
-
+        console.log('load contacts called');
         contacts.forEach(function(contact){
             contact.name = contact.firstName + " " + contact.lastName;
             contact._lowername = contact.name.toLowerCase();
@@ -171,6 +145,6 @@ angular.module('users')
                 return contact;
             }
         })
-    }
+    };
 
 }]);

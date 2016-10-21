@@ -5,43 +5,41 @@
 
     'use strict';
 
-    angular.module('mercurio').service('chatClientService', ['$stateParams', '$location', '$anchorScroll', function($stateParams, $location, $anchorScroll){
+    angular.module('mercurio').service('chatClientService', ['$state', '$location', '$anchorScroll', function($state, $location, $anchorScroll){
 
         var self = this;
         self.chatClient;
+
+        self.chatIsReadyToSendObserver = function(chat){
+            $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+        };
 
         self.instantiateChatClient = function(userId){
             self.chatClient = new MercurioChatClient(userId, self.onMessageReceived);
         }
 
-        self.onMessageReceived = function(message){
-            console.log('message has been received');
-            //playSound('random')
-            if(true){
-                $location.hash('bottom');
-                $anchorScroll();
-            }
+        self.onMessageReceived = function(receivedChat, index){
 
-            if(message.from !== self.chatClient.chatClientOwner){
+            $location.hash('bottom');
+            $anchorScroll();
+
+            if(receivedChat.lastMessage.from !== self.chatClient.chatClientOwner){
                 var sound = new Audio("audio/pickup_coin.wav");
                 sound.play();
                 sound.currentTime=0;
+
+                var receivedChatIndex = index;
+
+                if($state.params.chatIndex != undefined && receivedChatIndex >= 0){
+                    if($state.params.chatIndex < receivedChatIndex){
+                        var newIndex = parseInt($state.params.chatIndex, 10) + 1;
+                        $state.go('chat', {'chatIndex' : newIndex, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                    }
+                    else if($state.params.chatIndex == receivedChatIndex && $state.params.chatIndex != 0){
+                        $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                    }
+                }
             }
-
-            $('#chatListSearch').click();
-            //$scope.apply();
-
-            /*function playSound(ringtone){
-                stopSound();
-                sound = new Audio("audio/"+ ringtone + ".mp3");
-                sound.play();
-                sound.currentTime=0;
-            }
-
-            function stopSound(){
-                sound.pause();
-            }*/
-
         }
 
         self.isChatListAvailable = function(){

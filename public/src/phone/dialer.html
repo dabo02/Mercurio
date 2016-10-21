@@ -14,14 +14,14 @@
                                 <a><i style="color:#1565c0;" class="fa fa-user"></i></a>
                               </span>
 
-                            <p style="font-size: 20px; line-height: 40px;" flex="80">
-                                {{user.displayName}}
+                            <p ng-controller="ProfileEditorController as profileCtrl" style="font-size: 20px; line-height: 40px;" flex="80">
+                                {{profileCtrl.getFirstName()}}
                             </p>
                         </md-card-title>
                         <md-card-title style="padding-top: 0%; margin-top: -8%;">
                             <md-card-title-text flex="100"  style="padding-top:5%" layout="row" ng-cloak>
 
-                                <md-content class="chipsdemoContactChips" style="background-color:white;" flex="80" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                <md-content ng-controller="ContactListController as contactListCtrl" class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
                                     <md-contact-chips
                                             ng-click="contactListCtrl.loadContacts()"
                                             ng-model="contactListCtrl.asyncContacts"

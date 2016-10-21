@@ -7,17 +7,26 @@
                 <h3 class="modal-title text-center">Add Chat</h3>
             </div>
             <div class="modal-body">
-                <md-autocomplete id='chatListSearch' style="margin-top:2%;" flex
-                                 md-input-name="autocompleteField"
-                                 md-input-minlength="2"
-                                 md-input-maxlength="18"
-                                 md-no-cache="ctrl.noCache"
-                                 md-selected-item="ctrl.selectedItem"
-                                 md-search-text="ctrl.searchText"
-                                 md-items="item in ctrl.querySearch(ctrl.searchText)"
-                                 md-item-text="item.display"
-                                 md-floating-label="Search">
-                </md-autocomplete>
+                <md-card-title style="padding-top: 0%; margin-top: -8%;">
+                    <md-card-title-text flex="100"  style="padding-top:5%" layout="row" ng-cloak>
+
+                        <md-content ng-controller="ContactListController as contactListCtrl" class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                            <md-contact-chips
+                                    ng-click="contactListCtrl.loadContacts()"
+                                    ng-model="contactListCtrl.asyncContacts"
+                                    md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                    md-contact-name="name"
+                                    md-contact-image="picture"
+                                    md-require-match="false"
+                                    md-highlight-flags="i"
+                                    filter-selected="contactListCtrl.filterSelected"
+                                    md-transform-chip=""
+                                    placeholder=""
+                                    ng-change="contactListCtrl.getChipInfo()">
+                            </md-contact-chips>
+                        </md-content>
+                    </md-card-title-text>
+                </md-card-title>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

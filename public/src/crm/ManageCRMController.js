@@ -16,7 +16,7 @@
                 self.insertCalls = false;
             }
             var crmInfo = {
-                insertCalls: self.insertCalls,
+                insertCalls: self.insertCallsCheckbox,
                 name: self.name,
                 token: self.token,
                 type: 'zoho',

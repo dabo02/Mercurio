@@ -12,7 +12,91 @@
             </div>
 
             <div ng-controller="ChatController as chatCtrl" style="padding-top:3%;" class="row">
-                <chat-group-details ng-controller="ChatGroupDetailsController as chatGroupCtrl"></chat-group-details>
+                <script type="text/ng-template" id="chatGroupDetails">
+                    <md-dialog flex="40" aria-label="Chat Group Details" ng-controller="ChatGroupDetailsController as chatGroupCtrl">
+                        <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
+                            <md-toolbar>
+                                <div class="md-toolbar-tools">
+                                    <h2>{{chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].title}}</h2>
+                                    <span flex></span>
+                                    <md-button class="md-icon-button" ng-click="chatGroupCtrl.closeChatGroupDetailsDialog()">
+                                        &times;
+                                    </md-button>
+                                </div>
+                            </md-toolbar>
+
+                            <md-dialog-content>
+                                <md-card-title style="padding-top: 0%; margin: 10px;">
+                                    <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
+
+                                        <md-content class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                            <md-contact-chips
+                                                    ng-model="contactListCtrl.asyncContacts"
+                                                    md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                                    md-contact-name="name"
+                                                    md-contact-image="picture"
+                                                    md-require-match="false"
+                                                    md-highlight-flags="i"
+                                                    filter-selected="contactListCtrl.filterSelected"
+                                                    placeholder="Search Contacts to Add">
+                                            </md-contact-chips>
+                                        </md-content>
+                                    </md-card-title-text>
+                                    <div flex="80" flex-offset="10" layout="row">
+                                        <span flex></span>
+                                        <md-button ng-if="contactListCtrl.asyncContacts.length > 0" ng-click="chatGroupCtrl.addParticipants(contactListCtrl.asyncContacts)">
+                                            Add
+                                        </md-button>
+                                    </div>
+                                </md-card-title>
+                                <div flex="80" flex-offset="10" layout="row" class="scrollableList fixedRows" >
+                                    <md-list>
+                                        <md-subheader class="md-no-sticky" style="background-color:white;">Group Members</md-subheader>
+                                        <md-list-item class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].participantList">
+                                            <img ng-src="{{participant.picture}}" class="md-avatar" alt="{{participant.firstName}}" />
+                                            <div class="md-list-item-text compact">
+                                                <h3>{{participant.firstName}} {{participant.lastName}}</h3>
+                                            </div>
+                                        </md-list-item>
+                                    </md-list>
+                                    <!--
+                                    <md-list>
+                                        <md-list-item ng-repeat="participant in chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].participantList track by $index" class="md-2-line">
+                                            <img ng-src="{{participant.picture}}" class="md-avatar"/>
+                                            <div class="md-list-item-text" layout="column">
+                                                <div layout="row">
+                                                    <h3>{{participant.firstName}} {{participant.lastName}}</h3>
+                                                </div>
+                                            </div>
+                                        </md-list-item>
+                                    </md-list>-->
+                                </div>
+                                <div flex="80" flex-offset="10" layout="row">
+                                    <md-input-container class=" md-icon-float md-block">
+                                        <md-checkbox md-no-ink ng-model="chatGroupCtrl.groupChatMuteCheckbox" aria-label="Mute Group">
+                                            Mute Group
+                                        </md-checkbox>
+                                        <label></label>
+                                    </md-input-container>
+                                </div>
+                            </md-dialog-content>
+
+                            <md-dialog-actions layout="row">
+                                <md-button ng-click="chatGroupCtrl.exitGroup()">
+                                    Exit Group
+                                </md-button>
+                                <span flex></span>
+                                <md-button ng-click="chatGroupCtrl.closeChatGroupDetailsDialog()">
+                                    Close
+                                </md-button>
+                                <md-button ng-click="chatGroupCtrl.saveChatGroupDetails()">
+                                    Save
+                                </md-button>
+                            </md-dialog-actions>
+                        </form>
+                    </md-dialog>
+                </script>
+
                 <md-content style="margin-bottom:10%;overflow-x:hidden;border-radius:8px;height:100%" flex="80" flex-offset="10">
                     <div ng-controller ="OptionController as options" style="border-radius:8px; border:1px solid #1565c0; background-color:ghostwhite;">
                         <div class="row">
@@ -22,7 +106,7 @@
                                     <img ng-src="{{chatCtrl.chatClient.chatList[chatCtrl.chatIndex] | chatListAvatarFilter : chatCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
                                     <a class="md-list-item-text" layout="column">
                                         <h4 ng-if="chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title.length > 0"
-                                            data-toggle="modal" data-target='#chatGroupDetailsModal'>
+                                            ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
                                                 {{chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title}}
                                         </h4>
                                         <h4 ng-if="chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title.length === 0">
@@ -59,12 +143,13 @@
                                         <md-menu-content width="4">
                                             <md-menu-item>
                                                 <md-button>
-                                                    Redial
+                                                    Group Details
                                                 </md-button>
                                             </md-menu-item>
+                                            <md-menu-divider></md-menu-divider>
                                             <md-menu-item>
                                                 <md-button>
-                                                    Check voicemail
+                                                    Mute
                                                 </md-button>
                                             </md-menu-item>
                                             <md-menu-divider></md-menu-divider>

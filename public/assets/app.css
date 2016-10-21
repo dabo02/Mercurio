@@ -589,7 +589,7 @@ $duration: 1.4s;
     display: inline-block;
     word-break: break-all;
     margin-top: 5%;
-    background-color: cornflowerblue;
+    background-color: #f2f2f2;
     border-radius: 5px;
 }
 
@@ -600,7 +600,7 @@ $duration: 1.4s;
     display: inline-block;
     word-break: break-all;
     margin-top: 5%;
-    background-color: springgreen;
+    background-color: #C8E6C9;
     border-radius: 5px;
 }
 
@@ -629,3 +629,6 @@ md-backdrop.md-select-backdrop {
     z-index:104;
 }
 
+.fixedRows {
+    height: 250px;
+}

@@ -217,6 +217,18 @@
         }
     })
 
+        .filter('createChatTextFilter', function(){
+            return function(groupChatCheckbox){
+
+                if(groupChatCheckbox){
+                    return 'Group';
+                }
+                else{
+                    return 'Chat';
+                }
+            }
+        })
+
     .directive('scrollToBottom', function () {
         return {
             scope: {
@@ -231,5 +243,20 @@
                 });
             }
         }
+    })
+
+    .directive('hardChange', function(){
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function(scope, elem, attr, ctrl){
+                scope.$watch(function(){
+                    return ctrl;
+                }, function(newVal, oldVal){
+                    if(newVal === oldVal) return;
+                    scope.$eval(attr.hardChange)
+                }, true);
+            }
+        };
     });
 })();

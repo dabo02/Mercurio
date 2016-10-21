@@ -34,7 +34,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 						return b.lastMessage.timeStamp - a.lastMessage.timeStamp
 					});
 					// call observer to notify view that a new chat message has been received
-					self.messageReceivedObserver(chat.lastMessage);					
+					self.messageReceivedObserver(chat, index);					
 				}
 				chatFound = true;
 				
@@ -109,15 +109,15 @@ MercurioChatClient.prototype.createChat = function(chatInfo, participants, obser
 	
 	var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
 	var newChatKey = newChatRef.key;
-	newChatRef.set(chatInfo).then(function(){
-		participants.forEach(function(participant){
-			firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function(){
-				var updates = {};
-				updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
-				firebase.database().ref().update(updates);
-			});
+	
+	participants.forEach(function(participant){
+		firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function(){
+			var updates = {};
+			updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
+			firebase.database().ref().update(updates);
 		});
 	});
+	
 	
 	// add participants using the new chat key
 }
@@ -180,11 +180,17 @@ MercurioChatClient.prototype.sendMessage = function(chatIndex, message){
 	
 	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
 	
+	var iOSTokens = [];
+	
 	self.chatList[chatIndex].participantList.forEach(function(participant){
 		
 		if(participant.userId !== self.chatClientOwner){
 			firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + participant.userId).set(0);
 		}
+		
+		firebase.database().ref().child('user-tokens/' + participant.userId).once('child_added', function(snapshot){
+			iOSTokens.push(snapshot.key);
+		});
 		
 		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
 		
@@ -195,6 +201,15 @@ MercurioChatClient.prototype.sendMessage = function(chatIndex, message){
 
 		firebase.database().ref().update(updates);
 	});
+	
+	iOSTokens.forEach(function(token){
+		// this may run before all tokens are fetched :( maybe i should delay a few senconds..?
+		// curl with token to send push notification
+	});
+	
+	var chat = self.chatList[chatIndex];
+	self.chatList.splice(chatIndex, 1);
+	self.chatList.unshift(chat);
 }
 
 MercurioChatClient.prototype.markAllMessagesAsRead = function(chatIndex){

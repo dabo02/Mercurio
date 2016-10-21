@@ -12,11 +12,70 @@
 -->
 <md-content>
 
-    <add-chat-form></add-chat-form>
+    <script type="text/ng-template" id="createChatForm">
+        <md-dialog flex="40" aria-label="Create New Chat" ng-controller="CreateChatController as createChatCtrl">
+            <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h2>Create New {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}</h2>
+                        <span flex></span>
+                        <md-button class="md-icon-button" ng-click="createChatCtrl.closeCreateChatDialog()">
+                            &times;
+                        </md-button>
+                    </div>
+                </md-toolbar>
+
+                <md-dialog-content>
+                    <md-card-title style="padding-top: 0%; margin: 10px;">
+                        <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
+
+                            <md-content class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                <md-contact-chips
+                                        ng-model="contactListCtrl.asyncContacts"
+                                        md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                        md-contact-name="name"
+                                        md-contact-image="picture"
+                                        md-require-match="false"
+                                        md-highlight-flags="i"
+                                        filter-selected="contactListCtrl.filterSelected"
+                                        placeholder="Search for Contacts">
+                                </md-contact-chips>
+                            </md-content>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <div flex="80" flex-offset="10" layout="row">
+                        <md-input-container class=" md-icon-float md-block">
+                            <md-checkbox md-no-ink ng-model="createChatCtrl.groupChatCheckbox" aria-label="Create Group Chat">
+                                New Group Chat
+                            </md-checkbox>
+                            <label></label>
+                        </md-input-container>
+                    </div>
+                    <div flex="80" flex-offset="10" layout="row">
+                        <md-input-container ng-if="createChatCtrl.groupChatCheckbox" class="md-icon-float md-block" flex="100">
+                            <label>Title</label>
+                            <input required md-no-asterisk type="text" ng-model="createChatCtrl.title">
+                        </md-input-container>
+                    </div>
+                </md-dialog-content>
+
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button ng-click="createChatCtrl.closeCreateChatDialog()">
+                        Close
+                    </md-button>
+                    <md-button ng-click="createChatCtrl.createNewChat(contactListCtrl.asyncContacts)">
+                       Create {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}
+                    </md-button>
+                </md-dialog-actions>
+            </form>
+        </md-dialog>
+    </script>
+
     <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
         <a flex="33" ><md-nav-item md-nav-click="goto('page1')" name="page1">Edit</md-nav-item></a>
         <p><md-nav-item name="Chat List">Chat List</md-nav-item></p>
-        <a flex="33" ><md-nav-item md-nav-click="goto('page3')" name="page3" data-toggle="modal" data-target='#addChatModal'>Add</md-nav-item></a>
+        <a flex="33" ><md-nav-item md-nav-click="goto('page3')" name="page3" ng-click="chatListCtrl.showCreateChatDialog($event)">Add</md-nav-item></a>
         <!-- these require actual routing with ui-router or ng-route, so they won't work in the demo
         <md-nav-item md-nav-sref="app.page4" name="page4">Page Four</md-nav-item>
         <md-nav-item md-nav-href="#page5" name="page5">Page Five</md-nav-item>
@@ -36,15 +95,15 @@
     </md-autocomplete>
 
     <md-list style="margin-top:-10%" ng-show="chatListCtrl.isChatListAvailable">
-        <md-list-item ng-repeat="chat in chatListCtrl.chatClient.chatList track by $index" ng-click="chatListCtrl.viewChat($index)" style="padding:0%; width:100%" id="chat-conversation" class="md-2-line">
+        <md-list-item ng-if="chat.lastMessage" ng-repeat="chat in chatListCtrl.chatClient.chatList track by $index" ng-click="chatListCtrl.viewChat($index)" style="padding:0%; width:100%" id="chat-conversation" class="md-2-line">
             <img ng-src="{{chat | chatListAvatarFilter : chatListCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
             <div style="width:100%" class="md-list-item-text" layout="column">
                 <div style="width:100%" layout="row">
-                    <h3 flex="70"ng-style="chatListCtrl.getTextPreviewClass(chat)" >{{chat | chatTitleFilter : chatListCtrl.chatClient.chatClientOwner}}</h3>
+                    <h3 flex="70"ng-style="chatListCtrl.getTextPreviewClass(chat, $index)" >{{chat | chatTitleFilter : chatListCtrl.chatClient.chatClientOwner}}</h3>
                     <p style="font-size:11.5px;" flex="30">{{chat.lastMessage.timeStamp | timeStampFilter}}</p>
                 </div>
                 <div>
-                    <p ng-style="chatListCtrl.getTextPreviewClass(chat)">{{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}}</p>
+                    <p ng-style="chatListCtrl.getTextPreviewClass(chat, $index)">{{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}}</p>
                 </div>
             </div>
             <md-divider ></md-divider>

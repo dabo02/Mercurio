@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ChatController', ['$scope', '$stateParams', 'chatClientService', 'accountService', '$location', '$anchorScroll', function($scope, $stateParams, chatClientService, accountService, $location, $anchorScroll){
+    angular.module('mercurio').controller('ChatController', ['$scope', '$stateParams', 'chatClientService', 'accountService', '$location', '$anchorScroll', '$state', function($scope, $stateParams, chatClientService, accountService, $location, $anchorScroll, $state){
 
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
@@ -44,6 +44,8 @@
                 self.textContentToSend = '';
                 document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
                 //document.getElementById("chatMessageInput").className = "md-icon-float md-block flex-offset-5 flex-85 md-input-focused";
+
+                $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
 
         }
