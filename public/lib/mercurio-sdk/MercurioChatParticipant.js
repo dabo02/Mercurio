@@ -12,8 +12,16 @@ function MercurioChatParticipant(userId, participantReadyCallback){
 	
 		if(snapshot.exists()){
 			if(!self.userId){
+				var picture = null;
+				if(snapshot.val().picture === "" || snapshot.val().picture == null){
+					picture = "https://firebasestorage.googleapis.com/v0/b/mercurio-39a44.appspot.com/o/system%2Fic_profile_color_200dp.png?alt=media&token=38e55453-3aa6-48e3-b2eb-f33978fc4a7b";
+				}
+				else{
+					picture = snapshot.val().picture;
+				}
+				
 				AbstractAccount.apply(self, [snapshot.key, snapshot.val().firstName, 
-					snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture, 
+					snapshot.val().lastName, snapshot.val().phone, picture, 
 					snapshot.val().status, snapshot.val().availability, snapshot.val().email, 
 					snapshot.val().extension]);
 				participantReadyCallback(self);

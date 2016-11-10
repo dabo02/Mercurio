@@ -55,9 +55,9 @@
 
                 <md-card>
                     <img id="profilePicturePreview" class="md-card-image" alt="Washed Out" style="height:300px;" ng-src="{{profileCtrl.getProfilePicture()}}"/>
-                    <md-card-actions layout="row" layout-align="end center">
+                    <md-card-actions layout="row" layout-align="end end">
 
-                            <input style="visibility:hidden;" onchange="angular.element(this).scope().file_changed(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
+                            <input style="visibility:hidden;" onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
                             <label style="margin-top: -1%;" class="btn btn-info" for="profileImage">Choose an Image</label>
 
                     </md-card-actions>

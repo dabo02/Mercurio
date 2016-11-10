@@ -38,32 +38,15 @@
 
         self.createNewChat = function(contacts){
 
-            var participants = [];
-
-            contacts.forEach(function(contact){
-                if(contact.userId != '' || contact.userId !== undefined){
-                    participants.push(contact.userId);
-                }
-            });
-
-            participants.push(chatClientService.chatClient.chatClientOwner);
-
-            if(participants.length > 1){
-
-                if(participants.length > 2 && !self.groupChatCheckbox){
-                    self.groupChatCheckbox = true;
-                    return;
-                }
-
-                var chatInfo = {
-                    lastMessage: {},
-                    timeStamp: new Date().getTime(),
-                    title: self.title || '',
-                    participantCount: participants.length,
-                    settings: {mute:false}
-                };
-
-                chatClientService.chatClient.createChat(chatInfo, participants, chatClientService.chatIsReadyToSendObserver);
+            if(contacts.length > 2 && !self.groupChatCheckbox){
+                self.groupChatCheckbox = true;
+                return;
+            }
+            else if(self.groupChatCheckbox && !self.title){
+                return;
+            }
+            else{
+                chatClientService.chatClient.createChat(self.title, contacts, chatClientService.chatIsReadyToSendObserver);
                 self.closeCreateChatDialog();
             }
 

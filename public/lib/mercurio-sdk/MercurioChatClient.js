@@ -23,16 +23,18 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	  	self.chatList.forEach(function(chat, index){
 			if(chat.chatId === snapshot.key){
 			
-				chat.chatSettings = snapshot.val().settings;
+				chat.settings = snapshot.val().settings;
 				chat.timeStamp = snapshot.val().timeStamp;
 				chat.title = snapshot.val().title;
+				chat.participantCount = snapshot.val().participantCount;
 					
-				if(chat.lastMessage !== snapshot.val().lastMessage){
+				if(chat.lastMessage.timeStamp != snapshot.val().lastMessage.timeStamp){
 			
 					chat.lastMessage = snapshot.val().lastMessage;
 					self.chatList.sort(function(a, b){
 						return b.lastMessage.timeStamp - a.lastMessage.timeStamp
 					});
+					
 					// call observer to notify view that a new chat message has been received
 					self.messageReceivedObserver(chat, index);					
 				}
@@ -45,7 +47,6 @@ function MercurioChatClient(userId, messageReceivedObserver){
 			self.fetchChatListPage(pageNumber, limit);
 		}
 	}); 
-	
 	
 	self.fetchChatListPage(pageNumber, limit);
 }
@@ -66,7 +67,7 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 	
 	firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('lastMessage/timeStamp').limitToFirst(1 * pageNumber * limit).on("child_added", function(snapshot) {
 	
-		if(snapshot.exists()){
+		//if(snapshot.val().lastMessage != undefined){
 		
 			var chat;
 			// send observer callback registered in addChat to MercurioChat constructor
@@ -77,7 +78,7 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 					snapshot.val().lastMessage, snapshot.val().settings, snapshot.val().timeStamp, snapshot.val().title);
 			
 			self.chatList.unshift(chat);
-		}
+		//}
 
 	});
 	
@@ -100,26 +101,71 @@ Requests server to create a chat and add it to the database
 @params: chatInfo - JSON object with chat attributes (including participantCount)
 */
 
-MercurioChatClient.prototype.createChat = function(chatInfo, participants, observer){
+MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 
 	var self = this;
-	
-	// receive observer call back in addChat parameters and register the callback to this
-	self.participantsAreReadyObserver = observer;
-	
-	var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
-	var newChatKey = newChatRef.key;
-	
-	participants.forEach(function(participant){
-		firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function(){
-			var updates = {};
-			updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
-			firebase.database().ref().update(updates);
-		});
+	var participants = [];
+
+	contacts.forEach(function(contact){
+		if(contact.userId != '' || contact.userId !== undefined){
+			// contact is a mercurio user
+			participants.push(contact.userId);
+		}
 	});
+
+	participants.push(self.chatClientOwner);
 	
+	if(participants.length > 1){
+		// chat client owner is not the only participant in the list
+		
+		// receive observer call back in addChat parameters and register the callback to this
+		self.participantsAreReadyObserver = observer;
 	
-	// add participants using the new chat key
+		var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
+		var newChatKey = newChatRef.key;
+	
+		var chatInfo = {
+			lastMessage: {},
+			timeStamp: new Date().getTime(),
+			title: title || '',
+			participantCount: participants.length,
+			settings: {mute:false}
+		};
+		
+		var updates = {};
+				
+		participants.forEach(function(participant){
+			// add participant to chat-members
+			firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function(){
+				updates = {};
+				// add user-chat entry for participant
+				updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
+				firebase.database().ref().update(updates);
+			});
+		});
+	}
+	
+	/* buggy code for avoiding duplicate non-group chats
+	var existingParticipants = [];
+	if(participants.length === 2){
+		firebase.database().ref('user-chats/' + self.chatClientOwner).once('child_added', function(outerSnapshot){
+			if(outerSnapshot.val().participantCount == 2){
+				firebase.database().ref('chat-members/' + outerSnapshot.key).once('child_added', function(innerSnapshot){
+					existingParticipants.push(innerSnapshot.key);
+				}).then(function(){
+					var matchedParticipantCount = 0;
+					existingParticipants.forEach(function(existingParticipant){
+						if(participants.indexOf(existingParticipant) > -1){
+							matchedParticpantCount++;
+						}
+					});
+					if(matchedParticipantCount === 2){
+						return; //chat already exists
+					}
+				});
+			}
+		});
+	}*/
 }
 
 /*
@@ -146,81 +192,76 @@ MercurioChatClient.prototype.searchChats = function(searchString){
 }
 
 /*
-Establishes a connection for sending and receiving messages between server and client
-@method
-@params: account - AbstractAccount object containing info about the connecting user
-*/
-
-MercurioChatClient.prototype.connect = function(account){
-	throw new MissingImplementationError("Function connect(account) is missing it's implementation!");
-}
-
-/*
-Tears down a connection for sending and receiving messages between server and client
-@method
-@params: account - AbstractAccount object containing info about the connecting user
-*/
-
-MercurioChatClient.prototype.disconnect = function(account){
-	throw new MissingImplementationError("Function disconnect(account) is missing it's implementation!");
-}
-
-/*
 Sends a chat message to server
 @method
 @params: chatIndex - index of the recent chat to which the send message belongs to
 		 message - AbstractMessage object
 */
 
-MercurioChatClient.prototype.sendMessage = function(chatIndex, message){
+MercurioChatClient.prototype.sendMultimediaMessage = function(chatIndex, message){
 
 	var self = this;
+		
+	if(!message.multimediaUrl){
+		message.multimediaUrl = "";
+	}
 	
 	var newMessageKey = self.chatList[chatIndex].addMessage(message);
 	
-	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
+	if(message.multimediaUrl){
+		firebase.storage().ref().child('chats/' + self.chatList[chatIndex].chatId + '/images/' + newMessageKey).put(message.multimediaUrl)
+		.then(function(multimediaSnapshot) {
+			message.multimediaUrl = multimediaSnapshot.downloadURL;
+			message.type = "image";
+			var updates = {};
+			updates['/chat-messages/' + self.chatList[chatIndex].chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
+			firebase.database().ref().update(updates);
+			
+			self.sendTextMessage(chatIndex, newMessageKey, message);
+		});
+	}
+	else{
+		self.sendTextMessage(chatIndex, newMessageKey, message);
+	}
 	
-	var iOSTokens = [];
-	
-	self.chatList[chatIndex].participantList.forEach(function(participant){
+}
+
+MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey, message){
+
+	var self = this;
 		
+	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
+
+	var iOSTokens = [];
+
+	self.chatList[chatIndex].participantList.forEach(function(participant){
+
 		if(participant.userId !== self.chatClientOwner){
 			firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + participant.userId).set(0);
 		}
-		
+
 		firebase.database().ref().child('user-tokens/' + participant.userId).once('child_added', function(snapshot){
 			iOSTokens.push(snapshot.key);
 		});
-		
+
 		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
-		
+
 		var updates = {};
 		message.messageId = newMessageKey;
-		
+
 		updates['/user-chats/' + participant.userId + "/" + self.chatList[chatIndex].chatId + "/lastMessage"] = message;
 
 		firebase.database().ref().update(updates);
 	});
-	
+
 	iOSTokens.forEach(function(token){
-		// this may run before all tokens are fetched :( maybe i should delay a few senconds..?
+		// this may run before all tokens are fetched :( maybe i should delay a few seconds..?
 		// curl with token to send push notification
 	});
-	
+
 	var chat = self.chatList[chatIndex];
 	self.chatList.splice(chatIndex, 1);
 	self.chatList.unshift(chat);
-}
-
-MercurioChatClient.prototype.markAllMessagesAsRead = function(chatIndex){
-
-	var self = this;
-	
-	self.chatList[chatIndex].messageList.forEach(function(message){
-		if(message.read[self.chatClientOwner] == 0){
-			firebase.database().ref().child('message-info/' + message.messageId + "/read/" + self.chatClientOwner).set(new Date().getTime());
-		}
-	});
 }
 
 /*

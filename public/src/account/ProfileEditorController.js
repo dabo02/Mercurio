@@ -22,8 +22,9 @@
             if(accountService.isAccountAvailable()) {
                 accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
                     self.statusMessage, self.availability);
-                accountService.activeAccount.savePicture(self.picture);
-                console.log('Profile info is being saved');
+                if(self.picture){
+                    accountService.activeAccount.savePicture(self.picture);
+                }
             }
         }
 
@@ -79,7 +80,7 @@
             console.log('picture chosen');
         }
 
-        $scope.file_changed = function(element) {
+        $scope.profilePictureSelected = function(element) {
 
             self.pictureChosen = true;
 

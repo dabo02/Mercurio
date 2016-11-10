@@ -10,6 +10,17 @@
         var self = this;
         self.chatClient = chatClientService.chatClient;
 
+        self.topDirections = ['left', 'up'];
+        self.bottomDirections = ['down', 'right'];
+
+        self.isOpen = false;
+
+        self.availableModes = ['md-fling', 'md-scale'];
+        self.selectedMode = 'md-fling';
+
+        self.availableDirections = ['up', 'down', 'left', 'right'];
+        self.selectedDirection = 'up';
+
         self.isChatListAvailable = function() {
             return chatClientService.isChatListAvailable();
         }
@@ -22,7 +33,7 @@
         self.getTextPreviewClass = function(chat, index){
 
             if($state.params.chatIndex == index){
-                chatClientService.chatClient.markAllMessagesAsRead(index);
+                chatClientService.chatClient.chatList[index].markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
                 return;
             }
 

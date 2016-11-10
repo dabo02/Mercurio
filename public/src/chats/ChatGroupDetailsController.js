@@ -35,5 +35,12 @@
             console.log('saving group details');
         }
 
+        self.addParticipantsToGroup = function(contacts){
+
+            // if selected contacts array contains at least one contacts
+            if(contacts.length > 0){
+                chatClientService.chatClient.chatList[$stateParams.chatIndex].addParticipants(contacts);
+            }
+        }
     }]);
 })();

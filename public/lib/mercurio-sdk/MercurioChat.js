@@ -10,12 +10,12 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	var self = this;
 	self.chatId = chatId;
 	self.lastMessage = lastMessage;
-	self.chatSettings = settings;
+	self.settings = settings;
 	self.timeStamp = timeStamp;
 	self.title = title;
 	self.participantList =[]; //array of participants
 	self.messageList = [];
-	self.participantCount;
+	self.participantCount = participantCount;
 	
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 	
@@ -64,7 +64,7 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit){
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
 	
-	firebase.database().ref('chat-messages/' + self.chatId).limitToFirst(1 * pageNumber * limit).on("child_added", function(snapshot) {
+	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToLast(1 * pageNumber * limit).on("child_added", function(snapshot) {
 	
 		if(snapshot.exists()){
 			var message;
@@ -129,10 +129,66 @@ MercurioChat.prototype.addMessage = function(message){
 	return newMessageKey;
 }
 
-MercurioChat.prototype.addParticipant = function(participantId){
+MercurioChat.prototype.addParticipants = function(contacts){
 
-	firebase.database().ref().child('chat-members/' + this.chatId + "/" + participantId).set(true);
+	var self = this;
+	
+	var newParticipants = [];
 
+	contacts.forEach(function(contact){
+		if(contact.userId != '' || contact.userId !== undefined){
+			// contact is a mercurio user
+			
+			var isNewParticipant = true; // innocent until proven guilty
+			self.participantList.forEach(function(participant){
+				if(participant.userId === contact.userId){
+					// contact is already a group member (guilty)
+					isNewParticipant = false;
+				}
+			});
+			
+			if(isNewParticipant){
+				// contact is not an existing group member
+				newParticipants.push(contact.userId);
+			}
+		}
+	});
+	
+	if(newParticipants.length > 0){
+		// there is at least one mercurio user to add as new chat member
+		
+		
+		var newParticipantCount = self.participantCount + newParticipants.length;
+		var updates = {};
+		
+		// update participant count for existing chat members
+		self.participantList.forEach(function(participant){
+			updates = {};
+			updates['/user-chats/' + participant.userId + "/" + self.chatId + '/participantCount'] = newParticipantCount;
+			firebase.database().ref().update(updates);
+		});
+	
+		var chatInfo = {
+			lastMessage: {},
+			timeStamp: new Date().getTime(),
+			title: self.title || '',
+			participantCount: newParticipantCount,
+			settings: {mute:false}
+		};
+		
+		
+		newParticipants.forEach(function(participant){
+			// add participant to chat-members
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant).set(true).then(function(){
+				updates = {};
+				// add user-chat entry for participant
+				updates['/user-chats/' + participant + "/" + self.chatId] = chatInfo;
+				firebase.database().ref().update(updates);
+			});
+		});
+	
+		
+	}
 }
 
 MercurioChat.prototype.deleteMessages = function(indices){
@@ -147,3 +203,20 @@ MercurioChat.prototype.getParticipants = function(){
 	return this.participantList;
 }
 
+MercurioChat.prototype.toggleNotifications = function(userId, value){
+	var self = this;
+	var updates = {};
+	updates['/user-chats/' + userId + "/" + self.chatId + '/settings/mute'] = value;
+	firebase.database().ref().update(updates);
+}
+
+MercurioChat.prototype.markAllMessagesAsRead = function(userId){
+
+	var self = this;
+	
+	self.messageList.forEach(function(message){
+		if(message.read[userId] == 0){
+			firebase.database().ref().child('message-info/' + message.messageId + "/read/" + userId).set(new Date().getTime());
+		}
+	});
+}

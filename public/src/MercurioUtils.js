@@ -57,18 +57,40 @@
     .filter('chatListAvatarFilter', function () {
         return function (chat, chatClientOwner) {
 
-            var avatarUrl = 'images/contacts.png';
+            var avatarUrl = '';
 
             if(chat.participantList.length > 2){
 
-                avatarUrl = '';
+                avatarUrl = 'images/default_group_avatar.png';
             }
             else{
                 chat.participantList.forEach(function (participant) {
                     if (chatClientOwner !== participant.userId) {
-                        avatarUrl = participant.picture;
+                        if(participant.picture === ""){
+                            avatarUrl = 'images/default_contact_avatar.png';
+                        }
+                        else{
+                            avatarUrl = participant.picture;
+                        }
                     }
                 });
+            }
+
+            return avatarUrl;
+
+        };
+    })
+
+    .filter('contactListAvatarFilter', function () {
+        return function (picture) {
+
+            var avatarUrl = '';
+
+            if(picture === ""){
+                avatarUrl = 'images/default_contact_avatar.png';
+            }
+            else{
+                avatarUrl = picture;
             }
 
             return avatarUrl;
@@ -243,20 +265,5 @@
                 });
             }
         }
-    })
-
-    .directive('hardChange', function(){
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            link: function(scope, elem, attr, ctrl){
-                scope.$watch(function(){
-                    return ctrl;
-                }, function(newVal, oldVal){
-                    if(newVal === oldVal) return;
-                    scope.$eval(attr.hardChange)
-                }, true);
-            }
-        };
     });
 })();

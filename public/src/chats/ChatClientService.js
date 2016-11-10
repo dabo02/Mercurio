@@ -20,13 +20,17 @@
 
         self.onMessageReceived = function(receivedChat, index){
 
-            $location.hash('bottom');
+            $location.hash('bottom'); //identify that this bottom means the message list bottom of current chat - use index
             $anchorScroll();
 
             if(receivedChat.lastMessage.from !== self.chatClient.chatClientOwner){
-                var sound = new Audio("audio/pickup_coin.wav");
-                sound.play();
-                sound.currentTime=0;
+
+                if(!receivedChat.settings.mute){
+                    var sound = new Audio("audio/pickup_coin.wav");
+                    sound.play();
+                    sound.currentTime=0;
+                }
+
 
                 var receivedChatIndex = index;
 
