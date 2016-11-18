@@ -60,15 +60,7 @@
         );
 
         //  ???
-        self.chatClient.chatList.forEach(function(chat){
-            $scope.$watch(function () {
-                return chat.lastMessage;
-            }, function (newVal, oldVal) {
-                if ( newVal !== oldVal ) {
-                    chat.lastMessage = newVal;
-                }
-            });
-        });
+
 
 
     }]);

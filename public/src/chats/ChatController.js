@@ -103,8 +103,17 @@
             });
         };
 
-        chatClientService.chatClient.chatList[$stateParams.chatIndex]
-            .markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+        self.multimediaClicked = function(multimediaURL){
+            self.showMultimediaSelectionPreviewDialog();
+            $('#multimediaPreview').attr('src', multimediaURL);
+            $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
+        }
+
+        if(chatClientService.chatClient.chatList.length > 0){
+            chatClientService.chatClient.chatList[$stateParams.chatIndex]
+                .markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+        }
+
         $location.hash('bottom');
         $anchorScroll();
 

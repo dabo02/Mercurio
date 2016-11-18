@@ -59,7 +59,7 @@
 
             var avatarUrl = '';
 
-            if(chat.participantList.length > 2){
+            if(chat.title.length > 0){
 
                 avatarUrl = 'images/default_group_avatar.png';
             }

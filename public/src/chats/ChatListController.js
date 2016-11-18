@@ -57,5 +57,36 @@
                 //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             });
         }
+
+        $scope.showDeleteConfirm = function(event, chatIndex) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to delete this chat from your chat list?')
+                .ariaLabel('delete confirm')
+                .targetEvent(event)
+                .ok('Delete')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function() {
+                //$scope.status = 'You decided to get rid of your debt.';
+                chatClientService.chatClient.deleteChats([chatIndex]);
+                $state.go('dialer');
+            }, function() {
+                //$scope.status = 'You decided to keep your debt.';
+            });
+        };
+
+        chatClientService.chatClient.chatList.forEach(function(chat, index){
+            $scope.chatList = [];
+            $scope.chatList[index] = chat;
+            $scope.$watch(
+                'chatList[' + index + ']',
+                function (newVal, oldVal) {
+                    if ( newVal !== oldVal ) {
+                        chat.lastMessage = newVal.lastMessage;
+                    }
+                }, true
+            );
+        });
     }]);
 })();

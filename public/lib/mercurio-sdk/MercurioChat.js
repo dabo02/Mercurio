@@ -25,7 +25,8 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 				self.participantList.push(participant);
 				if(self.participantList.length === participantCount){
 					if(participantsAreReadyObserver){
-						participantsAreReadyObserver(self);
+						//participantsAreReadyObserver(self);
+						//participantsAreReadyObserver = undefined;
 					}
 				}
 			});	
@@ -218,5 +219,17 @@ MercurioChat.prototype.markAllMessagesAsRead = function(userId){
 		if(message.read[userId] == 0){
 			firebase.database().ref().child('message-info/' + message.messageId + "/read/" + userId).set(new Date().getTime());
 		}
+	});
+}
+
+MercurioChat.prototype.saveChatTitle = function(newChatTitle){
+
+	var self = this;
+	
+	// update chat title for existing chat members
+	self.participantList.forEach(function(participant){
+		updates = {};
+		updates['/user-chats/' + participant.userId + "/" + self.chatId + '/title'] = newChatTitle;
+		firebase.database().ref().update(updates);
 	});
 }

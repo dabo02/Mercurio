@@ -23,23 +23,37 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	  	self.chatList.forEach(function(chat, index){
 			if(chat.chatId === snapshot.key){
 			
+				chatFound = true;
+				
 				chat.settings = snapshot.val().settings;
 				chat.timeStamp = snapshot.val().timeStamp;
 				chat.title = snapshot.val().title;
 				chat.participantCount = snapshot.val().participantCount;
 					
-				if(chat.lastMessage.timeStamp != snapshot.val().lastMessage.timeStamp){
-			
-					chat.lastMessage = snapshot.val().lastMessage;
-					self.chatList.sort(function(a, b){
-						return b.lastMessage.timeStamp - a.lastMessage.timeStamp
-					});
-					
-					// call observer to notify view that a new chat message has been received
-					self.messageReceivedObserver(chat, index);					
+				if(!snapshot.val().lastMessage){
+					self.chatList.splice(index, 1);
 				}
-				chatFound = true;
+				else{
 				
+					if(!chat.lastMessage || chat.lastMessage.timeStamp != snapshot.val().lastMessage.timeStamp){
+			
+						chat.lastMessage = snapshot.val().lastMessage;
+						// self.chatList.sort(function(a, b){
+	// 						if(!b.lastMessage || !a.lastMessage){
+	// 							return 0;
+	// 						}
+	// 						else{
+	// 							return b.lastMessage.timeStamp - a.lastMessage.timeStamp;
+	// 						}
+	// 					});
+					
+						self.chatList.splice(index, 1);
+						self.chatList.unshift(chat);
+					
+						// call observer to notify view that a new chat message has been received
+						self.messageReceivedObserver(chat, index);					
+					}
+				}
 			}
 		});
 		
@@ -119,7 +133,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 		// chat client owner is not the only participant in the list
 		
 		// receive observer call back in addChat parameters and register the callback to this
-		self.participantsAreReadyObserver = observer;
+		//self.participantsAreReadyObserver = observer;
 	
 		var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
 		var newChatKey = newChatRef.key;
@@ -144,6 +158,8 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 			});
 		});
 	}
+	
+	observer();
 	
 	/* buggy code for avoiding duplicate non-group chats
 	var existingParticipants = [];
@@ -177,7 +193,8 @@ Requests server to delete a list of chats from the database
 MercurioChatClient.prototype.deleteChats = function(indices){
 	var self = this;
 	indices.forEach(function(index){
-		firebase.database().ref('user-chats/' + self.chatClientOwner + '/' + self.chatList[index].chatId).set(null);
+		firebase.database().ref('user-chats/' + self.chatClientOwner + '/' + self.chatList[index].chatId + '/lastMessage').set(null);
+		firebase.database().ref('user-chats/' + self.chatClientOwner + '/' + self.chatList[index].chatId + '/timeStamp').set(0);
 	});
 }
 
@@ -259,9 +276,9 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 		// curl with token to send push notification
 	});
 
-	var chat = self.chatList[chatIndex];
-	self.chatList.splice(chatIndex, 1);
-	self.chatList.unshift(chat);
+	// var chat = self.chatList[chatIndex];
+// 	self.chatList.splice(chatIndex, 1);
+// 	self.chatList.unshift(chat);
 }
 
 /*
