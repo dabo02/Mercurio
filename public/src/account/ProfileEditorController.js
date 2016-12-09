@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ProfileEditorController', ['$scope', 'accountService', function($scope, accountService) {
+    angular.module('mercurio').controller('ProfileEditorController', ['$scope', 'accountService', '$mdDialog', function($scope, accountService, $mdDialog) {
 
         var self = this;
         self.firstName = '',
@@ -17,6 +17,22 @@
         self.pictureChosen = true;
 
         self.activeAccount = accountService.activeAccount;
+
+        self.showProfileEditorDialog = function(event) {
+
+            $mdDialog.show({
+                templateUrl: 'profileEditorForm',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                escapeToClose: true,
+                clickOutsideToClose:true
+                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            });
+        }
+
+        self.closeProfileEditorDialog = function(){
+            $mdDialog.hide()
+        };
 
         self.saveProfileInfo = function(){
             if(accountService.isAccountAvailable()) {
@@ -36,7 +52,24 @@
 
         self.getAvailability = function(){
             if(accountService.isAccountAvailable()) {
-                return accountService.activeAccount.availability;
+                switch(accountService.activeAccount.availability){
+
+                    case "0":
+                        self.availability = 'Offline';
+                        return 'Offline';
+
+                    case "1":
+                        self.availability = 'Online';
+                        return 'Online'
+
+                    case "2":
+                        self.availability = 'Away';
+                        return 'Away';
+
+                    case "3":
+                        self.availability = 'Busy';
+                        return 'Busy';
+                }
             }
         }
 

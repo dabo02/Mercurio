@@ -58,7 +58,7 @@
             });
         }
 
-        $scope.showDeleteConfirm = function(event, chatIndex) {
+        self.showDeleteConfirm = function(event, chatIndex) {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to delete this chat from your chat list?')

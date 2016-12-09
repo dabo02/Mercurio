@@ -14,8 +14,9 @@ function AbstractChat(){
 	//check if parameter types are correct
 	
 	this.title;
-	this.participants; //array of participants
+	this.participants =[]; //array of participants
 	this.messageList = [];
+	this.chatSettings = [];
 }
 
 /*
@@ -23,11 +24,11 @@ function AbstractChat(){
 Requests server to add a message to the chat list in database and updates its local copy
 @method
 @abstract
-@params: message - message object to add to
+@params: messageInfo - message object to add to
 
 */
 
-AbstractChat.prototype.addMessage = function(message){
+AbstractChat.prototype.addMessage = function(messageInfo){
 	throw new AbstractFunctionError("Cannot call abstract function addMessage!");
 }
 

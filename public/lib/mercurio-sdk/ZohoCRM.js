@@ -7,7 +7,6 @@
 function ZohoCRM(crmId, insertCalls, name, token, type, validated){
 
     AbstractCRM.apply(this, arguments);
-	this.validateToken(token);
 }
 
 ZohoCRM.prototype = Object.create(AbstractCRM.prototype);
@@ -33,14 +32,14 @@ ZohoCRM.prototype.crmLogin = function(username, password, appName){
  @params: callInfo - JSON object with call attributes
 
  */
-ZohoCRM.prototype.validateToken = function(token) {
+ZohoCRM.prototype.validateToken = function(crmOwnerId) {
 
 	var self = this;
   var route = "/validateToken";
   var url = "crm.zoho.com";
   var succ = [];
   var data = {
-    token: token,
+    token: self.token,
     url: url
   };
   $.ajax({
@@ -51,12 +50,17 @@ ZohoCRM.prototype.validateToken = function(token) {
     dataType: "json",
     success: function (response) {
       succ.push(response);
+      var validated = false;
       if (succ[0].response.error) {
-        self.validated = false;
-        // save validation state to firebase
+        validated = false;
+    
       } else {
-        self.validated = true;
+        validated = true;
       }
+      
+      	var updates = {};
+		updates['user-crms/' + crmOwnerId + "/" + self.crmId + "/validated"] = validated;
+		firebase.database().ref().update(updates);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(textStatus, errorThrown);

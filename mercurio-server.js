@@ -452,7 +452,7 @@ app.post('/validateToken', function (req, res) {
   request.end();
   body.on('update', function () {
     cleanData = body.data.toString();
-    res.send(JSON.parse(cleanData));
+    res.send(cleanData);
   });
 
 });

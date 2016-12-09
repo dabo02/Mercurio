@@ -17,8 +17,6 @@ function AbstractChatClient(){
 	
 	this.notificationManager;
 	this.chatList = [];
-	this.chatSettings = [];
-
 }
 
 /*

@@ -14,11 +14,17 @@
                         <md-icon class="fa fa-comment-o"></md-icon>
                         <input id="statusMessage" type="text" ng-model="profileCtrl.statusMessage" placeholder="{{profileCtrl.getStatusMessage()}}">
                     </md-input-container>
-                    <md-input-container class="md-icon-float md-block">
-                        <label>Availability</label>
+                    <!--<md-input-container class="md-icon-float md-block">
+                        <label>Availability</label>-->
                         <md-icon class="fa fa-circle-o"></md-icon>
-                        <input id="availablity" type="text" ng-model="profileCtrl.availability" placeholder="{{profileCtrl.getAvailability()}}">
-                    </md-input-container>
+                        <md-select id="availablity" ng-model="profileCtrl.selectedAvailability"  class="md-no-underline">
+                            <md-option value="Offline">Offline</md-option>
+                            <md-option value="Online">Online</md-option>
+                            <md-option value="Away">Away</md-option>
+                            <md-option value="Busy">Busy</md-option>
+                        </md-select>
+                        <!--<input id="availablity" type="text" ng-model="profileCtrl.availability" placeholder="{{profileCtrl.getAvailability()}}">-->
+                    <!--</md-input-container>-->
                 </div>
 
                 <div layout="row">

@@ -2,7 +2,7 @@
 @constructor
 */
 
-function Message(messageId, from, multimediaUrl, textContent, timeStamp){
+function Message(messageId, from, multimediaUrl, textContent, timeStamp, read){
 	
 	var self = this;
 	self.messageId = messageId;
@@ -10,16 +10,7 @@ function Message(messageId, from, multimediaUrl, textContent, timeStamp){
 	self.multimediaUrl = multimediaUrl;
 	self.textContent = textContent;
 	self.timeStamp = timeStamp;
-	self.hasMessage = {};
-	self.read = {}
-	
-	firebase.database().ref('message-info/' + messageId).on("value", function(snapshot) {
-	
-		if(snapshot.exists()){
-		
-			self.hasMessage = snapshot.val()['has-message'];
-			self.read = snapshot.val().read;
-		}
-
-	});
+	//self.hasMessage = {};
+	//self.read = {}
+	self.read = read;
 }

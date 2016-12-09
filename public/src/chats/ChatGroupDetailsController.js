@@ -14,16 +14,20 @@
         self.saveGroupDetailsButtonIsAvailable = false;
         self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
         self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
+        self.isChatClientOwnerGroupMember = false;
 
         self.showChatGroupDetailsDialog = function(event) {
-            $mdDialog.show({
-                templateUrl: 'chatGroupDetails',
-                parent: angular.element(document.body),
-                targetEvent: event,
-                escapeToClose: true,
-                clickOutsideToClose:true
-                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            });
+
+            if(self.isChatClientOwnerGroupMember){
+                $mdDialog.show({
+                    templateUrl: 'chatGroupDetails',
+                    parent: angular.element(document.body),
+                    targetEvent: event,
+                    escapeToClose: true,
+                    clickOutsideToClose:true
+                    //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                });
+            }
         }
 
         self.closeChatGroupDetailsDialog = function(){
@@ -31,7 +35,9 @@
         };
 
         self.exitGroup = function(){
-            console.log('exiting group');
+            chatClientService.chatClient.chatList[$stateParams.chatIndex]
+                .exitChatGroup(chatClientService.chatClient.chatClientOwner);
+            self.closeChatGroupDetailsDialog();
         };
 
         self.addParticipantsToGroup = function(contacts){
@@ -62,5 +68,11 @@
 
             self.closeChatGroupDetailsDialog();
         }
+
+        chatClientService.chatClient.chatList[$stateParams.chatIndex].participantList.forEach(function(participant){
+            if(participant.userId == chatClientService.chatClient.chatClientOwner){
+                self.isChatClientOwnerGroupMember = true;
+            }
+        });
     }]);
 })();

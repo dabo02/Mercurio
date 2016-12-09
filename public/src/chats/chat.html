@@ -235,16 +235,19 @@
 
                         </div>
                         <a id="bottom"></a>
-                        <div>
-                            <form layout="row" ng-submit="chatCtrl.sendMessage()">
+                        <div ng-controller="ChatGroupDetailsController as chatGroupCtrl">
+                            <form ng-if="chatGroupCtrl.isChatClientOwnerGroupMember" layout="row" ng-submit="chatCtrl.sendMessage()">
                                 <!--<p id="smile" style="margin-top: 3%; font-size: 22px;" class="fa fa-smile-o text-center" flex="10"></p>-->
-                                <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block">
+                                <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" class="md-icon-float md-block flex-85 flex-offset-5">
                                     <label>Type Message</label>
                                     <!--<input ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.changeMicToSend()" type="text">-->
                                     <input ng-model="chatCtrl.textContentToSend" type="text">
                                 </md-input-container>
                                 <p ng-click="chatCtrl.sendMessage()"  style="margin-top: 3%; color:#1565c0; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                             </form>
+                            <h4 ng-if="!chatGroupCtrl.isChatClientOwnerGroupMember" layout="row" layout-align="center center">
+                                You have left this group
+                            </h4>
                         </div>
                     </div>
                 </md-content>

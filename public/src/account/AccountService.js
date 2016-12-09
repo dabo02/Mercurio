@@ -31,6 +31,10 @@
             }
         }
 
+        self.resetPassword = function(email, emailSentObserver){
+            self.activeAccount.resetPassword(email, emailSentObserver);
+        }
+
         authenticationService.setAccountObserver(function(account){
             self.activeAccount = account;
 

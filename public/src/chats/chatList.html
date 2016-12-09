@@ -101,7 +101,7 @@
                     <p ng-style="chatListCtrl.getTextPreviewClass(chat, $index)">
                         {{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}}
                     </p>
-                    <md-icon aria-label="Delete Chat" class="md-secondary md-raised fa fa-trash-o" ng-click="showDeleteConfirm($event, $index)"></md-icon>
+                    <md-icon aria-label="Delete Chat" class="md-secondary md-raised fa fa-trash-o" ng-click="chatListCtrl.showDeleteConfirm($event, $index)"></md-icon>
                 </div>
             </div>
             <md-divider ></md-divider>

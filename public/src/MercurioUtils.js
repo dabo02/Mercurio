@@ -239,17 +239,43 @@
         }
     })
 
-        .filter('createChatTextFilter', function(){
-            return function(groupChatCheckbox){
+    .filter('createChatTextFilter', function(){
+        return function(groupChatCheckbox){
 
-                if(groupChatCheckbox){
-                    return 'Group';
-                }
-                else{
-                    return 'Chat';
-                }
+            if(groupChatCheckbox){
+                return 'Group';
             }
-        })
+            else{
+                return 'Chat';
+            }
+        }
+    })
+
+    .filter('chatClientOwnerGroupMemberFilter', function(){
+        return function(chat, chatClientOwner){
+
+            var isChatClientOwnerGroupMember = false;
+
+            chat.participantList.forEach(function(participant){
+                if(participant.userId == chatClientOwner){
+                    isChatClientOwnerGroupMember = true;
+                }
+            });
+
+            return isChatClientOwnerGroupMember;
+        }
+    })
+
+    .filter('insertCallsAutomaticallyCheckboxFilter', function(){
+        return function(crmList){
+            if(crmList.length > 0){
+                return crmList[0].insertCallsAutomatically;
+            }
+            else{
+                return false;
+            }
+        }
+    })
 
     .directive('scrollToBottom', function () {
         return {

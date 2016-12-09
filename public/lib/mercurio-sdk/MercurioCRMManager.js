@@ -16,12 +16,29 @@ function MercurioCRMManager(userId){
 	
 		if(snapshot.exists()){
 		
-			var crm = new ZohoCRM(snapshot.key, snapshot.val().insertCalls,
+			var crm = new ZohoCRM(snapshot.key, snapshot.val().insertCallsAutomatically,
 					snapshot.val().name, snapshot.val().token, snapshot.val().type,
 					snapshot.val().validated);	
-			
+			crm.validateToken(self.crmManagerOwner);
 			self.crmList.push(crm);
 		}
+
+	});
+	
+	firebase.database().ref('user-crms/' + self.crmManagerOwner).on("child_changed", function(snapshot) {
+	
+		if(snapshot.exists()){
+			self.crmList.forEach(function(crm, index){
+			if(crm.crmId === snapshot.key){
+				var crm = self.crmList[index];
+				crm.insertCallsAutomatically = snapshot.val().insertCallsAutomtically;
+				crm.name = snapshot.val().name;
+				crm.token = snapshot.val().token;
+				crm.type = snapshot.val().type;
+				crm.validated = snapshot.val().validated;
+			}
+		});
+	}
 
 	});
 }
@@ -49,13 +66,8 @@ MercurioCRMManager.prototype.addCRM = function(crmInfo){
 	}
 	else{
 		firebase.database().ref().child('user-crms/' + self.crmManagerOwner + '/' + self.crmList[0].crmId).set(crmInfo);
+		self.crmList[0].validateToken(self.crmManagerOwner);
 	}
-	
-	// var updates = {};
-// 	updates['/user-crms/' + userId + "/" + token] = chatInfo;
-// 
-// 	firebase.database().ref().update(updates);
-	
 }
 
 /*
@@ -67,6 +79,6 @@ Requests server to delete a list of CRMs from the database
 MercurioCRMManager.prototype.deleteCRMs = function(crmIndices){
 	var self = this;
 	indices.forEach(function(index){
-		firebase.database().ref('user-crms/' + self.crmManagerOwner + '/' + self.crmList[index].token).set(null);
+		firebase.database().ref('user-crms/' + self.crmManagerOwner + '/' + self.crmList[index].crmId).set(null);
 	});
 }

@@ -5,7 +5,7 @@
 */
 
 function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
-	lastMessage, settings, timeStamp, title){
+	lastMessage, settings, timeStamp, title, chatClientOwner){
 	
 	var self = this;
 	self.chatId = chatId;
@@ -19,43 +19,56 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 	
-		if(snapshot.exists()){
+		if(snapshot.exists() && snapshot.val()){
+			// if participant has true value instantiate participnat and add to list
+			var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
 			
-			var participant = new MercurioChatParticipant(snapshot.key, function(participant){
-				self.participantList.push(participant);
-				if(self.participantList.length === participantCount){
-					if(participantsAreReadyObserver){
-						//participantsAreReadyObserver(self);
-						//participantsAreReadyObserver = undefined;
-					}
-				}
+				self.participantList.push(newParticipant);
+				
+				// if(self.participantList.length === participantCount){
+// 					if(participantsAreReadyObserver){
+// 						//participantsAreReadyObserver(self);
+// 						//participantsAreReadyObserver = undefined;
+// 					}
+// 				}
 			});	
 		}
 	});
 	
-	firebase.database().ref('chat-members/' + self.chatId).on('child_removed', function(snapshot) {
+	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
 	
-		//compare message ids from local message list to snapshot keys in order to find local 
-		//reference to message; remove message from local contacts list
-
-		self.participants.forEach(function(participant, index){
-			if(participant.participantId === snapshot.key){
-				self.participantList.splice(index, 1);
+		if(snapshot.exists()){
+			
+			if(snapshot.val()){
+				// if value changed to true instantiate new participant and add to list
+				var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
+				
+					self.participantList.push(newParticipant);
+				
+				});
 			}
-		});
+			else{
+				// if value changed to false remove participant from list
+				self.participantList.forEach(function(participant, index){
+					if(participant.participantId === snapshot.key){
+						self.participantList.splice(index, 1);
+					}
+				});
+			}	
+		}
 	});
 	
 	var pageNumber = 1;
 	var limit = 50;
 
-	self.fetchMessageListPage(pageNumber, limit)
+	self.fetchMessageListPage(pageNumber, limit, chatClientOwner)
 }
 
 MercurioChat.prototype.getMessageList = function(){
 	return this.messageList;
 }
 
-MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit){
+MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatClientOwner){
 
 	var self = this;
 	
@@ -65,12 +78,24 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit){
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
 	
-	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToLast(1 * pageNumber * limit).on("child_added", function(snapshot) {
+	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToLast(1 * pageNumber * limit).on("child_added", function(messageSnapshot) {
 	
-		if(snapshot.exists()){
-			var message;
-			message = new Message(snapshot.key, snapshot.val().from, snapshot.val().multimediaUrl, snapshot.val().textContent, snapshot.val().timeStamp);
-			self.messageList.push(message);
+		if(messageSnapshot.exists()){
+		
+			firebase.database().ref('message-info/' + messageSnapshot.key).on("value", function(messageInfoSnapshot) {
+	
+				if(messageInfoSnapshot.exists()){
+		
+					if(messageInfoSnapshot.val()['has-message'][chatClientOwner]){
+						var message;
+						message = new Message(messageSnapshot.key, messageSnapshot.val().from, messageSnapshot.val().multimediaUrl, messageSnapshot.val().textContent, messageSnapshot.val().timeStamp, messageInfoSnapshot.val().read);
+						self.messageList.push(message);
+					}
+				}
+
+			});
+	
+			
 		}
 
 	});
@@ -230,6 +255,22 @@ MercurioChat.prototype.saveChatTitle = function(newChatTitle){
 	self.participantList.forEach(function(participant){
 		updates = {};
 		updates['/user-chats/' + participant.userId + "/" + self.chatId + '/title'] = newChatTitle;
+		firebase.database().ref().update(updates);
+	});
+}
+
+MercurioChat.prototype.exitChatGroup = function(userId){
+
+	var self = this;
+	
+	self.participantList.forEach(function(participant){
+		updates = {};
+		updates['/user-chats/' + participant.userId + "/" + self.chatId + '/participantCount'] = self.participantCount - 1;
+		
+		if(participant.userId === userId){
+			updates['/chat-members/' + self.chatId + "/" + participant.userId] = false;
+		}
+		
 		firebase.database().ref().update(updates);
 	});
 }

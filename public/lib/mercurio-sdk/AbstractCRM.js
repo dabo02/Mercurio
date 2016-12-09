@@ -4,10 +4,10 @@ uses ConstructorError, AbstractFunctionError
 
 */
 
-function AbstractCRM(crmId, insertCalls, name, token, type, validated){
+function AbstractCRM(crmId, insertCallsAutomatically, name, token, type, validated){
 
 	this.crmId = crmId;
-	this.insertCalls = insertCalls;
+	this.insertCallsAutomatically = insertCallsAutomatically;
 	this.name = name;
 	this.token = token;
 	this.type = type;

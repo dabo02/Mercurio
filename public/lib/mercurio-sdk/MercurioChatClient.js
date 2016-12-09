@@ -89,7 +89,7 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 				//chat = new MercurioChat(snapshot.key, snapshot.val().participantCount);
 			//}
 			chat = new MercurioChat(snapshot.key, snapshot.val().participantCount, self.participantsAreReadyObserver,
-					snapshot.val().lastMessage, snapshot.val().settings, snapshot.val().timeStamp, snapshot.val().title);
+					snapshot.val().lastMessage, snapshot.val().settings, snapshot.val().timeStamp, snapshot.val().title, self.chatClientOwner);
 			
 			self.chatList.unshift(chat);
 		//}

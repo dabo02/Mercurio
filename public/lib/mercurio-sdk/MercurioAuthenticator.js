@@ -50,15 +50,15 @@ MercurioAuthenticator.prototype.logout = function(){
 /*
 Requests firebase to send a password reset
 @method
-@params: AbstractUser account- account for which the password is to be recovered
+@params: String email - email of account for which the password is to be reset
 */
 
-MercurioAuthenticator.prototype.recoverPassword = function(account){
+MercurioAuthenticator.prototype.resetPassword = function(email, emailObserver){
 
-	firebase.auth().sendPasswordResetEmail(account.email).then(function() {
-	  // Email sent.
+	firebase.auth().sendPasswordResetEmail(email).then(function() {
+	  emailObserver();
 	}, function(error) {
-	  // An error happened.
+	  emailObserver(error);
 	});
 }
 

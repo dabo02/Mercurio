@@ -50,18 +50,26 @@ MercurioPhone.prototype.fetchRecentCallListPage = function(pageNumber, limit){
 
 	});
 	
-// 	firebase.database().ref('user-calls/' + self.chatClientOwner).orderByChild('lastMessage/timeStamp').limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
-// 	
-// 		//compare chat ids from local chat list to snapshot keys in order to find local 
-// 		//reference to chat; remove chat from local contacts list
-// 
-// 		self.chatList.forEach(function(chat, index){
-// 			if(chat.chatId === snapshot.key){
-// 				self.chatList.splice(index, 1);
-// 			}
-// 		});
-// 	});
+	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
+	
+		//compare chat ids from local chat list to snapshot keys in order to find local 
+		//reference to chat; remove chat from local contacts list
+
+		self.recentCallList.forEach(function(call, index){
+			if(call.callId === snapshot.key){
+				self.recentCallList.splice(index, 1);
+			}
+		});
+	});
 }
+
+MercurioPhone.prototype.deleteCalls = function(indices){
+	var self = this;
+	indices.forEach(function(index){
+		firebase.database().ref('user-calls/' + self.phoneOwner + '/' + self.recentCallList[index].callId).set(null);
+	});	
+}
+
 MercurioPhone.prototype.registerUA = function(){
 
   this.ua.start();
