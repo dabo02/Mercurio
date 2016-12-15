@@ -95,13 +95,31 @@
 
             var info = {};
 
+            var callFromTo;
+
             self.selectedRecords.forEach(function(record){
+
+                if(record.leadId){
+                    callFromTo = 'Lead';
+                }
+                else if(record.contactId){
+                    callFromTo = 'Contact';
+                }
+                else if(record.accountId){
+                    callFromTo = 'Account';
+                }
+                else{
+                    callFromTo = '';
+                }
+
                 info = {
                     smOwnerId: record.smOwnerId.toString(),
                     subject: self.notes,
                     callType: crmService.selectedCallDirection,
                     callPurpose: 'Demo',
-                    //leadId: lead.leadId.toString(),
+                    callFromTo: callFromTo,
+                    id: (record.leadId || record.contactId || record.accountId).toString(),
+                    module: callFromTo + 's',
                     startTime: '2011-06-10 22:10:00',
                     duration: '60:00',
                     description: "This is just a test",
@@ -109,9 +127,11 @@
                     result: 'Successful'
                 };
 
-                //crmService.crmManager.crmList[0].addCall(info, function(call){
-                //    console.log(call);
-                //});
+
+                console.log("\n\nCall to insert info:\n\n" + info);
+                crmService.crmManager.crmList[0].addCall(info, function(call){
+                    console.log(call);
+                });
             });
 
             //$mdDialog.hide();

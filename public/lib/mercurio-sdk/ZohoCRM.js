@@ -72,16 +72,27 @@ ZohoCRM.prototype.validateToken = function(crmOwnerId) {
 }
 
 
+
 ZohoCRM.prototype.addCall = function(callInfo, cb) {
 
   var route = "/insertCalls";
   var url = "crm.zoho.com";
   var succ = [];
   var data = {
-    token: this.token,
-    callInfo: callInfo,
-    url: url
-  };
+    token: this.crmToken,
+    smOwnerId: callInfo.smOwnerId,
+    subject: callInfo.subject,
+    callType: callInfo.callType,
+    callPurpose: callInfo.callPurpose,
+    callFromTo: callInfo.callFromTo,
+    id: callInfo.id,
+    module: callInfo.module,
+    startTime: callInfo.startTime,
+    duration: callInfo.duration,
+    description: callInfo.description,
+    billable: callInfo.billable,
+    result: callInfo.result,
+     };
   $.ajax({
     url: route,
     type: "post",

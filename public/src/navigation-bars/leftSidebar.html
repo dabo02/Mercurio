@@ -72,9 +72,8 @@
                         <md-icon style="font-size:22px;" class="fa fa-camera">
                             <!--<input ng-model="chatCtrl.multimedia" ng-change="chatCtrl.showImagePreview()" class="fa fa-paperclip" style="opacity:0;" type="file" accept="image/*"/>-->
                             <!--<input style="opacity:0;" onchange="angular.element(this).scope().multimediaSelected(this)" type="file" ng-model="multimedia" name="multimedia" id="multimedia" accept="image/*"/>-->
-
+                            <input style="opacity:0;" onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
                         </md-icon>
-                        <input style="visibility:hidden;" onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
                     </md-button>
 
                     <!--<md-card-actions layout="row" layout-align="end end">-->
@@ -139,7 +138,7 @@
 
                 <div layout="row">
                     <md-input-container class=" md-icon-float md-block">
-                        <md-checkbox md-no-ink ng-model="crmCtrl.newInsertCallsAutomaticallySetting"
+                        <md-checkbox md-no-ink ng-model="crmCtrl.newInsertCallsAutomaticallySetting" ng-value="crmCtrl.crmManager.crmList[0].insertCallsAutomatically"
                                      aria-label="Insert Calls" ng-change="crmCtrl.insertCallsCheckboxChanged()">
                             Insert all calls into CRM database automatically
                         </md-checkbox>

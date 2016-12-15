@@ -31,7 +31,7 @@ function MercurioCRMManager(userId){
 			self.crmList.forEach(function(crm, index){
 			if(crm.crmId === snapshot.key){
 				var crm = self.crmList[index];
-				crm.insertCallsAutomatically = snapshot.val().insertCallsAutomtically;
+				crm.insertCallsAutomatically = snapshot.val().insertCallsAutomatically;
 				crm.name = snapshot.val().name;
 				crm.token = snapshot.val().token;
 				crm.type = snapshot.val().type;
