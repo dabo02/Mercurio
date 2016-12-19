@@ -14,6 +14,7 @@
         self.picture = '',
         self.statusMessage = '',
         self.availability = '';
+        self.newAvailability = '';
         self.pictureChosen = true;
 
         self.activeAccount = accountService.activeAccount;
@@ -36,8 +37,12 @@
 
         self.saveProfileInfo = function(){
             if(accountService.isAccountAvailable()) {
+                if(self.newAvailability == ''){
+                    self.newAvailability = accountService.activeAccount.availability;
+                }
+
                 accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
-                    self.statusMessage, self.availability);
+                    self.statusMessage, parseInt(self.newAvailability));
                 if(self.picture){
                     accountService.activeAccount.savePicture(self.picture);
                 }
@@ -54,19 +59,19 @@
             if(accountService.isAccountAvailable()) {
                 switch(accountService.activeAccount.availability){
 
-                    case "0":
+                    case 0:
                         self.availability = 'Offline';
                         return 'Offline';
 
-                    case "1":
+                    case 1:
                         self.availability = 'Online';
                         return 'Online'
 
-                    case "2":
+                    case 2:
                         self.availability = 'Away';
                         return 'Away';
 
-                    case "3":
+                    case 3:
                         self.availability = 'Busy';
                         return 'Busy';
                 }
@@ -128,5 +133,8 @@
                 reader.readAsDataURL(self.picture);
             });
         };
+
+        self.getAvailability();
+
     }]);
 })();

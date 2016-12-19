@@ -23,8 +23,8 @@
                     <md-input-container class="md-icon-float md-block">
                         <label>Availability</label>
                         <md-icon class="fa fa-circle-o"></md-icon>
-                        <md-select style="min-width: 100px;" id="availability" ng-model="profileCtrl.availability">
-                            <md-option ng-selected="{{true}}" value="0">Offline</md-option>
+                        <md-select style="min-width: 100px;" id="availability" ng-model="profileCtrl.newAvailability">
+                            <md-option ng-selected="{{profileCtrl.availability === 'Offline' ? 'true' : 'false'}}" value="0">Offline</md-option>
                             <md-option ng-selected="{{profileCtrl.availability === 'Online' ? 'true' : 'false' }}" value="1">Online</md-option>
                             <md-option ng-selected="{{profileCtrl.availability === 'Away' ? 'true' : 'false' }}" value="2">Away</md-option>
                             <md-option ng-selected="{{profileCtrl.availability === 'Busy' ? 'true' : 'false' }}" value="3">Busy</md-option>
