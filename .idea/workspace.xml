@@ -2,489 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc091242-0296-41fd-8120-90cbdbce7e9c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/FontAwesome.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/bufferutil.node" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/obj.target/bufferutil/src/bufferutil.o" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/favicon.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/fontawesome-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/fontawesome-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/fontawesome-webfont.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/fontawesome-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/glyphicons-halflings-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/glyphicons-halflings-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/glyphicons-halflings-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/janus-logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/meetecho-logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/streams/music.mulaw" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/audio/ringback.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/sort-arrow-sprite.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/up_arrow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/validation.node" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/obj.target/validation/src/validation.o" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/.bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/.editorconfig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.eslintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.jscsrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/.jscsrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/.jshintignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/.zuul.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/recordings/1234.nfo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/tools/1to2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/BufferUtil.fallback.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/BufferUtil.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/COPYING" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/src/phone/CallController.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/Deprecation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/lib/Event.browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/lib/Event.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/lib/EventTarget.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/vendor/FastBufferList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/Gruntfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/ISSUE_TEMPLATE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/src/phone/IncomingCallDialogController.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/Makefile.am" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/docs/Makefile.am" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/Makefile.am" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/Makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/PULL_REQUEST_TEMPLATE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/README-w3c-tests.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/tools/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/certs/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/Validation.fallback.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/Validation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/W3CWebSocket.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/W3CWebSocket.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketClient.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketClient.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketConnection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketConnection.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketFrame.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketFrame.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketRequest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketRequest.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketRouter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketRouterRequest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketServer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketServer.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/out/adapter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/adapter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/adapter_core.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/out/adapter_no_edge.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/out/adapter_no_edge_no_global.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/out/adapter_no_global.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/admin.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/admin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/any.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/apierror.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/apierror.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/assert.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/async.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/asyncworker.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/plugin/audiobridge-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/audiobridge.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/audiobridgetest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/audiobridgetest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/plugin/audioroom-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/audioroom.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/auth.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/auth.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/autogen.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/base.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/test/basic.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/bind.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/binding.Makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/binding.gyp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/browser/bluebird.core.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/browser/bluebird.core.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/browser/bluebird.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/bluebird.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/browser/bluebird.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/js/bootbox.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/bootstrap-theme.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/bootstrap-theme.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/cerulean/bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/js/bootstrap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/cerulean/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/js/bootstrap.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/buffers.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/src/bufferutil.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/.deps/Release/bufferutil.node.d" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/.deps/Release/obj.target/bufferutil/src/bufferutil.o.d" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/bufferutil.target.mk" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/builderror.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/call_get.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/callback.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/cancel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/catch_filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/changelog.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/citeus.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/client.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/client.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/client.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/codecov.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/config.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/config.gypi" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/config.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/config.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/configure.ac" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/connection.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/connection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/connection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/context.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/converters.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/coverage.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/debug.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/debuggability.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/demo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/demos.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/devicetest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/devicetest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/direct_resolve.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/docs/doxy-boot.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/dtls-bio.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/dtls-bio.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/dtls.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/dtls.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/docs/dynsections.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/each.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/echotest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/echotest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/edge/edge_sdp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/edge/edge_shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/emacs.el" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/error.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/error.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/errors.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/es5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/event-emitter.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/event-emitter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/eventemitter2.d.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/lib/eventemitter2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/finally.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/font-awesome.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/css/font-awesome.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/fontawesome-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/docs/footer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/footer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/generators.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/chrome/getusermedia.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/firefox/getusermedia.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/fonts/glyphicons-halflings-regular.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/gyp-mac-tool" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/docs/header.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/helpers.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/helpers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/helpers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/ice.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/ice.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/include_dirs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/index-browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/index-node.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/traits/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/docs/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/index.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/docs/janus-doxygen.cfg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/janus-message.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/janus-message.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/janus-plugin-message.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/janus-plugin-message.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/janus-pp-rec.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/janus-valgrind.supp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/janus.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.cfg.sample.in" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/janus.ggo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/janus.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/janus.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/janus.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/janus.nojquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.audiobridge.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.echotest.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.recordplay.cfg.sample.in" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.sip.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.streaming.cfg.sample.in" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.textroom.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.videocall.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.videoroom.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.plugin.voicemail.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.transport.http.cfg.sample.in" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.transport.mqtt.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.transport.pfunix.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.transport.rabbitmq.cfg.sample" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/conf/janus.transport.websockets.cfg.sample.in" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_audiobridge.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_echotest.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/transports/janus_http.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/transports/janus_mqtt.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/transports/janus_pfunix.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/transports/janus_rabbitmq.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_recordplay.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_sip.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_streaming.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_textroom.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_videocall.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_videoroom.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/janus_voicemail.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/transports/janus_websockets.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/join.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/jquery.blockUI.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/karma.conf.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/karma.readJSON.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov.info" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/log.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/log.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/mach_gettime.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/mainpage.dox" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/map.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/maybe_types.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/js/md5.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/media-audio-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/media-devices-shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/media-entity-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/media-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/media-stream-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/method.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/methods.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/mocha.opts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/mutex.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/certs/mycert.key" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/certs/mycert.pem" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_callbacks.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_callbacks_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_callbacks_pre_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_converters.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_converters_43_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_converters_pre_43_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_implementation_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_implementation_pre_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_maybe_43_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_maybe_pre_43_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_new.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_object_wrap.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_persistent_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_persistent_pre_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_string_bytes.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_typedarray_contents.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_weak.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/navbar.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/new.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/node_misc.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/nodeback.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/nodeify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/object_wrappers.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/tools/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/persistent.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/plugin.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/plugin.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/plugin.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-g711.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-g711.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-h264.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-h264.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-opus-silence.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-opus.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-opus.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-rtp.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-srt.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-srt.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-webm.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/postprocessing/pp-webm.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/prettify.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/prettify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/promise.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/promise_array.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/promisify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/props.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/queue.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/race.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/record.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/record.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/recordplaytest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/recordplaytest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/reduce.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/rtcp.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/rtcp.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/rtp.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/rtp.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/plugin/rtpbroadcast-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/rtpbroadcast.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/run-tests.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/safari/safari_shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/schedule.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/scopes.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/screensharingtest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/screensharingtest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/script.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/sctp.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/sctp.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/sdp-utils.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/sdp-utils.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/sdp.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/sdp.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/sdp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/selenium-lib.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/session.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/session.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/session.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/settle.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/siptest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/siptest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/some.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/sorter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/js/spin.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/webrtc/plugin/streaming-plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/streaming.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/streamingtest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/streamingtest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/string_bytes.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/support.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/synchronous_inspection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/traits/t-transaction-gateway.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/traits/t-transaction-gateway.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/traits/t-transaction-gateway.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/streams/test_gstreamer.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/plugins/streams/test_gstreamer_1.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/testpage.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/textroomtest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/textroomtest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/thenables.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/timer.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/timer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/timer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/timers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/transaction.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/transaction.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/transaction.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/transactions.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/transactions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/transactions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/transports/transport.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/turnrest.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/turnrest.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/using.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/utils.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/utils.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/utils.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/utils.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/v8_internals.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/v8_misc.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/src/validation.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/.deps/Release/validation.node.d" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/.deps/Release/obj.target/validation/src/validation.o.d" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/validation.target.mk" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/version.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/videocalltest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/videocalltest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/videoroomtest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/videoroomtest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/voicemailtest.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/bower_components/janus-gateway/html/voicemailtest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/coverage/lcov-report/src/websocket-connection.js.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/src/websocket-connection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/websocket-connection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/helpers/websocket-server.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/websocket.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/AbstractContact.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/AbstractContact.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/AbstractContactManager.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/AbstractContactManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/account/AccountService.js" afterPath="$PROJECT_DIR$/public/src/account/AccountService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/Contact.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/Contact.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/contacts/ContactListController.js" afterPath="$PROJECT_DIR$/public/src/contacts/ContactListController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/CreateChatController.js" afterPath="$PROJECT_DIR$/public/src/chats/CreateChatController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/MercurioAccount.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/MercurioAccount.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/MercurioContact.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/MercurioContact.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/MercurioContactManager.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/MercurioContactManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/MercurioUtils.js" afterPath="$PROJECT_DIR$/public/src/MercurioUtils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/phone/PhoneService.js" afterPath="$PROJECT_DIR$/public/src/phone/PhoneService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/RecentCall.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/RecentCall.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/phone/call.html" afterPath="$PROJECT_DIR$/public/src/phone/call.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/contacts/contactProfile.html" afterPath="$PROJECT_DIR$/public/src/contacts/contactProfile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/contacts/contacts.html" afterPath="$PROJECT_DIR$/public/src/contacts/contacts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/phone/dialer.html" afterPath="$PROJECT_DIR$/public/src/phone/dialer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/phone/dialerController.js" afterPath="$PROJECT_DIR$/public/src/phone/dialerController.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/src/phone/dialersController.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/src/phone/DialerController.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/navigation-bars/leftSidebar.html" afterPath="$PROJECT_DIR$/public/src/navigation-bars/leftSidebar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/mercurio-ng.js" afterPath="$PROJECT_DIR$/public/src/mercurio-ng.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="material-start.iws" />
@@ -510,8 +30,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.34931508">
-              <caret line="279" column="27" selection-start-line="279" selection-start-column="27" selection-end-line="279" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.55479455">
+              <caret line="285" column="61" selection-start-line="285" selection-start-column="61" selection-end-line="285" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -529,8 +49,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dialerController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/src/phone/dialerController.js">
+      <file leaf-file-name="dialersController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/src/phone/dialersController.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
@@ -1308,7 +828,7 @@
       <workItem from="1482175328487" duration="3545000" />
       <workItem from="1482246807025" duration="22240000" />
       <workItem from="1482423378356" duration="6643000" />
-      <workItem from="1483033322260" duration="19877000" />
+      <workItem from="1483033322260" duration="20835000" />
     </task>
     <task id="LOCAL-00001" summary="testing intellij commit">
       <created>1481825475799</created>
@@ -1316,11 +836,17 @@
       <option name="project" value="LOCAL" />
       <updated>1481825475799</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="mercurio is able to make calls and receive calls">
+      <created>1483454198542</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1483454198542</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="416963000" />
+    <option name="totallyTimeSpent" value="417921000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1379,7 +905,8 @@
     <MESSAGE value="testing intellij commit" />
     <MESSAGE value="mercurio is able to make calls and receive calls (hard coded)" />
     <MESSAGE value="mercurio is able to make calls and receive calls" />
-    <option name="LAST_COMMIT_MESSAGE" value="mercurio is able to make calls and receive calls" />
+    <MESSAGE value="fixing DialerController commit bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing DialerController commit bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1780,7 +1307,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/src/phone/dialerController.js">
+    <entry file="file://$PROJECT_DIR$/public/src/phone/dialersController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
@@ -1790,8 +1317,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34931508">
-          <caret line="279" column="27" selection-start-line="279" selection-start-column="27" selection-end-line="279" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.55479455">
+          <caret line="285" column="61" selection-start-line="285" selection-start-column="61" selection-end-line="285" selection-end-column="61" />
           <folding />
         </state>
       </provider>
