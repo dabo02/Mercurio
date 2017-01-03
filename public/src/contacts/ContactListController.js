@@ -1,5 +1,5 @@
 angular.module('users')
-.controller('ContactListController', ['$scope', 'accountService', '$q', '$timeout', '$state', function ($scope, accountService, $q, $timeout, $state) {
+.controller('ContactListController', ['$rootScope', '$scope', 'accountService', '$q', '$timeout', '$state', 'phoneService', function ($rootScope, $scope, accountService, $q, $timeout, $state, phoneService) {
 
     var self = this;
     self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -67,8 +67,10 @@ angular.module('users')
      */
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
+        lowercaseQuery.replace("(","").replace(")","").replace(" ","").replace("-","");
+        phoneService.contactSearchString = lowercaseQuery;
         return function filterFn(contact) {
-            return (contact._lowername.indexOf(lowercaseQuery) != -1);;
+            return (contact._lowername.indexOf(lowercaseQuery) != -1) || (contact.phone.indexOf(lowercaseQuery) != -1);;
         };
     }
     function loadContacts() {
@@ -121,6 +123,7 @@ angular.module('users')
         self.tempContacts = [];
         for(var i = 0; i < contacts.length ; i++){
             if(contacts[i].firstName.substring(0,1) == letter || contacts[i].firstName.substring(0,1) == letter.toLowerCase()){
+                contacts[i].realIndex = i;
                 self.tempContacts.push(contacts[i]);
             }
         }

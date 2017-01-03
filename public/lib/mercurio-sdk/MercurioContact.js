@@ -19,7 +19,7 @@ function MercurioContact(){
 	this.contactId;
 }
 
-function MercurioContact(firstName, lastName, emails, picture, phone, userId, status, availability, contactId){
+function MercurioContact(firstName, lastName, emails, picture, phone, extension, userId, status, availability, contactId){
 	
 // 	if(picture === ""){
 // 		picture = "https://firebasestorage.googleapis.com/v0/b/mercurio-39a44.appspot.com/o/system%2Fic_profile_color_200dp.png?alt=media&token=38e55453-3aa6-48e3-b2eb-f33978fc4a7b";

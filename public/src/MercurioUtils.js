@@ -277,6 +277,46 @@
         }
     })
 
+    .filter('currentCallParticipantNameFilter', function () {
+        return function (call, contactList) {
+
+            var callerId = '';
+            var phone = '';
+
+            if(call.incoming){
+                phone = call.from;
+            }
+            else{
+                phone = call.to;
+            }
+
+            contactList.forEach(function(contact){
+                if(contact.phone == phone || contact.extension == phone){
+                    callerId = contact.firstName + " " + contact.lastName ;
+                }
+            })
+
+            if(callerId.length > 0){
+                return callerId;
+            }
+            else{
+                return 'Unkown'
+            }
+        };
+    })
+
+    .filter('currentCallPhoneNumberFilter', function () {
+        return function (call) {
+
+            if(call.incoming){
+               return call.from;
+            }
+            else{
+                return call.to;
+            }
+        };
+    })
+
     .directive('scrollToBottom', function () {
         return {
             scope: {

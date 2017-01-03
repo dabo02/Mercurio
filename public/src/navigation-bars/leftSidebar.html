@@ -165,6 +165,37 @@
 </script>
 <!--end crm manager dialog-->
 
+<!--start incoming call dialog-->
+<script type="text/ng-template" id="incomingCallDialog">
+    <md-dialog aria-label="Incoming Call Dialog" ng-controller="IncomingCallDialogController as incomingCallCtrl">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Incoming Call</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="row">
+
+                <span class="dialer-icons" style="margin:auto;">
+                    <a href="" ng-click="incomingCallCtrl.ignoreCall()" style="width:50px; height:50px; background-color:red;">
+                        <i style="font-size:25px; line-height:50px; color:#ffffff" class="fa fa-phone fa-lg"></i>
+                    </a>
+                </span>
+
+                <span class="dialer-icons" style="margin:auto;">
+                    <a href="" ng-click="incomingCallCtrl.receiveCall()" style="width:50px; height:50px; background-color:#4caf50;">
+                        <i style="font-size:25px; line-height:50px; color:#ffffff" class="fa fa-phone fa-lg"></i>
+                    </a>
+                </span>
+
+            </div>
+        </md-dialog-content>
+    </md-dialog>
+</script>
+<!--end incoming call dialog-->
+
 <md-sidenav id="sidenav" ng-click="navCtrl.toggleLeftSidebar()" md-component-id="left" class="md-whiteframe-z2" >
     <md-list>
 

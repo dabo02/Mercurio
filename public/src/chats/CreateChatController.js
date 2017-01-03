@@ -45,6 +45,9 @@
             else if(self.groupChatCheckbox && !self.title){
                 return;
             }
+            else if(contacts.length == 0){
+                return;
+            }
             else{
                 chatClientService.chatClient.createChat(self.title, contacts, chatClientService.chatIsReadyToSendObserver);
                 self.closeCreateChatDialog();

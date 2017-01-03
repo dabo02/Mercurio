@@ -1,0 +1,48 @@
+{
+  "name": "janus-gateway",
+  "version": "0.2.1",
+  "homepage": "https://github.com/meetecho/janus-gateway",
+  "authors": [
+    "Lorenzo Miniero <lorenzo@meetecho.com>",
+    "Philip Withnall <philip@tecnocode.co.uk>",
+    "Jack Leigh",
+    "Pierce Lopez <pierce.lopez@gmail.com>",
+    "Benjamin Trent <ben.w.trent@gmail.com>",
+    "Dustin Oprea <dustin@randomingenuity.com>",
+    "Maurizio Porrato",
+    "Giacomo Vacca",
+    "mrauhu",
+    "Min Wang",
+    "leonuh",
+    "Nicholas Wylie",
+    "Graeme Yeates <yeatesgraeme@gmail.com>",
+    "gatecrasher777",
+    "Damon Oehlman <damon.oehlman@gmail.com>",
+    "Scott <scottmortonashton@gmail.com>"
+  ],
+  "description": "A javascript library for interacting with the C based Janus WebRTC Gateway",
+  "main": "./html/{adapter,janus}.js",
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "**/*.alaw",
+    "**/*.mjr",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.1",
+    "commit": "aa8260013e64157b163b6b6799a7cd5f95658066"
+  },
+  "_source": "https://github.com/meetecho/janus-gateway.git",
+  "_target": "^0.2.1",
+  "_originalSource": "janus-gateway",
+  "_direct": true
+}

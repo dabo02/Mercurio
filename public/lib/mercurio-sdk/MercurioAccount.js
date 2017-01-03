@@ -24,8 +24,8 @@ function MercurioAccount(user, accountReadyCallback){
 				AbstractAccount.apply(self, [snapshot.key, snapshot.val().firstName, 
 					snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture, 
 					snapshot.val().status, snapshot.val().availability, snapshot.val().email, 
-					snapshot.val().extension], snapshot.val().sipUsername, 
-					snapshot.val().sipPassword, snapshot.val().settings);
+					snapshot.val().extension, snapshot.val().sipUsername,
+					snapshot.val().sipPassword, snapshot.val().settings]);
 				accountReadyCallback(self);
 			}
 			else{

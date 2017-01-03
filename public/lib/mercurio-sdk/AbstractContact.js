@@ -8,7 +8,7 @@
 		 phoneNumbers - Array
 */
 
-function AbstractContact(firstName, lastName, emails, picture, phone){
+function AbstractContact(firstName, lastName, emails, picture, phone, extension){
 	
 	if(this.constructor === AbstractContact){
 		throw new ConstructorError("Cannot instantiate AbstractContact class!");
@@ -23,6 +23,7 @@ function AbstractContact(firstName, lastName, emails, picture, phone){
 	
 	// check if phoneNumbers is array
 	this.phone = phone;
+	this.extension = extension;
 	
 	this.contactSettings = [];
 }
@@ -45,4 +46,8 @@ AbstractContact.prototype.setPicture = function(picture){
 
 AbstractContact.prototype.setPhoneNumbers = function(phoneNumbers){
 	this.phoneNumbers = phoneNumbers;
+}
+
+AbstractContact.prototype.setExtensions = function(extensions){
+	this.phoneNumbers = extensions;
 }

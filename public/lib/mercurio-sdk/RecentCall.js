@@ -5,12 +5,12 @@
 function RecentCall(callId, answered, duration, from, incoming, timeStamp, to){
 	
 	var self = this;
-	self.callId = callId;
-	self.answered = answered;
-	self.duration = duration;
-	self.from = from;
-	self.incoming = incoming;
-	self.timeStamp = timeStamp;
-	self.to = to;
+	self.callId = callId ||  null;
+	self.answered = answered ||  null;
+	self.duration = duration ||  null;
+	self.from = from ||  null;
+	self.incoming = incoming ||  null;
+	self.timeStamp = timeStamp ||  null;
+	self.to = to ||  null;
 	
 }
