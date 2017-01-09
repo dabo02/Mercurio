@@ -15,16 +15,25 @@
 
             <div layout="row">
                 <div flex-offset="20" flex="60">
-                    <md-autocomplete style="padding-top:2%;" flex
+                    <md-autocomplete style="padding-top:2%; overflow-y:hidden" flex
                                      md-input-name="autocompleteField"
-                                     md-input-minlength="2"
-                                     md-input-maxlength="18"
-                                     md-no-cache="ctrl.noCache"
-                                     md-selected-item="ctrl.selectedItem"
-                                     md-search-text="ctrl.searchText"
-                                     md-items="item in ctrl.querySearch(ctrl.searchText)"
-                                     md-item-text="item.display"
+                                     md-input-minlength="0"
+                                     md-no-cache="contactListCtrl.noCache"
+                                     md-autofocus="true"
+                                     md-autoselect="true"
+                                     md-selected-item="contactListCtrl.selectedItem"
+                                     md-search-text-change="contactListCtrl.searchTextChange(contactListCtrl.searchText)"
+                                     md-selected-item-change="contactListCtrl.selectedItemChange(item.realIndex)"
+                                     md-search-text="contactListCtrl.searchText"
+                                     md-items="item in contactListCtrl.querySearch(contactListCtrl.searchText)"
+                                     md-item-text="item.name"
                                      md-floating-label="Search">
+                        <md-item-template>
+                            <span md-highlight-text="contactListCtrl.searchText" md-highlight-flags="^i">{{item.name}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No states matching "{{contactListCtrl.searchText}}" were found.
+                        </md-not-found>
                     </md-autocomplete>
                     <!--<div style="margin-top:-5%" id="contacts-list" ng-cloak></div>-->
 
@@ -42,7 +51,7 @@
                                             </div>
                                             <div style="margin-left: 2%; margin-top: 2%;" class="col-lg-7 col-md-7" layout="column">
                                                 <p style="font-size:20px; word-break: break-all" flex="50">{{contact.firstName}}</p>
-                                                <p>{{}}</p>
+                                                <p>{{contact.lastName}}</p>
                                             </div>
                                             <p class="col-lg-3 col-md-3"> Mobile </p>
                                         </md-list-item>
