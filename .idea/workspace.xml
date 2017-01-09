@@ -2,248 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdcd8753-a73f-46f8-bdc7-06318adc76a9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/bufferutil.node" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/obj.target/bufferutil/src/bufferutil.o" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/obj.target/validation/src/validation.o" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/validation.node" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/changelog.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/browser/bluebird.core.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/browser/bluebird.core.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/browser/bluebird.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/browser/bluebird.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/any.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/assert.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/async.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/bind.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/bluebird.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/call_get.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/cancel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/catch_filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/context.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/debuggability.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/direct_resolve.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/each.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/es5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/finally.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/generators.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/join.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/map.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/method.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/nodeback.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/nodeify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/promise.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/promise_array.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/promisify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/props.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/queue.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/race.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/reduce.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/schedule.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/settle.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/some.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/synchronous_inspection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/thenables.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/timers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/using.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/js/release/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/bluebird/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/eventemitter2.d.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/lib/eventemitter2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/eventemitter2/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/is-typedarray/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/.editorconfig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/audiobridge.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/audioroom.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/config.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/janus.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/karma.readJSON.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/rtpbroadcast.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/integration/streaming.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/karma.conf.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/mocha.opts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/client.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/connection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/helpers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/helpers/websocket-server.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/plugin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/session.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/timer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/traits/t-transaction-gateway.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/transaction.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/transactions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/janus-gateway-js/test/unit/websocket-connection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/asyncworker.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/buffers.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/callback.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/converters.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/errors.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/maybe_types.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/methods.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/new.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/node_misc.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/object_wrappers.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/persistent.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/scopes.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/script.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/string_bytes.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/v8_internals.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/doc/v8_misc.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/include_dirs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_callbacks.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_callbacks_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_callbacks_pre_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_converters.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_converters_43_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_converters_pre_43_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_implementation_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_implementation_pre_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_maybe_43_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_maybe_pre_43_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_new.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_object_wrap.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_persistent_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_persistent_pre_12_inl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_string_bytes.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_typedarray_contents.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/nan_weak.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/tools/1to2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/tools/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/nan/tools/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/.zuul.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/typedarray-to-buffer/test/basic.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.eslintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.jscsrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/Gruntfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/ISSUE_TEMPLATE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/PULL_REQUEST_TEMPLATE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/README-w3c-tests.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/out/adapter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/out/adapter_no_edge.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/out/adapter_no_edge_no_global.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/out/adapter_no_global.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/adapter_core.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/chrome/getusermedia.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/edge/edge_sdp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/edge/edge_shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/firefox/getusermedia.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/safari/safari_shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/src/js/utils.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/run-tests.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/sdp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/selenium-lib.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtc-adapter/test/testpage.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/.jshintignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/index-browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/index-node.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/webrtcsupport/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/Makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/binding.gyp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/.deps/Release/bufferutil.node.d" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/.deps/Release/obj.target/bufferutil/src/bufferutil.o.d" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/.deps/Release/obj.target/validation/src/validation.o.d" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/Release/.deps/Release/validation.node.d" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/binding.Makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/bufferutil.target.mk" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/config.gypi" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/gyp-mac-tool" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/build/validation.target.mk" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/builderror.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/W3CWebSocket.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketClient.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketConnection.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketFrame.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketRequest.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/WebSocketServer.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/docs/index.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/BufferUtil.fallback.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/BufferUtil.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/Deprecation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/Validation.fallback.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/Validation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/W3CWebSocket.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketClient.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketConnection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketFrame.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketRequest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketRouter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketRouterRequest.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/WebSocketServer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/utils.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/version.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/lib/websocket.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/src/bufferutil.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/src/validation.cc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/websocket/vendor/FastBufferList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/.jscsrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/lib/Event.browser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/lib/Event.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/lib/EventTarget.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/yaeti/package.json" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/material-start.iml" afterPath="$PROJECT_DIR$/web-interface-mercurio.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js" />
     </list>
     <ignored path="web-interface-mercurio.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -275,11 +35,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactListController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ContactListController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/src/contacts/ContactListController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="156" column="4" selection-start-line="156" selection-start-column="4" selection-end-line="156" selection-end-column="4" />
+            <state relative-caret-position="2934">
+              <caret line="163" column="33" selection-start-line="163" selection-start-column="33" selection-end-line="163" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JanusPhone.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="511">
+              <caret line="482" column="12" selection-start-line="482" selection-start-column="12" selection-end-line="482" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -300,6 +70,7 @@
       <list>
         <option value="$PROJECT_DIR$/public/src/contacts/ContactListController.js" />
         <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js" />
       </list>
     </option>
   </component>
@@ -418,6 +189,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-interface-mercurio" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-interface-mercurio" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -529,12 +318,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1483995074459</updated>
-      <workItem from="1483995078416" duration="742000" />
+      <workItem from="1483995078416" duration="1386000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="742000" />
+    <option name="totallyTimeSpent" value="1386000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="66" y="52" width="1845" height="1027" extended-state="4" />
@@ -547,7 +336,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -598,8 +387,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/src/contacts/ContactListController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="156" column="4" selection-start-line="156" selection-start-column="4" selection-end-line="156" selection-end-column="4" />
+        <state relative-caret-position="2934">
+          <caret line="163" column="33" selection-start-line="163" selection-start-column="33" selection-end-line="163" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="482" column="12" selection-start-line="482" selection-start-column="12" selection-end-line="482" selection-end-column="12" />
           <folding />
         </state>
       </provider>
