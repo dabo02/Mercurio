@@ -480,7 +480,7 @@ JanusPhone.prototype.inCallTimer = function() {
 
 JanusPhone.prototype.createAnswerOnAccepted = function() {
 	var self = this;
-	if (self.jsepOnAcceptedCall) {
+	if (self.jsepOnAcceptedCall!=null) {
 		if (self.jsepOnAcceptedCall.type === 'Answer') {
 			if (self.jsepOnIncomingCall !== null) {
 				self.sipCallHandler.handleRemoteJsep({jsep: self.jsepOnIncomingCall, error: self.endCall()});

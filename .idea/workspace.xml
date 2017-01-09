@@ -48,8 +48,8 @@
       <file leaf-file-name="JanusPhone.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="482" column="12" selection-start-line="482" selection-start-column="12" selection-end-line="482" selection-end-column="12" />
+            <state relative-caret-position="385">
+              <caret line="502" column="8" selection-start-line="502" selection-start-column="8" selection-end-line="502" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -318,12 +318,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1483995074459</updated>
-      <workItem from="1483995078416" duration="1386000" />
+      <workItem from="1483995078416" duration="1660000" />
     </task>
+    <task id="LOCAL-00001" summary="updated JanusPhone.js">
+      <created>1483996497205</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1483996497205</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1386000" />
+    <option name="totallyTimeSpent" value="1660000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="66" y="52" width="1845" height="1027" extended-state="4" />
@@ -370,7 +378,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge branch 'development' of https://bitbucket.org/optivon/web-interface-mercurio into fbc-web-interface-branch&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/workspace.xml&#10;#&#9;public/index.html&#10;#&#9;public/src/contacts/ContactListController.js&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'development' of https://bitbucket.org/optivon/web-interface-mercurio into fbc-web-interface-branch&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/workspace.xml&#10;#&#9;public/index.html&#10;#&#9;public/src/contacts/ContactListController.js&#10;" />
+    <MESSAGE value="updated JanusPhone.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated JanusPhone.js" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -395,8 +404,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="482" column="12" selection-start-line="482" selection-start-column="12" selection-end-line="482" selection-end-column="12" />
+        <state relative-caret-position="385">
+          <caret line="502" column="8" selection-start-line="502" selection-start-column="8" selection-end-line="502" selection-end-column="8" />
           <folding />
         </state>
       </provider>
