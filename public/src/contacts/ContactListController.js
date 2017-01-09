@@ -25,7 +25,7 @@ angular.module('users')
 
     $scope.getChipInfo= function(chip_info) {
         console.log(chip_info);
-    }
+    };
 
     /**
      * Search for contacts; use a random delay to simulate a remote call
@@ -35,9 +35,6 @@ angular.module('users')
         var regExp = /\d/;
         self.allContacts = loadContacts();
         if (cachedQuery.includes("(") || cachedQuery.includes(")") || cachedQuery.includes("-") || regExp.test(cachedQuery)){
-            while(cachedQuery.includes("(") || cachedQuery.includes(")") || cachedQuery.includes("-")){
-                cachedQuery = cachedQuery.replace(/[^0-9]/, '');
-            }
             var answer = cachedQuery ? self.allContacts.filter(createFilterForPhone(cachedQuery)) : [];
 
         }else {
