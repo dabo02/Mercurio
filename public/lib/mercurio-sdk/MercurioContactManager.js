@@ -16,7 +16,7 @@ function MercurioContactManager(userId){
 		
 			var contact;
 			contact = new MercurioContact(snapshot.val().firstName, snapshot.val().lastName, 
-			snapshot.val().email, snapshot.val().picture, snapshot.val().phone,
+			snapshot.val().email, snapshot.val().picture, snapshot.val().phone, snapshot.val().extension,
 			snapshot.val().userId, snapshot.val().status, snapshot.val().availability, snapshot.key);
 				
 			self.contactList.push(contact);
@@ -34,7 +34,8 @@ function MercurioContactManager(userId){
 				self.contactList[index].setLastName(snapshot.val().lastName);
 				self.contactList[index].setEmails(snapshot.val().emails);
 				self.contactList[index].setPicture(snapshot.val().picture);
-				self.contactList[index].setPhoneNumbers(snapshot.val().phoneNumbers);
+				self.contactList[index].setPhoneNumbers(snapshot.val().phone);
+				self.contactList[index].setExtensions(snapshot.val().extension);
 				self.contactList[index].setUserId(snapshot.val().userId);
 				self.contactList[index].setStatus(snapshot.val().status);
 				self.contactList[index].setAvailability(snapshot.val().availability);

@@ -1,22 +1,24 @@
 <div style="height:100%;" ng-show="navCtrl.isAccountAvailable()" layout="column" ng-controller="UserController as user">
     <nav-bar></nav-bar>
-    <md-content flex layout="row">
+    <div flex layout="row">
         <left-sidebar></left-sidebar>
-    <md-content flex="75" id="main-content" ng-controller="DialerController as dialer" style="position:relative;background-color:#e1f5fe;">
-            <md-card flex-offset="20" flex="60" style="background-color:white;">
+        <md-content flex="75" id="main-content" ng-controller="CallController as callCtrl" style="position:relative;background-color:#e1f5fe;">
+            <video class='rounded centered' id='localStream' autoplay></video>
+            <video class='rounded centered' id='remoteStream' autoplay></video>
+            <md-card flex-offset="20" flex="60" style="background-color:white;" ng-controller="ContactListController as contactListCtrl">
                 <md-card-title layout="column" flex-offset="20" flex>
                     <md-card-title-text>
-                        <span class="md-headline">Contact Name</span>
+                        <span class="md-headline">{{callCtrl.phoneService.phone.currentCalls[0] | currentCallParticipantNameFilter : contactListCtrl.contactList}}</span>
                     </md-card-title-text>
                     <md-card-title-text layout="row" style="padding-top:1%;">
-                        <span flex="60" class="md-subhead">787-518-1788</span>
+                        <span flex="60" class="md-subhead">{{callCtrl.phoneService.phone.currentCalls[0] | currentCallPhoneNumberFilter}}</span>
                         <span flex-offset="10" flex="30" class="md-subhead">Time</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-title>
                     <md-card-title-media flex-offset="20" flex="60">
                         <div class="md-media-lg card-media" style="width:100%;">
-                            <img src="images/contact0Dressed.jpg" style="width: 100%; height: 250px; border-radius: 3px;">
+                            <img ng-src="{{contactCtrl.contact.picture | contactListAvatarFilter}}" style="width: 100%; height: 250px; border-radius: 3px;">
                         </div>
                     </md-card-title-media>
                 </md-card-title>
@@ -54,10 +56,13 @@
                 </md-content>
                 <md-content flex-offset="35" flex="50" style="margin-bottom:-25px;background-color: transparent;overflow-y: hidden; margin-top:10%;">
                           <span style="display:table; margin:0 auto;" class="dialer-icons">
-                                    <a href="" ng-click="" id="callIcon" style="width:50px; height:50px; background-color:red;">
+                                    <a href="" ng-click="callCtrl.endCall()" id="callIcon" style="width:50px; height:50px; background-color:red;">
                                         <i style="font-size:25px; line-height:50px; color:#ffffff" class="fa fa-phone fa-lg"></i>
                                     </a>
                           </span>
                 </md-content>
             </md-card>
         </md-content>
+        <right-sidebar class="scrollableList" flex="25"></right-sidebar>
+    </div>
+</div>

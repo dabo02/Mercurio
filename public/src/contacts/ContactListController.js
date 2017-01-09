@@ -1,5 +1,5 @@
 angular.module('users')
-.controller('ContactListController', ['$scope', 'accountService', '$q', '$timeout', '$state', function ($scope, accountService, $q, $timeout, $state) {
+.controller('ContactListController', ['$rootScope', '$scope', 'accountService', '$q', '$timeout', '$state', 'phoneService', function ($rootScope, $scope, accountService, $q, $timeout, $state, phoneService) {
 
     var self = this;
     self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -32,9 +32,10 @@ angular.module('users')
      */
     function querySearch (criteria) {
         cachedQuery = criteria || cachedQuery;
-        var regExp = /\d/;
+        var decimalRegExp = /\d/;
+	    var characterRegExp = /[a-zA-Z]*/;
         self.allContacts = loadContacts();
-        if (cachedQuery.includes("(") || cachedQuery.includes(")") || cachedQuery.includes("-") || regExp.test(cachedQuery)){
+        if ((cachedQuery.includes("(") || cachedQuery.includes(")") || cachedQuery.includes("-") || decimalRegExp.test(cachedQuery)) && !characterRegExp.test(cachedQuery)){
             var answer = cachedQuery ? self.allContacts.filter(createFilterForPhone(cachedQuery)) : [];
 
         }else {
@@ -79,8 +80,9 @@ angular.module('users')
      */
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
+        phoneService.contactSearchString = lowercaseQuery;
         return function filterFn(contact) {
-            return (contact._lowername.indexOf(lowercaseQuery) != -1);;
+            return (contact._lowername.indexOf(lowercaseQuery) != -1) || (contact.phone.indexOf(lowercaseQuery) != -1);;
         };
     }
 

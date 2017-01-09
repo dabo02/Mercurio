@@ -44,7 +44,7 @@
             else{
                 self.activeAccount.contactManager = new MercurioContactManager(account.userId);
                 chatClientService.instantiateChatClient(account.userId);
-                phoneService.instantiatePhone(account.userId);
+                phoneService.instantiatePhone(account);
                 crmService.instantiateCRMManager(account.userId);
                 $state.go('dialer'); // go to previos state instead
             }

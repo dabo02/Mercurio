@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" >
   <head>
-    <title>Angular Material - Starter App</title>
+    <title>Mercurio</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
@@ -214,7 +214,7 @@
   <script src="/lib/mercurio-sdk/MercurioContact.js"></script>
   <script src="/lib/mercurio-sdk/MercurioContactManager.js"></script>
   <script src="/lib/mercurio-sdk/Message.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioPhone.js"></script>
+  <script src="/lib/mercurio-sdk/JanusPhone.js"></script>
   <script src="/lib/mercurio-sdk/RecentCall.js"></script>
   <script src="/lib/mercurio-sdk/MissingImplementationError.js"></script>
   <script src="/lib/mercurio-sdk/AbstractCRMManager.js"></script>
@@ -231,7 +231,11 @@
   <script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="/node_modules/angularjs-scroll-glue/src/scrollglue.js"></script>
   <script src="/node_modules/angularfire/dist/angularfire.min.js"></script>
-  <script src="/node_modules/jssip/dist/jssip.min.js"></script>
+
+  <script src="/bower_components/janus-gateway/html/janus.js"></script>
+  <script src="/bower_components/janus-gateway/html/adapter.js"></script>
+  <script src="/bower_components/janus-gateway/html/jquery.blockUI.js"></script>
+  <!--<script src="/node_modules/jssip/dist/jssip.min.js"></script>-->
 
   <script src="/src/users/Users.js"></script>
   <script src="/src/mercurio-ng.js"></script>
@@ -272,7 +276,9 @@
   <script src="/src/phone/callDirective.js"></script>
 
   <script src="/src/phone/dialerDirective.js"></script>
-  <script src="/src/phone/dialerController.js"></script>
+  <script src="/src/phone/dialersController.js"></script>
+  <script src="/src/phone/CallController.js"></script>
+  <script src="/src/phone/IncomingCallDialogController.js"></script>
   <script src="/src/phone/directives.js"></script>
   <script src="/src/phone/PhoneService.js"></script>
   <script src="/src/phone/RecentCallListController.js"></script>

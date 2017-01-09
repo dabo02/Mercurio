@@ -3,7 +3,7 @@
     <div flex layout="row">
         <left-sidebar></left-sidebar>
 
-        <md-content flex="75" id="main-content" ng-controller="DialerController as dialer" style="position:relative;padding0%; background-color:#e1f5fe;">
+        <md-content flex="75" id="main-content" ng-controller="DialerController as dialer" style="position:relative;padding:0%; background-color:#e1f5fe;">
             <div style="padding-top:3%" class="row">
                 <div class="col-lg-2 col-md-2 col-lg-push-3 col-md-push-3">
                     <span style="display:table;margin:0 auto;" class="dialer-icons">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <md-card class="wrapper" style="width: 97%; height: 500px; background-size: 100% 100%; background-image:url({{contactCtrl.contact.picture}});" class="col-lg-12 col-md-12" >
+                        <md-card class="wrapper" style="width: 97%; height: 500px; background-size: 100% 100%; background-image:url({{contactCtrl.contact.picture | contactListAvatarFilter}});" class="col-lg-12 col-md-12" >
                             <ul style="padding-top:1%" layout="column"  class="col-lg-2 col-md-2 col-lg-push-10 col-md-push-10 social-icons icon-circle icon-rotate list-unstyled list-inline">
                                 <li>
                                     <a href=""><i class="fa fa-facebook"></i></a>

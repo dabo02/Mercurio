@@ -40,6 +40,10 @@
                     url: '/dialer',
                     templateUrl: '/src/phone/dialer.html'
                 })
+                .state('call', {
+                    url: '/call/:callIndex',
+                    templateUrl: '/src/phone/call.html'
+                })
                 .state('contacts', {
                     url: '/contacts',
                     templateUrl: '/src/contacts/contacts.html'
