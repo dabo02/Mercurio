@@ -55,12 +55,12 @@
 
         };
 
-        $scope.$watch(
-            "asyncContacts",
-            function( newValue, oldValue ) {
-                console.log('contact added');
-            }, true
-        );
+        //$scope.$watch(
+        //    "asyncContacts",
+        //    function( newValue, oldValue ) {
+        //        console.log('contact added');
+        //    }, true
+        //);
 
         //  ???
 

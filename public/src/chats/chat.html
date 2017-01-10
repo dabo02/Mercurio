@@ -222,7 +222,7 @@
                                             {{message.timeStamp | timeStampFilter}}
                                         </p>
                                         <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked(message.multimediaUrl)" style="height:150px;">
-                                        <p ng-if="message.textContent">
+                                        <p ng-if="message.textContent.length > 0">
                                             {{message.textContent}}
                                         </p>
                                     </md-card>

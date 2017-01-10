@@ -57,8 +57,9 @@
             console.log('call hung up');
             self.stopRingTone();
             self.stopRingbackTone();
-            location.replace("#/dialer");
+            self.phone.endCall();
             self.phone.currentCalls = [];
+            location.replace("#/dialer");
         }
 
         self.webRTCStateObserver = function(state){

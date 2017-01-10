@@ -31,6 +31,7 @@
  * @property phoneOwner: array instance field that stores the reference to the user id related to this phone account.
  * @property doVideo: boolean indicating if the user wishes to share video or not (false by default).
  **/
+
 function JanusPhone(userId, phoneInitializationObserver) {
 
 	var self = this;
@@ -55,7 +56,7 @@ function JanusPhone(userId, phoneInitializationObserver) {
 	self.recentCallList = [];
 	self.phoneOwner = userId;
 	self.doVideo = false;
-
+	self.currentCalls = [];
 	var pageNumber = 1;
 	var limit = 50;
 
@@ -69,6 +70,35 @@ function JanusPhone(userId, phoneInitializationObserver) {
  * @param limit: TODO also fill this
  */
 
+
+JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeStamp){
+
+	var self = this;
+	var newCallRef = firebase.database().ref().child('user-calls/' + self.phoneOwner).push();
+
+	var callInfo = {
+		answered: answered,
+		duration: '',
+		from: from,
+		incoming: incoming,
+		timeStamp: timeStamp,
+		to: to
+	};
+	
+	var updates = {};
+	// add user-chat entry for participant
+	updates['/user-calls/' + self.phoneOwner + "/" + newCallRef.key] = callInfo;
+	firebase.database().ref().update(updates);
+	
+	this.currentCalls.push(new RecentCall(newCallRef.key, answered, '', from, incoming, timeStamp, to));
+}
+
+
+/**
+ * @function JanusPhone.fetchRecentCallListPage:
+ * @param pageNumber: TODO fill this
+ * @param limit: TODO also fill this
+ */
 JanusPhone.prototype.fetchRecentCallListPage = function(pageNumber, limit){
 
 	var self = this;
@@ -140,7 +170,7 @@ JanusPhone.prototype.deleteCalls = function(indices){
  * @listens onremotestream callback function from Janus.
  **/
 
-JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, incomingCallObserver, callHangupObserver, callAcceptedObserver, callInProgressObserver, localStreamObserver, remoteStreamObserver, webRTCStateObserver) {
+JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, incomingCallObserver, callHangupObserver, callAcceptedObserver, callInProgressObserver, localStreamObserver, remoteStreamObserver) {
 	var self = this;
 
 	// Call back assignment
@@ -332,8 +362,10 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
  * @function JanusPhone.makeCall: function that initiates an outbound call.
  * @param phoneNumber: callee's phone number.
  **/
-JanusPhone.prototype.makeCall = function(phoneNumber) {
+JanusPhone.prototype.makeCall = function(phoneNumber, myStreamTag, peerStreamTag) {
 	var self = this;
+	self.localView = document.getElementById(myStreamTag);
+	self.remoteView = document.getElementById(peerStreamTag);
 	self.sipCallHandler.createOffer({
 		jsep: self.jsepOnMakeCall,
 		media: {
@@ -390,28 +422,31 @@ JanusPhone.prototype.endCall = function() {
 	self.sipCallHandler.hangup(); // cleans up UI and removes streams
 };
 
-JanusPhone.prototype.answerCall = function() {
+JanusPhone.prototype.answerCall = function(myStreamTag, peerStreamTag) {
 	var self = this;
-	self.sipCallHandler.createAnswer(
-		{
-			jsep: self.jsepOnIncomingCall,
-			media: { audio: true, video: self.doVideo },
-			success: function(jsep) {
-				var body = { request: "accept" };
-				var index = jsep.sdp.search("a=rtpmap");
-				var topHalf = jsep.sdp.slice(0, index-1);
-				var bottomHalf = jsep.sdp.slice(index);
-				topHalf = topHalf + "\na=rtpmap:101 telephone-event/8000\n";
-				jsep.sdp = topHalf + "" + bottomHalf;
-				// Note: as with "call", you can add a "srtp" attribute to
-				// negotiate/mandate SDES support for this incoming call.
-				// The default behaviour is to automatically use it if
-				// the caller negotiated it, but you may choose to require
-				// SDES support by setting "srtp" to "sdes_mandatory", e.g.:
-				//		var body = { request: "accept", srtp: "sdes_mandatory" };
-				// This way you'll tell the plugin to accept the call, but ONLY
-				// if SDES is available, and you don't want plain RTP. If it
-				// is not available, you'll get an error (452) back.
+	self.localView = document.getElementById(myStreamTag);
+	self.remoteView = document.getElementById(peerStreamTag);
+
+    self.sipCallHandler.createAnswer(
+        {
+            jsep: self.jsepOnIncomingCall,
+            media: { audio: true, video: self.doVideo },
+            success: function(jsep) {
+                var body = { request: "accept" };
+	            var index = jsep.sdp.search("a=rtpmap");
+	            var topHalf = jsep.sdp.slice(0, index-1);
+	            var bottomHalf = jsep.sdp.slice(index);
+	            topHalf = topHalf + "\na=rtpmap:101 telephone-event/8000\n";
+	            jsep.sdp = topHalf + "" + bottomHalf;
+                // Note: as with "call", you can add a "srtp" attribute to
+                // negotiate/mandate SDES support for this incoming call.
+                // The default behaviour is to automatically use it if
+                // the caller negotiated it, but you may choose to require
+                // SDES support by setting "srtp" to "sdes_mandatory", e.g.:
+                //		var body = { request: "accept", srtp: "sdes_mandatory" };
+                // This way you'll tell the plugin to accept the call, but ONLY
+                // if SDES is available, and you don't want plain RTP. If it
+                // is not available, you'll get an error (452) back.
 
 				self.sipCallHandler.send({"message": body, "jsep": jsep});
 			},
@@ -445,7 +480,7 @@ JanusPhone.prototype.inCallTimer = function() {
 	var minutes = 0; // stores number of minutes of ongoing call
 	var hours = 0; // stores number of hours of ongoing call
 	self.cT = setInterval(function() {
-
+		
 
 		seconds++;
 
@@ -471,6 +506,7 @@ JanusPhone.prototype.inCallTimer = function() {
 		// Assignment of actual timer for the call
 		self.callTimer = hours.toString() + ":" + minutes.toString() +  ":" + seconds.toString() ;
 		Janus.debug(" " + self.callTimer + " ");
+		$('.callTimer').html(self.callTimer);
 
 	}, 1000);
 
