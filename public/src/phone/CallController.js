@@ -45,7 +45,9 @@
             phoneService.phone.dialDTMFTone(number)
         }
 
-
+        self.backToCallButtonClicked = function() {
+            $state.go('call', {'callIndex' : 0});
+        }
         //self.setupIncomingCall = function() {
         //    phoneService.phone.addNewCall(false, accountService.activeAccount.phone, phoneService.phone.callerId, true, new Date().getTime());
         //    $mdDialog.hide();

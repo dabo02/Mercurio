@@ -61,20 +61,20 @@
             self.contactSearchString = '';
             self.phone.endCall();
             self.phone.currentCalls = [];
-            $state.go('dialer');
+            $location.replace('#/dialer');
 
 
         }
 
-        self.webRTCStateObserver = function(state){
-            if (state === true){
+        self.webRTCStateObserver = function(webRTCState){
+            if (webRTCState === true){
                 self.stopRingTone();
                 self.stopRingbackTone();
-            } else {
-                self.phone.endCall();
-                self.phone.currentCalls = [];
-                $state.go('dialer');
-            }
+             } //else {
+            //     self.phone.endCall();
+            //     self.phone.currentCalls = [];
+            //     $state.go('dialer');
+            // }
         }
         self.callAcceptedObserver = function(){
             console.log('call accepted');
