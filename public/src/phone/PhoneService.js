@@ -26,7 +26,7 @@
 
         self.phoneInitializationObserver = function(){
             self.phone.registerUA(self.activeAccount, self.userIsRegisteredObserver, self.incomingCallObserver, self.callHangupObserver,
-                self.callAcceptedObserver, self.callInProgressObserver, self.localStreamObserver, self.remoteStreamObserver);
+                self.callAcceptedObserver, self.callInProgressObserver, self.localStreamObserver, self.remoteStreamObserver, self.webRTCStateObserver);
         }
 
         self.userIsRegisteredObserver = function(){
@@ -55,14 +55,22 @@
 
         self.callHangupObserver = function(){
             console.log('call hung up');
+            self.stopRingTone();
+            self.stopRingbackTone();
             location.replace("#/dialer");
             self.phone.currentCalls = [];
         }
 
+        self.webRTCStateObserver = function(state){
+            if (state === true){
+                self.stopRingTone();
+                self.stopRingbackTone();
+            } else {
+                // TODO determine what to do when peer connection goes down
+            }
+        }
         self.callAcceptedObserver = function(){
             console.log('call accepted');
-            self.stopRingTone();
-            self.stopRingbackTone();
             self.phone.createAnswerOnAccepted();
         }
 

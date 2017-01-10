@@ -31,7 +31,7 @@
  * @property phoneOwner: array instance field that stores the reference to the user id related to this phone account.
  * @property doVideo: boolean indicating if the user wishes to share video or not (false by default).
  **/
-function JanusPhone(userId, myStream, peerStream, phoneInitializationObserver) {
+function JanusPhone(userId, phoneInitializationObserver) {
 
 	var self = this;
 	self.debug = true;
@@ -47,8 +47,8 @@ function JanusPhone(userId, myStream, peerStream, phoneInitializationObserver) {
 	self.cT = null;
 	self.callTimer = null;
 	self.callerId = null;
-	self.localView = document.getElementById(myStream);
-	self.remoteView = document.getElementById(peerStream);
+	self.localView;
+	self.remoteView;
 	self.callOnMute = false;
 	self.remoteHasVideo = false;
 	self.localHasVideo = false;
@@ -140,7 +140,7 @@ JanusPhone.prototype.deleteCalls = function(indices){
  * @listens onremotestream callback function from Janus.
  **/
 
-JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, incomingCallObserver, callHangupObserver, callAcceptedObserver, callInProgressObserver, localStreamObserver, remoteStreamObserver) {
+JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, incomingCallObserver, callHangupObserver, callAcceptedObserver, callInProgressObserver, localStreamObserver, remoteStreamObserver, webRTCStateObserver) {
 	var self = this;
 
 	// Call back assignment
@@ -150,6 +150,7 @@ JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, in
 	self.localStreamObserver = localStreamObserver;
 	self.remoteStreamObserver = remoteStreamObserver;
 	self.callInProgressObserver = callInProgressObserver;
+	self.webRTCStateObserver = webRTCStateObserver;
 
 	// Registration Info for respective telephony switch
 	var registrationInfo = {
@@ -213,9 +214,10 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 						webrtcState: function (state) {
 							if (state === true) {
 								self.inCallTimer();
+								self.webRTCStateObserver(state);
 							}
 							else {
-								// TODO determine what to do when peer connection goes down
+								self.webRTCStateObserver(state);
 							}
 
 						},
@@ -272,6 +274,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 										self.jsepOnAcceptedCall = jsep;
 										self.callAcceptedObserver();
 									} else {
+										self.jsepOnAcceptedCall = null;
 										self.callAcceptedObserver();
 									}
 								}
@@ -462,7 +465,7 @@ JanusPhone.prototype.inCallTimer = function() {
 			seconds = "0" + seconds.toString();
 		}
 
-		if (minutes < 10 && minutes.length !==2) {
+		if (minutes < 10 && minutes.length !== 2) {
 			minutes = "0" + minutes.toString()
 		}
 		// Assignment of actual timer for the call
