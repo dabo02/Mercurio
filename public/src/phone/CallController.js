@@ -6,11 +6,11 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('CallController', ['phoneService', 'accountService', '$stateParams', function (phoneService, accountService, $stateParams) {
+    angular.module('mercurio').controller('CallController', ['phoneService', 'accountService', '$stateParams', '$state', function (phoneService, accountService, $stateParams, $state) {
 
         var self = this;
 
-        self.callIndex = $stateParams.callIndex;
+        //self.callIndex = $stateParams.callIndex;
         self.phoneService = phoneService;
 
         self.makeCall = function(){
@@ -21,10 +21,41 @@
             phoneService.phone.answerCall('localStream', 'remoteStream');
         }
 
-        self.endCall = function(){
-            phoneService.phone.endCall();
-            phoneService.stopRingbackTone();
+        self.muteCall = function(){
+            phoneService.phone.muteCall();
         }
+
+        self.endCall = function(){
+            phoneService.stopRingbackTone();
+            phoneService.phone.endCall();
+        }
+
+        self.showDTMFDialog = function(event) {
+            $mdDialog.show({
+                templateUrl: 'dtmfDialog',
+                parent: angular.element(document.body),
+                //targetEvent: event,
+                escapeToClose: true,
+                clickOutsideToClose:false
+                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            });
+        }
+
+        self.dialDTMFTone = function(number){
+            phoneService.phone.dialDTMFTone(number)
+        }
+
+
+        //self.setupIncomingCall = function() {
+        //    phoneService.phone.addNewCall(false, accountService.activeAccount.phone, phoneService.phone.callerId, true, new Date().getTime());
+        //    $mdDialog.hide();
+        //    $state.go('call', {'callIndex' : 0});
+        //}
+        //
+        //self.ignoreCall = function(){
+        //    phoneService.stopRingTone();
+        //    phoneService.phone.endCall();
+        //}
 
         if(phoneService.phone.currentCalls.length > 0){
             if(!phoneService.phone.currentCalls[0].answered){
@@ -38,9 +69,10 @@
             }
 
         }
-        else{
-            //location.replace("#/dialer");
+        else if($state.current == 'call'){
+                location.replace("#/dialer");
         }
+
 
     }])
 })();

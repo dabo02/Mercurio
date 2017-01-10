@@ -46,7 +46,7 @@
                 chatClientService.instantiateChatClient(account.userId);
                 phoneService.instantiatePhone(account);
                 crmService.instantiateCRMManager(account.userId);
-                $state.go('dialer'); // go to previos state instead
+                $state.go('dialer'); // go to previous state instead
             }
             //else{
             //    $state.go('dialer');

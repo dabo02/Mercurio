@@ -317,6 +317,34 @@
         };
     })
 
+    .filter('currentCallAvatarFilter', function () {
+        return function (call, contactList) {
+
+            var avatarUrl = '';
+            var phone = '';
+
+            if(call.incoming){
+                phone = call.from;
+            }
+            else{
+                phone = call.to;
+            }
+
+            contactList.forEach(function(contact){
+                if(contact.phone == phone || contact.extension == phone){
+                    avatarUrl = contact.picture ;
+                }
+            });
+
+            if(avatarUrl == ""){
+                avatarUrl = 'images/default_contact_avatar.png';
+            }
+
+            return avatarUrl;
+
+        };
+    })
+
     .directive('scrollToBottom', function () {
         return {
             scope: {
