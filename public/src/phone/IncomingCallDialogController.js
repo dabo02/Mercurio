@@ -11,14 +11,14 @@
         var self = this;
 
         self.receiveCall = function() {
-            phoneService.phone.addNewCall(false, accountService.activeAccount.phone, accountService.activeAccount.phone, true, new Date().getTime());
+            phoneService.phone.addNewCall(false, accountService.activeAccount.phone, phoneService.phone.callerId, true, new Date().getTime());
             $mdDialog.hide();
             $state.go('call', {'callIndex' : 0});
         }
 
         self.ignoreCall = function(){
-            phoneService.phone.endCall();
             phoneService.stopRingTone();
+            phoneService.phone.endCall();
         }
 
     }])

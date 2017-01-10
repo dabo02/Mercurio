@@ -58,7 +58,7 @@
 
                 chatClientService.chatClient.sendMultimediaMessage(self.chatIndex, message);
                 self.textContentToSend = '';
-                document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
+                //document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
                 //document.getElementById("chatMessageInput").className = "md-icon-float md-block flex-offset-5 flex-85 md-input-focused";
 
                 if($rootScope.multimedia){

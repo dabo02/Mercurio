@@ -60,6 +60,9 @@
 
   <body ng-app="mercurio" ng-controller="NavigationController as navCtrl" ng-cloak onload="checkUrl()" >
 
+    <video style="position: absolute;" id='localStream' autoplay></video>
+    <video style="position: absolute;" id='remoteStream' autoplay></video>
+
     <div style="height:100%;" ui-view></div>
 
     <!--<profile-editor-form ng-controller="ProfileEditorController as profileCtrl"></profile-editor-form>-->
@@ -250,8 +253,6 @@
   <script src="/src/account/AuthenticationController.js"></script>
   <script src="/src/account/AuthenticationService.js"></script>
 
-  <!--<script src="/src/phone/recents.js"></script>-->
-
   <script src="/src/navigation-bars/navBarDirective.js"></script>
   <script src="/src/navigation-bars/leftSidebarDirective.js"></script>
   <script src="/src/navigation-bars/rightSidebarDirective.js"></script>
@@ -277,7 +278,7 @@
   <script src="/src/phone/callDirective.js"></script>
 
   <script src="/src/phone/dialerDirective.js"></script>
-  <script src="/src/phone/dialersController.js"></script>
+  <script src="/src/phone/dialerController.js"></script>
   <script src="/src/phone/CallController.js"></script>
   <script src="/src/phone/IncomingCallDialogController.js"></script>
   <script src="/src/phone/directives.js"></script>

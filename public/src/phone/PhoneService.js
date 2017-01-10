@@ -55,8 +55,10 @@
 
         self.callHangupObserver = function(){
             console.log('call hung up');
-            location.replace("#/dialer");
+            self.stopRingTone();
+            self.phone.endCall();
             self.phone.currentCalls = [];
+            location.replace("#/dialer");
         }
 
         self.callAcceptedObserver = function(){
