@@ -151,11 +151,11 @@
                 </md-card-title>
 
                 <md-content style="margin-top:20%; border-bottom:1px solid #1565c0;background-color: transparent;" layout="row" flex="65" flex-offset="25">
-                    <div ng-click="callStatusCtrl.showDTMFDialog()" id="call-button" flex="30" flex-offset="20" layout="column">
+                    <div ng-click="callCtrl.showDTMFDialog()" id="call-button" flex="30" flex-offset="20" layout="column">
                         <div flex="50"><img id="dialer-image" src="images/dialer_green.png" style="height:35px; margin:auto; margin-left:50%;"></div>
                         <p class="text-center">Add Call</p>
                     </div>
-                    <div ng-click="callStatusCtrl.muteCall();" id="call-button" flex="30" layout="column">
+                    <div ng-click="callCtrl.muteCall();" id="call-button" flex="30" layout="column">
                         <div ng-click="" id="call-button" style="border-right:1px solid #1565c0; border-left:1px solid #1565c0;" flex="40" layout="column">
                         <md-icon style="text-align: center; font-size:25px; margin-top:10%;" class="fa fa-microphone-slash"></md-icon>
                         <p class="text-center">Mute</p>

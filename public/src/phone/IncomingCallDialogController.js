@@ -9,6 +9,7 @@
     angular.module('mercurio').controller('IncomingCallDialogController', ['phoneService', 'accountService', '$state', '$mdDialog', function (phoneService, accountService, $state, $mdDialog) {
 
         var self = this;
+        self.phoneService = phoneService;
 
         self.receiveCall = function() {
             phoneService.phone.addNewCall(false, accountService.activeAccount.phone, phoneService.phone.callerId, true, new Date().getTime());
@@ -17,6 +18,7 @@
         }
 
         self.ignoreCall = function(){
+            $mdDialog.hide();
             phoneService.stopRingTone();
             phoneService.phone.endCall();
         }

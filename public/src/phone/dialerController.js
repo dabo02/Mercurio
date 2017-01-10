@@ -12,18 +12,23 @@
 
 		self.makeCall = function (contacts) {
 
-			if (contacts.length > 0) {
-				phoneService.phone.addNewCall(false,contacts[0].phone, accountService.activeAccount.phone, false, new Date().getTime());
-				$state.go('call', {'callIndex' : 0});
-			}
-			else if(phoneService.contactSearchString.length > 0){
-				phoneService.phone.addNewCall(false,phoneService.contactSearchString, accountService.activeAccount.phone, false, new Date().getTime());
-				$state.go('call', {'callIndex' : 0});
+			if(phoneService.phone.currentCalls.length == 0){
+				if (contacts.length > 0) {
+					phoneService.phone.addNewCall(false,contacts[0].phone, accountService.activeAccount.phone, false, new Date().getTime());
+					$state.go('call', {'callIndex' : 0});
+				}
+				else if(phoneService.contactSearchString.length > 0){
+					phoneService.phone.addNewCall(false,phoneService.contactSearchString, accountService.activeAccount.phone, false, new Date().getTime());
+					$state.go('call', {'callIndex' : 0});
+				}
+				else{
+					return;
+				}
 			}
 			else{
 				return;
 			}
-		}
+		};
 
 
 

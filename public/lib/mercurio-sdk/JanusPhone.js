@@ -35,7 +35,7 @@
 function JanusPhone(userId, phoneInitializationObserver) {
 
 	var self = this;
-	self.debug = true;
+	self.debug = false;
 	self.audioConferenceHandler = null;
 	self.videoPluginHandler = null;
 	self.sipCallHandler = null;
@@ -170,7 +170,7 @@ JanusPhone.prototype.deleteCalls = function(indices){
  * @listens onremotestream callback function from Janus.
  **/
 
-JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, incomingCallObserver, callHangupObserver, callAcceptedObserver, callInProgressObserver, localStreamObserver, remoteStreamObserver) {
+JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, incomingCallObserver, callHangupObserver, callAcceptedObserver, callInProgressObserver, localStreamObserver, remoteStreamObserver, webRTCStateObserver) {
 	var self = this;
 
 	// Call back assignment
@@ -270,7 +270,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 
 							if (result !== null && result !== undefined && result["event"] !== undefined && result["event"] !== null) {
 								var event = result["event"];
-								console.log("Event is "+event);
+								Janus.debug("Event is "+event);
 								if (event === 'registration_failed') {
 									Janus.warn("Registration failed: " + result.code + " " + result.reason);
 									return;
@@ -568,16 +568,7 @@ JanusPhone.prototype.muteCall = function() {
 	if (self.callOnMute !== true) {
 		self.sipCallHandler.muteAudio();
 		self.callOnMute = true;
-	}
-};
-
-/**
- * @function JanusPhone.unmuteCall: function that unmutes the current call.
- **/
-
-JanusPhone.prototype.unmuteCall = function() {
-	var self = this;
-	if (self.callOnMute === true) {
+	} else {
 		self.sipCallHandler.unmuteAudio();
 		self.callOnMute = false;
 	}

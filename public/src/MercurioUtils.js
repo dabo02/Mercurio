@@ -345,6 +345,26 @@
         };
     })
 
+    .filter('incomingCallNameFilter', function () {
+        return function (callerId, contactList) {
+
+            var name = '';
+
+            contactList.forEach(function(contact){
+                if(contact.phone == callerId || contact.extension == callerId){
+                    name = contact.firstName + " " + contact.lastName ;
+                }
+            });
+
+            if(name.length > 0){
+                return name;
+            }
+            else{
+                return 'Unkown';
+            }
+        };
+    })
+
     .directive('scrollToBottom', function () {
         return {
             scope: {

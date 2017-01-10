@@ -176,14 +176,19 @@
             </div>
         </md-toolbar>
         <md-dialog-content>
-            <div class="md-dialog-content" layout="row">
 
+            <div class="md-dialog-content" layout="row">
+                <p class="center" ng-controller="ContactListController as contactListCtrl">{{incomingCallCtrl.phoneService.phone.callerId | incomingCallNameFilter : contactListCtrl.contactList}}</p>
+            </div>
+            <div class="md-dialog-content" layout="row">
+                <p class="center" >{{incomingCallCtrl.phoneService.phone.callerId}}</p>
+            </div>
+            <div class="md-dialog-content" layout="row">
                 <span class="dialer-icons" style="margin:auto;">
                     <a href="" ng-click="incomingCallCtrl.ignoreCall()" style="width:50px; height:50px; background-color:red;">
                         <i style="font-size:25px; line-height:50px; color:#ffffff" class="fa fa-phone fa-lg"></i>
                     </a>
                 </span>
-
                 <span class="dialer-icons" style="margin:auto;">
                     <a href="" ng-click="incomingCallCtrl.receiveCall()" style="width:50px; height:50px; background-color:#4caf50;">
                         <i style="font-size:25px; line-height:50px; color:#ffffff" class="fa fa-phone fa-lg"></i>

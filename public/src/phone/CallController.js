@@ -6,7 +6,7 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('CallController', ['phoneService', 'accountService', '$stateParams', '$state', function (phoneService, accountService, $stateParams, $state) {
+    angular.module('mercurio').controller('CallController', ['phoneService', 'accountService', '$stateParams', '$state', '$mdDialog', function (phoneService, accountService, $stateParams, $state, $mdDialog) {
 
         var self = this;
 

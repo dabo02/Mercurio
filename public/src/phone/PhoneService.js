@@ -5,11 +5,12 @@
 
     'use strict';
 
-    angular.module('mercurio').service('phoneService', ['$location', '$mdDialog', function($location, $mdDialog){
+    angular.module('mercurio').service('phoneService', ['$location', '$mdDialog', '$state', function($location, $mdDialog, $state){
 
         var self = this;
         self.phone;
         self.activeAccount;
+        self.contactSearchString = '';
         self.ringbackTone = new Audio('audio/ringback.mp3');
         self.ringTone = new Audio('audio/bar.mp3');
 
@@ -57,9 +58,12 @@
             console.log('call hung up');
             self.stopRingTone();
             self.stopRingbackTone();
+            self.contactSearchString = '';
             self.phone.endCall();
             self.phone.currentCalls = [];
-            location.replace("#/dialer");
+            $state.go('dialer');
+
+
         }
 
         self.webRTCStateObserver = function(state){
@@ -67,7 +71,9 @@
                 self.stopRingTone();
                 self.stopRingbackTone();
             } else {
-                // TODO determine what to do when peer connection goes down
+                self.phone.endCall();
+                self.phone.currentCalls = [];
+                $state.go('dialer');
             }
         }
         self.callAcceptedObserver = function(){
