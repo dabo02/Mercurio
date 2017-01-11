@@ -148,7 +148,7 @@
                                     </a>
 
                                     <md-fab-speed-dial class="md-secondary" md-open="options.isOpen" md-direction="{{options.selectedDirection}}"
-                                                       ng-class="options.selectedMode">
+                                                       ng-class="options.selectedMode" style="padding-right: 50%">
                                         <md-fab-trigger>
                                             <md-button style="min-width: 0px;border-radius: 60px;min-height: 0px;padding: 0;margin: 0;" aria-label="menu">
                                                 <md-icon style="font-size:22px;" class="fa fa-paperclip">
@@ -170,32 +170,34 @@
                                         </md-fab-actions>-->
                                     </md-fab-speed-dial>
 
-                                    <md-menu class="md-secondary" style="min-width: 0px;border-radius: 60px;min-height: 0px;padding: 0;margin: 0;" aria-label="menu">
-                                        <md-button class="md-icon-button">
-                                            <md-icon style="font-size:22px;" class="fa fa-ellipsis-v"></md-icon>
-                                        </md-button>
-                                        <md-menu-content width="4">
-                                            <md-menu-item>
-                                                <md-button>
-                                                    Group Details
-                                                </md-button>
-                                            </md-menu-item>
-                                            <md-menu-divider></md-menu-divider>
-                                            <md-menu-item>
-                                                <md-button ng-click="chatCtrl.toggleMute(chatCtrl.chatClient.chatList[chatCtrl.chatIndex].settings.mute)">
-                                                    Mute
-                                                </md-button>
-                                            </md-menu-item>
-                                            <md-menu-divider></md-menu-divider>
-                                            <md-menu-item>
-                                                <md-button>
-                                                    Notifications
-                                                </md-button>
-                                            </md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu>
+
+
 
                                 </md-list-item>
+                                <md-menu class="md-secondary" style="position: absolute; min-width: 0px; top: 4%; right: 0%; border-radius: 60px;min-height: 0px;padding: 0;margin: 0;" aria-label="menu">
+                                    <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" style="padding-right: 70%;">
+                                        <md-icon style="font-size:22px;" class="fa fa-ellipsis-v"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4">
+                                        <md-menu-item>
+                                            <md-button>
+                                                Group Details
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-divider></md-menu-divider>
+                                        <md-menu-item>
+                                            <md-button ng-click="chatCtrl.toggleMute(chatCtrl.chatClient.chatList[chatCtrl.chatIndex].settings.mute)">
+                                                Mute
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-divider></md-menu-divider>
+                                        <md-menu-item>
+                                            <md-button>
+                                                Notifications
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
 
                             </md-list>
 
