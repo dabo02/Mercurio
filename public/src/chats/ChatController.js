@@ -122,6 +122,18 @@
             });
         };
 
+        self.getParticipantUserId = function(){
+          var userId = null;
+          chatClientService.chatClient.chatList[self.chatIndex].participantList.forEach(function (participant) {
+              if (chatClientService.chatClient.chatClientOwner != participant.userId) {
+                  userId = participant.userId;
+              }
+
+            });
+          return userId;
+
+      };
+
         self.multimediaClicked = function(messageIndex){
             chatClientService.selectedMessageIndex = messageIndex;
             self.showMultimediaSelectionTextDialog();

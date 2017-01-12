@@ -177,4 +177,13 @@ angular.module('users')
         self.viewContact(index);
     };
 
+    self.viewContactById = function(id){
+      self.contactList.forEach(function (contact, index) {
+          if (id == contact.userId) {
+             self.viewContact(index);
+          }
+
+    });
+  };
+
 }]);

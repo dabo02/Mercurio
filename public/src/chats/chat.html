@@ -172,7 +172,7 @@
                                             ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
                                                 {{chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].title}}
                                         </h4>
-                                        <h4 ng-if="chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].title.length === 0">
+                                        <h4 ng-controller = "ContactListController as contactListCtrl" ng-click = "contactListCtrl.viewContactById(chatCtrl.getParticipantUserId())" ng-if="chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].title.length === 0">
                                             {{chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex] | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
                                     </a>
