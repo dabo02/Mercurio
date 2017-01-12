@@ -61,7 +61,13 @@
             self.contactSearchString = '';
             self.phone.endCall();
             self.phone.currentCalls = [];
-            $location.replace('#/dialer');
+            if($state.current.name != "call")
+            {
+                $state.reload('dialer');
+            }else {
+                $state.go('dialer');
+            };
+
 
 
         }
@@ -70,11 +76,11 @@
             if (webRTCState === true){
                 self.stopRingTone();
                 self.stopRingbackTone();
-             } //else {
-            //     self.phone.endCall();
-            //     self.phone.currentCalls = [];
-            //     $state.go('dialer');
-            // }
+             } else {
+                self.phone.endCall();
+                self.phone.currentCalls = [];
+                $state.reload('dialer');
+            }
         }
         self.callAcceptedObserver = function(){
             console.log('call accepted');
