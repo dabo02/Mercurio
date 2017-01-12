@@ -9,6 +9,7 @@
 
         var self = this;
         self.chatClient;
+        self.selectedMessageIndex = null;
 
         self.chatIsReadyToSendObserver = function(){
             $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});

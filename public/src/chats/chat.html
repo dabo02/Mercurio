@@ -18,10 +18,10 @@
                             <md-toolbar>
                                 <div class="md-toolbar-tools">
                                     <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block">
-                                        <h2><input style="color:white;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" eng-value="chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].title" type="text"></h2>
+                                        <h2><input style="color:white;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" eng-value="chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].title" type="text"></h2>
                                     </md-input-container>
 
-                                    <!--<h2>{{chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].title}}</h2>-->
+                                    <!--<h2>{{chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].title}}</h2>-->
                                     <span flex></span>
                                     <md-button class="md-icon-button" ng-click="chatGroupCtrl.closeChatGroupDetailsDialog()">
                                         &times;
@@ -60,7 +60,7 @@
                                 </div>
                                 <div flex="80" flex-offset="10" layout="row" class="scrollableList fixedRows" >
                                     <md-list>
-                                        <md-list-item class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].participantList">
+                                        <md-list-item class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].participantList">
                                             <img ng-src="{{participant.picture}}" class="md-avatar" alt="{{participant.firstName}}" />
                                             <div class="md-list-item-text compact">
                                                 <h3>{{participant.firstName}} {{participant.lastName}}</h3>
@@ -70,7 +70,7 @@
                                 </div>
                                 <div flex="80" flex-offset="10" layout="row" style="padding-top:3%" ng-controller="ChatController as chatCtrl">
                                     <md-input-container class=" md-icon-float md-block">
-                                        <md-checkbox md-no-ink ng-model="chatGroupCtrl.newMuteSetting" ng-value="chatGroupCtrl.chatClient.chatList[chatGroupCtrl.chatIndex].settings.mute"
+                                        <md-checkbox md-no-ink ng-model="chatGroupCtrl.newMuteSetting" ng-value="chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].settings.mute"
                                                      ng-change="chatGroupCtrl.muteSettingChanged()" aria-label="Mute Group">
                                             Mute Group
                                         </md-checkbox>
@@ -130,20 +130,50 @@
                     </md-dialog>
                 </script>
 
+                <script type="text/ng-template" id="multimediaTextView">
+                    <md-dialog flex="40" aria-label="Multimedia Selection Preview" ng-controller="ChatController as multimediaChatCtrl">
+                            <md-toolbar>
+                                <div class="md-toolbar-tools">
+                                    <h2>Multimedia Preview</h2>
+                                    <span flex></span>
+                                    <md-button class="md-icon-button" ng-click="multimediaChatCtrl.closeMultimediaSelectionTextDialog()">
+                                        &times;
+                                    </md-button>
+                                </div>
+                            </md-toolbar>
+
+                            <md-dialog-content>
+
+                                <md-card flex="60" flex-offset="20" layout="row" style="margin-top:3%">
+                                    <img style="height:300px;" ng-src= "{{multimediaChatCtrl.chatClientService.chatClient.chatList[multimediaChatCtrl.chatIndex].messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
+
+                                </md-card>
+                                <div layout="row">
+                                    <p flex = "40" flex-offset="50"> {{multimediaChatCtrl.chatClientService.chatClient.chatList[multimediaChatCtrl.chatIndex].messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].textContent}} </p>
+                                </div>
+                            </md-dialog-content>
+
+                    </md-dialog>
+                </script>
+
+
+
+
+
                 <md-content style="margin-bottom:10%;overflow-x:hidden;border-radius:8px;height:100%" flex="80" flex-offset="10">
                     <div ng-controller ="OptionController as options" style="border-radius:8px; border:1px solid #1565c0; background-color:ghostwhite;">
                         <div class="row">
 
                             <md-list flex="90" flex-offset="5">
                                 <md-list-item class="md-1-line">
-                                    <img ng-src="{{chatCtrl.chatClient.chatList[chatCtrl.chatIndex] | chatListAvatarFilter : chatCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
+                                    <img ng-src="{{chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex] | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
                                     <a class="md-list-item-text" layout="column">
-                                        <h4 ng-if="chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title.length > 0"
+                                        <h4 ng-if="chatCtrl.chatClientService.chatClientService.chatClient.chatList[chatCtrl.chatIndex].title.length > 0"
                                             ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
-                                                {{chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title}}
+                                                {{chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].title}}
                                         </h4>
-                                        <h4 ng-if="chatCtrl.chatClient.chatList[chatCtrl.chatIndex].title.length === 0">
-                                            {{chatCtrl.chatClient.chatList[chatCtrl.chatIndex] | chatTitleFilter : chatCtrl.chatClient.chatClientOwner}}
+                                        <h4 ng-if="chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].title.length === 0">
+                                            {{chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex] | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
                                     </a>
 
@@ -186,7 +216,7 @@
                                         </md-menu-item>
                                         <md-menu-divider></md-menu-divider>
                                         <md-menu-item>
-                                            <md-button ng-click="chatCtrl.toggleMute(chatCtrl.chatClient.chatList[chatCtrl.chatIndex].settings.mute)">
+                                            <md-button ng-click="chatCtrl.toggleMute(chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].settings.mute)">
                                                 Mute
                                             </md-button>
                                         </md-menu-item>
@@ -203,19 +233,19 @@
 
                         </div>
                         <div id="conversation" class="wrapper scrollableList" style="width: 100%;height:350px" class="col-lg-12 col-md-12" scroll-glue>
-                            <div ng-repeat="message in chatCtrl.chatClient.chatList[chatCtrl.chatIndex].messageList" class="row">
+                            <div ng-repeat="message in chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].messageList track by $index" class="row">
                                 <div ng-if="!chatCtrl.isMessageFromMe(message)" flex-offset="10" flex="55">
                                     <md-card class="receivedMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row">
                                         <p>
-                                            {{message.from | messageListParticipantNameFilter : chatCtrl.chatClient.chatList[chatCtrl.chatIndex].participantList : chatCtrl.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}
+                                            {{message.from | messageListParticipantNameFilter : chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}
                                         </p>
-                                        <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked(message.multimediaUrl)" style="height:150px;">
+                                        <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;">
                                         <p ng-if="message.textContent.length > 0">
                                             {{message.textContent}}
                                         </p>
                                     </md-card>
                                     <p ng-if="!message.multimediaUrl" class="receivedMessage">
-                                        {{message.from | messageListParticipantNameFilter : chatCtrl.chatClient.chatList[chatCtrl.chatIndex].participantList : chatCtrl.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}, {{message.textContent}}
+                                        {{message.from | messageListParticipantNameFilter : chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}, {{message.textContent}}
                                     </p>
                                 </div>
                                 <div ng-if="chatCtrl.isMessageFromMe(message)"flex-offset="35" flex="55">
@@ -223,7 +253,7 @@
                                         <p>
                                             {{message.timeStamp | timeStampFilter}}
                                         </p>
-                                        <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked(message.multimediaUrl)" style="height:150px;">
+                                        <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;">
                                         <p ng-if="message.textContent.length > 0">
                                             {{message.textContent}}
                                         </p>
