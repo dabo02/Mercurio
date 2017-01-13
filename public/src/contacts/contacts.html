@@ -3,7 +3,8 @@
     <div flex layout="row">
         <left-sidebar></left-sidebar>
 
-        <md-content flex="75" id="main-content" style="padding-bottom:10%;background-color: transparent; width:100%;">
+        <md-content flex="75" id="main-content" style="padding-bottom:10%;background-color: transparent; width:100%; overflow-x: hidden; overflow-y: hidden;">
+
 
             <div style="padding-top:3%" class="row">
                 <div class="col-lg-2 col-md-2 col-lg-push-5 col-md-push-5">
@@ -13,8 +14,8 @@
                 </div>
             </div>
 
-            <div layout="row">
-                <div flex-offset="20" flex="60">
+            <div layout="row" >
+                <div flex-offset="20" flex="60" style="overflow-x: hidden;">
                     <md-autocomplete style="padding-top:2%; overflow-y:hidden" flex
                                      md-input-name="autocompleteField"
                                      md-input-minlength="0"
