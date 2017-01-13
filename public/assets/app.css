@@ -632,3 +632,11 @@ $duration: 1.4s;
 .fixedRows {
     height: 250px;
 }
+
+.mercurioBlueBackground{
+  background-color: #087be4;
+}
+
+.mercurioBlueColor{
+  background: #087be4;
+  }
