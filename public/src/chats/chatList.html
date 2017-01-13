@@ -10,7 +10,7 @@
     </md-list-item>
 </md-list>
 -->
-<md-content layout="column" flex>
+<md-content style= "background-color: transparent;" layout="column" flex>
 
     <script type="text/ng-template" id="createChatForm">
         <md-dialog flex="40" aria-label="Create New Chat" ng-controller="CreateChatController as createChatCtrl">
@@ -90,18 +90,18 @@
     </md-autocomplete>
 
     <md-list style="margin-top:-10%" ng-show="chatListCtrl.isChatListAvailable">
-        <md-list-item ng-if="chat.lastMessage && chat.messageList.length > 0" ng-repeat="chat in chatListCtrl.chatClient.chatList track by $index" ng-click="chatListCtrl.viewChat($index)" style="padding:0%; width:100%" id="chat-conversation" class="md-2-line">
+        <md-list-item ng-if="chat.lastMessage && chat.messageList.length > 0" ng-repeat="chat in chatListCtrl.chatClient.chatList track by $index" ng-click="chatListCtrl.viewChat($index)" style="background:rgba(0,0,0,0.60); margin-bottom: 2%; padding:0%; width:100%" id="chat-conversation" class="md-2-line">
             <img ng-src="{{chat | chatListAvatarFilter : chatListCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
             <div style="width:100%" class="md-list-item-text" layout="column">
                 <div style="width:100%" layout="row">
-                    <h3 flex="70" ng-style="chatListCtrl.getTextPreviewClass(chat, $index)" >{{chat | chatTitleFilter : chatListCtrl.chatClient.chatClientOwner}}</h3>
-                    <p style="font-size:11.5px;" flex="30">{{chat.lastMessage.timeStamp | timeStampFilter}}</p>
+                    <h3 style= "color: white;" flex="70" ng-style="chatListCtrl.getTextPreviewClass(chat, $index)" >{{chat | chatTitleFilter : chatListCtrl.chatClient.chatClientOwner}}</h3>
+                    <p style="color: white; font-size:11.5px;" flex="30">{{chat.lastMessage.timeStamp | timeStampFilter}}</p>
                 </div>
                 <div>
-                    <p ng-style="chatListCtrl.getTextPreviewClass(chat, $index)">
+                    <p style= "color: white;"ng-style="chatListCtrl.getTextPreviewClass(chat, $index)">
                         {{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}}
                     </p>
-                    <md-icon aria-label="Delete Chat" class="md-secondary md-raised fa fa-trash-o" ng-click="chatListCtrl.showDeleteConfirm($event, $index)"></md-icon>
+                    <md-icon style= "color: white" aria-label="Delete Chat" class="md-secondary md-raised fa fa-trash-o" ng-click="chatListCtrl.showDeleteConfirm($event, $index)"></md-icon>
                 </div>
             </div>
             <md-divider ></md-divider>

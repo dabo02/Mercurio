@@ -45,7 +45,7 @@
                         </md-toolbar>
                     </div>
 
-                    <md-card ng-controller="ContactListController as contactListCtrl" flex-offset="30" flex="40" style="background-color:white" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+                    <md-card ng-controller="ContactListController as contactListCtrl" flex-offset="30" flex="40" style="padding-top: 0%; margin-top: 8%; background:rgba(0,0,0,0.60);" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
                         <!--<md-card-title style="margin-top: 0%; margin-left: 7%;">-->
 
                               <!--<span flex="20" class="dialer-icons">-->
@@ -59,7 +59,7 @@
                         <md-card-title style="padding-top: 0%;">
                             <md-card-title-text flex="80"  flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
 
-                                <md-content ng-if="!dialerCtrl.dialing" class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                <md-content ng-if="!dialerCtrl.dialing" class="chipsdemoContactChips" style = "background:rgba(0,0,0,0.0);" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
                                     <md-contact-chips
                                             ng-click="contactListCtrl.loadContacts()"
                                             ng-model="contactListCtrl.asyncContacts"
