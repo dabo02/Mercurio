@@ -237,6 +237,9 @@
             <md-button layout="row">
                 <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img ng-src="images/contacts.png" alt=""></p>
                 <p flex="80" ng-click="crmCtrl.showManageCRMDialog()">CRM Manager</p>
+                <md-icon ng-show = "crmCtrl.crmManager.crmList[0].validated" class="fa fa-check" alt=""></p>
+                <md-icon ng-show = "!crmCtrl.crmManager.crmList[0].validated" class="fa fa-exclamation-triangle" alt=""></p>
+
             </md-button>
         </md-list-item>
 
