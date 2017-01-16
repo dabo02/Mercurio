@@ -632,3 +632,25 @@ $duration: 1.4s;
 .fixedRows {
     height: 250px;
 }
+
+.mercurioBlueBackground{
+  background-color: #087be4;
+}
+
+.mercurioBlueColor{
+  color: #087be4;
+  }
+
+  .scrollable-content {
+   overflow-x:hidden;
+   overflow-y:scroll;
+ }
+ .scrollable-content::-webkit-scrollbar {
+   width:15px;
+ }
+ .scrollable-content::-webkit-scrollbar * {
+   background:transparent;
+ }
+ .scrollable-content::-webkit-scrollbar-thumb {
+   background:rgba(0,0,0,0.60) !important;
+ }

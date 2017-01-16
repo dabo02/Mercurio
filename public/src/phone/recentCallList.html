@@ -10,7 +10,7 @@
     </md-list-item>
 </md-list>
 -->
-<md-content>
+<md-content style ="background-color: transparent;" >
 
     <!--start call details dialog-->
     <script type="text/ng-template" id="callDetailsDialog">
@@ -122,7 +122,7 @@
         </md-dialog>
     </script>
 
-    <md-autocomplete id='chatListSearch' style="margin-top:2%;" flex
+    <md-autocomplete class= "mercurioBlueColor" id='chatListSearch' style="font-color: white; margin-top:2%;" flex
                      md-input-name="autocompleteField"
                      md-input-minlength="2"
                      md-input-maxlength="18"
@@ -134,19 +134,20 @@
                      md-floating-label="Search">
     </md-autocomplete>
 
-    <md-button ng-repeat="call in recentCallListCtrl.phone.recentCallList track by $index" style="margin-left:0%; margin-bottom:7%; margin-top:-7%; width:100%; border-bottom:1px solid #eee">
+    <md-button ng-repeat="call in recentCallListCtrl.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom:7%; margin-top:-7%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
                 <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
-                <p ng-click="selectCallIndex($index)"style="font-size:12px; margin-top:5%; word-break: break-all;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</p>
+                <p style= "color: white;" ng-click="selectCallIndex($index)"style="font-size:12px; margin-top:5%; word-break: break-all;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</p>
                 <div ng-click="selectCallIndex($index)" flex="25" layout="column">
-                    <p class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
+                    <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}">
                 </div>
                 <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
-                <md-icon aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
+                <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
             </md-list-item>
         </md-list>
+        
         <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
         <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="callDetailsCtrl.showCallDetailsDialog($event, $index)">Call Details</span>

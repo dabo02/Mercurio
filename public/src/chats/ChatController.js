@@ -32,6 +32,24 @@
             $rootScope.multimedia = null;
         };
 
+
+        self.showMultimediaSelectionTextDialog = function(event) {
+            $mdDialog.show({
+                templateUrl: 'multimediaTextView',
+                parent: angular.element(document.body),
+                //targetEvent: event,
+                escapeToClose: true,
+                clickOutsideToClose:false
+                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            });
+        }
+
+        self.closeMultimediaSelectionTextDialog = function(){
+            $mdDialog.hide();
+            $rootScope.multimedia = null;
+        };
+
+
         self.isMessageListAvailable = function() {
             return chatClientService.isMessageListAvailable();
         }
@@ -71,7 +89,7 @@
         }
 
         self.isMessageFromMe = function(message){
-            return message.from == self.chatClient.chatClientOwner;
+            return message.from == chatClientService.chatClient.chatClientOwner;
         }
 
         self.showUploadForm = function(){
@@ -103,10 +121,23 @@
             });
         };
 
-        self.multimediaClicked = function(multimediaURL){
-            self.showMultimediaSelectionPreviewDialog();
-            $('#multimediaPreview').attr('src', multimediaURL);
-            $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
+        self.getParticipantUserId = function(){
+          var userId = null;
+          chatClientService.chatClient.chatList[self.chatIndex].participantList.forEach(function (participant) {
+              if (chatClientService.chatClient.chatClientOwner != participant.userId) {
+                  userId = participant.userId;
+              }
+
+            });
+          return userId;
+
+      };
+
+        self.multimediaClicked = function(messageIndex){
+            chatClientService.selectedMessageIndex = messageIndex;
+            self.showMultimediaSelectionTextDialog();
+            // $('#multimediaPreview').attr('src', multimediaURL);
+            // $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
         }
 
         if(chatClientService.chatClient.chatList.length > 0){

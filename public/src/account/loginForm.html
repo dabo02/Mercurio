@@ -12,7 +12,7 @@
             </md-toolbar>
 
             <md-dialog-content>
-                <md-input-container style="margin-top:3%" class="md-icon-float md-block flex-80 flex-offset-10" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
+                <md-input-container style="margin-top:10%" class="md-icon-float md-block flex-80 flex-offset-10" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
                     <label>Email</label>
                     <md-icon class="fa fa-envelope"></md-icon>
                     <input id="email" type="text" ng-model="authCtrl.email">
@@ -41,44 +41,48 @@
     <div ng-if="spinnerActivated"class="row" style="padding-top:15%" ng-cloak>
         <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="!spinnerActivated" md-diameter="200"></md-progress-circular>
     </div>
-    <div ng-if="!spinnerActivated"class="row" style="padding-top: 5%;" ng-cloak>
-        <div class="col-lg-4 col-md-4 col-lg-push-4 col-md-push-4" style="background-color:#eee; border-radius:9px;">
-            <div class="row" style="height:50px; background-color:#1565c0;"></div>
-            <div class="row" style="padding-top: 8%;">
-                <div style="margin-top:5%;" class="col-lg-1 col-md-1">
-                    <i class="fa fa-envelope" style="font-size:20px;"></i>
+    <div ng-if="!spinnerActivated" style="padding-top: 5%;" ng-cloak>
+
+        <md-card flex="45" flex-offset="30" style="margin: 10% auto; background:rgba(0,0,0,0.50);">
+              <div layout="row" style="height: 5%; background:rgba(0,0,0,0); ">
+                  <h2 style="font-size: 22px;color: white; padding-left: 40%"> Log in </h2>
+              </div>
+
+            <div layout= "row" style = "padding-top: 5%;" >
+              <div flex="0" flex-offset="5"  style="padding-top: 5%;">
+                <i class="fa fa-envelope" style="font-size:20px; color: white;"></i>
+              </div>
+
+                <div flex="75" flex-offset = "5" >
+                    <md-input-container class="md-icon-float md-block" >
+                        <!-- Use floating label instead of placeholder -->
+
+                        <label style= "color: white">Email</label>
+                        <input style= "color: white; border-color: yellow;" ng-model="authCtrl.email" type="email">
+
+                    </md-input-container>
+                  </div>
                 </div>
-                <div class="col-lg-9 col-md-9">
+
+            <div layout="row">
+                <div flex="0" flex-offset="5"  style="padding-top: 5%;">
+                    <i class="fa fa-unlock-alt" style="font-size:22px; color: white;"></i>
+                </div>
+                <div flex="75" flex-offset = "5">
                     <md-input-container class="md-icon-float md-block">
                         <!-- Use floating label instead of placeholder -->
-                        <label>Email</label>
-                        <input ng-model="authCtrl.email" type="email">
+                        <label style= "color: white">Password</label>
+                        <input style= "color: white; border-color: yellow;" ng-model="authCtrl.password" type="password">
+                        <a class = "mercurioBlueColor" style= "padding-bottom: 10%;" href="" ng-click="authCtrl.showResetPasswordDialog()">Forgot password?</a>
                     </md-input-container>
                 </div>
             </div>
-            <div class="row" style="padding-top: 1%;">
-                <div style="margin-top:5%;" class="col-lg-1 col-md-1">
-                    <i class="fa fa-unlock-alt" style="font-size:20px;"></i>
-                </div>
-                <div class="col-lg-9 col-md-9">
-                    <md-input-container class="md-icon-float md-block">
-                        <!-- Use floating label instead of placeholder -->
-                        <label>Password</label>
-                        <input ng-model="authCtrl.password" type="password">
-                        <a href="" ng-click="authCtrl.showResetPasswordDialog()">Forgot password?</a>
-                    </md-input-container>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-11 col-md-11 col-lg-push-1 col-md-push-1">
+            <div layout="row">
+                <!-- <div class="col-lg-11 col-md-11 col-lg-push-1 col-md-push-1">
                     <p style="color:red; font-weight:bold;" id="feedback" href=""></p>
-                </div>
-                <div class="col-lg-8 col-md-8 col-lg-push-2 col-md-push-2" style="margin-bottom:5%;">
-                    <div class="row">
-                        <button class="col-lg-12 col-md-12 btn btn-info" style="width:100%; margin-bottom:2%;" ng-click="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">Login</button>
-                    </div>
-                </div>
+                </div> -->
+                <md-button flex="60" flex-offset="20" style="color: white; background-color: #087be4; width:100%; margin-bottom:4%;" ng-click="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">Login</md-button>
             </div>
-        </div>
+        </md-card>
     </div>
 </div>
