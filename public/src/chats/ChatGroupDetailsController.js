@@ -10,6 +10,7 @@
 
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
+        self.chatClientService = chatClientService;
         self.chatClient = chatClientService.chatClient;
         self.saveGroupDetailsButtonIsAvailable = false;
         self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;

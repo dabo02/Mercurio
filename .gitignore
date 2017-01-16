@@ -2,3 +2,4 @@
 .idea/tasks.xml
 .idea/
 node_modules/
+*.iml

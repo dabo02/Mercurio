@@ -14,6 +14,7 @@
 
         var self = this;
         self.chatClient = chatClientService.chatClient;
+        self.chatServiceClient = chatClientService;
         self.groupChatCheckbox = false;
 
         self.newContactChipSelected = function(contacts){
