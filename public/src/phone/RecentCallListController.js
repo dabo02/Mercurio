@@ -21,6 +21,33 @@
             }
         };
 
+        self.recentCalls =
+          {
+            "name":"Ralo@optivon.net",
+            "number":"1234",
+            "calls":
+            [
+              {
+                "date" : "Mon, Jan 16, 2017",
+                "time" : "11:08 AM",
+                "duration" : "0 Seconds",
+                "type" : "incoming"
+              },
+              {
+                "date" : "Fri, Jan 13, 2017",
+                "time" : "12:18 PM",
+                "duration" : "3 Seconds",
+                "type" : "missed"
+              },
+              {
+                "date" : "Fri, Jan 13, 2017",
+                "time" : "09:45 AM",
+                "duration" : "7 Seconds",
+                "type" : "outgoing"
+              }
+            ]
+          };
+
         self.showDeleteConfirm = function(event, callIndex) {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()

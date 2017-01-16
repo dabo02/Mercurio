@@ -14,12 +14,12 @@
 
     <!--start call details dialog-->
     <script type="text/ng-template" id="callDetailsDialog">
-        <md-dialog flex="40" aria-label="Call Details Dialog" ng-controller="CallDetailsController as callDetailsCtrl">
-            <form ng-cloak>
+        <md-dialog flex="30" aria-label="Call Details Dialog" ng-controller="CallDetailsController as callDetailsCtrl">
+            <form ng-cloak style="overflow-x:hidden">
               <md-toolbar>
                   <div class="md-toolbar-tools">
                       <h2 class="pull-left col-xs-6">Call Details</h2>
-                      <div class ="col-xs-6">
+                      <div class ="col-xs-6" style="left:8%;">
                         <md-button class="pull-right md-icon-button fa fa-close" ng-click="callDetailsCtrl.closeCallDetailsDialog()">
                         </md-button>
                         <md-button class="pull-right md-icon-button fa fa-trash">
@@ -30,21 +30,56 @@
                   </div>
               </md-toolbar>
 
-                <md-dialog-content class="flex-80 flex-offset-10" style="margin-top:3%;">
+                <md-dialog-content class="flex-100" style="margin-top:3%;" ng-controller="RecentCallListController as RecentCallsCtrl">
 
-                    <h3>Call Details Go Here..!!</h3>
+                  <div>
+                    <md-list style="margin-top:-3%;">
+                      <md-list-item class="md-3-line">
+                        <img ng-src="https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/14724397_1206577912739845_4904131675000625869_n.jpg?oh=4cee204b42d61ca092138f9131eaf202&oe=590BC9A8" class="md-avatar" alt="">
+                        <div class="md-list-item-text" style="margin-top:5%;">
+                          <h3>{{RecentCallsCtrl.recentCalls.name}}</h3>
+                          <h4>{{RecentCallsCtrl.recentCalls.number}}</h4>
+                        </div>
+                      </md-list-item>
+                    </md-list>
+                    <md-list layout = "row" style="margin-top:-5%;">
+                      <md-list-item>
+                        <p class="text-center">All</p>
+                      </md-list-item>
+                      <md-list-item>
+                        <p class="text-center">Missed</p>
+                      </md-list-item>
+                      <md-list-item>
+                        <p class="text-center">Outgoing</p>
+                      </md-list-item>
+                      <md-list-item>
+                        <p class="text-center">Incoming</p>
+                      </md-list-item>
+                    </md-list>
+                    <md-divider></md-divider>
+                    <md-list layout ="column" style="background-color:#EEEEEE">
+                      <md-list-item ng-repeat="call in RecentCallsCtrl.recentCalls.calls">
+                        <div layout="row" style="width:100%;">
+                          <div class="pull-left" layout="column" style="width:50%;">
+                            <p>
+                              {{call.date}}
+                            </p>
+                            <p>
+                              {{call.duration}}
+                            </p>
+                          </div>
+                          <div class="pull-right" layout="column" style="width:50%;">
+                            <p style="text-align:right">
+                              {{call.time}}
+                            </p>
+                          </div>
+                        </div>
+                        <md-divider></md-divider>
+                      </md-list-item>
+
+                    </md-list>
+                  </div>
                 </md-dialog-content>
-
-                <md-dialog-actions layout="row">
-
-                    <span flex></span>
-
-                    <md-button ng-click="callDetailsCtrl.closeCallDetailsDialog()">
-                        Close
-                    </md-button>
-
-                </md-dialog-actions>
-
             </form>
         </md-dialog>
     </script>
