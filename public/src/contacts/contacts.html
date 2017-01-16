@@ -16,7 +16,7 @@
 
             <div layout="row" >
                 <div flex-offset="20" flex="60" style="overflow-x: hidden;">
-                    <md-autocomplete style="padding-top:2%; overflow-y:hidden" flex
+                    <md-autocomplete style="padding-top:2%;" class = "scrollable-content" flex
                                      md-input-name="autocompleteField"
                                      md-input-minlength="0"
                                      md-no-cache="contactListCtrl.noCache"
@@ -40,7 +40,7 @@
                   </div>
                 </div>
                     <!--Test-->
-                    <div class="scrollableList" flex-offset="20" flex="60">
+                    <div class="scrollable-content" flex-offset="20" flex="60">
                     <div style="margin-top:-3%; margin-bottom:10%;" ng-repeat="letter in contactListCtrl.alphabet">
                         <div ng-if="contactListCtrl.setContacts(letter)">
                             <a style="color: white;" id=contact-initial> <h2>{{letter}}</h2> </a>
@@ -69,6 +69,6 @@
 
 
         </md-content>
-        <right-sidebar class="scrollableList" flex="25"></right-sidebar>
+        <right-sidebar class="scrollable-content" flex="25"></right-sidebar>
     </div>
 </div>

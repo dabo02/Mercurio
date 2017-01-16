@@ -147,6 +147,7 @@
                 <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
             </md-list-item>
         </md-list>
+        
         <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
         <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="callDetailsCtrl.showCallDetailsDialog($event, $index)">Call Details</span>
