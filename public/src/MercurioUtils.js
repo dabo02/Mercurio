@@ -343,21 +343,27 @@
             return avatarUrl;
 
         };
-    });
+    })
 
-    //.directive('scrollToBottom', function () {
-    //    return {
-    //        scope: {
-    //            scrollToBottom: "="
-    //        },
-    //        link: function (scope, element) {
-    //            scope.$watchCollection('scrollToBottom', function (newValue) {
-    //                if (newValue)
-    //                {
-    //                    $(element).scrollTop($(element)[0].scrollHeight);
-    //                }
-    //            });
-    //        }
-    //    }
-    //});
+    .filter('incomingCallNameFilter', function () {
+        return function (callerId, contactList) {
+
+            var name = '';
+
+            contactList.forEach(function(contact){
+                if(contact.phone == callerId || contact.extension == callerId){
+                    name = contact.firstName + " " + contact.lastName ;
+                }
+            });
+
+            if(name.length > 0){
+                return name;
+            }
+            else{
+                return 'Unkown';
+            }
+        };
+    })
+
+   
 })();

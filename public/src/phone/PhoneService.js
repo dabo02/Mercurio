@@ -5,11 +5,12 @@
 
     'use strict';
 
-    angular.module('mercurio').service('phoneService', ['$location', '$mdDialog', function($location, $mdDialog){
+    angular.module('mercurio').service('phoneService', ['$location', '$mdDialog', '$state', function($location, $mdDialog, $state){
 
         var self = this;
         self.phone;
         self.activeAccount;
+        self.contactSearchString = '';
         self.ringbackTone = new Audio('audio/ringback.mp3');
         self.ringTone = new Audio('audio/bar.mp3');
 
@@ -26,7 +27,7 @@
 
         self.phoneInitializationObserver = function(){
             self.phone.registerUA(self.activeAccount, self.userIsRegisteredObserver, self.incomingCallObserver, self.callHangupObserver,
-                self.callAcceptedObserver, self.callInProgressObserver, self.localStreamObserver, self.remoteStreamObserver);
+                self.callAcceptedObserver, self.callInProgressObserver, self.localStreamObserver, self.remoteStreamObserver, self.webRTCStateObserver);
         }
 
         self.userIsRegisteredObserver = function(){
@@ -56,15 +57,33 @@
         self.callHangupObserver = function(){
             console.log('call hung up');
             self.stopRingTone();
+            self.stopRingbackTone();
+            self.contactSearchString = '';
             self.phone.endCall();
             self.phone.currentCalls = [];
-            location.replace("#/dialer");
+            if($state.current.name != "call")
+            {
+                $state.reload('dialer');
+            }else {
+                $state.go('dialer');
+            };
+
+
+
         }
 
+        self.webRTCStateObserver = function(webRTCState){
+            if (webRTCState === true){
+                self.stopRingTone();
+                self.stopRingbackTone();
+             } else {
+                self.phone.endCall();
+                self.phone.currentCalls = [];
+                $state.reload('dialer');
+            }
+        }
         self.callAcceptedObserver = function(){
             console.log('call accepted');
-            self.stopRingTone();
-            self.stopRingbackTone();
             self.phone.createAnswerOnAccepted();
         }
 

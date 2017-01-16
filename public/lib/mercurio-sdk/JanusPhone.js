@@ -35,7 +35,7 @@
 function JanusPhone(userId, phoneInitializationObserver) {
 
 	var self = this;
-	self.debug = true;
+	self.debug = false;
 	self.audioConferenceHandler = null;
 	self.videoPluginHandler = null;
 	self.sipCallHandler = null;
@@ -48,9 +48,12 @@ function JanusPhone(userId, phoneInitializationObserver) {
 	self.cT = null;
 	self.callTimer = null;
 	self.callerId = null;
-	self.localView;// = document.getElementById(myStream);
-    self.remoteView;// = document.getElementById(peerStream);
+	self.localView;
+	self.remoteView;
 	self.callOnMute = false;
+	self.outboundCall = false;
+	self.endCallRequest = false;
+	self.ignoreCallFlag = false;
 	self.remoteHasVideo = false;
 	self.localHasVideo = false;
 	self.recentCallList = [];
@@ -64,6 +67,11 @@ function JanusPhone(userId, phoneInitializationObserver) {
 	self.initialize(phoneInitializationObserver); // Initialize Janus plugin
 };
 
+/**
+ * @function JanusPhone.fetchRecentCallListPage:
+ * @param pageNumber: TODO fill this
+ * @param limit: TODO also fill this
+ */
 
 
 JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeStamp){
@@ -88,6 +96,19 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 	this.currentCalls.push(new RecentCall(newCallRef.key, answered, '', from, incoming, timeStamp, to));
 }
 
+JanusPhone.prototype.updateFinishedCall = function(){
+
+	var self = this;
+
+	var updates = {};
+
+	updates['/user-calls/' + self.phoneOwner + "/" + self.currentCalls[0].callId + '/answered'] = self.currentCalls[0].answered;
+	updates['/user-calls/' + self.phoneOwner + "/" + self.currentCalls[0].callId + '/duration'] = self.currentCalls[0].duration;
+
+	firebase.database().ref().update(updates);
+
+	// TODO - add error management callback
+}
 
 /**
  * @function JanusPhone.fetchRecentCallListPage:
@@ -111,19 +132,19 @@ JanusPhone.prototype.fetchRecentCallListPage = function(pageNumber, limit){
 			var chat;
 			// send observer callback registered in addChat to MercurioChat constructor
 			//if(snapshot.val().lastMessage){
-				//chat = new MercurioChat(snapshot.key, snapshot.val().participantCount);
+			//chat = new MercurioChat(snapshot.key, snapshot.val().participantCount);
 			//}
 			call = new RecentCall(snapshot.key, snapshot.val().answered, snapshot.val().duration,
-					snapshot.val().from, snapshot.val().incoming, snapshot.val().timeStamp, snapshot.val().to);
-			
+				snapshot.val().from, snapshot.val().incoming, snapshot.val().timeStamp, snapshot.val().to);
+
 			self.recentCallList.unshift(call);
 		}
 
 	});
-	
+
 	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
-	
-		//compare chat ids from local chat list to snapshot keys in order to find local 
+
+		//compare chat ids from local chat list to snapshot keys in order to find local
 		//reference to chat; remove chat from local contacts list
 
 		self.recentCallList.forEach(function(call, index){
@@ -143,7 +164,7 @@ JanusPhone.prototype.deleteCalls = function(indices){
 	var self = this;
 	indices.forEach(function(index){
 		firebase.database().ref('user-calls/' + self.phoneOwner + '/' + self.recentCallList[index].callId).set(null);
-	});	
+	});
 }
 
 /**
@@ -165,7 +186,7 @@ JanusPhone.prototype.deleteCalls = function(indices){
  * @listens onremotestream callback function from Janus.
  **/
 
-JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, incomingCallObserver, callHangupObserver, callAcceptedObserver, callInProgressObserver, localStreamObserver, remoteStreamObserver) {
+JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, incomingCallObserver, callHangupObserver, callAcceptedObserver, callInProgressObserver, localStreamObserver, remoteStreamObserver, webRTCStateObserver) {
 	var self = this;
 
 	// Call back assignment
@@ -175,6 +196,7 @@ JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, in
 	self.localStreamObserver = localStreamObserver;
 	self.remoteStreamObserver = remoteStreamObserver;
 	self.callInProgressObserver = callInProgressObserver;
+	self.webRTCStateObserver = webRTCStateObserver;
 
 	// Registration Info for respective telephony switch
 	var registrationInfo = {
@@ -238,10 +260,22 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 						webrtcState: function (state) {
 							if (state === true) {
 								self.inCallTimer();
+								if (self.outboundCall = true) {
+									self.currentCalls[0].answered = true;
+									self.outboundCall =false;
+								} else {
+									self.currentCalls[0].answered = true; // TODO Ask default value to take proper action
+								}
+								self.webRTCStateObserver(state);
 							}
-							else {
-								// TODO determine what to do when peer connection goes down
-							}
+							 else {
+								if(self.endCallRequest == false) {
+									self.stopTimer = true;
+									self.currentCalls[0].duration = self.callTimer;
+									self.updateFinishedCall();
+									self.webRTCStateObserver(state);
+								}
+							 }
 
 						},
 						onmessage: function (msg, jsep) {
@@ -263,7 +297,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 
 							if (result !== null && result !== undefined && result["event"] !== undefined && result["event"] !== null) {
 								var event = result["event"];
-								console.log("Event is "+event);
+								Janus.debug("Event is "+event);
 								if (event === 'registration_failed') {
 									Janus.warn("Registration failed: " + result.code + " " + result.reason);
 									return;
@@ -289,6 +323,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 								if (event === 'calling') {
 									self.jsepOnMakeCall = jsep;
 									self.stopTimer =false;
+									self.callInProgress = true;
 									self.callInProgressObserver();
 								}
 								if (event === 'accepted') {
@@ -297,13 +332,29 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 										self.jsepOnAcceptedCall = jsep;
 										self.callAcceptedObserver();
 									} else {
+										self.jsepOnAcceptedCall = null;
 										self.callAcceptedObserver();
 									}
 								}
 								if (event === 'hangup') {
 									Janus.debug("call hanged");
-									clearInterval(self.cT);
-									self.callHangUpObserver();
+									if (self.endCallRequest === true) {
+										if (self.outboundCall == true || self.ignoreCallFlag === true) {
+											self.outboundCall = false;
+											self.ignoreCallFlag = false;
+											self.currentCalls[0].answered = false;
+											self.currentCalls[0].duration = "0:00:00";
+										} else {
+											self.currentCalls[0].duration = self.callTimer;
+										}
+										self.updateFinishedCall();
+										clearInterval(self.cT);
+										self.stopTimer = true;
+										self.currentCalls = [];
+										self.callHangUpObserver();
+									} else {
+										self.callHangUpObserver();
+									}
 								}
 							}
 						},
@@ -311,8 +362,8 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 							Janus.debug(" ::: Got a local stream :::");
 							self.localStream = stream;
 
-														// if ($('#myvideo').length === 0)
-								// $('#videoleft').append('<video class="rounded centered" id="myvideo" width=320 height=240 autoplay muted="muted"/>');
+							// if ($('#myvideo').length === 0)
+							// $('#videoleft').append('<video class="rounded centered" id="myvideo" width=320 height=240 autoplay muted="muted"/>');
 
 							Janus.attachMediaStream(self.localView, self.localStream);
 							self.localView.muted = "muted";
@@ -410,6 +461,7 @@ JanusPhone.prototype.makeCall = function(phoneNumber, myStreamTag, peerStreamTag
 JanusPhone.prototype.endCall = function() {
 	var self = this;
 	var hangup = {"request": "hangup"};
+	self.endCallRequest = true;
 	self.sipCallHandler.send({"message": hangup}); // sends habgup request to gateway
 	self.sipCallHandler.hangup(); // cleans up UI and removes streams
 };
@@ -472,7 +524,7 @@ JanusPhone.prototype.inCallTimer = function() {
 	var minutes = 0; // stores number of minutes of ongoing call
 	var hours = 0; // stores number of hours of ongoing call
 	self.cT = setInterval(function() {
-
+		
 
 		seconds++;
 
@@ -492,7 +544,7 @@ JanusPhone.prototype.inCallTimer = function() {
 			seconds = "0" + seconds.toString();
 		}
 
-		if (minutes < 10 && minutes.length !==2) {
+		if (minutes < 10 && minutes.length !== 2) {
 			minutes = "0" + minutes.toString()
 		}
 		// Assignment of actual timer for the call
@@ -511,10 +563,12 @@ JanusPhone.prototype.inCallTimer = function() {
 
 JanusPhone.prototype.createAnswerOnAccepted = function() {
 	var self = this;
-	if (self.jsepOnAcceptedCall.type === 'Answer'){
-		if (self.jsepOnIncomingCall!== null) {
-			self.sipCallHandler.handleRemoteJsep({jsep: self.jsepOnIncomingCall, error: self.endCall()});
-			self.jsepOnIncomingCall = null;
+	if (self.jsepOnAcceptedCall!=null) {
+		if (self.jsepOnAcceptedCall.type === 'Answer') {
+			if (self.jsepOnIncomingCall !== null) {
+				self.sipCallHandler.handleRemoteJsep({jsep: self.jsepOnIncomingCall, error: self.endCall()});
+				self.jsepOnIncomingCall = null;
+			}
 		}
 	}
 	self.sipCallHandler.createAnswer({
@@ -558,16 +612,7 @@ JanusPhone.prototype.muteCall = function() {
 	if (self.callOnMute !== true) {
 		self.sipCallHandler.muteAudio();
 		self.callOnMute = true;
-	}
-};
-
-/**
- * @function JanusPhone.unmuteCall: function that unmutes the current call.
- **/
-
-JanusPhone.prototype.unmuteCall = function() {
-	var self = this;
-	if (self.callOnMute === true) {
+	} else {
 		self.sipCallHandler.unmuteAudio();
 		self.callOnMute = false;
 	}

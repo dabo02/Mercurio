@@ -4,27 +4,38 @@
         <left-sidebar></left-sidebar>
 
         <md-content flex="75" id="main-content" style="padding-bottom:10%;background-color:#e1f5fe;width:100%;">
-
             <div style="padding-top:3%" class="row">
                 <div class="col-lg-2 col-md-2 col-lg-push-5 col-md-push-5">
-                    <span style="display:table;margin:0 auto;" class="dialer-icons">
+                    <span style="display:table; margin:0 auto;" class="dialer-icons">
                         <a href="#/dialer" id="dialer-circle" style="width:50px; height:50px; margin-right:0px;"><img id="dialer" src="images/dialer.png"></a>
+                    </span>
+                    <span style="display:table; margin:0 auto;">
+                        <call-status-toolbar></call-status-toolbar>
                     </span>
                 </div>
             </div>
 
             <div layout="row">
                 <div flex-offset="20" flex="60">
-                    <md-autocomplete style="padding-top:2%;" flex
+                    <md-autocomplete style="padding-top:2%; overflow-y:hidden" flex
                                      md-input-name="autocompleteField"
-                                     md-input-minlength="2"
-                                     md-input-maxlength="18"
-                                     md-no-cache="ctrl.noCache"
-                                     md-selected-item="ctrl.selectedItem"
-                                     md-search-text="ctrl.searchText"
-                                     md-items="item in ctrl.querySearch(ctrl.searchText)"
-                                     md-item-text="item.display"
+                                     md-input-minlength="0"
+                                     md-no-cache="contactListCtrl.noCache"
+                                     md-autofocus="true"
+                                     md-autoselect="true"
+                                     md-selected-item="contactListCtrl.selectedItem"
+                                     md-search-text-change="contactListCtrl.searchTextChange(contactListCtrl.searchText)"
+                                     md-selected-item-change="contactListCtrl.selectedItemChange(item.realIndex)"
+                                     md-search-text="contactListCtrl.searchText"
+                                     md-items="item in contactListCtrl.querySearch(contactListCtrl.searchText)"
+                                     md-item-text="item.name"
                                      md-floating-label="Search">
+                        <md-item-template>
+                            <span md-highlight-text="contactListCtrl.searchText" md-highlight-flags="^i">{{item.name}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No states matching "{{contactListCtrl.searchText}}" were found.
+                        </md-not-found>
                     </md-autocomplete>
                     <!--<div style="margin-top:-5%" id="contacts-list" ng-cloak></div>-->
 

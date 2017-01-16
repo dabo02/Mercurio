@@ -13,21 +13,34 @@ angular.module('users')
     var cachedQuery, lastSearch;
     self.allContacts = loadContacts();
     self.contacts = [self.allContacts[0]];
+    self.sortedContacts = [];
     self.asyncContacts = [];
     self.filterSelected = true;
     self.querySearch = querySearch;
     self.delayedQuerySearch = delayedQuerySearch;
 
+    self.selectedItem;
+    self.searchText;
+    self.noCache = false;
+
     $scope.getChipInfo= function(chip_info) {
         console.log(chip_info);
-    }
+    };
 
     /**
      * Search for contacts; use a random delay to simulate a remote call
      */
     function querySearch (criteria) {
-        cachedQuery = cachedQuery || criteria;
-        var answer = cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];;
+        cachedQuery = criteria || cachedQuery;
+        var decimalRegExp = /\d/;
+	    var characterRegExp = /[a-zA-Z]*/;
+        self.allContacts = loadContacts();
+        if ((cachedQuery.includes("(") || cachedQuery.includes(")") || cachedQuery.includes("-") || decimalRegExp.test(cachedQuery)) && !characterRegExp.test(cachedQuery)){
+            var answer = cachedQuery ? self.allContacts.filter(createFilterForPhone(cachedQuery)) : [];
+
+        }else {
+            var answer = cachedQuery ? self.allContacts.filter(createFilterFor(cachedQuery)) : [];
+        }
         return answer;
     }
     /**
@@ -67,12 +80,18 @@ angular.module('users')
      */
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
-        lowercaseQuery.replace("(","").replace(")","").replace(" ","").replace("-","");
         phoneService.contactSearchString = lowercaseQuery;
         return function filterFn(contact) {
             return (contact._lowername.indexOf(lowercaseQuery) != -1) || (contact.phone.indexOf(lowercaseQuery) != -1);;
         };
     }
+
+    function createFilterForPhone(query) {
+        return function filterFn(contact) {
+            return (contact.phone.indexOf(query) != -1);;
+        };
+    }
+
     function loadContacts() {
         console.log('load contacts called');
         contacts.forEach(function(contact){
@@ -119,13 +138,13 @@ angular.module('users')
         return accountService.isContactListAvailable();
     }
 
-    self.setContacts = function(letter){
+    self.setContacts = function(letter, index){
         self.tempContacts = [];
         for(var i = 0; i < contacts.length ; i++){
             if(contacts[i].firstName.substring(0,1) == letter || contacts[i].firstName.substring(0,1) == letter.toLowerCase()){
                 contacts[i].realIndex = i;
                 self.tempContacts.push(contacts[i]);
-            }
+                }
         }
         if (self.tempContacts.length > 0){
             return true;
@@ -148,6 +167,14 @@ angular.module('users')
                 return contact;
             }
         })
+    };
+
+    self.searchTextChange = function(text){
+
+    };
+
+    self.selectedItemChange = function(index){
+        self.viewContact(index);
     };
 
 }]);

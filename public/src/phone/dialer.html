@@ -10,28 +10,7 @@
                     <!--<video class='rounded centered' id='localStream' autoplay></video>-->
                     <!--<video class='rounded centered' id='remoteStream' autoplay></video>-->
 
-
-                    <md-toolbar ng-controller="CallController as callStatusCtrl" ng-if="callStatusCtrl.phoneService.phone.currentCalls.length > 0">
-                        <div class="md-toolbar-tools">
-                            <md-button aria-label="Call">
-                                Go Back
-                            </md-button>
-                            <h2>
-                                <span></span>
-                            </h2>
-                            <span flex="" ng-controller="ContactListController as contactListCtrl">{{callStatusCtrl.phoneService.phone.currentCalls[0] | currentCallParticipantNameFilter : contactListCtrl.contactList}}</span>
-                            <span flex-offset="10" flex="30" class="md-subhead callTimer"></span>
-                            <md-button class="" aria-label="Learn More">
-                                {{callStatusCtrl.phoneService.phone.currentCalls[0] | currentCallPhoneNumberFilter}}
-                            </md-button>
-                            <md-button class="md-fab md-mini" aria-label="Favorite">
-                                <a href="" ng-click="callCtrl.endCall()" style="width:50px; height:50px; background-color:red;">
-                                    <i style="font-size:25px; line-height:50px; color:#ffffff" class="fa fa-phone fa-lg"></i>
-                                </a>
-                            </md-button>
-                        </div>
-                    </md-toolbar>
-
+                    <call-status-toolbar></call-status-toolbar>
                     <md-card ng-controller="ContactListController as contactListCtrl" flex-offset="30" flex="40" style="background-color:white" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
                         <!--<md-card-title style="margin-top: 0%; margin-left: 7%;">-->
 
@@ -43,7 +22,7 @@
                                 <!--{{profileCtrl.getFirstName()}}-->
                             <!--</p>-->
                         <!--</md-card-title>-->
-                        <md-card-title style="padding-top: 0%; ">
+                        <md-card-title style="padding-top: 0%;">
                             <md-card-title-text flex="80"  flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
 
                                 <md-content ng-if="!dialerCtrl.dialing" class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
