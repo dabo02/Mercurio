@@ -51,19 +51,19 @@
                 clickOutsideToClose:false
                 //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             });
-            console.log('incoming call');
         }
 
         self.callHangupObserver = function(){
             console.log('call hung up');
             self.stopRingTone();
             self.stopRingbackTone();
+            $mdDialog.hide();
             self.contactSearchString = '';
             self.phone.endCall();
             self.phone.currentCalls = [];
             if($state.current.name != "call")
             {
-                $state.reload('dialer');
+                $state.reload();
             }else {
                 $state.go('dialer');
             };
@@ -79,7 +79,7 @@
              } else {
                 self.phone.endCall();
                 self.phone.currentCalls = [];
-                $state.reload('dialer');
+                $state.reload();
             }
         }
         self.callAcceptedObserver = function(){

@@ -353,6 +353,13 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 										self.currentCalls = [];
 										self.callHangUpObserver();
 									} else {
+										if (self.currentCalls[0].answered === true) {
+											self.currentCalls[0].duration = self.callTimer;
+										} else {
+											self.currentCalls[0].answered = false;
+											self.currentCalls[0].duration = "0:00:00";
+										}
+										self.updateFinishedCall();
 										self.callHangUpObserver();
 									}
 								}
