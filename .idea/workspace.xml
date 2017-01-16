@@ -2,34 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdcd8753-a73f-46f8-bdc7-06318adc76a9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/app.css" afterPath="$PROJECT_DIR$/public/assets/app.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/MercurioUtils.js" afterPath="$PROJECT_DIR$/public/src/MercurioUtils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/account/loginForm.html" afterPath="$PROJECT_DIR$/public/src/account/loginForm.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/ChatClientService.js" afterPath="$PROJECT_DIR$/public/src/chats/ChatClientService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/ChatController.js" afterPath="$PROJECT_DIR$/public/src/chats/ChatController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/chat.html" afterPath="$PROJECT_DIR$/public/src/chats/chat.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/chatList.html" afterPath="$PROJECT_DIR$/public/src/chats/chatList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/contacts/ContactListController.js" afterPath="$PROJECT_DIR$/public/src/contacts/ContactListController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/contacts/contactProfile.html" afterPath="$PROJECT_DIR$/public/src/contacts/contactProfile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/contacts/contacts.html" afterPath="$PROJECT_DIR$/public/src/contacts/contacts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/navigation-bars/leftSidebar.html" afterPath="$PROJECT_DIR$/public/src/navigation-bars/leftSidebar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/navigation-bars/navBar.html" afterPath="$PROJECT_DIR$/public/src/navigation-bars/navBar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/navigation-bars/rightSidebar.html" afterPath="$PROJECT_DIR$/public/src/navigation-bars/rightSidebar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/phone/call.html" afterPath="$PROJECT_DIR$/public/src/phone/call.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/phone/dialer.html" afterPath="$PROJECT_DIR$/public/src/phone/dialer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/phone/recentCallList.html" afterPath="$PROJECT_DIR$/public/src/phone/recentCallList.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web-interface-mercurio.iml" afterPath="$PROJECT_DIR$/web-interface-mercurio.iml" />
     </list>
-    <list id="4ee942b8-6f54-40a3-9a1b-d1146b313b5d" name="New changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list id="4ee942b8-6f54-40a3-9a1b-d1146b313b5d" name="New changelist" comment="" />
+    <list id="10732e96-f287-457e-91fb-86aff6e57c78" name="Failed commit: Default" comment="Merge branch 'development' of https://bitbucket.org/optivon/web-interface-mercurio into fbc-web-interface-branch&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/workspace.xml&#10;">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/ChatGroupDetailsController.js" afterPath="$PROJECT_DIR$/public/src/chats/ChatGroupDetailsController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/ChatListController.js" afterPath="$PROJECT_DIR$/public/src/chats/ChatListController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/CreateChatController.js" afterPath="$PROJECT_DIR$/public/src/chats/CreateChatController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/chat.html" afterPath="$PROJECT_DIR$/public/src/chats/chat.html" />
     </list>
     <ignored path="web-interface-mercurio.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +32,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="JanusPhone.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="JanusPhone.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="476">
@@ -85,10 +72,50 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="ChatGroupDetailsController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/src/chats/ChatGroupDetailsController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChatListController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/src/chats/ChatListController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateChatController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/src/chats/CreateChatController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="35" column="28" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web-interface-mercurio.iml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web-interface-mercurio.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="IncomingCallDialogController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/src/phone/IncomingCallDialogController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
+            <state relative-caret-position="450">
               <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
               <folding />
             </state>
@@ -98,7 +125,7 @@
       <file leaf-file-name="CallController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/src/phone/CallController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
+            <state relative-caret-position="1152">
               <caret line="64" column="56" selection-start-line="64" selection-start-column="56" selection-end-line="64" selection-end-column="56" />
               <folding />
             </state>
@@ -200,9 +227,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -309,6 +333,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -970,6 +997,7 @@
       <workItem from="1484281986917" duration="2915000" />
       <workItem from="1484315628874" duration="8949000" />
       <workItem from="1484333507742" duration="13745000" />
+      <workItem from="1484594411218" duration="127000" />
     </task>
     <task id="LOCAL-00001" summary="updated JanusPhone.js">
       <created>1483996497205</created>
@@ -1038,11 +1066,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60417000" />
+    <option name="totallyTimeSpent" value="60544000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="69" y="52" width="1815" height="1027" extended-state="4" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1051,8 +1079,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1120,7 +1148,8 @@
     <MESSAGE value="added call-status-toolbar directive to respective files" />
     <MESSAGE value="call hangup management fix" />
     <MESSAGE value="banner on chat,  incomming call management" />
-    <option name="LAST_COMMIT_MESSAGE" value="banner on chat,  incomming call management" />
+    <MESSAGE value="Merge branch 'development' of https://bitbucket.org/optivon/web-interface-mercurio into fbc-web-interface-branch&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/workspace.xml&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'development' of https://bitbucket.org/optivon/web-interface-mercurio into fbc-web-interface-branch&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/workspace.xml&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1129,30 +1158,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/JanusPhone.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2016">
-          <caret line="112" column="43" selection-start-line="112" selection-start-column="29" selection-end-line="112" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/src/phone/IncomingCallDialogController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/src/phone/CallController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/src/phone/PhoneService.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1206">
@@ -1187,7 +1192,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1476">
           <caret line="82" column="58" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1265,7 +1269,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1476">
           <caret line="82" column="58" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1302,13 +1305,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/src/phone/dialersController.js" />
-    <entry file="file://$PROJECT_DIR$/public/src/chats/CreateChatController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="35" column="28" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/src/navigation-bars/leftSidebarDirective.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1379,7 +1375,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-353">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1401,7 +1396,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="21" column="55" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1437,7 +1431,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1476">
           <caret line="82" column="58" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1483,13 +1476,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/src/phone/CallController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
+        <state relative-caret-position="1152">
           <caret line="64" column="56" selection-start-line="64" selection-start-column="56" selection-end-line="64" selection-end-column="56" />
           <folding />
         </state>
@@ -1511,17 +1503,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/src/chats/chat.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/src/phone/IncomingCallDialogController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
+        <state relative-caret-position="450">
           <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
           <folding />
         </state>
@@ -1531,6 +1515,46 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="119" column="20" selection-start-line="119" selection-start-column="20" selection-end-line="119" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/src/chats/chat.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/src/chats/ChatGroupDetailsController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/src/chats/ChatListController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/src/chats/CreateChatController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="35" column="28" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web-interface-mercurio.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -9,6 +9,7 @@
 
         var self = this;
         self.chatClient = chatClientService.chatClient;
+        self.chatClientService = chatClientService;
 
         self.topDirections = ['left', 'up'];
         self.bottomDirections = ['down', 'right'];
