@@ -201,10 +201,10 @@
 </script>
 <!--end incoming call dialog-->
 
-<md-sidenav id="sidenav" ng-click="navCtrl.toggleLeftSidebar()" md-component-id="left" class="md-whiteframe-z2" >
+<md-sidenav id="sidenav" style = "background:rgba(0,0,0,0.65);" ng-click="navCtrl.toggleLeftSidebar()" md-component-id="left" class="md-whiteframe-z2" >
     <md-list>
 
-        <md-card ng-controller="ProfileEditorController as profileCtrl" style="margin:0px; margin-bottom:4%; background-image:url({{user.background}});" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card ng-controller="ProfileEditorController as profileCtrl" style="margin:0px; margin-bottom:4%; background-image:url(images/background.jpg);" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
             <md-card-title>
                 <md-card-title-media flex="40">
                     <div class="md-media-sm card-media"><md-icon class="avatar"><img style="border-radius:70px;" ng-src="{{profileCtrl.getProfilePicture()}}"></md-icon></div>
@@ -222,49 +222,52 @@
         <md-list-item layout="row" ng-controller="ProfileEditorController as profileCtrl">
             <md-button layout="row">
                 <p flex="20" ng-click="profileCtrl.showProfileEditorDialog()"><img ng-src="images/contacts.png" alt=""></p>
-                <p flex="80" ng-click="profileCtrl.showProfileEditorDialog()">Profile</p>
+                <p style = "color: white;" flex="80" ng-click="profileCtrl.showProfileEditorDialog()">Profile</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.contactsLinkClicked()" layout="row">
                 <p flex="20"><img ng-src="images/contacts.png" alt=""></p>
-                <p flex="80">Contacts</p>
+                <p style = "color: white;" flex="80">Contacts</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row" ng-controller="ManageCRMController as crmCtrl">
             <md-button layout="row">
                 <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img ng-src="images/contacts.png" alt=""></p>
-                <p flex="80" ng-click="crmCtrl.showManageCRMDialog()">CRM Manager</p>
+                <p style = "color: white;" flex="80" ng-click="crmCtrl.showManageCRMDialog()">CRM Manager</p>
+                <md-icon ng-show = "crmCtrl.crmManager.crmList[0].validated" class="fa fa-check" alt=""></p>
+                <md-icon ng-show = "!crmCtrl.crmManager.crmList[0].validated" class="fa fa-exclamation-triangle" alt=""></p>
+
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row">
             <md-button layout="row">
                 <p flex="20" data-toggle="modal" data-target='#phone-settings-modal'><img ng-src="images/settings.png" alt=""></p>
-                <p flex="80" data-toggle="modal" data-target='#phone-settings-modal'>Phone Settings</p>
+                <p style = "color: white;" flex="80" data-toggle="modal" data-target='#phone-settings-modal'>Phone Settings</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row">
             <md-button layout="row">
                 <p flex="20" data-toggle="modal" data-target=''><img ng-src="images/settings.png" alt=""></p>
-                <p flex="80" data-toggle="modal" data-target=''>Account Settings</p>
+                <p style = "color: white;" flex="80" data-toggle="modal" data-target=''>Account Settings</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row">
             <md-button layout="row">
                 <p flex="20"><img ng-src="images/info.png" alt=""></p>
-                <p flex="80">About Mercurio</p>
+                <p style = "color: white;" flex="80">About Mercurio</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row" ng-controller="AuthenticationController as authCtrl">
             <md-button ng-click="authCtrl.logoutButtonClicked()" layout="row">
                 <p flex="20"><img ng-src="images/signout.png" alt=""></p>
-                <p flex="80">Sign Out</p>
+                <p style = "color: white;" flex="80">Sign Out</p>
             </md-button>
         </md-list-item>
         <!--<md-list-item layout ="row" style="background-image:url(images/background.jpg)"-->
