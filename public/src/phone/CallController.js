@@ -25,11 +25,15 @@
             phoneService.phone.muteCall();
         }
 
-        self.endCall = function(){
+        self.endCall = function() {
             phoneService.stopRingbackTone();
+            phoneService.stopRingTone();
             phoneService.phone.endCall();
-        }
+            if($state.current.name === "call") {
+                $state.go('dialer');
+            }
 
+        }
         self.showDTMFDialog = function(event) {
             $mdDialog.show({
                 templateUrl: 'dtmfDialog',
@@ -58,23 +62,23 @@
         //    phoneService.stopRingTone();
         //    phoneService.phone.endCall();
         //}
+        if(phoneService.phone.ignoreCallFlag !== true) {
+            if (phoneService.phone.currentCalls.length > 0) {
+                if (!phoneService.phone.currentCalls[0].answered) {
+                    if (phoneService.phone.currentCalls[0].incoming) {
+                        phoneService.phone.currentCalls[0].answered = true;
+                        self.receiveCall();
+                    }
+                    else {
+                        self.makeCall();
+                    }
+                }
 
-        if(phoneService.phone.currentCalls.length > 0){
-            if(!phoneService.phone.currentCalls[0].answered){
-                if(phoneService.phone.currentCalls[0].incoming){
-                    phoneService.phone.currentCalls[0].answered = true;
-                    self.receiveCall();
-                }
-                else{
-                    self.makeCall();
-                }
             }
-
+            else if ($state.current.name == 'call') {
+                $state.go('dialer');
+            }
         }
-        else if($state.current == 'call'){
-                location.replace("#/dialer");
-        }
-
 
     }])
 })();

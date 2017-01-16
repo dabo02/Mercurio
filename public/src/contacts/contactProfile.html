@@ -5,8 +5,9 @@
 
         <md-content flex="75" id="main-content" ng-controller="DialerController as dialer" style="overflow-x:hidden; overflow-y: hidden; position:relative;padding:0%; background-color: transparent;">
             <div style="padding-top:3%" class="row">
+                <call-status-toolbar></call-status-toolbar>
                 <div class="col-lg-2 col-md-2 col-lg-push-3 col-md-push-3">
-                    <span style="display:table;margin:0 auto;" class="dialer-icons">
+                    <span style="display:table;margin:0 auto;" class="dialer-icons" ng-controller="ContactController as contactCtrl">
                         <a style="margin-right:0px;"><i style="color:#1565c0;" class="fa fa-phone"></i></a>
                     </span>
                 </div>

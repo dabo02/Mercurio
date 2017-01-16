@@ -165,7 +165,8 @@
                     </div>
                     <div ng-click="callCtrl.muteCall();" id="call-button" flex="30" layout="column">
                         <div ng-click="" id="call-button" style="border-right:1px solid #1565c0; border-left:1px solid #1565c0;" flex="40" layout="column">
-                        <md-icon style="text-align: center; font-size:25px; margin-top:10%;" class="fa fa-microphone-slash"></md-icon>
+                        <md-icon ng-if="callCtrl.phoneService.phone.callOnMute" style="text-align: center; font-size:25px; margin-top:10%;" class="fa fa-microphone-slash"></md-icon>
+                        <md-icon ng-if="!callCtrl.phoneService.phone.callOnMute" style="text-align: center; font-size:25px; margin-top:10%;" class="fa fa-microphone"></md-icon>
                         <p class="text-center">Mute</p>
                     </div>
                     </div>

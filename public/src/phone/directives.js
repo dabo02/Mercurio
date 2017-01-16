@@ -11,5 +11,11 @@
             restrict: 'E',
             replace: false
         }
+    }).directive('callStatusToolbar',function(){
+        return {
+            templateUrl:'src/phone/callStatusToolbar.html',
+            restrict: 'E',
+            replace: false
+        }
     });
 })();

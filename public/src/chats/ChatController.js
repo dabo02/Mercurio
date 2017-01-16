@@ -9,7 +9,6 @@
 
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
-        self.chatClient = chatClientService.chatClient;
         self.chatClientService = chatClientService;
         /*self.chat = chatClientService.chatClient.chatList[self.chatIndex];
         self.messageList = self.chat.messageList;
@@ -90,7 +89,7 @@
         }
 
         self.isMessageFromMe = function(message){
-            return message.from === self.chatClient.chatClientOwner;
+            return message.from == chatClientService.chatClient.chatClientOwner;
         }
 
         self.showUploadForm = function(){
