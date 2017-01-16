@@ -51,6 +51,9 @@ function JanusPhone(userId, phoneInitializationObserver) {
 	self.localView;
 	self.remoteView;
 	self.callOnMute = false;
+	self.outboundCall = false;
+	self.endCallRequest = false;
+	self.ignoreCallFlag = false;
 	self.remoteHasVideo = false;
 	self.localHasVideo = false;
 	self.recentCallList = [];
@@ -93,6 +96,19 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 	this.currentCalls.push(new RecentCall(newCallRef.key, answered, '', from, incoming, timeStamp, to));
 }
 
+JanusPhone.prototype.updateFinishedCall = function(){
+
+	var self = this;
+
+	var updates = {};
+
+	updates['/user-calls/' + self.phoneOwner + "/" + self.currentCalls[0].callId + '/answered'] = self.currentCalls[0].answered;
+	updates['/user-calls/' + self.phoneOwner + "/" + self.currentCalls[0].callId + '/duration'] = self.currentCalls[0].duration;
+
+	firebase.database().ref().update(updates);
+
+	// TODO - add error management callback
+}
 
 /**
  * @function JanusPhone.fetchRecentCallListPage:
@@ -244,11 +260,22 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 						webrtcState: function (state) {
 							if (state === true) {
 								self.inCallTimer();
+								if (self.outboundCall = true) {
+									self.currentCalls[0].answered = true;
+									self.outboundCall =false;
+								} else {
+									self.currentCalls[0].answered = true; // TODO Ask default value to take proper action
+								}
 								self.webRTCStateObserver(state);
 							}
-							else {
-								self.webRTCStateObserver(state);
-							}
+							 else {
+								if(self.endCallRequest == false) {
+									self.stopTimer = true;
+									self.currentCalls[0].duration = self.callTimer;
+									self.updateFinishedCall();
+									self.webRTCStateObserver(state);
+								}
+							 }
 
 						},
 						onmessage: function (msg, jsep) {
@@ -296,6 +323,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 								if (event === 'calling') {
 									self.jsepOnMakeCall = jsep;
 									self.stopTimer =false;
+									self.callInProgress = true;
 									self.callInProgressObserver();
 								}
 								if (event === 'accepted') {
@@ -310,8 +338,23 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 								}
 								if (event === 'hangup') {
 									Janus.debug("call hanged");
-									clearInterval(self.cT);
-									self.callHangUpObserver();
+									if (self.endCallRequest === true) {
+										if (self.outboundCall == true || self.ignoreCallFlag === true) {
+											self.outboundCall = false;
+											self.ignoreCallFlag = false;
+											self.currentCalls[0].answered = false;
+											self.currentCalls[0].duration = "0:00:00";
+										} else {
+											self.currentCalls[0].duration = self.callTimer;
+										}
+										self.updateFinishedCall();
+										clearInterval(self.cT);
+										self.stopTimer = true;
+										self.currentCalls = [];
+										self.callHangUpObserver();
+									} else {
+										self.callHangUpObserver();
+									}
 								}
 							}
 						},
@@ -418,6 +461,7 @@ JanusPhone.prototype.makeCall = function(phoneNumber, myStreamTag, peerStreamTag
 JanusPhone.prototype.endCall = function() {
 	var self = this;
 	var hangup = {"request": "hangup"};
+	self.endCallRequest = true;
 	self.sipCallHandler.send({"message": hangup}); // sends habgup request to gateway
 	self.sipCallHandler.hangup(); // cleans up UI and removes streams
 };
