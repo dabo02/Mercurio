@@ -712,10 +712,27 @@ $duration: 1.4s;
     color: #F44336;
 }
 
+
 md-chips.md-default-theme .md-chips .md-chip-input-container input, md-chips .md-chips .md-chip-input-container input{
   color: white;
 }
 
 md-chps.md-default-theme .md-chips .md-chip-input-container placeholder {
   color: red;
+
+#centralize-4-navbar{
+  width:24%;
+}
+
+#centralize-4-navbar button{
+  width:100%;
+}
+
+#centralize-2-navbar{
+  width:50%;
+}
+
+#centralize-2-navbar button{
+  width:100%;
+
 }
