@@ -9,6 +9,8 @@
 
         var self = this;
         self.phone = phoneService.phone;
+        self.phoneService = phoneService;
+        $scope.currentNavItem = "all";
 
         $scope.selectedCallIndex = undefined;
 
@@ -21,6 +23,28 @@
             }
         };
 
+        self.missedCalls = [];
+        self.outgoingCalls = [];
+        self.incomingCalls = [];
+        function filterCalls(calls){
+          calls.forEach(function(call){
+            if(!call.answered){
+              self.missedCalls.push(call);
+            }
+          });
+
+          calls.forEach(function(call){
+            if(call.incoming && call.answered){
+              self.incomingCalls.push(call);
+            }
+          });
+
+          calls.forEach(function(call){
+            if(!call.incoming && call.answered){
+              self.outgoingCalls.push(call);
+            }
+          });
+        }
         self.recentCalls =
           {
             "name":"Ralo@optivon.net",
@@ -85,8 +109,14 @@
               }
             ]
           };
+          filterCalls(self.phoneService.phone.recentCallList);
+
+        self.saveIndex = function(index){
+          self.phoneService.selectedCallDetailsIndex = index;
+        }
 
         self.showDeleteConfirm = function(event, callIndex) {
+          console.log(callIndex)
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to delete this call from your recents list?')

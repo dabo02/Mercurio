@@ -711,3 +711,11 @@ $duration: 1.4s;
     transform: rotate(225deg);
     color: #F44336;
 }
+
+#centralize-4-navbar{
+  width:24%;
+}
+
+#centralize-4-navbar button{
+  width:100%;
+}
