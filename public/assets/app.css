@@ -719,3 +719,11 @@ $duration: 1.4s;
 #centralize-4-navbar button{
   width:100%;
 }
+
+#centralize-2-navbar{
+  width:50%;
+}
+
+#centralize-2-navbar button{
+  width:100%;
+}
