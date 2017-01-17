@@ -178,7 +178,7 @@
                 </md-dialog-content>
 
                 <md-dialog-content ng-if="!crmCtrl.isCallableRecordListAvailable()">
-                    <h1 style = "margin-top: 2%" flex-offset = "5" >There are no records in your CRM that match the selected phone number.</h3>
+                    <h1 style = "font-size: 18px; margin-top: 2%" flex-offset = "5" >There are no records in your CRM that match the selected phone number.</h3>
                 </md-dialog-content>
 
                 <md-dialog-actions layout="row">
@@ -195,7 +195,7 @@
         </md-dialog>
     </script>
 
-    <md-autocomplete class= "mercurioBlueColor" id='chatListSearch' style="font-color: white; margin-top:2%;" flex
+    <!-- <md-autocomplete class= "mercurioBlueColor" id='chatListSearch' style="font-color: white; margin-top:2%;" flex
                      md-input-name="autocompleteField"
                      md-input-minlength="2"
                      md-input-maxlength="18"
@@ -205,9 +205,9 @@
                      md-items="item in ctrl.querySearch(ctrl.searchText)"
                      md-item-text="item.display"
                      md-floating-label="Search">
-    </md-autocomplete>
+    </md-autocomplete> -->
 
-    <md-button ng-repeat="call in recentCallListCtrl.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom:7%; margin-top:-7%; width:100%; border-bottom:1px solid #eee">
+    <md-button class= "firstElement" ng-repeat="call in recentCallListCtrl.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
                 <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
@@ -225,7 +225,7 @@
         <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
             <span style = "color: white;" ng-controller="CallDetailsController as callDetailsCtrl" ng-click="callDetailsCtrl.showCallDetailsDialog($event, $index)">Call Details</span>
             <br/>
-            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.crmService.addCallToCRM($event, call)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
             <br/>
             <span style = "color: white;">Send Text Message</span>
             <br/>

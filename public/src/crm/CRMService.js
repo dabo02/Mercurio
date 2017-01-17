@@ -8,7 +8,7 @@
 
     'use strict';
 
-    angular.module('mercurio').service('crmService', ['phoneService','$stateParams', '$rootScope', '$mdDialog', '$location', '$anchorScroll', function(phoneService, $stateParams, $rootScope, $mdDialog, $location, $anchorScroll){
+    angular.module('mercurio').service('crmService', ['$stateParams', '$rootScope', '$mdDialog', '$location', '$anchorScroll', function($stateParams, $rootScope, $mdDialog, $location, $anchorScroll){
 
         var self = this;
         self.crmManager = null;
@@ -20,7 +20,7 @@
             self.crmManager = new MercurioCRMManager(userId);
         }
 
-        self.addCallToCRM = function(event, call){
+        self.addCallToCRM = function(phone, type, event){
             self.isFetching=true;
             self.showAddCallToCRMDialog(event);
             self.callableRecords = null;
@@ -39,16 +39,7 @@
             }
             */
 
-            if(call.from === phoneService.activeAccount.phone){
-                self.selectedNumber = call.to;
-                self.selectedCallDirection = 'Outgoing';
-            }
-            else{
-                self.selectedNumber = call.from;
-                self.selectedCallDirection = 'Incoming';
-            }
-
-            self.crmManager.crmList[0].searchCallableRecords(self.selectedNumber, function(records){
+            self.crmManager.crmList[0].searchCallableRecords(phone, function(records){
                 self.callableRecords = records;
                   $rootScope.$apply(function(){
                         self.isFetching = false;

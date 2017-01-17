@@ -121,7 +121,7 @@
                                     <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block">
                                         <label style="color: white;" >Type Message</label>
                                         <!--<input ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.changeMicToSend()" type="text">-->
-                                        <input ng-model="multimediaChatCtrl.textContentToSend" type="text">
+                                        <input style="color: white;" ng-model="multimediaChatCtrl.textContentToSend" type="text">
                                     </md-input-container>
                                     <p ng-click="multimediaChatCtrl.sendMessage()" style="margin-top: 3%; color:#1565c0; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                                 </div>
@@ -161,7 +161,7 @@
 
 
                 <md-content style="margin-bottom:10%;overflow-x:hidden;border-radius:8px;height:100%; background:rgba(0,0,0,0.55);" flex="80" flex-offset="10">
-                    <div ng-controller ="OptionController as options" style="border-radius:8px; border:1px solid #1565c0; ">
+                    <div ng-controller ="OptionController as options" style="border-radius:8px; border:1px solid white; ">
                         <div class="row">
 
                             <md-list flex="90" flex-offset="5">
@@ -272,11 +272,11 @@
                                 <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" class="md-icon-float md-block flex-85 flex-offset-5">
                                     <label style="color: white;">Type Message</label>
                                     <!--<input ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.changeMicToSend()" type="text">-->
-                                    <input style = "border-color: white;" ng-model="chatCtrl.textContentToSend" type="text">
+                                    <input style = "color: white; border-color: white;" ng-model="chatCtrl.textContentToSend" type="text">
                                 </md-input-container>
                                 <p ng-click="chatCtrl.sendMessage()"  style="margin-top: 3%; color: white; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                             </form>
-                            <h4 ng-if="!chatGroupCtrl.isChatClientOwnerGroupMember" layout="row" layout-align="center center">
+                            <h4 style = "color: white;"ng-if="!chatGroupCtrl.isChatClientOwnerGroupMember" layout="row" layout-align="center center">
                                 You have left this group
                             </h4>
                         </div>

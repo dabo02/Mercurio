@@ -5,10 +5,23 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('AddCallToCRMController', ['accountService', 'crmService', '$mdDialog', '$scope', function(accountService, crmService, $mdDialog, $scope){
+    angular.module('mercurio').controller('AddCallToCRMController', ['phoneService', 'crmService', '$mdDialog', '$scope', function(phoneService, crmService, $mdDialog, $scope){
 
         var self = this;
         self.crmService = crmService;
+        self.phoneService = phoneService;
+
+        self.addCallToCRMButtonClicked = function(call, event){
+          if(call.from === phoneService.activeAccount.phone){
+              self.selectedNumber = call.to;
+              self.selectedCallDirection = 'Outgoing';
+          }
+          else{
+              self.selectedNumber = call.from;
+              self.selectedCallDirection = 'Incoming';
+          }
+          crmService.addCallToCRM(self.selectedNumber, self.selectedCallDirection, event);
+        }
 
         self.isCallableRecordListAvailable = function(){
             return (crmService.callableRecords !== null) &&
