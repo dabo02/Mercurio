@@ -21,6 +21,71 @@
             }
         };
 
+        self.recentCalls =
+          {
+            "name":"Ralo@optivon.net",
+            "number":"1234",
+            "calls":
+            [
+              {
+                "answered" : true,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : false,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : false,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : true,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : true,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : false,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : false,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : true,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : true,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : true,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : false,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : false,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : true,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : false,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              }
+            ]
+          };
+
         self.showDeleteConfirm = function(event, callIndex) {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
