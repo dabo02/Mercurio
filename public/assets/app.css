@@ -711,3 +711,11 @@ $duration: 1.4s;
     transform: rotate(225deg);
     color: #F44336;
 }
+
+md-chips.md-default-theme .md-chips .md-chip-input-container input, md-chips .md-chips .md-chip-input-container input{
+  color: white;
+}
+
+md-chps.md-default-theme .md-chips .md-chip-input-container placeholder {
+  color: red;
+}
