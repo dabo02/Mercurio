@@ -59,7 +59,6 @@
             self.stopRingbackTone();
             $mdDialog.hide();
             self.contactSearchString = '';
-            self.phone.endCall();
             self.phone.currentCalls = [];
             if($state.current.name != "call")
             {

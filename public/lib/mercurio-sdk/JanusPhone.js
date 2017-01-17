@@ -78,7 +78,6 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 
 	var self = this;
 	var newCallRef = firebase.database().ref().child('user-calls/' + self.phoneOwner).push();
-
 	var callInfo = {
 		answered: answered,
 		duration: '',
@@ -87,7 +86,7 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 		timeStamp: timeStamp,
 		to: to
 	};
-	
+
 	var updates = {};
 	// add user-chat entry for participant
 	updates['/user-calls/' + self.phoneOwner + "/" + newCallRef.key] = callInfo;
@@ -347,11 +346,6 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 										} else {
 											self.currentCalls[0].duration = self.callTimer;
 										}
-										self.updateFinishedCall();
-										clearInterval(self.cT);
-										self.stopTimer = true;
-										self.currentCalls = [];
-										self.callHangUpObserver();
 									} else {
 										if (self.currentCalls[0].answered === true) {
 											self.currentCalls[0].duration = self.callTimer;
@@ -359,9 +353,15 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 											self.currentCalls[0].answered = false;
 											self.currentCalls[0].duration = "0:00:00";
 										}
-										self.updateFinishedCall();
-										self.callHangUpObserver();
+
+
 									}
+									self.updateFinishedCall();
+									clearInterval(self.cT);
+									self.stopTimer = true;
+									self.endCallRequest = false;
+									self.currentCalls = []
+									self.callHangUpObserver();
 								}
 							}
 						},
