@@ -28,22 +28,60 @@
             "calls":
             [
               {
-                "date" : "Mon, Jan 16, 2017",
-                "time" : "11:08 AM",
-                "duration" : "0 Seconds",
-                "type" : "incoming"
+                "answered" : true,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : false,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
               },
               {
-                "date" : "Fri, Jan 13, 2017",
-                "time" : "12:18 PM",
-                "duration" : "3 Seconds",
-                "type" : "missed"
+                "answered" : false,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : true,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
               },
               {
-                "date" : "Fri, Jan 13, 2017",
-                "time" : "09:45 AM",
-                "duration" : "7 Seconds",
-                "type" : "outgoing"
+                "answered" : true,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : false,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : false,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : true,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : true,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : true,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : false,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : false,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
+              },
+              {
+                "answered" : true,
+                "duration" : "00:04",
+                "from" : "7873042972",
+                "incoming" : false,
+                "timeStamp" : 1482349829206,
+                "to" : "7873042704"
               }
             ]
           };

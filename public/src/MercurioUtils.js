@@ -137,6 +137,48 @@
         };
     })
 
+    .filter('timeStampToDateFilter', function () {
+      return function (timeStamp) {
+
+          var date = new Date(timeStamp);
+          var today = new Date();
+
+          if((today.getDate() - date.getDate()) == 1){
+              return 'Yesterday';
+          }
+          else{
+              return date.toDateString();
+          }
+      };
+    })
+
+    .filter('timeStampToTimeFilter', function () {
+        return function (timeStamp) {
+
+            var date = new Date(timeStamp);
+
+            var hour = date.getHours();
+            var min = date.getMinutes();
+
+            if(min < 10){
+                min = '0' + min;
+            }
+
+            if(hour == 0){
+                return '12:' + min + ' am';
+            }
+            else if(hour == 12 ){
+                return '12:' + min + ' pm';
+            }
+            else if(hour > 12){
+                return (hour - 12) + ':' + min + ' pm';
+            }
+            else{
+                return hour + ':' + min + ' am';
+            }
+        };
+    })
+
     .filter('chatTitleFilter', function () {
         return function (chat, chatClientOwner) {
 
@@ -365,5 +407,5 @@
         };
     })
 
-   
+
 })();

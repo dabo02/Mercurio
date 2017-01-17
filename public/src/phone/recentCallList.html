@@ -30,7 +30,7 @@
                   </div>
               </md-toolbar>
 
-                <md-dialog-content class="flex-100" style="margin-top:3%;" ng-controller="RecentCallListController as RecentCallsCtrl">
+                <md-dialog-content class="flex-100" style="margin-top:3%; overflow-y:hidden;" ng-controller="RecentCallListController as RecentCallsCtrl">
 
                   <div>
                     <md-list style="margin-top:-3%;">
@@ -57,26 +57,31 @@
                       </md-list-item>
                     </md-list>
                     <md-divider></md-divider>
-                    <md-list layout ="column" style="background-color:#EEEEEE">
-                      <md-list-item ng-repeat="call in RecentCallsCtrl.recentCalls.calls">
+                    <md-list layout ="column" style="background-color:#EEEEEE; overflow-y:scroll; height:250px;">
+                      <div ng-repeat="call in RecentCallsCtrl.recentCalls.calls">
+                        <md-divider ng-if="!$first"></md-divider>
                         <div layout="row" style="width:100%;">
-                          <div class="pull-left" layout="column" style="width:50%;">
+                          <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
                             <p>
-                              {{call.date}}
+                              {{call.timeStamp | timeStampToDateFilter}}
                             </p>
                             <p>
                               {{call.duration}}
                             </p>
                           </div>
-                          <div class="pull-right" layout="column" style="width:50%;">
+                          <div class="pull-right" layout="column" style="width:50%; margin-right:2%;">
                             <p style="text-align:right">
-                              {{call.time}}
+                              {{call.timeStamp | timeStampToTimeFilter}}
                             </p>
+                            <div>
+                              <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
+                              <i ng-if="call.incoming && !call.answered" class="fa fa-long-arrow-up incoming-missed pull-right" style="margin-right:15%;"></i>
+                              <i ng-if="!call.incoming && call.answered" class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
+                              <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
+                            </div>
                           </div>
                         </div>
-                        <md-divider></md-divider>
-                      </md-list-item>
-
+                      </div>
                     </md-list>
                   </div>
                 </md-dialog-content>
