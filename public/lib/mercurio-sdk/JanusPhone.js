@@ -343,6 +343,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 											self.ignoreCallFlag = false;
 											self.currentCalls[0].answered = false;
 											self.currentCalls[0].duration = "0:00:00";
+											self.sipCallHandler.hangup(); // cleans up UI and removes streams
 										} else {
 											self.currentCalls[0].duration = self.callTimer;
 										}
@@ -353,8 +354,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 											self.currentCalls[0].answered = false;
 											self.currentCalls[0].duration = "0:00:00";
 										}
-
-
+										self.sipCallHandler.hangup(); // cleans up UI and removes streams
 									}
 									self.updateFinishedCall();
 									clearInterval(self.cT);
@@ -368,9 +368,6 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 						onlocalstream: function (stream) {
 							Janus.debug(" ::: Got a local stream :::");
 							self.localStream = stream;
-
-							// if ($('#myvideo').length === 0)
-							// $('#videoleft').append('<video class="rounded centered" id="myvideo" width=320 height=240 autoplay muted="muted"/>');
 
 							Janus.attachMediaStream(self.localView, self.localStream);
 							self.localView.muted = "muted";
