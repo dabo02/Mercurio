@@ -8,15 +8,68 @@
 
     'use strict';
 
-    angular.module('mercurio').service('crmService', ['$stateParams', '$location', '$anchorScroll', function($stateParams, $location, $anchorScroll){
+    angular.module('mercurio').service('crmService', ['phoneService','$stateParams', '$rootScope', '$mdDialog', '$location', '$anchorScroll', function(phoneService, $stateParams, $rootScope, $mdDialog, $location, $anchorScroll){
 
         var self = this;
         self.crmManager = null;
         self.selectedNumber = null;
         self.callableRecords = null;
+        self.isFetching = false;
 
         self.instantiateCRMManager = function(userId){
             self.crmManager = new MercurioCRMManager(userId);
+        }
+
+        self.addCallToCRM = function(event, call){
+            self.isFetching=true;
+            self.showAddCallToCRMDialog(event);
+            self.callableRecords = null;
+            /*
+            if(call.from !== accountService.activeAccount.phone){
+                crmService.selectedNumber = call.from;
+                crmService.selectedCallDirection = 'Missed';
+
+                if(call.answered){
+                    crmService.selectedCallDirection = 'Incoming';
+                }
+            }
+            else{
+                crmService.selectedNumber = call.to;
+                crmService.selectedCallDirection = 'Outgoing';
+            }
+            */
+
+            if(call.from === phoneService.activeAccount.phone){
+                self.selectedNumber = call.to;
+                self.selectedCallDirection = 'Outgoing';
+            }
+            else{
+                self.selectedNumber = call.from;
+                self.selectedCallDirection = 'Incoming';
+            }
+
+            self.crmManager.crmList[0].searchCallableRecords(self.selectedNumber, function(records){
+                self.callableRecords = records;
+                  $rootScope.$apply(function(){
+                        self.isFetching = false;
+                    });
+            });
+        }
+
+        self.showAddCallToCRMDialog = function(event) {
+            $mdDialog.show({
+                //controller: AddCallToCRMController,
+                templateUrl: 'addCallToCRMForm',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                escapeToClose: true,
+                clickOutsideToClose:true
+                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            });
+        }
+
+        self.closeAddCallToCRMDialog = function(){
+            $mdDialog.hide()
         }
 
         self.isCRMListEmpty = function(){
