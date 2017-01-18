@@ -72,12 +72,12 @@
         </md-dialog>
     </script>
 
-    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+    <!-- <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
         <md-nav-item id="centralize-2-navbar" md-nav-click="goto('page1')" name="page1">Edit</md-nav-item>
         <md-nav-item id="centralize-2-navbar" style="width:50%;" md-nav-click="goto('page2')" name="page2" ng-click="chatListCtrl.showCreateChatDialog($event)">Add</md-nav-item>
-    </md-nav-bar>
+    </md-nav-bar> -->
 
-    <md-autocomplete id='chatListSearch' style="margin-top:2%;" flex
+    <!-- <md-autocomplete id='chatListSearch' style="margin-top:2%;" flex
                      md-input-name="autocompleteField"
                      md-input-minlength="2"
                      md-input-maxlength="18"
@@ -87,9 +87,9 @@
                      md-items="item in ctrl.querySearch(ctrl.searchText)"
                      md-item-text="item.display"
                      md-floating-label="Search">
-    </md-autocomplete>
+    </md-autocomplete> -->
 
-    <md-list style="margin-top:-10%" ng-show="chatListCtrl.isChatListAvailable">
+    <md-list style="margin-top: 0%" ng-show="chatListCtrl.isChatListAvailable">
         <md-list-item ng-if="chat.lastMessage && chat.messageList.length > 0" ng-repeat="chat in chatListCtrl.chatClient.chatList track by $index" ng-click="chatListCtrl.viewChat($index)" style="background:rgba(0,0,0,0.60); margin-bottom: 2%; padding:0%; width:100%" id="chat-conversation" class="md-2-line">
             <img ng-src="{{chat | chatListAvatarFilter : chatListCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
             <div style="width:100%" class="md-list-item-text" layout="column">
@@ -108,25 +108,16 @@
         </md-list-item>
     </md-list>
 
-    <!--
+
     <div class="lock-size" layout="row" layout-align="end end">
         <md-fab-speed-dial md-open="chatListCtrl.isOpen" md-direction="{{chatListCtrl.selectedDirection}}" ng-class="chatListCtrl.selectedMode">
             <md-fab-trigger>
-                <md-button aria-label="menu" class="md-fab md-primary">
-                    <md-icon md-svg-icon="menu"></md-icon>
+                <md-button aria-label="menu" class="md-fab md-primary" ng-click="chatListCtrl.showCreateChatDialog($event)" >
+                    <img style= "background-color: transparent;" ng-src= "images/chat1.png"></img>
                 </md-button>
             </md-fab-trigger>
-
-            <md-fab-actions>
-                <md-button aria-label="add" ng-click="chatListCtrl.showCreateChatDialog($event)" class="md-fab md-raised md-mini">
-                    <md-icon class="icon_add" aria-label="Add Chat"></md-icon>
-                </md-button>
-                <md-button aria-label="edit" class="md-fab md-raised md-mini">
-                    <md-icon md-svg-icon="mode_edit" aria-label="Edit Chat List">edit</md-icon>
-                </md-button>
-            </md-fab-actions>
         </md-fab-speed-dial>
-    </div>-->
+    </div>
 
 
 </md-content>

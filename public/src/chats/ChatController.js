@@ -121,7 +121,7 @@
             });
         };
 
-        self.getParticipantUserId = function(){
+        self.getChatParticipantUserId = function(){
           var userId = null;
           chatClientService.chatClient.chatList[self.chatIndex].participantList.forEach(function (participant) {
               if (chatClientService.chatClient.chatClientOwner != participant.userId) {
