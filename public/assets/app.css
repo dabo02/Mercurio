@@ -712,6 +712,11 @@ $duration: 1.4s;
     color: #F44336;
 }
 
+
+/*md-chips.md-default-theme .md-chips .md-chip-input-container input, md-chips .md-chips .md-chip-input-container input{
+  color: white;
+}*/
+
 #centralize-4-navbar{
   width:24%;
 }
@@ -726,6 +731,7 @@ $duration: 1.4s;
 
 #centralize-2-navbar button{
   width:100%;
+
 }
 
 #remoteStream{
