@@ -16,13 +16,13 @@
 
             <!--start dtmf dialog-->
             <script type="text/ng-template" id="dtmfDialog">
-                <md-dialog aria-label="DTMF Dialog">
+                <md-dialog aria-label="DTMF Dialog" ng-controller="CallController as dtmfDialogCtrl">
 
                     <md-toolbar>
                         <div class="md-toolbar-tools">
                             <h2>Dial Pad</h2>
                             <span flex></span>
-                            <md-button class="md-icon-button" ng-click="callCtrl.closeDTMFDialog()">
+                            <md-button class="md-icon-button close" ng-click="dtmfDialogCtrl.closeDTMFDialog()">
                                 &times;
                             </md-button>
                         </div>
@@ -33,7 +33,7 @@
                                 <md-input-container class="md-icon-float md-block">
                                     <label></label>
                                     <md-icon class="fa fa-envelope"></md-icon>
-                                    <input type="text" value="callCtrl.phoneService.phone.dialedDTMFTones">
+                                    <!--<input type="text" ng-value="callCtrl.phoneService.phone.dialedDTMFTones">-->
                                 </md-input-container>
 
                                 <!--First dialer row ( 1, 2, 3, videocall)-->
