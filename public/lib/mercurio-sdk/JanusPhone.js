@@ -87,12 +87,12 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 		timeStamp: timeStamp,
 		to: to
 	};
-	
+
 	var updates = {};
 	// add user-chat entry for participant
 	updates['/user-calls/' + self.phoneOwner + "/" + newCallRef.key] = callInfo;
 	firebase.database().ref().update(updates);
-	
+
 	this.currentCalls.push(new RecentCall(newCallRef.key, answered, '', from, incoming, timeStamp, to));
 }
 
@@ -350,7 +350,6 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 										self.updateFinishedCall();
 										clearInterval(self.cT);
 										self.stopTimer = true;
-										self.currentCalls = [];
 										self.callHangUpObserver();
 									} else {
 										self.callHangUpObserver();
@@ -524,7 +523,7 @@ JanusPhone.prototype.inCallTimer = function() {
 	var minutes = 0; // stores number of minutes of ongoing call
 	var hours = 0; // stores number of hours of ongoing call
 	self.cT = setInterval(function() {
-		
+
 
 		seconds++;
 

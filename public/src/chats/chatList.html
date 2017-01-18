@@ -15,7 +15,7 @@
     <script type="text/ng-template" id="createChatForm">
         <md-dialog flex="40" aria-label="Create New Chat" ng-controller="CreateChatController as createChatCtrl">
             <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
-                <md-toolbar>
+                <md-toolbar class="mercurioBlueBackground">
                     <div class="md-toolbar-tools">
                         <h2>Create New {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}</h2>
                         <span flex></span>
@@ -113,7 +113,7 @@
         <md-fab-speed-dial md-open="chatListCtrl.isOpen" md-direction="{{chatListCtrl.selectedDirection}}" ng-class="chatListCtrl.selectedMode">
             <md-fab-trigger>
                 <md-button aria-label="menu" class="md-fab md-primary" ng-click="chatListCtrl.showCreateChatDialog($event)" >
-                    <img style= "background-color: transparent;" ng-src= "images/chat1.png"></img>
+                    <img style= "height: 20px; background-color: transparent;" ng-src= "images/add_chat.png"></img>
                 </md-button>
             </md-fab-trigger>
         </md-fab-speed-dial>
