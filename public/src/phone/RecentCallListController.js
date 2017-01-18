@@ -8,7 +8,6 @@
     angular.module('mercurio').controller('RecentCallListController', ['$scope', '$state', 'phoneService', '$mdDialog', function($scope, $state, phoneService, $mdDialog){
 
         var self = this;
-        self.phone = phoneService.phone;
         self.phoneService = phoneService;
         $scope.currentNavItem = "all";
 
