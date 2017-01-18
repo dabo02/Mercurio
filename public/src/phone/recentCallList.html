@@ -285,7 +285,7 @@
 
         <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
         <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
-            <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
+            <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.saveIndex($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
             <br/>
             <span ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.markCallAsSelected($event, call)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
             <br/>
