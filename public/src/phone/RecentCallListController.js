@@ -44,79 +44,61 @@
               self.outgoingCalls.push(call);
             }
           });
+          phoneService.missedCalls = angular.copy(self.missedCalls);
+          phoneService.incomingCalls = angular.copy(self.incomingCalls);
+          phoneService.outgoingCalls = angular.copy(self.outgoingCalls);
+
+          //clear fetched calls
+          self.missedCalls = [];
+          self.incomingCalls = [];
+          self.outgoingCalls = [];
         }
-        self.recentCalls =
+
+        self.fetchCallDetails = function(index){
+          phoneService.selectedCallDetailsIndex = index;
+          console.log(phoneService.selectedCallDetailsIndex);
+          var selectedCall = self.phoneService.phone.recentCallList[index];
+          var myPhoneNumber = self.phoneService.activeAccount.phone;
+          var otherUserPhoneNumber;
+          if(selectedCall.from != myPhoneNumber){
+            otherUserPhoneNumber = selectedCall.from;
+          }
+          else{
+            otherUserPhoneNumber = selectedCall.to;
+          }
+
+          self.allCalls = [];
+          self.phoneService.phone.recentCallList.map(function(call){
+            if(otherUserPhoneNumber === call.from || otherUserPhoneNumber === call.to){
+              self.allCalls.push(call);
+            }
+          })
+          phoneService.callDetailsCalls = angular.copy(self.allCalls);
+          var contactList = self.phoneService.activeAccount.contactManager.contactList;
+          var contact=
           {
-            "name":"Ralo@optivon.net",
-            "number":"1234",
-            "calls":
-            [
-              {
-                "answered" : true,
-                "duration" : "00:04",
-                "from" : "7873042972",
-                "incoming" : false,
-                "timeStamp" : 1482349829206,
-                "to" : "7873042704"
-              },
-              {
-                "answered" : false,
-                "duration" : "00:04",
-                "from" : "7873042972",
-                "incoming" : true,
-                "timeStamp" : 1482349829206,
-                "to" : "7873042704"
-              },
-              {
-                "answered" : true,
-                "duration" : "00:04",
-                "from" : "7873042972",
-                "incoming" : false,
-                "timeStamp" : 1482349829206,
-                "to" : "7873042704"
-              },
-              {
-                "answered" : false,
-                "duration" : "00:04",
-                "from" : "7873042972",
-                "incoming" : true,
-                "timeStamp" : 1482349829206,
-                "to" : "7873042704"
-              },
-              {
-                "answered" : true,
-                "duration" : "00:04",
-                "from" : "7873042972",
-                "incoming" : true,
-                "timeStamp" : 1482349829206,
-                "to" : "7873042704"
-              },
-              {
-                "answered" : false,
-                "duration" : "00:04",
-                "from" : "7873042972",
-                "incoming" : false,
-                "timeStamp" : 1482349829206,
-                "to" : "7873042704"
-              },
-              {
-                "answered" : true,
-                "duration" : "00:04",
-                "from" : "7873042972",
-                "incoming" : false,
-                "timeStamp" : 1482349829206,
-                "to" : "7873042704"
-              }
-            ]
+            "firstName" : "Unknown",
+            "phone" : otherUserPhoneNumber,
+            "picture" : "../../images/default_contact_avatar.png"
           };
-          filterCalls(self.phoneService.phone.recentCallList);
-
-        self.saveIndex = function(index){
-          self.phoneService.selectedCallDetailsIndex = index;
+          contactList.map(function(mercurioContact){
+            if(mercurioContact.phone == otherUserPhoneNumber){
+              contact = angular.copy(mercurioContact);
+            }
+          });
+          phoneService.callDetailsContact = contact;
+          //Set default contact
+          contact=
+          {
+            "firstName" : "Unknown",
+            "phone" : otherUserPhoneNumber,
+            "picture" : "../../images/default_contact_avatar.png"
+          };
+          filterCalls(phoneService.callDetailsCalls);
         }
 
-        self.showDeleteConfirm = function(event, callIndex) {
-          console.log(callIndex)
+        self.showDeleteConfirm = function(event) {
+            var callIndex = phoneService.selectedCallDetailsIndex;
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to delete this call from your recents list?')
