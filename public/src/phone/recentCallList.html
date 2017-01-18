@@ -24,7 +24,7 @@
                         </md-button>
                         <md-button class="pull-right md-icon-button fa fa-trash" ng-click="RecentCallsCtrl.showDeleteConfirm($event)">
                         </md-button>
-                        <md-button class="pull-right md-icon-button fa fa-phone">
+                        <md-button class="pull-right md-icon-button fa fa-phone" ng-click="callDetailsCtrl.closeCallDetailsDialog(); RecentCallsCtrl.call();">
                         </md-button>
                       </div>
                   </div>
@@ -115,7 +115,8 @@
                         </div>
                       </div>
                       <div ng-show="currentNavItem=='missed' && RecentCallsCtrl.phoneService.missedCalls.length==0">
-                        <h3 class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.phone}}.</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}.</h3>
                       </div>
 
                       <!-- Incoming calls -->
@@ -141,7 +142,8 @@
                         </div>
                       </div>
                       <div ng-show="currentNavItem=='incoming' && RecentCallsCtrl.phoneService.incomingCalls.length==0">
-                        <h3 class="text-center" style="margin-top:100px;">There are no incoming calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.phone}}.</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}.</h3>
                       </div>
 
                       <!-- Outgoing calls -->
@@ -167,7 +169,8 @@
                         </div>
                       </div>
                       <div ng-show="currentNavItem=='outgoing' && RecentCallsCtrl.phoneService.outgoingCalls.length==0">
-                        <h3 class="text-center" style="margin-top:100px;">There are no outgoing calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.phone}}.</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}.</h3>
                       </div>
 
                     </md-list>

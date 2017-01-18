@@ -116,5 +116,10 @@
             });
         };
 
+        self.call = function(){
+          phoneService.phone.addNewCall(false, self.phoneService.callDetailsContact.phone, self.phoneService.activeAccount.phone, false, new Date().getTime());
+					$state.go('call', {'callIndex' : 0});
+        }
+
     }]);
 })();

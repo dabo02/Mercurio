@@ -727,3 +727,7 @@ $duration: 1.4s;
 #centralize-2-navbar button{
   width:100%;
 }
+
+#remoteStream{
+  visibility: hidden;
+}
