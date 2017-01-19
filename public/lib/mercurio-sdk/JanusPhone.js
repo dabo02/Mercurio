@@ -78,7 +78,6 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 
 	var self = this;
 	var newCallRef = firebase.database().ref().child('user-calls/' + self.phoneOwner).push();
-
 	var callInfo = {
 		answered: answered,
 		duration: '',
@@ -344,25 +343,32 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 											self.ignoreCallFlag = false;
 											self.currentCalls[0].answered = false;
 											self.currentCalls[0].duration = "0:00:00";
+											self.sipCallHandler.hangup(); // cleans up UI and removes streams
 										} else {
 											self.currentCalls[0].duration = self.callTimer;
 										}
-										self.updateFinishedCall();
-										clearInterval(self.cT);
-										self.stopTimer = true;
-										self.callHangUpObserver();
+
 									} else {
-										self.callHangUpObserver();
+										if (self.currentCalls[0].answered === true) {
+											self.currentCalls[0].duration = self.callTimer;
+										} else {
+											self.currentCalls[0].answered = false;
+											self.currentCalls[0].duration = "0:00:00";
+										}
+										self.sipCallHandler.hangup(); // cleans up UI and removes streams
 									}
+									self.updateFinishedCall();
+									clearInterval(self.cT);
+									self.stopTimer = true;
+									self.endCallRequest = false;
+									self.currentCalls = []
+									self.callHangUpObserver();
 								}
 							}
 						},
 						onlocalstream: function (stream) {
 							Janus.debug(" ::: Got a local stream :::");
 							self.localStream = stream;
-
-							// if ($('#myvideo').length === 0)
-							// $('#videoleft').append('<video class="rounded centered" id="myvideo" width=320 height=240 autoplay muted="muted"/>');
 
 							Janus.attachMediaStream(self.localView, self.localStream);
 							self.localView.muted = "muted";
