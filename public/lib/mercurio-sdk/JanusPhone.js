@@ -361,7 +361,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 									clearInterval(self.cT);
 									self.stopTimer = true;
 									self.endCallRequest = false;
-									self.currentCalls = []
+									// self.currentCalls = []
 									self.callHangUpObserver();
 								}
 							}

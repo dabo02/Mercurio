@@ -61,7 +61,6 @@
             $mdDialog.hide();
             self.contactSearchString = '';
             self.phone.endCall();
-            console.log(self.phone.currentCalls[0]);
             self.addCallToCRMCallFinished(self.phone.currentCalls[0]);
             self.phone.currentCalls = [];
             if($state.current.name != "call")
