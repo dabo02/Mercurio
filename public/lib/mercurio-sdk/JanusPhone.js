@@ -80,7 +80,7 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 	var newCallRef = firebase.database().ref().child('user-calls/' + self.phoneOwner).push();
 	var callInfo = {
 		answered: answered,
-		duration: '',
+		duration: '0:00:00',
 		from: from,
 		incoming: incoming,
 		timeStamp: timeStamp,
@@ -215,6 +215,7 @@ JanusPhone.prototype.registerUA = function(account, userIsRegisteredObserver, in
  * @function JanusPhone.initialize: initializes the sip plugin and enables communication to the Janus gateway.
  * @param phoneInitializationObserver: callback function to be called when the plugin success callback has been triggered.
  **/
+
 JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 	var self = this;
 
@@ -342,7 +343,6 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 											self.outboundCall = false;
 											self.ignoreCallFlag = false;
 											self.currentCalls[0].answered = false;
-											self.currentCalls[0].duration = "0:00:00";
 										} else {
 											self.currentCalls[0].duration = self.callTimer;
 										}
@@ -352,7 +352,6 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 											self.currentCalls[0].duration = self.callTimer;
 										} else {
 											self.currentCalls[0].answered = false;
-											self.currentCalls[0].duration = "0:00:00";
 										}
 										self.sipCallHandler.hangup(); // cleans up UI and removes streams
 
@@ -361,7 +360,6 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 									clearInterval(self.cT);
 									self.stopTimer = true;
 									self.endCallRequest = false;
-									self.currentCalls = []
 									self.callHangUpObserver();
 								}
 							}
@@ -445,7 +443,7 @@ JanusPhone.prototype.makeCall = function(phoneNumber, myStreamTag, peerStreamTag
 			//				"AnotherHeader": "another string"
 			//			}
 			//		};
-			var body = {request: "call", uri: "sip:"+phoneNumber+"@63.131.240.90"};
+			var body = {request: "call", uri: "sip:" + phoneNumber + "@63.131.240.90"};
 			// Note: you can also ask the plugin to negotiate SDES-SRTP, instead of the
 			// default plain RTP, by adding a "srtp" attribute to the request. Valid
 			// values are "sdes_optional" and "sdes_mandatory", e.g.:
@@ -571,7 +569,7 @@ JanusPhone.prototype.inCallTimer = function() {
 
 JanusPhone.prototype.createAnswerOnAccepted = function() {
 	var self = this;
-	if (self.jsepOnAcceptedCall!=null) {
+	if (self.currentCalls[0].incoming = true) {
 		if (self.jsepOnAcceptedCall.type === 'Answer') {
 			if (self.jsepOnIncomingCall !== null) {
 				self.sipCallHandler.handleRemoteJsep({jsep: self.jsepOnIncomingCall, error: self.endCall()});
