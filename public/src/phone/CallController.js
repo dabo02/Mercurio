@@ -45,6 +45,10 @@
             });
         }
 
+        self.closeDTMFDialog = function(){
+          $mdDialog.hide();
+        };
+
         self.dialDTMFTone = function(number){
             phoneService.phone.dialDTMFTone(number)
         }
@@ -82,5 +86,3 @@
 
     }])
 })();
-
-
