@@ -18,7 +18,7 @@
             <script type="text/ng-template" id="dtmfDialog">
                 <md-dialog aria-label="DTMF Dialog" ng-controller="CallController as callCtrl">
 
-                    <md-toolbar>
+                    <md-toolbar class="mercurioBlueBackground">
                         <div class="md-toolbar-tools">
                             <h2>Dial Pad</h2>
                             <span flex></span>
@@ -30,11 +30,11 @@
                     <md-dialog-content style = "overflow-x: hidden;">
                         <div class="md-dialog-content" layout="row">
 
-                                <md-input-container class="md-icon-float md-block">
+                                <!-- <md-input-container class="md-icon-float md-block">
                                     <label></label>
                                     <md-icon class="fa fa-envelope"></md-icon>
                                     <input type="text" value="callCtrl.phoneService.phone.dialedDTMFTones">
-                                </md-input-container>
+                                </md-input-container> -->
 
                                 <!--First dialer row ( 1, 2, 3, videocall)-->
                                 <div>
@@ -128,11 +128,11 @@
             <md-card flex-offset="30" flex="40" style="background:rgba(0,0,0,0.55);" ng-controller="ContactListController as contactListCtrl">
                 <md-card-title layout="column" flex-offset="20" flex>
                     <md-card-title-text>
-                        <span class="md-headline">{{callCtrl.phoneService.phone.currentCalls[0] | currentCallParticipantNameFilter : contactListCtrl.contactList}}</span>
+                        <span style = "color: white;"class="md-headline">{{callCtrl.phoneService.phone.currentCalls[0] | currentCallParticipantNameFilter : contactListCtrl.contactList}}</span>
                     </md-card-title-text>
                     <md-card-title-text layout="row" style="padding-top:1%;">
-                        <span flex="60" class="md-subhead">{{callCtrl.phoneService.phone.currentCalls[0] | currentCallPhoneNumberFilter}}</span>
-                        <span flex-offset="10" flex="30" class="md-subhead callTimer"></span>
+                        <span flex="60" style= "color: white;" class="md-subhead">{{callCtrl.phoneService.phone.currentCalls[0] | currentCallPhoneNumberFilter}}</span>
+                        <span flex-offset="10" flex="30" style= "color: white;" class="md-subhead callTimer"></span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-title>
