@@ -10,8 +10,32 @@
         var self = this;
         self.phoneService = phoneService;
         $scope.currentNavItem = "all";
+        $scope.sidebarNavItem = "all";
 
         $scope.selectedCallIndex = undefined;
+
+        self.sidebarMissedCalls = [];
+        self.sidebarIncomingCalls = [];
+        self.sidebarOutgoingCalls = [];
+        self.phoneService.phone.recentCallList.forEach(function(call){
+          if(!call.answered){
+            self.sidebarMissedCalls.push(call);
+          }
+          else if(call.incoming){
+            self.sidebarIncomingCalls.push(call);
+          }
+          else{
+            self.sidebarOutgoingCalls.push(call);
+          }
+        });
+        phoneService.sidebarMissedCalls = angular.copy(self.sidebarMissedCalls);
+        phoneService.sidebarIncomingCalls = angular.copy(self.sidebarIncomingCalls);
+        phoneService.sidebarOutgoingCalls = angular.copy(self.sidebarOutgoingCalls);
+
+        self.sidebarMissedCalls = [];
+        self.sidebarIncomingCalls = [];
+        self.sidebarOutgoingCalls = [];
+
 
         $scope.selectCallIndex = function (index) {
             if ($scope.selectedCallIndex !== index) {
