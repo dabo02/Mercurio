@@ -88,11 +88,15 @@
                      md-item-text="item.display"
                      md-floating-label="Search">
     </md-autocomplete> -->
-
-    <md-list style="margin-top: 0%" ng-show="chatListCtrl.isChatListAvailable">
+    <!-- <md-content  ng-show = "!chatListCtrl.isChatListAvailable()">
+    <h4 style="color: black; margin-top: 50%;">
+      There are no chat
+    </h4>
+  </md-content> -->
+    <md-list style="margin-top: 0%" ng-show="chatListCtrl.isChatListAvailable()">
         <md-list-item ng-if="chat.lastMessage && chat.messageList.length > 0" ng-repeat="chat in chatListCtrl.chatClient.chatList track by $index" ng-click="chatListCtrl.viewChat($index)" style="background:rgba(0,0,0,0.60); margin-bottom: 2%; padding:0%; width:100%" id="chat-conversation" class="md-2-line">
             <img ng-src="{{chat | chatListAvatarFilter : chatListCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
-            <div style="width:100%" class="md-list-item-text" layout="column">
+            <div ng-init= "chatListCtrl.checkIfThereAreMsg(chatListCtrl.counter)" style="width:100%" class="md-list-item-text" layout="column">
                 <div style="width:100%" layout="row">
                     <h3 style= "color: white;" flex="70" ng-style="chatListCtrl.getTextPreviewClass(chat, $index)" >{{chat | chatTitleFilter : chatListCtrl.chatClient.chatClientOwner}}</h3>
                     <p style="color: white; font-size:11.5px;" flex="30">{{chat.lastMessage.timeStamp | timeStampFilter}}</p>
@@ -106,6 +110,12 @@
             </div>
             <md-divider ></md-divider>
         </md-list-item>
+      <md-content style="margin-left: 30%; background-color: transparent;" ng-show = "chatListCtrl.counter==0">
+      <h4 style="color: black; margin-top: 40%;">
+        There are no chat
+      </h4>
+    </md-content>
+
     </md-list>
 
 
