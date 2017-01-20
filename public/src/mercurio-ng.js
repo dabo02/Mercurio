@@ -39,42 +39,48 @@
                 .state('dialer', {
                     url: '/dialer',
                     templateUrl: '/src/phone/dialer.html',
-                    authenticate: true
-                    //resolve: {
-                    //    auth: function resolveAuthentication(AuthResolver) {
-                    //        return AuthResolver.resolve();
-                    //    }
-                    //}
+                    authenticate: true,
+                    resolve: {
+                        //auth: function resolveAuthentication(AuthResolver) {
+                        //    return AuthResolver.resolve();
+                        //}
+                    }
                 })
                 .state('call', {
                     url: '/call/:callIndex',
                     templateUrl: '/src/phone/call.html',
-                    authenticate: true
+                    authenticate: true,
+                    resolve:{}
                 })
                 .state('contacts', {
                     url: '/contacts',
                     templateUrl: '/src/contacts/contacts.html',
-                    authenticate: true
+                    authenticate: true,
+                    resolve:{}
                 })
                 .state('contact-profile', {
                     url: '/contact-profile/:contactIndex',
                     templateUrl: '/src/contacts/contactProfile.html',
-                    authenticate: true
+                    authenticate: true,
+                    resolve:{}
                 })
                 .state('edit-profile', {
                     url: '/edit-profile',
                     templateUrl: '/src/contacts/editProfile.html',
-                    authenticate: true
+                    authenticate: true,
+                    resolve:{}
                 })
                 .state('chat', {
                     url: '/chat/:chatIndex/:chatClientOwner',
                     templateUrl: '/src/chats/chat.html',
-                    authenticate: true
+                    authenticate: true,
+                    resolve:{}
                 })
                 .state('crm-manager', {
                     url: '/crm-manager',
                     templateUrl: '/src/crm/crmList.html',
-                    authenticate: true
+                    authenticate: true,
+                    resolve:{}
                 })
                 .state('login', {
                     url: '/login',
@@ -85,40 +91,32 @@
         .factory('AuthResolver', function ($q, $rootScope, $state) {
             return {
                 resolve: function () {
+
                     var deferred = $q.defer();
-                    var unwatch = $rootScope.$watch('currentUser', function (currentUser) {
-                        if (angular.isDefined(currentUser)) {
-                            if (currentUser) {
-                                deferred.resolve(true);
-                            } else {
-                                deferred.reject(true);
-                                //$state.go('login');
-                            }
-                            unwatch();
+
+                    $rootScope.$watch('currentUser', function (currentUser) {
+                        $rootScope.firebaseUserRetrievalCount++;
+                        if($rootScope.firebaseUserRetrievalCount > 1) {
+                            //if (angular.isDefined(currentUser)) {
+                            //    if (currentUser) {
+                                    deferred.resolve(currentUser);
+                                //} else {
+                                    deferred.reject();
+                                    //$state.go('login');
+                                //}
+                            //}
                         }
                     });
+
                     return deferred.promise;
                 }
             };
         })
 
-        .run(['$rootScope', '$state', '$location', 'accountService', '$timeout', 'AuthResolver', function($rootScope, $state, $location, accountService, $timeout, AuthResolver){
+        .run(['$rootScope', function($rootScope){
+
             $rootScope.spinnerActivated = true;
-            //$timeout(function() {
-                $rootScope.spinnerActivated = false;
-                $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-                    if(AuthResolver.resolve()){
-                        if(toState.authenticate && !accountService.isAccountAvailable()){
-                            $state.transitionTo("login");
-                            event.preventDefault();
-                        }
-                    }
-                    //if (toState.name != 'login' && !accountService.isAccountAvailable()){
-                    //    $location.url('/login');
-                    //    //$state.go('login');
-                    //}
-                });
-            //}, 4000);
+
         }]);
 
 

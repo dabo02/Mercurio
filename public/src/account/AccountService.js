@@ -38,20 +38,36 @@
         authenticationService.setAccountObserver(function(account){
 
             self.activeAccount = account;
-            $rootScope.currentUser = account;
 
             if(!self.isAccountAvailable()){
-                //$location.url('/login');
+                $location.url('/login');
             }
             else{
                 self.activeAccount.contactManager = new MercurioContactManager(account.userId);
                 chatClientService.instantiateChatClient(account.userId);
                 phoneService.instantiatePhone(account);
                 crmService.instantiateCRMManager(account.userId);
-                //$state.go('dialer'); // go to previous state instead
+
+                if($state.current.name == 'login'){
+                    $state.go('dialer');
+                }
+
             }
-            //else{
-            //    $state.go('dialer');
+
+            $rootScope.spinnerActivated = false;
+            $rootScope.$apply();
+        });
+
+        $rootScope.$watch('activeAccount', function (currentUser) {
+
+            //$rootScope.spinnerActivated = false;
+            //if (angular.isDefined(currentUser)) {
+            //    if (currentUser) {
+            //        $rootScope.currentUser = currentUser;
+            //    } else {
+            //        //deferred.reject(true);
+            //        //$state.go('login');
+            //    }
             //}
         });
 
