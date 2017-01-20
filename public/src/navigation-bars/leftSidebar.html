@@ -53,16 +53,14 @@
                         <md-icon class="fa fa-envelope"></md-icon>
                         <input id="email" type="text" ng-model="profileCtrl.email" placeholder="{{profileCtrl.getEmail()}}">
                     </md-input-container>
-                    <md-input-container class="md-icon-float md-block">
-                        <label>Phone</label>
-                        <md-icon class="fa fa-phone"></md-icon>
-                        <input id="phone" type="text" ng-model="profileCtrl.phone" placeholder="{{profileCtrl.getPhone()}}">
-                    </md-input-container>
-                    <md-input-container class="md-icon-float md-block">
+                    <md-content style= "background-color: white; margin-left: 5%;" class="md-icon-float">
+                        <label >Phone</label>
+                        <i style = "position: fixed; margin-top: 1%;" class="fa fa-phone"> {{profileCtrl.getPhone()}}</i>
+                    </md-content>
+                    <md-content style= "background-color: white; margin-left: 15%;"class="md-icon-float">
                         <label>Ext.</label>
-                        <md-icon class="fa fa-hashtag"></md-icon>
-                        <input id="extension" type="text" ng-model="profileCtrl.extension" placeholder="{{profileCtrl.getExtension()}}">
-                    </md-input-container>
+                        <i style = "position: fixed; margin-top: 1%;" class="fa fa-hashtag">{{profileCtrl.getExtension()}} </i>
+                    </md-content>
                 </div>
 
                 <md-card>
@@ -91,7 +89,7 @@
                 <md-button ng-click="profileCtrl.closeProfileEditorDialog()">
                     Close
                 </md-button>
-                <md-button ng-click="profileCtrl.saveProfileInfo()">
+                <md-button ng-click="profileCtrl.saveProfileInfo(); profileCtrl.closeProfileEditorDialog()">
                     Save
                 </md-button>
 

@@ -27,7 +27,7 @@
                 <md-button ng-click="authCtrl.closeResetPasswordDialog()">
                     Close
                 </md-button>
-                <md-button ng-click="authCtrl.sendResetPasswordEmail()" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
+                <md-button ng-click="authCtrl.sendResetPasswordEmail(); authCtrl.closeResetPasswordDialog()" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
                     Reset Password
                 </md-button>
 
@@ -73,7 +73,7 @@
                         <!-- Use floating label instead of placeholder -->
                         <label style= "color: white">Password</label>
                         <input style= "color: white; border-color: yellow;" ng-model="authCtrl.password" type="password">
-                        <a class = "mercurioBlueColor" style= "padding-bottom: 10%;" href="" ng-click="authCtrl.showResetPasswordDialog()">Forgot password?</a>
+                        <a style= "color: white; padding-bottom: 10%;" href="" ng-click="authCtrl.showResetPasswordDialog()">Forgot password?</a>
                     </md-input-container>
                 </div>
             </div>
