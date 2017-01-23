@@ -119,15 +119,17 @@
         }
 
         self.addCallToCRMCallFinished = function(call, event){
-          if(call.from === self.activeAccount.phone){
+            if(call.from === self.activeAccount.phone){
               self.selectedNumber = call.to;
               self.selectedCallDirection = 'Outgoing';
-          }
-          else{
+            }
+            else{
               self.selectedNumber = call.from;
               self.selectedCallDirection = 'Incoming';
-          }
-          crmService.addCallToCRM(self.selectedNumber, self.selectedCallDirection, event, self.crmService.crmManager.crmList[0].insertCallsAutomatically);
+            }
+
+            if(crmService.crmManager.crmList != undefined && crmService.crmManager.crmList != null && crmService.crmManager.crmList.length > 0)
+          crmService.addCallToCRM(self.selectedNumber, self.selectedCallDirection, event, crmService.crmManager.crmList[0].insertCallsAutomatically);
         }
 
 

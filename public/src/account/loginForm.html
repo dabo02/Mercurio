@@ -38,10 +38,12 @@
 </script>
 
 <div style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');height:100%" ng-controller="AuthenticationController as authCtrl" ng-cloak onload="checkUrl()">
-    <div ng-if="spinnerActivated"class="row" style="padding-top:15%" ng-cloak>
+
+    <div ng-if="spinnerActivated" class="row" style="padding-top:15%" ng-cloak>
         <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="!spinnerActivated" md-diameter="200"></md-progress-circular>
     </div>
-    <div ng-if="!spinnerActivated" style="padding-top: 5%;" ng-cloak>
+
+    <form ng-if="!spinnerActivated" style="padding-top: 5%;" ng-cloak ng-submit="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">
 
         <md-card flex="45" flex-offset="30" style="margin: 10% auto; background:rgba(0,0,0,0.50);">
               <div layout="row" style="height: 5%; background:rgba(0,0,0,0); ">
@@ -84,5 +86,5 @@
                 <md-button flex="60" flex-offset="20" style="color: white; background-color: #087be4; width:100%; margin-bottom:4%;" ng-click="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">Login</md-button>
             </div>
         </md-card>
-    </div>
+    </form>
 </div>

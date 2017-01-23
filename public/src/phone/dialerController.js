@@ -30,6 +30,12 @@
 			}
 		};
 
+		self.redial = function(phoneNumber){
+			phoneService.contactSearchString = phoneNumber;
+			self.makeCall();
+		}
+
+
 
 
 		//self.dial = function (){

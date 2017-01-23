@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', '$mdDialog', function($scope, authenticationService, accountService, $mdDialog){
+    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, $mdDialog, $rootScope){
 
         var self = this;
 
@@ -13,8 +13,10 @@
         //if user is already logged in change state to dialer
 
         self.loginButtonClicked = function(email, password){
-
+            $rootScope.spinnerActivated = true;
+            //$rootScope.$apply();
             authenticationService.login(email, password);
+
         }
 
         self.logoutButtonClicked = function(){

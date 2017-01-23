@@ -37,6 +37,8 @@
 
                 if($state.params.chatIndex != undefined && receivedChatIndex >= 0){
                     if($state.params.chatIndex < receivedChatIndex){
+                        // received chat is listed after the chat i am currently viewing
+                        // move the chat i'm vieweing one spot down the list
                         var newIndex = parseInt($state.params.chatIndex, 10) + 1;
                         $state.go('chat', {'chatIndex' : newIndex, 'chatClientOwner' : self.chatClient.chatClientOwner});
                     }

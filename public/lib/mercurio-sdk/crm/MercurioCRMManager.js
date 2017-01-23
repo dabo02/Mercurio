@@ -9,24 +9,24 @@ function MercurioCRMManager(userId){
 
 	this.crmList = [];
 	var self = this;
-
+	
 	AbstractCRMManager.apply(this, arguments);
-
+	
 	firebase.database().ref('user-crms/' + self.crmManagerOwner).on("child_added", function(snapshot) {
-
+	
 		if(snapshot.exists()){
-
+		
 			var crm = new ZohoCRM(snapshot.key, snapshot.val().insertCallsAutomatically,
 					snapshot.val().name, snapshot.val().token, snapshot.val().type,
-					snapshot.val().validated);
+					snapshot.val().validated);	
 			crm.validateToken(self.crmManagerOwner);
 			self.crmList.push(crm);
 		}
 
 	});
-
+	
 	firebase.database().ref('user-crms/' + self.crmManagerOwner).on("child_changed", function(snapshot) {
-
+	
 		if(snapshot.exists()){
 			self.crmList.forEach(function(crm, index){
 			if(crm.crmId === snapshot.key){
@@ -60,7 +60,7 @@ Requests server to add a CRM to the database
 MercurioCRMManager.prototype.addCRM = function(crmInfo){
 
 	var self = this;
-
+	
 	if(self.crmList.length < 1){
 		firebase.database().ref().child('user-crms/' + self.crmManagerOwner).push(crmInfo);
 	}
