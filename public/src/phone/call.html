@@ -2,7 +2,7 @@
     <nav-bar></nav-bar>
     <div flex layout="row">
         <left-sidebar></left-sidebar>
-        <md-content class="scrollable-content" flex="75" id="main-content" ng-controller="CallController as callCtrl" style="position:relative;background-color:transparent;">
+        <md-content flex="75" id="main-content" ng-controller="CallController as callCtrl" style="position:relative;background-color:transparent;">
             <!--<video class='rounded centered' id='localStream' autoplay></video>-->
             <!--<video class='rounded centered' id='remoteStream' autoplay></video>-->
 
@@ -16,13 +16,13 @@
 
             <!--start dtmf dialog-->
             <script type="text/ng-template" id="dtmfDialog">
-                <md-dialog aria-label="DTMF Dialog" ng-controller="CallController as callCtrl">
+                <md-dialog aria-label="DTMF Dialog" ng-controller="CallController as dtmfDialogCtrl">
 
                     <md-toolbar class="mercurioBlueBackground">
                         <div class="md-toolbar-tools">
                             <h2>Dial Pad</h2>
                             <span flex></span>
-                            <md-button class="md-icon-button" ng-click="callCtrl.closeDTMFDialog()">
+                            <md-button class="md-icon-button close" ng-click="dtmfDialogCtrl.closeDTMFDialog()">
                                 &times;
                             </md-button>
                         </div>
@@ -56,6 +56,7 @@
                                                     <p style="margin:-10px 0 0 0; font-size:70%" class="text-center">DEF</p>
                                                 </md-button>
                                             </div>
+                                        </div>
                                     </div>
                                 <!--<div style="padding-top:6%;" class="col-lg-2 col-lg-push-1 col-md-2 col-md-push-1">-->
                                 <!--<md-button style="border-radius:40px; min-width:0px;">-->
@@ -64,6 +65,7 @@
                                 <!--</span>-->
                                 <!--</md-button>-->
                                 <!--</div>-->
+                                </div>
 
                                 <!--Second dialer row ( 4, 5, 6, text)-->
                                 <div layout="row">
