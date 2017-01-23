@@ -454,7 +454,6 @@ app.post('/validateToken', function (req, res) {
     cleanData = body.data.toString();
     res.send(cleanData);
   });
-
 });
 
 app.all('/*', function(req, res, next) {
