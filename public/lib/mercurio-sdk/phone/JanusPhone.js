@@ -268,14 +268,14 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 								}
 								self.webRTCStateObserver(state);
 							}
-							else {
-								if(self.endCallRequest == false) {
-									self.stopTimer = true;
-									self.currentCalls[0].duration = self.callTimer;
-									self.updateFinishedCall();
-									self.webRTCStateObserver(state);
-								}
-							}
+							//else {
+							//	if(self.endCallRequest == false) {
+							//		self.stopTimer = true;
+							//		self.currentCalls[0].duration = self.callTimer;
+							//		self.updateFinishedCall();
+							//		self.webRTCStateObserver(state);
+							//	}
+							//}
 
 						},
 						onmessage: function (msg, jsep) {
