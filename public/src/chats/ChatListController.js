@@ -82,17 +82,17 @@
             });
         };
 
-        //chatClientService.chatClient.chatList.forEach(function(chat, index){
-        //    $scope.chatList = [];
-        //    $scope.chatList[index] = chat;
-        //    $scope.$watch(
-        //        'chatList[' + index + ']',
-        //        function (newVal, oldVal) {
-        //            if ( newVal !== oldVal ) {
-        //                chat.lastMessage = newVal.lastMessage;
-        //            }
-        //        }, true
-        //    );
-        //});
+        chatClientService.chatClient.chatList.forEach(function(chat, index){
+           $scope.chatList = [];
+           $scope.chatList[index] = chat;
+           $scope.$watch(
+               'chatList[' + index + ']',
+               function (newVal, oldVal) {
+                   if ( newVal !== oldVal ) {
+                       chat.lastMessage = newVal.lastMessage;
+                   }
+               }, true
+           );
+        });
     }]);
 })();

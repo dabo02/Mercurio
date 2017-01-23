@@ -127,7 +127,7 @@
               self.selectedNumber = call.from;
               self.selectedCallDirection = 'Incoming';
           }
-          crmService.addCallToCRM(self.selectedNumber, self.selectedCallDirection, event);
+          crmService.addCallToCRM(self.selectedNumber, self.selectedCallDirection, event, self.crmService.crmManager.crmList[0].insertCallsAutomatically);
         }
 
 

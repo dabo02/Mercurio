@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ManageCRMController', ['crmService', '$mdDialog', function(crmService, $mdDialog){
+    angular.module('mercurio').controller('ManageCRMController', ['crmService', '$mdDialog', '$scope', function(crmService, $mdDialog, $scope){
 
         var self = this;
 
@@ -44,8 +44,13 @@
                 name: self.name,
                 token: self.token,
                 type: 'zoho',
-                validated: false
+                validated: true
             };
+            $scope.validatedCRM = crmService.crmManager.crmList[0].validated;
+
+            $scope.$watch("validatedCRM", function(validated){
+              //$scope.$apply();
+            });
 
             crmService.crmManager.addCRM(crmInfo);
             self.saveCRMDetailsButtonIsAvailable = false;

@@ -18,9 +18,10 @@
 
         self.instantiateCRMManager = function(userId){
             self.crmManager = new MercurioCRMManager(userId);
-        }
+          }
 
-        self.addCallToCRM = function(phone, type, event){
+        self.addCallToCRM = function(phone, type, event, insertCallsAutomatically){
+          if(insertCallsAutomatically || insertCallsAutomatically==null){
             self.isFetching=true;
             self.showAddCallToCRMDialog(event);
             self.callableRecords = null;
@@ -45,6 +46,7 @@
                         self.isFetching = false;
                     });
             });
+          }
         }
 
         self.showAddCallToCRMDialog = function(event) {
