@@ -11,12 +11,9 @@
                     <span style="display:table; margin:0 auto;" class="dialer-icons">
                         <a href="#/dialer" id="dialer-circle" style="width:50px; height:50px; margin-right:0px;"><img id="dialer" src="images/dialer.png"></a>
                     </span>
-                    <span style="display:table; margin:0 auto;">
-                        <call-status-toolbar></call-status-toolbar>
-                    </span>
                 </div>
             </div>
-
+            <call-status-toolbar></call-status-toolbar>
             <div layout="row" >
                 <div flex-offset="20" flex="60" style="overflow-x: hidden;">
                     <md-autocomplete style="padding-top:2%;" class = "scrollable-content" flex
@@ -47,7 +44,7 @@
                     <div style="margin-top:-3%; margin-bottom:10%;" ng-repeat="letter in contactListCtrl.alphabet">
                         <div ng-if="contactListCtrl.setContacts(letter)">
                             <a style="color: white;" id=contact-initial> <h2>{{letter}}</h2> </a>
-                            <md-content style="background:rgba(0,0,0,0.55); overflow-y:hidden" ng-repeat="contact in contactListCtrl.tempContacts track by $index" id="contacts-content">
+                            <md-content style="border-color: white; background:rgba(0,0,0,0.55); overflow-y:hidden" ng-repeat="contact in contactListCtrl.tempContacts track by $index" id="contacts-content">
                                 <md-button ng-click="contactListCtrl.viewContact(contact.realIndex)" style="width:100%;">
                                     <md-list style="background-color: transparent;" id="contacts-card" flex>
                                         <md-list-item class="row">
@@ -55,10 +52,13 @@
                                                 <img style="width:50px; height:50px; border-radius:35px;" ng-src="{{contact.picture | contactListAvatarFilter}}"/>
                                             </div>
                                             <div style= "margin-left: 2%; margin-top: 2%;" class="col-lg-7 col-md-7" layout="column">
-                                                <p style="color: white; font-size:20px; word-break: break-all" flex="50">{{contact.firstName}}</p>
-                                                <p style="color: white;" >{{contact.lastName}}</p>
+                                                <p style="color: white; font-size:20px; word-break: break-all" flex="50">{{contact.firstName}} {{contact.lastName}}</p>
+                                                <p style="color: white;" > {{contact.status}}</p>
                                             </div>
-                                            <p style = "color: white;" class="col-lg-3 col-md-3"> Mobile </p>
+                                            <p class="col-lg-3 col-md-3" ng-if= "contact.availability == 0" style="color: white;" > Offline</p>
+                                            <p class="col-lg-3 col-md-3" ng-if= "contact.availability == 1" style="color: white;" > Online</p>
+                                            <p class="col-lg-3 col-md-3" ng-if= "contact.availability == 2" style="color: white;" > Away</p>
+                                            <p class="col-lg-3 col-md-3" ng-if= "contact.availability == 3" style="color: white;" > Busy</p>
                                         </md-list-item>
                                     </md-list>
                                 </md-button>

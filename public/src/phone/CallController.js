@@ -40,9 +40,13 @@
                 parent: angular.element(document.body),
                 //targetEvent: event,
                 escapeToClose: true,
-                clickOutsideToClose:false
+                clickOutsideToClose:true
                 //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             });
+        }
+
+        self.closeDTMFDialog = function(){
+            $mdDialog.hide();
         }
 
         self.dialDTMFTone = function(number){
@@ -70,7 +74,12 @@
                         self.receiveCall();
                     }
                     else {
-                        self.makeCall();
+                        if(!phoneService.phone.endCallRequest) {
+                            self.makeCall();
+                        } else {
+                            phoneService.phone.endCallRequest = false;
+                        }
+
                     }
                 }
 
@@ -82,5 +91,3 @@
 
     }])
 })();
-
-

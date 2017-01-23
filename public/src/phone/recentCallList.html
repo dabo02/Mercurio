@@ -10,42 +10,177 @@
     </md-list-item>
 </md-list>
 -->
-<md-content style ="background-color: transparent;" >
+<md-content style ="overflow-x: hidden;background-color: transparent;" >
 
     <!--start call details dialog-->
     <script type="text/ng-template" id="callDetailsDialog">
         <md-dialog flex="40" aria-label="Call Details Dialog" ng-controller="CallDetailsController as callDetailsCtrl">
-            <form ng-cloak>
-                <md-toolbar>
-                    <div class="md-toolbar-tools">
-                        <h2>Call Details</h2>
-                        <span flex></span>
-                        <md-button class="md-icon-button" ng-click="callDetailsCtrl.closeCallDetailsDialog()">
-                            &times;
+            <form ng-cloak style="overflow-x:hidden" ng-controller="RecentCallListController as RecentCallsCtrl">
+              <md-toolbar>
+                  <div class="md-toolbar-tools">
+                      <h2 class="pull-left col-xs-6">Call Details</h2>
+                      <div class ="col-xs-6" style="left:3%;">
+                        <md-button class="pull-right md-icon-button fa fa-close" ng-click="callDetailsCtrl.closeCallDetailsDialog()">
                         </md-button>
-                    </div>
-                </md-toolbar>
+                        <md-button class="pull-right md-icon-button fa fa-trash" ng-click="RecentCallsCtrl.showDeleteConfirm($event)">
+                        </md-button>
+                        <md-button class="pull-right md-icon-button fa fa-phone" ng-click="callDetailsCtrl.closeCallDetailsDialog(); RecentCallsCtrl.call();">
+                        </md-button>
+                      </div>
+                  </div>
+              </md-toolbar>
 
-                <md-dialog-content class="flex-80 flex-offset-10" style="margin-top:3%;">
+                <md-dialog-content class="flex-100" style="margin-top:3%; overflow-y:hidden;" >
 
-                    <h3>Call Details Go Here..!!</h3>
+                  <div>
+                    <md-list style="margin-top:-3%;">
+                      <md-list-item class="md-3-line" ng-controller="ContactListController as contactListCtrl">
+                        <img ng-click="callDetailsCtrl.closeCallDetailsDialog(); contactListCtrl.viewContactById(RecentCallsCtrl.phoneService.callDetailsContact.userId);" ng-src="{{RecentCallsCtrl.phoneService.callDetailsContact.picture}}" class="md-avatar">
+                        <div class="md-list-item-text" style="margin-top:15px;">
+                          <h3 ng-click="callDetailsCtrl.closeCallDetailsDialog(); contactListCtrl.viewContactById(RecentCallsCtrl.phoneService.callDetailsContact.userId);">{{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}</h3>
+                          <h4 ng-click="callDetailsCtrl.closeCallDetailsDialog(); contactListCtrl.viewContactById(RecentCallsCtrl.phoneService.callDetailsContact.userId);">{{RecentCallsCtrl.phoneService.callDetailsContact.phone}}</h4>
+                        </div>
+                      </md-list-item>
+                    </md-list>
+                    <!-- <md-list layout = "row" style="margin-top:-5%;">
+                      <md-list-item>
+                        <p class="text-center">All</p>
+                      </md-list-item>
+                      <md-list-item>
+                        <p class="text-center">Missed</p>
+                      </md-list-item>
+                      <md-list-item>
+                        <p class="text-center">Outgoing</p>
+                      </md-list-item>
+                      <md-list-item>
+                        <p class="text-center">Incoming</p>
+                      </md-list-item>
+                    </md-list> -->
+                    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+                      <md-nav-item id="centralize-4-navbar" md-nav-click="goto('all')" name="all">({{RecentCallsCtrl.phoneService.callDetailsCalls.length}}) All</md-nav-item>
+                      <md-nav-item id="centralize-4-navbar" md-nav-click="goto('missed')" name="missed">({{RecentCallsCtrl.phoneService.missedCalls.length}}) Missed</md-nav-item>
+                      <md-nav-item id="centralize-4-navbar" md-nav-click="goto('incoming')" name="incoming">({{RecentCallsCtrl.phoneService.incomingCalls.length}}) Incoming</md-nav-item>
+                      <md-nav-item id="centralize-4-navbar" md-nav-click="goto('outgoing')" name="outgoing">({{RecentCallsCtrl.phoneService.outgoingCalls.length}}) Outgoing</md-nav-item>
+                    </md-nav-bar>
+                    <md-divider></md-divider>
+                    <md-list layout ="column" style="background-color:#EEEEEE; overflow-y:scroll; height:250px;">
+
+                      <!-- All calls -->
+                      <div ng-show="currentNavItem=='all'" ng-repeat="call in RecentCallsCtrl.phoneService.callDetailsCalls">
+                        <md-divider ng-if="!$first"></md-divider>
+                        <div layout="row" style="width:100%;">
+                          <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
+                            <p>
+                              {{call.timeStamp | timeStampToDateFilter}}
+                            </p>
+                            <p>
+                              {{call.duration}}
+                            </p>
+                          </div>
+                          <div class="pull-right" layout="column" style="width:50%; margin-right:2%;">
+                            <p style="text-align:right">
+                              {{call.timeStamp | timeStampToTimeFilter}}
+                            </p>
+                            <div>
+                              <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
+                              <i ng-if="call.incoming && !call.answered" class="fa fa-long-arrow-up incoming-missed pull-right" style="margin-right:15%;"></i>
+                              <i ng-if="!call.incoming && call.answered" class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
+                              <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Missed calls -->
+                      <div ng-show="currentNavItem=='missed'" ng-repeat="call in RecentCallsCtrl.phoneService.missedCalls">
+                        <md-divider ng-if="!$first"></md-divider>
+                        <div layout="row" style="width:100%;">
+                          <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
+                            <p>
+                              {{call.timeStamp | timeStampToDateFilter}}
+                            </p>
+                            <p>
+                              {{call.duration}}
+                            </p>
+                          </div>
+                          <div class="pull-right" layout="column" style="width:50%; margin-right:2%;">
+                            <p style="text-align:right">
+                              {{call.timeStamp | timeStampToTimeFilter}}
+                            </p>
+                            <div>
+                              <i ng-if="call.incoming && !call.answered" class="fa fa-long-arrow-up incoming-missed pull-right" style="margin-right:15%;"></i>
+                              <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div ng-show="currentNavItem=='missed' && RecentCallsCtrl.phoneService.missedCalls.length==0">
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.phone}}.</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}.</h3>
+                      </div>
+
+                      <!-- Incoming calls -->
+                      <div ng-show="currentNavItem=='incoming'" ng-repeat="call in RecentCallsCtrl.phoneService.incomingCalls">
+                        <md-divider ng-if="!$first"></md-divider>
+                        <div layout="row" style="width:100%;">
+                          <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
+                            <p>
+                              {{call.timeStamp | timeStampToDateFilter}}
+                            </p>
+                            <p>
+                              {{call.duration}}
+                            </p>
+                          </div>
+                          <div class="pull-right" layout="column" style="width:50%; margin-right:2%;">
+                            <p style="text-align:right">
+                              {{call.timeStamp | timeStampToTimeFilter}}
+                            </p>
+                            <div>
+                              <i class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div ng-show="currentNavItem=='incoming' && RecentCallsCtrl.phoneService.incomingCalls.length==0">
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.phone}}.</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}.</h3>
+                      </div>
+
+                      <!-- Outgoing calls -->
+                      <div ng-show="currentNavItem=='outgoing'" ng-repeat="call in RecentCallsCtrl.phoneService.outgoingCalls">
+                        <md-divider ng-if="!$first"></md-divider>
+                        <div layout="row" style="width:100%;">
+                          <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
+                            <p>
+                              {{call.timeStamp | timeStampToDateFilter}}
+                            </p>
+                            <p>
+                              {{call.duration}}
+                            </p>
+                          </div>
+                          <div class="pull-right" layout="column" style="width:50%; margin-right:2%;">
+                            <p style="text-align:right">
+                              {{call.timeStamp | timeStampToTimeFilter}}
+                            </p>
+                            <div>
+                              <i class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div ng-show="currentNavItem=='outgoing' && RecentCallsCtrl.phoneService.outgoingCalls.length==0">
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.phone}}.</h3>
+                        <h3 ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" class="text-center" style="margin-top:100px;">There are no missed calls from {{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}.</h3>
+                      </div>
+
+                    </md-list>
+                  </div>
                 </md-dialog-content>
-
-                <md-dialog-actions layout="row">
-
-                    <span flex></span>
-
-                    <md-button ng-click="callDetailsCtrl.closeCallDetailsDialog()">
-                        Close
-                    </md-button>
-
-                </md-dialog-actions>
-
             </form>
         </md-dialog>
     </script>
 
-    <script type="text/ng-template" id="fetchingCallableRecordsProgress">
+    <!-- <script type="text/ng-template" id="fetchingCallableRecordsProgress">
         <md-dialog aria-label="Fetching your CRM Records" ng-controller="AddCallToCRMController as crmCtrl">
             <form ng-cloak>
                 <md-toolbar>
@@ -70,14 +205,38 @@
                 </md-dialog-content>
             </form>
         </md-dialog>
-    </script>
+    </script> -->
 
     <script type="text/ng-template" id="addCallToCRMForm">
-        <md-dialog aria-label="Add Call To CRM" ng-controller="AddCallToCRMController as crmCtrl">
-            <form ng-cloak>
+        <md-dialog flex = "30" aria-label="Add Call To CRM" ng-controller="AddCallToCRMController as crmCtrl">
+
+          <form ng-cloak>
+            <div ng-show = "crmCtrl.crmService.isFetching">
+              <md-toolbar>
+                  <div class="md-toolbar-tools">
+                      <h2>Fetching your CRM Records</h2>
+                      <span flex></span>
+                      <md-button class="md-icon-button" ng-click="crmCtrl.closeAddCallToCRMDialog()">
+                          &times;
+                      </md-button>
+                  </div>
+              </md-toolbar>
+
+              <md-dialog-content>
+                  <div class="md-dialog-content">
+                      <md-content>
+                          <md-progress-linear md-mode="query" ng-disabled="crmCtrl.isCallableRecordListAvailable()"></md-progress-linear>
+                      </md-content>
+                  </div>
+              </md-dialog-content>
+          </div>
+
+
+
+            <div ng-show="!crmCtrl.crmService.isFetching">
                 <md-toolbar>
                     <div class="md-toolbar-tools">
-                        <h2>Add Call To CRM</h2>
+                        <h2>Add Call to CRM</h2>
                         <span flex></span>
                         <md-button class="md-icon-button" ng-click="crmCtrl.closeAddCallToCRMDialog()">
                             &times;
@@ -85,7 +244,7 @@
                     </div>
                 </md-toolbar>
 
-                <md-dialog-content>
+                <md-dialog-content ng-if="crmCtrl.isCallableRecordListAvailable()">
                     <div class="md-dialog-content">
                         <md-input-container ng-if="crmCtrl.isCallableRecordListAvailable()">
                             <label>Choose a CRM entry</label>
@@ -104,9 +263,13 @@
                         <md-input-container ng-if="crmCtrl.isCallableRecordListAvailable()" class="md-icon-float md-block" flex="100">
                             <label>Notes</label>
                             <md-icon class="fa fa-circle-o"></md-icon>
-                            <textarea rows="5" cols="100" ng-model="crmCtrl.notes"></textarea>
+                            <textarea ng-model="crmCtrl.notes"></textarea>
                         </md-input-container>
                     </div>
+                </md-dialog-content>
+
+                <md-dialog-content ng-if="!crmCtrl.isCallableRecordListAvailable()">
+                    <h1 style = "font-size: 18px; margin-top: 2%" flex-offset = "5" >There are no records in your CRM that match the selected phone number.</h3>
                 </md-dialog-content>
 
                 <md-dialog-actions layout="row">
@@ -118,11 +281,12 @@
                         Add Call
                     </md-button>
                 </md-dialog-actions>
+              </div>
             </form>
         </md-dialog>
     </script>
 
-    <md-autocomplete class= "mercurioBlueColor" id='chatListSearch' style="font-color: white; margin-top:2%;" flex
+    <!-- <md-autocomplete class= "mercurioBlueColor" id='chatListSearch' style="font-color: white; margin-top:2%;" flex
                      md-input-name="autocompleteField"
                      md-input-minlength="2"
                      md-input-maxlength="18"
@@ -132,31 +296,133 @@
                      md-items="item in ctrl.querySearch(ctrl.searchText)"
                      md-item-text="item.display"
                      md-floating-label="Search">
-    </md-autocomplete>
+    </md-autocomplete> -->
+    <md-nav-bar md-selected-nav-item="sidebarNavItem" nav-bar-aria-label="navigation links">
+      <md-nav-item style="margin-left:-5%" flex="25" md-nav-click="goto('all')" name="all">({{recentCallListCtrl.phoneService.phone.recentCallList.length}}) All</md-nav-item>
+      <md-nav-item flex="25" md-nav-click="goto('missed')" name="missed">({{recentCallListCtrl.phoneService.sidebarMissedCalls.length}}) Missed</md-nav-item>
+      <md-nav-item flex="25" md-nav-click="goto('incoming')" name="incoming">({{recentCallListCtrl.phoneService.sidebarIncomingCalls.length}}) In</md-nav-item>
+      <md-nav-item flex="25" md-nav-click="goto('outgoing')" name="outgoing">({{recentCallListCtrl.phoneService.sidebarOutgoingCalls.length}}) Out</md-nav-item>
+    </md-nav-bar>
 
-    <md-button ng-repeat="call in recentCallListCtrl.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom:7%; margin-top:-7%; width:100%; border-bottom:1px solid #eee">
+    <!-- All calls -->
+    <md-button ng-show="sidebarNavItem=='all'" ng-repeat="call in recentCallListCtrl.phoneService.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
                 <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
                 <p style= "color: white;" ng-click="selectCallIndex($index)"style="font-size:12px; margin-top:5%; word-break: break-all;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</p>
                 <div ng-click="selectCallIndex($index)" flex="25" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
-                    <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}">
+                    <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
+                    <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
+                    <i ng-if="call.incoming && !call.answered" class="fa fa-long-arrow-up incoming-missed pull-right" style="margin-right:15%;"></i>
+                    <i ng-if="!call.incoming && call.answered" class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
+                    <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
                 </div>
                 <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
                 <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
             </md-list-item>
         </md-list>
-        
+
         <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
         <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
-            <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="callDetailsCtrl.showCallDetailsDialog($event, $index)">Call Details</span>
+
+            <span style = "color: white;"ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
+
             <br/>
-            <span ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.markCallAsSelected($event, call)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
             <br/>
-            <span>Send Text Message</span>
+            <span style = "color: white;">Send Text Message</span>
             <br/>
-            <span ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+            <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+        </div>
+    </md-button>
+
+    <!-- Missed calls -->
+    <md-button ng-show="sidebarNavItem=='missed'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarMissedCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+        <md-list style="padding:0%;">
+            <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
+                <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
+                <p style= "color: white;" ng-click="selectCallIndex($index)"style="font-size:12px; margin-top:5%; word-break: break-all;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</p>
+                <div ng-click="selectCallIndex($index)" flex="25" layout="column">
+                    <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
+                    <i ng-if="call.incoming && !call.answered" class="fa fa-long-arrow-up incoming-missed pull-right" style="margin-right:15%;"></i>
+                    <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
+                </div>
+                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
+                <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
+            </md-list-item>
+        </md-list>
+
+        <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
+        <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
+
+            <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
+
+            <br/>
+            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <br/>
+            <span style = "color: white;">Send Text Message</span>
+            <br/>
+            <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+        </div>
+    </md-button>
+
+    <!-- Incoming calls -->
+    <md-button ng-show="sidebarNavItem=='incoming'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarIncomingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+        <md-list style="padding:0%;">
+            <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
+                <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
+                <p style= "color: white;" ng-click="selectCallIndex($index)"style="font-size:12px; margin-top:5%; word-break: break-all;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</p>
+                <div ng-click="selectCallIndex($index)" flex="25" layout="column">
+                    <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
+                  <i class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
+                </div>
+                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
+                <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
+            </md-list-item>
+        </md-list>
+
+        <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
+        <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
+
+            <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
+
+            <br/>
+            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <br/>
+            <span style = "color: white;">Send Text Message</span>
+            <br/>
+            <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+        </div>
+    </md-button>
+
+    <!-- Outgoing calls -->
+    <md-button ng-show="sidebarNavItem=='outgoing'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarOutgoingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+        <md-list style="padding:0%;">
+            <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
+                <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
+                <p style= "color: white;" ng-click="selectCallIndex($index)"style="font-size:12px; margin-top:5%; word-break: break-all;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</p>
+                <div ng-click="selectCallIndex($index)" flex="25" layout="column">
+                    <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
+                    <i class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
+                </div>
+                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
+                <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
+            </md-list-item>
+        </md-list>
+
+        <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
+        <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
+
+            <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
+
+            <br/>
+            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <br/>
+            <span style = "color: white;">Send Text Message</span>
+            <br/>
+            <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
 

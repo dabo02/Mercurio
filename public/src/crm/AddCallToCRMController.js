@@ -5,48 +5,23 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('AddCallToCRMController', ['accountService', 'crmService', '$mdDialog', '$scope', function(accountService, crmService, $mdDialog, $scope){
+    angular.module('mercurio').controller('AddCallToCRMController', ['phoneService', 'crmService', '$mdDialog', '$scope', function(phoneService, crmService, $mdDialog, $scope){
 
         var self = this;
         self.crmService = crmService;
+        self.phoneService = phoneService;
 
-        self.markCallAsSelected = function(event, call){
-            self.showFetchingCallableRecordsProgress();
-            crmService.callableRecords = null;
-
-            /*
-            if(call.from !== accountService.activeAccount.phone){
-                crmService.selectedNumber = call.from;
-                crmService.selectedCallDirection = 'Missed';
-
-                if(call.answered){
-                    crmService.selectedCallDirection = 'Incoming';
-                }
-            }
-            else{
-                crmService.selectedNumber = call.to;
-                crmService.selectedCallDirection = 'Outgoing';
-            }
-            */
-
-            if(call.from === accountService.activeAccount.phone){
-                crmService.selectedNumber = call.to;
-                crmService.selectedCallDirection = 'Outgoing';
-            }
-            else{
-                crmService.selectedNumber = call.from;
-                crmService.selectedCallDirection = 'Incoming';
-            }
-
-            crmService.crmManager.crmList[0].searchCallableRecords(crmService.selectedNumber, function(records){
-                crmService.callableRecords = records;
-                if(self.isCallableRecordListAvailable()) {
-                    $mdDialog.hide();
-                    self.showAddCallToCRMDialog(event);
-                }
-            });
+        self.addCallToCRMButtonClicked = function(call, event){
+          if(call.from === phoneService.activeAccount.phone){
+              self.selectedNumber = call.to;
+              self.selectedCallDirection = 'Outgoing';
+          }
+          else{
+              self.selectedNumber = call.from;
+              self.selectedCallDirection = 'Incoming';
+          }
+          crmService.addCallToCRM(self.selectedNumber, self.selectedCallDirection, event);
         }
-
 
         self.isCallableRecordListAvailable = function(){
             return (crmService.callableRecords !== null) &&
@@ -65,30 +40,6 @@
 
         self.isCallableAccountListAvailable = function(){
             return crmService.callableRecords['Accounts'].length > 0;
-        }
-
-        self.showFetchingCallableRecordsProgress = function(){
-            $mdDialog.show({
-                //controller: AddCallToCRMController,
-                templateUrl: 'fetchingCallableRecordsProgress',
-                parent: angular.element(document.body),
-                targetEvent: event,
-                escapeToClose: true,
-                clickOutsideToClose:true
-                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            })
-        }
-
-        self.showAddCallToCRMDialog = function(event) {
-            $mdDialog.show({
-                //controller: AddCallToCRMController,
-                templateUrl: 'addCallToCRMForm',
-                parent: angular.element(document.body),
-                targetEvent: event,
-                escapeToClose: true,
-                clickOutsideToClose:true
-                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            });
         }
 
         self.addCallToCRM = function(){
