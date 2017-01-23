@@ -35,7 +35,7 @@
 function JanusPhone(userId, phoneInitializationObserver) {
 
 	var self = this;
-	self.debug = false;
+	self.debug = true;
 	self.audioConferenceHandler = null;
 	self.videoPluginHandler = null;
 	self.sipCallHandler = null;
@@ -268,20 +268,20 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 								}
 								self.webRTCStateObserver(state);
 							}
-							 else {
-								if(self.endCallRequest == false) {
-									self.stopTimer = true;
-									self.currentCalls[0].duration = self.callTimer;
-									self.updateFinishedCall();
-									self.webRTCStateObserver(state);
-								}
-							 }
+							 // else {
+								// if(self.endCallRequest == false) {
+								// 	self.stopTimer = true;
+								// 	self.currentCalls[0].duration = self.callTimer;
+								// 	self.updateFinishedCall();
+								// 	self.webRTCStateObserver(state);
+								// }
+							 // }
 
 						},
 						onmessage: function (msg, jsep) {
 							Janus.debug(" ::: Got a message :::");
 							Janus.debug(JSON.stringify(msg));
-							Janus.debug(JSON.stringify(jsep));
+							// Janus.debug(JSON.stringify(jsep));
 							if (jsep) {
 								if (jsep.sdp !== null || jsep.sdp !== undefined) {
 									var index = jsep.sdp.search("a=rtpmap");
@@ -569,11 +569,12 @@ JanusPhone.prototype.inCallTimer = function() {
 
 JanusPhone.prototype.createAnswerOnAccepted = function() {
 	var self = this;
-	if (self.currentCalls[0].incoming = true) {
-		if (self.jsepOnAcceptedCall.type === 'Answer') {
-			if (self.jsepOnIncomingCall !== null) {
+	if (self.jsepOnIncomingCall !== null) {
+		if (self.jsepOnIncomingCall.type) {
+			if (self.jsepOnIncomingCall.type === 'answer') {
 				self.sipCallHandler.handleRemoteJsep({jsep: self.jsepOnIncomingCall, error: self.endCall()});
 				self.jsepOnIncomingCall = null;
+
 			}
 		}
 	}
