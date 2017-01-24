@@ -85,7 +85,7 @@
 
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
-
+            $state.reload();
         }
 
         self.isMessageFromMe = function(message){
