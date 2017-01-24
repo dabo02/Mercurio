@@ -63,7 +63,10 @@
     <video style="position: absolute;" id='localStream' autoplay></video>
     <video style="position: absolute;" id='remoteStream' autoplay></video>
 
-    <div style="height:100%;" ui-view></div>
+    <div ng-if="spinnerActivated" class="row" style="padding-top:15%" ng-cloak>
+      <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="!spinnerActivated" md-diameter="200"></md-progress-circular>
+    </div>
+    <div ng-if="!spinnerActivated" style="height:100%;" ui-view></div>
 
     <!--<profile-editor-form ng-controller="ProfileEditorController as profileCtrl"></profile-editor-form>-->
 
@@ -206,24 +209,29 @@
       });
     </script>
 
-  <script src="/lib/mercurio-sdk/AbstractAccount.js"></script>
-  <script src="/lib/mercurio-sdk/AbstractContact.js"></script>
-  <script src="/lib/mercurio-sdk/AbstractContactManager.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioAccount.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioAuthenticator.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioChatParticipant.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioChat.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioChatClient.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioContact.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioContactManager.js"></script>
-  <script src="/lib/mercurio-sdk/Message.js"></script>
-  <script src="/lib/mercurio-sdk/JanusPhone.js"></script>
-  <script src="/lib/mercurio-sdk/RecentCall.js"></script>
-  <script src="/lib/mercurio-sdk/MissingImplementationError.js"></script>
-  <script src="/lib/mercurio-sdk/AbstractCRMManager.js"></script>
-  <script src="/lib/mercurio-sdk/MercurioCRMManager.js"></script>
-  <script src="/lib/mercurio-sdk/AbstractCRM.js"></script>
-  <script src="/lib/mercurio-sdk/ZohoCRM.js"></script>
+  <script src="/lib/mercurio-sdk/account/AbstractAccount.js"></script>
+  <script src="/lib/mercurio-sdk/account/MercurioAccount.js"></script>
+  <script src="/lib/mercurio-sdk/account/MercurioAuthenticator.js"></script>
+
+  <script src="/lib/mercurio-sdk/contacts/AbstractContact.js"></script>
+  <script src="/lib/mercurio-sdk/contacts/AbstractContactManager.js"></script>
+  <script src="/lib/mercurio-sdk/contacts/MercurioContact.js"></script>
+  <script src="/lib/mercurio-sdk/contacts/MercurioContactManager.js"></script>
+
+  <script src="/lib/mercurio-sdk/chat/MercurioChatParticipant.js"></script>
+  <script src="/lib/mercurio-sdk/chat/MercurioChat.js"></script>
+  <script src="/lib/mercurio-sdk/chat/MercurioChatClient.js"></script>
+  <script src="/lib/mercurio-sdk/chat/Message.js"></script>
+
+  <script src="/lib/mercurio-sdk/phone/JanusPhone.js"></script>
+  <script src="/lib/mercurio-sdk/phone/RecentCall.js"></script>
+
+  <script src="/lib/mercurio-sdk/errors/MissingImplementationError.js"></script>
+
+  <script src="/lib/mercurio-sdk/crm/AbstractCRMManager.js"></script>
+  <script src="/lib/mercurio-sdk/crm/MercurioCRMManager.js"></script>
+  <script src="/lib/mercurio-sdk/crm/AbstractCRM.js"></script>
+  <script src="/lib/mercurio-sdk/crm/ZohoCRM.js"></script>
 
   <script src="/node_modules/angular/angular.js"></script>
   <script src="/node_modules/angular-animate/angular-animate.js"></script>

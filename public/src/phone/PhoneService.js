@@ -5,10 +5,11 @@
 
     'use strict';
 
-    angular.module('mercurio').service('phoneService', ['$location', '$mdDialog', '$state', function($location, $mdDialog, $state){
+    angular.module('mercurio').service('phoneService', ['crmService', '$location', '$mdDialog', '$state', function(crmService, $location, $mdDialog, $state){
 
         var self = this;
         self.phone;
+        self.crmService = crmService;
         self.activeAccount;
         self.contactSearchString = '';
         self.ringbackTone = new Audio('audio/ringback.mp3');
@@ -59,6 +60,8 @@
             self.stopRingbackTone();
             $mdDialog.hide();
             self.contactSearchString = '';
+            self.phone.endCall();
+            self.addCallToCRMCallFinished(self.phone.currentCalls[0]);
             self.phone.currentCalls = [];
             if($state.current.name != "call")
             {
@@ -114,6 +117,23 @@
             self.ringbackTone.pause();
             self.ringbackTone.currentTime = 0;
         }
+
+        self.addCallToCRMCallFinished = function(call, event){
+            if(call.from === self.activeAccount.phone){
+              self.selectedNumber = call.to;
+              self.selectedCallDirection = 'Outgoing';
+            }
+            else{
+              self.selectedNumber = call.from;
+              self.selectedCallDirection = 'Incoming';
+            }
+
+            if(crmService.crmManager.crmList != undefined && crmService.crmManager.crmList != null && crmService.crmManager.crmList.length > 0)
+          crmService.addCallToCRM(self.selectedNumber, self.selectedCallDirection, event, crmService.crmManager.crmList[0].insertCallsAutomatically);
+        }
+
+
+
     }]);
 
 })();

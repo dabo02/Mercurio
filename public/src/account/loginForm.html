@@ -27,7 +27,7 @@
                 <md-button ng-click="authCtrl.closeResetPasswordDialog()">
                     Close
                 </md-button>
-                <md-button ng-click="authCtrl.sendResetPasswordEmail()" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
+                <md-button ng-click="authCtrl.sendResetPasswordEmail(); authCtrl.closeResetPasswordDialog()" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
                     Reset Password
                 </md-button>
 
@@ -38,10 +38,12 @@
 </script>
 
 <div style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');height:100%" ng-controller="AuthenticationController as authCtrl" ng-cloak onload="checkUrl()">
-    <div ng-if="spinnerActivated"class="row" style="padding-top:15%" ng-cloak>
+
+    <div ng-if="spinnerActivated" class="row" style="padding-top:15%" ng-cloak>
         <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="!spinnerActivated" md-diameter="200"></md-progress-circular>
     </div>
-    <div ng-if="!spinnerActivated" style="padding-top: 5%;" ng-cloak>
+
+    <form ng-if="!spinnerActivated" style="padding-top: 5%;" ng-cloak ng-submit="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">
 
         <md-card flex="45" flex-offset="30" style="margin: 10% auto; background:rgba(0,0,0,0.50);">
               <div layout="row" style="height: 5%; background:rgba(0,0,0,0); ">
@@ -73,7 +75,7 @@
                         <!-- Use floating label instead of placeholder -->
                         <label style= "color: white">Password</label>
                         <input style= "color: white; border-color: yellow;" ng-model="authCtrl.password" type="password">
-                        <a class = "mercurioBlueColor" style= "padding-bottom: 10%;" href="" ng-click="authCtrl.showResetPasswordDialog()">Forgot password?</a>
+                        <a style= "color: white; padding-bottom: 10%;" href="" ng-click="authCtrl.showResetPasswordDialog()">Forgot password?</a>
                     </md-input-container>
                 </div>
             </div>
@@ -84,5 +86,5 @@
                 <md-button flex="60" flex-offset="20" style="color: white; background-color: #087be4; width:100%; margin-bottom:4%;" ng-click="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">Login</md-button>
             </div>
         </md-card>
-    </div>
+    </form>
 </div>

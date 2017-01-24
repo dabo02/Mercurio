@@ -2,7 +2,7 @@
 <script type="text/ng-template" id="profileEditorForm">
     <md-dialog flex="40" aria-label="Profile Editor Form" ng-controller="ProfileEditorController as profileCtrl">
         <form ng-cloak>
-            <md-toolbar>
+            <md-toolbar class="mercurioBlueBackground">
                 <div class="md-toolbar-tools">
                     <h2>Profile Editor</h2>
                     <span flex></span>
@@ -53,16 +53,14 @@
                         <md-icon class="fa fa-envelope"></md-icon>
                         <input id="email" type="text" ng-model="profileCtrl.email" placeholder="{{profileCtrl.getEmail()}}">
                     </md-input-container>
-                    <md-input-container class="md-icon-float md-block">
-                        <label>Phone</label>
-                        <md-icon class="fa fa-phone"></md-icon>
-                        <input id="phone" type="text" ng-model="profileCtrl.phone" placeholder="{{profileCtrl.getPhone()}}">
-                    </md-input-container>
-                    <md-input-container class="md-icon-float md-block">
+                    <md-content style= "background-color: white; margin-left: 5%;" class="md-icon-float">
+                        <label >Phone</label>
+                        <i style = "position: fixed; margin-top: 1%;" class="fa fa-phone"> {{profileCtrl.getPhone()}}</i>
+                    </md-content>
+                    <md-content style= "background-color: white; margin-left: 15%;"class="md-icon-float">
                         <label>Ext.</label>
-                        <md-icon class="fa fa-hashtag"></md-icon>
-                        <input id="extension" type="text" ng-model="profileCtrl.extension" placeholder="{{profileCtrl.getExtension()}}">
-                    </md-input-container>
+                        <i style = "position: fixed; margin-top: 1%;" class="fa fa-hashtag">{{profileCtrl.getExtension()}} </i>
+                    </md-content>
                 </div>
 
                 <md-card>
@@ -91,7 +89,7 @@
                 <md-button ng-click="profileCtrl.closeProfileEditorDialog()">
                     Close
                 </md-button>
-                <md-button ng-click="profileCtrl.saveProfileInfo()">
+                <md-button ng-click="profileCtrl.saveProfileInfo(); profileCtrl.closeProfileEditorDialog()">
                     Save
                 </md-button>
 
@@ -106,7 +104,7 @@
 <script type="text/ng-template" id="manageCRMForm">
     <md-dialog flex="40" aria-label="Manage CRM Form" ng-controller="ManageCRMController as crmCtrl">
         <form ng-cloak>
-            <md-toolbar>
+            <md-toolbar class="mercurioBlueBackground">
                 <div class="md-toolbar-tools">
                     <h2>CRM Manager</h2>
                     <span flex></span>
@@ -124,6 +122,7 @@
                         <md-icon class="fa fa-comment-o"></md-icon>
                         <input required md-no-asterisk type="text" ng-model="crmCtrl.name" placeholder="{{crmCtrl.getCRMName()}}"
                                ng-change="crmCtrl.crmNameChanged()" required>
+
                     </md-input-container>
                 </div>
 
@@ -134,6 +133,8 @@
                         <input required md-no-asterisk type="text" ng-model="crmCtrl.token" placeholder="{{crmCtrl.getCRMToken()}}"
                                ng-change="crmCtrl.crmTokenChanged()" required>
                     </md-input-container>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_check_green.png" alt=""></p>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "!crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_exclamation_red.png" alt=""></p>
                 </div>
 
                 <div layout="row">
@@ -144,7 +145,11 @@
                         </md-checkbox>
                         <label></label>
                     </md-input-container>
-                </div>
+                  </div>
+              <div layout="row">
+                <a href="https://accounts.zoho.com/apiauthtoken/create?SCOPE=ZohoCRM/crmapi">Find your 2-Factor Authentication Token </a>
+              </div>
+
 
             </md-dialog-content>
 
@@ -215,7 +220,7 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-actions style="padding-left:4%;" layout="row">
-                <p style="word-break: break-all" flex="65">{{profileCtrl.getStatusMessage()}}</p>
+                <p style="font-size: 15px; word-break: break-all" flex="65">{{profileCtrl.getStatusMessage()}}</p>
             </md-card-actions>
         </md-card>
 
@@ -237,8 +242,8 @@
             <md-button layout="row">
                 <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img ng-src="images/contacts.png" alt=""></p>
                 <p style = "color: white;" flex="80" ng-click="crmCtrl.showManageCRMDialog()">CRM Manager</p>
-                <md-icon ng-show = "crmCtrl.crmManager.crmList[0].validated" class="fa fa-check" alt=""></p>
-                <md-icon ng-show = "!crmCtrl.crmManager.crmList[0].validated" class="fa fa-exclamation-triangle" alt=""></p>
+                <img style="height: 20px;" ng-show = "crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_check_green.png" alt=""></p>
+                <img style="height: 20px;" ng-show = "!crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_exclamation_red.png" alt=""></p>
 
             </md-button>
         </md-list-item>

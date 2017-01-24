@@ -21,9 +21,15 @@
 
         self.availableDirections = ['up', 'down', 'left', 'right'];
         self.selectedDirection = 'up';
+        self.counter=0;
 
         self.isChatListAvailable = function() {
             return chatClientService.isChatListAvailable();
+        }
+
+        self.checkIfThereAreMsg = function(counter){
+          console.log(self.counter);
+          self.counter++;
         }
 
         self.viewChat = function(chatIndex){
@@ -32,7 +38,6 @@
         }
 
         self.getTextPreviewClass = function(chat, index){
-
             if($state.params.chatIndex == index){
                 chatClientService.chatClient.chatList[index].markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
                 return;
@@ -77,17 +82,17 @@
             });
         };
 
-        //chatClientService.chatClient.chatList.forEach(function(chat, index){
-        //    $scope.chatList = [];
-        //    $scope.chatList[index] = chat;
-        //    $scope.$watch(
-        //        'chatList[' + index + ']',
-        //        function (newVal, oldVal) {
-        //            if ( newVal !== oldVal ) {
-        //                chat.lastMessage = newVal.lastMessage;
-        //            }
-        //        }, true
-        //    );
-        //});
+        chatClientService.chatClient.chatList.forEach(function(chat, index){
+           $scope.chatList = [];
+           $scope.chatList[index] = chat;
+           $scope.$watch(
+               'chatList[' + index + ']',
+               function (newVal, oldVal) {
+                   if ( newVal !== oldVal ) {
+                       chat.lastMessage = newVal.lastMessage;
+                   }
+               }, true
+           );
+        });
     }]);
 })();

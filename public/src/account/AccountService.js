@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').service('accountService', ['authenticationService', 'chatClientService', 'phoneService', 'crmService', '$state', '$location', function(authenticationService, chatClientService, phoneService, crmService, $state, $location){
+    angular.module('mercurio').service('accountService', ['authenticationService', 'chatClientService', 'phoneService', 'crmService', '$state', '$location', '$rootScope', function(authenticationService, chatClientService, phoneService, crmService, $state, $location, $rootScope){
 
         var self = this;
 
@@ -36,6 +36,7 @@
         }
 
         authenticationService.setAccountObserver(function(account){
+
             self.activeAccount = account;
 
             if(!self.isAccountAvailable()){
@@ -46,10 +47,27 @@
                 chatClientService.instantiateChatClient(account.userId);
                 phoneService.instantiatePhone(account);
                 crmService.instantiateCRMManager(account.userId);
-                $state.go('dialer'); // go to previous state instead
+
+                if($state.current.name == 'login'){
+                    $state.go('dialer');
+                }
+
             }
-            //else{
-            //    $state.go('dialer');
+
+            $rootScope.spinnerActivated = false;
+            $rootScope.$apply();
+        });
+
+        $rootScope.$watch('activeAccount', function (currentUser) {
+
+            //$rootScope.spinnerActivated = false;
+            //if (angular.isDefined(currentUser)) {
+            //    if (currentUser) {
+            //        $rootScope.currentUser = currentUser;
+            //    } else {
+            //        //deferred.reject(true);
+            //        //$state.go('login');
+            //    }
             //}
         });
 

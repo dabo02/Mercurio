@@ -35,7 +35,7 @@
 function JanusPhone(userId, phoneInitializationObserver) {
 
 	var self = this;
-	self.debug = true;
+	self.debug = false;
 	self.audioConferenceHandler = null;
 	self.videoPluginHandler = null;
 	self.sipCallHandler = null;
@@ -91,7 +91,7 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 	// add user-chat entry for participant
 	updates['/user-calls/' + self.phoneOwner + "/" + newCallRef.key] = callInfo;
 	firebase.database().ref().update(updates);
-	
+
 	this.currentCalls.push(new RecentCall(newCallRef.key, answered, '', from, incoming, timeStamp, to));
 }
 
@@ -268,20 +268,20 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 								}
 								self.webRTCStateObserver(state);
 							}
-							 // else {
-								// if(self.endCallRequest == false) {
-								// 	self.stopTimer = true;
-								// 	self.currentCalls[0].duration = self.callTimer;
-								// 	self.updateFinishedCall();
-								// 	self.webRTCStateObserver(state);
-								// }
-							 // }
+							//else {
+							//	if(self.endCallRequest == false) {
+							//		self.stopTimer = true;
+							//		self.currentCalls[0].duration = self.callTimer;
+							//		self.updateFinishedCall();
+							//		self.webRTCStateObserver(state);
+							//	}
+							//}
 
 						},
 						onmessage: function (msg, jsep) {
 							Janus.debug(" ::: Got a message :::");
 							Janus.debug(JSON.stringify(msg));
-							// Janus.debug(JSON.stringify(jsep));
+							Janus.debug(JSON.stringify(jsep));
 							if (jsep) {
 								if (jsep.sdp !== null || jsep.sdp !== undefined) {
 									var index = jsep.sdp.search("a=rtpmap");
@@ -477,26 +477,26 @@ JanusPhone.prototype.answerCall = function(myStreamTag, peerStreamTag) {
 	self.localView = document.getElementById(myStreamTag);
 	self.remoteView = document.getElementById(peerStreamTag);
 
-    self.sipCallHandler.createAnswer(
-        {
-            jsep: self.jsepOnIncomingCall,
-            media: { audio: true, video: self.doVideo },
-            success: function(jsep) {
-                var body = { request: "accept" };
-	            var index = jsep.sdp.search("a=rtpmap");
-	            var topHalf = jsep.sdp.slice(0, index-1);
-	            var bottomHalf = jsep.sdp.slice(index);
-	            topHalf = topHalf + "\na=rtpmap:101 telephone-event/8000\n";
-	            jsep.sdp = topHalf + "" + bottomHalf;
-                // Note: as with "call", you can add a "srtp" attribute to
-                // negotiate/mandate SDES support for this incoming call.
-                // The default behaviour is to automatically use it if
-                // the caller negotiated it, but you may choose to require
-                // SDES support by setting "srtp" to "sdes_mandatory", e.g.:
-                //		var body = { request: "accept", srtp: "sdes_mandatory" };
-                // This way you'll tell the plugin to accept the call, but ONLY
-                // if SDES is available, and you don't want plain RTP. If it
-                // is not available, you'll get an error (452) back.
+	self.sipCallHandler.createAnswer(
+		{
+			jsep: self.jsepOnIncomingCall,
+			media: { audio: true, video: self.doVideo },
+			success: function(jsep) {
+				var body = { request: "accept" };
+				var index = jsep.sdp.search("a=rtpmap");
+				var topHalf = jsep.sdp.slice(0, index-1);
+				var bottomHalf = jsep.sdp.slice(index);
+				topHalf = topHalf + "\na=rtpmap:101 telephone-event/8000\n";
+				jsep.sdp = topHalf + "" + bottomHalf;
+				// Note: as with "call", you can add a "srtp" attribute to
+				// negotiate/mandate SDES support for this incoming call.
+				// The default behaviour is to automatically use it if
+				// the caller negotiated it, but you may choose to require
+				// SDES support by setting "srtp" to "sdes_mandatory", e.g.:
+				//		var body = { request: "accept", srtp: "sdes_mandatory" };
+				// This way you'll tell the plugin to accept the call, but ONLY
+				// if SDES is available, and you don't want plain RTP. If it
+				// is not available, you'll get an error (452) back.
 
 				self.sipCallHandler.send({"message": body, "jsep": jsep});
 			},
@@ -530,7 +530,7 @@ JanusPhone.prototype.inCallTimer = function() {
 	var minutes = 0; // stores number of minutes of ongoing call
 	var hours = 0; // stores number of hours of ongoing call
 	self.cT = setInterval(function() {
-		
+
 
 		seconds++;
 
@@ -569,12 +569,11 @@ JanusPhone.prototype.inCallTimer = function() {
 
 JanusPhone.prototype.createAnswerOnAccepted = function() {
 	var self = this;
-	if (self.jsepOnIncomingCall !== null) {
-		if (self.jsepOnIncomingCall.type) {
-			if (self.jsepOnIncomingCall.type === 'answer') {
+	if (self.currentCalls[0].incoming = true) {
+		if (self.jsepOnAcceptedCall.type === 'Answer') {
+			if (self.jsepOnIncomingCall !== null) {
 				self.sipCallHandler.handleRemoteJsep({jsep: self.jsepOnIncomingCall, error: self.endCall()});
 				self.jsepOnIncomingCall = null;
-
 			}
 		}
 	}
