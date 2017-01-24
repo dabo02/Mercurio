@@ -13,7 +13,7 @@
 		self.makeCall = function (contacts) {
 
 			if(phoneService.phone.currentCalls.length == 0){
-				if (contacts.length > 0) {
+				if (contacts && contacts.length > 0) {
 					phoneService.phone.addNewCall(false,contacts[0].phone, accountService.activeAccount.phone, false, new Date().getTime());
 					$state.go('call', {'callIndex' : 0});
 				}
