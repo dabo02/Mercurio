@@ -27,8 +27,7 @@
             return chatClientService.isChatListAvailable();
         }
 
-        self.checkIfThereAreMsg = function(counter){
-          console.log(self.counter);
+        self.chatListCounter = function(counter){
           self.counter++;
         }
 
