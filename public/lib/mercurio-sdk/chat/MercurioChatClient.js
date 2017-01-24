@@ -130,7 +130,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 
 	participants.push(self.chatClientOwner);
 
-if(title==''){
+if(!title){
 	firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('title').equalTo('').once('value', function(chats){
 				var userChats = chats; //Get every user with empty title
 				userChats.forEach(function (chat){
@@ -154,7 +154,6 @@ if(title==''){
 
 	if(participants.length > 1){
 		// chat client owner is not the only participant in the list
-
 		// receive observer call back in addChat parameters and register the callback to this
 		//self.participantsAreReadyObserver = observer;
 		if(chatExist==null){
@@ -183,37 +182,29 @@ if(title==''){
 			});
 		});
 	}
+
 	else{
 		// chat already existe
-
 		// try and find chat in local chatList. if found move that chat to the top
 		// if its not in the local list add  new instance to chatList using the MercurioChat constructor
 		// and add it to the top of the list. call observer at the end
 		var chatFound = false;
 		self.chatList.forEach(function(chat, index){
-		if(chat.chatId === chatExist.key && !chatFound){
-			chatFound=true;
-			self.chatList.splice(index, 1);
-			self.chatList.unshift(chat);
-				}
-	});
+			if(chat.chatId === chatExist.key && !chatFound){
+				chatFound=true;
+				self.chatList.splice(index, 1);
+				self.chatList.unshift(chat);
+					}
+				});
 
 		if(!chatFound){
 			var chat;
-			// send observer callback registered in addChat to MercurioChat constructor
-			//if(snapshot.val().lastMessage){
-				//chat = new MercurioChat(snapshot.key, snapshot.val().participantCount);
-			//}
+
 			chat = new MercurioChat(chatExist.key, chatExist.val().participantCount, self.participantsAreReadyObserver,
 					chatExist.val().lastMessage, chatExist.val().settings, chatExist.val().timeStamp, chatExist.val().title, self.chatClientOwner);
 
 			self.chatList.unshift(chat);
-
 		}
-
-
-
-
 		observer();
 	}
 }
