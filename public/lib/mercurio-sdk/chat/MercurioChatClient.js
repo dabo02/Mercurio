@@ -130,6 +130,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 
 	participants.push(self.chatClientOwner);
 
+if(title==''){
 	firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('title').equalTo('').once('value', function(chats){
 				var userChats = chats; //Get every user with empty title
 				userChats.forEach(function (chat){
@@ -149,13 +150,14 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 						})
 				});
 	});
+}
 
-	if(participants.length > 1 && chatExist==null){
+	if(participants.length > 1){
 		// chat client owner is not the only participant in the list
 
 		// receive observer call back in addChat parameters and register the callback to this
 		//self.participantsAreReadyObserver = observer;
-
+		if(chatExist==null){
 		var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
 		var newChatKey = newChatRef.key;
 
@@ -214,6 +216,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 
 		observer();
 	}
+}
 
 	/* buggy code for avoiding duplicate non-group chats
 	var existingParticipants = [];
