@@ -119,9 +119,9 @@
                                 <div layout="row" class="messagePreviewChatMessageInput">
                                     <!--<p id="smile" style="margin-top: 3%; font-size: 22px;" class="fa fa-smile-o text-center" flex="10"></p>-->
                                     <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block">
-                                        <label style="color: white;" >Type Message</label>
+                                        <label style="color: black;">Type Message</label>
                                         <!--<input ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.changeMicToSend()" type="text">-->
-                                        <input style="color: white;" ng-model="multimediaChatCtrl.textContentToSend" type="text">
+                                        <input style="color: black;" ng-model="multimediaChatCtrl.textContentToSend" type="text">
                                     </md-input-container>
                                     <p ng-click="multimediaChatCtrl.sendMessage()" style="margin-top: 3%; color:#1565c0; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                                 </div>
@@ -187,7 +187,7 @@
                                                 </md-icon>
                                             </md-button>
                                         </md-fab-trigger>
-                                        <md-fab-actions>
+                                        <!-- <md-fab-actions>
                                             <md-button ng-show="options.isOpen" aria-label="Twitter" class="md-fab md-primary md-raised md-mini">
                                                 <md-icon style="font-size:20px" class="fa fa-file-picture-o"></md-icon>
                                             </md-button>
@@ -197,7 +197,7 @@
                                             <md-button ng-show="options.isOpen" aria-label="Google Hangout" class="md-fab md-accent md-raised md-mini">
                                                 <md-icon style="font-size:20px" class="fa fa-file-audio-o"></md-icon>
                                             </md-button>
-                                        </md-fab-actions>
+                                        </md-fab-actions> -->
                                     </md-fab-speed-dial>
 
 
@@ -208,12 +208,14 @@
                                         <md-icon style="color: white; font-size:22px;" class="fa fa-ellipsis-v"></md-icon>
                                     </md-button>
                                     <md-menu-content width="4">
+                                      <div ng-if="chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].title.length > 0">
                                         <md-menu-item>
                                             <md-button>
                                                 Group Details
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-divider></md-menu-divider>
+                                      </div>
                                         <md-menu-item>
                                             <md-button ng-click="chatCtrl.toggleMute(chatCtrl.chatClientService.chatClient.chatList[chatCtrl.chatIndex].settings.mute)">
                                                 Mute
