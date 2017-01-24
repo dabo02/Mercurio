@@ -67,11 +67,21 @@
         self.sendMessage = function(){
 
             if(self.textContentToSend.length > 0 || $rootScope.multimedia){
+
+                var type = '';
+
+                if($rootScope.multimedia){
+                    type = 'image';
+                }
+                else{
+                    type = 'im';
+                }
                 var message = {
                     from: accountService.activeAccount.getUserId(),
-                    multimediaUrl: $rootScope.multimedia,
+                    multimediaUrl: $rootScope.multimedia || '',
                     textContent: self.textContentToSend,
-                    timeStamp: new Date().getTime()
+                    timeStamp: new Date().getTime(),
+                    type: type
                 }
 
                 chatClientService.chatClient.sendMultimediaMessage(self.chatIndex, message);

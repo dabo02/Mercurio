@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, $mdDialog, $rootScope){
+    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, $mdDialog, $rootScope){
 
         var self = this;
 
@@ -22,6 +22,9 @@
         self.logoutButtonClicked = function(){
 
             authenticationService.logout();
+            //chatClientService.chatClient = null;
+            //phoneService.phone = null;
+            //crmService.crmManager = null;
         }
 
         self.changePasswordButtonClicked = function(){
