@@ -276,16 +276,19 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chatIndex, message
 	if(message.multimediaUrl){
 		firebase.storage().ref().child('chats/' + self.chatList[chatIndex].chatId + '/images/' + newMessageKey).put(message.multimediaUrl)
 		.then(function(multimediaSnapshot) {
+
 			message.multimediaUrl = multimediaSnapshot.downloadURL;
-			message.type = "image";
+
 			var updates = {};
 			updates['/chat-messages/' + self.chatList[chatIndex].chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
+
 			firebase.database().ref().update(updates);
 
 			self.sendTextMessage(chatIndex, newMessageKey, message);
 		});
 	}
 	else{
+
 		self.sendTextMessage(chatIndex, newMessageKey, message);
 	}
 

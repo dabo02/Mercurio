@@ -37,10 +37,10 @@
         }
 
         self.getTextPreviewClass = function(chat, index){
-            if($state.params.chatIndex == index){
-                chatClientService.chatClient.chatList[index].markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
-                return;
-            }
+            //if($state.params.chatIndex == index){
+            //    chatClientService.chatClient.chatList[index].markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+            //    return;
+            //}
 
 
             if(chat.messageList[chat.messageList.length - 1].read[chatClientService.chatClient.chatClientOwner] == 0){
