@@ -9,6 +9,7 @@
 
         var self = this;
         self.phoneService = phoneService;
+        $scope.phoneService = self.phoneService;
         $scope.currentNavItem = "all";
         $scope.sidebarNavItem = "all";
 
@@ -143,6 +144,12 @@
           phoneService.phone.addNewCall(false, self.phoneService.callDetailsContact.phone, self.phoneService.activeAccount.phone, false, new Date().getTime());
 					$state.go('call', {'callIndex' : 0});
         }
+
+        self.redial = function(phoneNumber){
+            phoneService.phone.addNewCall(false, phoneNumber, self.phoneService.activeAccount.phone, false, new Date().getTime());
+            $state.go('call', {'callIndex' : 0});
+        };
+
 
     }]);
 })();

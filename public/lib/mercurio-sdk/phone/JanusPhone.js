@@ -340,11 +340,16 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 									Janus.debug("call hanged");
 									if (self.endCallRequest === true) {
 										if (self.outboundCall == true || self.ignoreCallFlag == true) {
-											self.outboundCall = false;
-											self.ignoreCallFlag = false;
-											self.currentCalls[0].answered = false;
-										} else {
-											self.currentCalls[0].duration = self.callTimer;
+											if(self.callTimer != "0:00:00") {
+												self.outboundCall = false;
+												self.ignoreCallFlag = false;
+												self.currentCalls[0].answered = true;
+											} else {
+												self.outboundCall = false;
+												self.ignoreCallFlag = false;
+												self.currentCalls[0].answer = false;
+												self.currentCalls[0].duration = self.callTimer;
+											}
 										}
 										self.sipCallHandler.hangup(); // cleans up UI and removes streams
 									} else {

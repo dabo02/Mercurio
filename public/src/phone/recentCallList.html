@@ -66,7 +66,7 @@
                     <md-list layout ="column" style="background-color:#EEEEEE; overflow-y:scroll; height:250px;">
 
                       <!-- All calls -->
-                      <div ng-show="currentNavItem=='all'" ng-repeat="call in RecentCallsCtrl.phoneService.callDetailsCalls">
+                      <div ng-show="currentNavItem=='all'" ng-repeat="call in phoneService.callDetailsCalls">
                         <md-divider ng-if="!$first"></md-divider>
                         <div layout="row" style="width:100%;">
                           <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
@@ -92,7 +92,7 @@
                       </div>
 
                       <!-- Missed calls -->
-                      <div ng-show="currentNavItem=='missed'" ng-repeat="call in RecentCallsCtrl.phoneService.missedCalls">
+                      <div ng-show="currentNavItem=='missed'" ng-repeat="call in phoneService.missedCalls">
                         <md-divider ng-if="!$first"></md-divider>
                         <div layout="row" style="width:100%;">
                           <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
@@ -120,7 +120,7 @@
                       </div>
 
                       <!-- Incoming calls -->
-                      <div ng-show="currentNavItem=='incoming'" ng-repeat="call in RecentCallsCtrl.phoneService.incomingCalls">
+                      <div ng-show="currentNavItem=='incoming'" ng-repeat="call in phoneService.incomingCalls">
                         <md-divider ng-if="!$first"></md-divider>
                         <div layout="row" style="width:100%;">
                           <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
@@ -147,7 +147,7 @@
                       </div>
 
                       <!-- Outgoing calls -->
-                      <div ng-show="currentNavItem=='outgoing'" ng-repeat="call in RecentCallsCtrl.phoneService.outgoingCalls">
+                      <div ng-show="currentNavItem=='outgoing'" ng-repeat="call in phoneService.outgoingCalls">
                         <md-divider ng-if="!$first"></md-divider>
                         <div layout="row" style="width:100%;">
                           <div class="pull-left" layout="column" style="width:50%; margin-left:2%;">
@@ -319,7 +319,7 @@
                     <i ng-if="!call.incoming && call.answered" class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
                     <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
                 </div>
-                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
+                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList);"></div>
                 <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
             </md-list-item>
         </md-list>
@@ -349,7 +349,7 @@
                     <i ng-if="call.incoming && !call.answered" class="fa fa-long-arrow-up incoming-missed pull-right" style="margin-right:15%;"></i>
                     <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
                 </div>
-                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
+                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList);"></div>
                 <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
             </md-list-item>
         </md-list>
@@ -378,7 +378,7 @@
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                   <i class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
                 </div>
-                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
+                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList);"></div>
                 <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
             </md-list-item>
         </md-list>
@@ -407,7 +407,7 @@
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <i class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
                 </div>
-                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone"></div>
+                <div style="font-size:22px; padding-top:7%; color:#1565c0" flex="20" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList);"></div>
                 <md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>
             </md-list-item>
         </md-list>
