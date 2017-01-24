@@ -248,27 +248,18 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 	var self = this;
 
 	function sendPushNotification(pushToken){
-		var tokens = [];
+		var tokenArray = [];
 		if(pushToken != null){
 			//Convert Not Iterable JSON to an array
 			var array = Object.keys(pushToken);
-			tokens = angular.copy(array);
+			tokenArray = angular.copy(array);
 		}
-		if(tokens.length>0){
-			var data = {"tokens" : tokens}
+		if(tokenArray.length>0){
 			$.ajax({
 		    url: "/sendNotification",
 		    type: "post",
-				dataType: "json",
 		    contentType: "application/json; charset=utf-8",
-		    data: JSON.stringify(data),
-		    success: function (response) {
-		      console.log(response);
-		    },
-		    error: function (jqXHR, textStatus, errorThrown) {
-		      console.log(textStatus, errorThrown);
-		      console.warn(jqXHR.responseText);
-		    }
+		    data: JSON.stringify({"tokens": tokenArray})
 		  });
 		}
 

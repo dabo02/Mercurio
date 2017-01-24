@@ -6,8 +6,8 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.set({'Content-Type': 'application/json; charset=utf-8'})
-  res.set('Content-Type', 'application/json');
+  // res.header('Content-Type:', 'application/json');
+  res.writeHead(200, {'Content-Type': 'application/json'});
   next();
 });
 var notification = require('./routes/notification');

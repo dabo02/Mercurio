@@ -2,24 +2,7 @@
 
 
 exports.sendPushNotification = function (req, res) {
-  res.sendStatus(200);
-  // var options = {
-  //   method: 'POST',
-  //   headers: {
-  //     accept: '*/*',
-  //     'Content-Type': 'application/json'
-  //   }
-  // };
-  //
-  // var cleanData;
-  // var EventEmitter = require("events").EventEmitter;
-  // var body = new EventEmitter();
-  // var request = https.request(options, function(response) {
-  //   response.on('data', function(data){
-  //     body.data = data;
-  //     body.emit('update');
-  //   });
-  // });
+
   //send push notification
   var FCM = require('fcm-push');
   var serverkey = 'AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8';
@@ -31,13 +14,14 @@ exports.sendPushNotification = function (req, res) {
   //     "fGLjo8fx0sc:APA91bEbsaOJOx6b5hMQmnrXXcJslABgXrJYDjBYXiSerTVyeZVwyyfRRm6pQzeA0yChFj0MiGWc5z7X_ukiHgd96c0IiAtOUVsOsDaWxNWikLST_0xkHbW3mPR-rbsIkSMvQ36NpckB"
   // ]
 
-  tokenArray.forEach(function(token){
+  for(var i = 0; i < tokenArray.length; i++){
+    var token = tokenArray[i];
     var message =  {
           to : token,
           priority:'high',
           notification : {
-            title : "Hi Manolo",
-            body : "Isra is an animal. 8)",
+            title : "Hi",
+            body : "Someone has wrote you...",
             sound : true
           }
     };
@@ -45,11 +29,15 @@ exports.sendPushNotification = function (req, res) {
     fcm.send(message, function(err,response){
       if(err) {
         console.log(err);
-        res.send(err);
+        if(i==tokenArray.length-1){
+          res.send(err);
+        }
       } else {
         console.log("Successfully sent with response :",response);
-        res.sendStatus(200);
+        if(i==tokenArray.length-1){
+          res.sendStatus(200);
+        }
       }
     });
-  })
+  }
 }

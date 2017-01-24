@@ -10,6 +10,7 @@ var loop = require('lupus');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var notification = require('./routes/notification');
 
 var app = express();
 
@@ -455,6 +456,8 @@ app.post('/validateToken', function (req, res) {
     res.send(cleanData);
   });
 });
+
+app.post('/sendNotification', notification.sendPushNotification);
 
 app.all('/*', function(req, res, next) {
   // Just send the index.html for other files to support HTML5Mode
