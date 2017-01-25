@@ -166,7 +166,7 @@
 
                             <md-list flex="90" flex-offset="5">
                                 <md-list-item class="md-1-line">
-                                    <img ng-src="{{getPicture()}}" class="md-avatar"/>
+                                    <img ng-src="{{chatList[chatCtrl.chatIndex] | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
                                     <a class="md-list-item-text" layout="column">
                                         <h4 style= "color: white;" ng-if="chatList[chatCtrl.chatIndex].title.length > 0"
                                             ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">

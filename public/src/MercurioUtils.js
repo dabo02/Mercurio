@@ -56,9 +56,8 @@
 
     .filter('chatListAvatarFilter', function () {
         return function (chat, chatClientOwner) {
-
+          if(chat){
             var avatarUrl = '';
-
             if(chat.title.length > 0){
 
                 avatarUrl = 'images/default_group_avatar.png';
@@ -75,9 +74,11 @@
                     }
                 });
             }
-
             return avatarUrl;
-
+          }
+          else{
+            return;
+          }
         };
     })
 
