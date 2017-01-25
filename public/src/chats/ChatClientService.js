@@ -59,10 +59,19 @@
                         var newIndex = parseInt($state.params.chatIndex, 10) + 1;
                         $state.go('chat', {'chatIndex' : newIndex, 'chatClientOwner' : self.chatClient.chatClientOwner});
                     }
-                    else if($state.params.chatIndex == receivedChatIndex && $state.params.chatIndex != 0){
+                    else if($state.params.chatIndex == receivedChatIndex){
+
+                        //mark message as read
+                        //self.chatClient.chatList[$state.params.chatIndex].markAllMessagesAsRead(self.chatClient.chatClientOwner);
+
                         // I am currently viewing the received chat and it is now positioned at index 0 so the route
                         // is updated to continue viewing it
-                        $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                        if(receivedChatIndex == 0){
+                            $state.reload();
+                        }
+                        else{
+                            $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                        }
                     }
                 }
             }
