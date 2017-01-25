@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').service('chatClientService', ['$state', '$location', '$anchorScroll', function($state, $location, $anchorScroll){
+    angular.module('mercurio').service('chatClientService', ['$state', '$location', '$anchorScroll', '$rootScope', function($state, $location, $anchorScroll, $rootScope){
 
         var self = this;
         self.chatClient;
@@ -17,6 +17,21 @@
 
         self.instantiateChatClient = function(userId){
             self.chatClient = new MercurioChatClient(userId, self.onMessageReceived);
+            //TODO repeat this for:
+           // accountService.activeAccount.contactManager.contactList
+           // phoneService.phone.recentCallList
+           // crmService.crmManager.crmList
+           // Spinner Variable
+
+           $rootScope.chatListIsReady = false;
+           $rootScope.chatList = self.chatClient.chatList;
+
+          //  $rootScope.$watch('chatList', function () {
+          //      if($rootScope.chatList.length > 0){
+          //          $rootScope.chatListIsReady = true;
+          //          console.log("chat")
+          //      }
+          //  });
         }
 
         self.onMessageReceived = function(receivedChat, index){
