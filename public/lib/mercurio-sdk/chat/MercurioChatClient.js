@@ -130,84 +130,83 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 
 	participants.push(self.chatClientOwner);
 
-if(!title){
-	firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('title').equalTo('').once('value', function(chats){
-				var userChats = chats; //Get every user with empty title
-				userChats.forEach(function (chat){
-						firebase.database().ref('chat-members/' + chat.key).once('value', function(chatMembers){
-							var members = Object.keys(chatMembers.val()); //get memebers in every in memebers-chat
-							var counter = 0;
-							members.forEach(function (member){
-								for(var i=0; i<participants.length; i++){
-									if(member == participants[i]){
-										counter++;
-									}
-								}
-							});
-							if(counter==2){
-								chatExist=chat;
+	if(!title){
+		firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('title').equalTo('').once('value', function(chats){
+			var userChats = chats; //Get every user with empty title
+			userChats.forEach(function (chat){
+				firebase.database().ref('chat-members/' + chat.key).once('value', function(chatMembers){
+					var members = Object.keys(chatMembers.val()); //get memebers in every in memebers-chat
+					var counter = 0;
+					members.forEach(function (member){
+						for(var i=0; i<participants.length; i++){
+							if(member == participants[i]){
+								counter++;
 							}
-						})
-				});
-	});
-}
-
-	if(participants.length > 1){
-		// chat client owner is not the only participant in the list
-		// receive observer call back in addChat parameters and register the callback to this
-		//self.participantsAreReadyObserver = observer;
-		if(chatExist==null){
-		var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
-		var newChatKey = newChatRef.key;
-
-		var chatInfo = {
-			lastMessage: {},
-			timeStamp: new Date().getTime(),
-			title: title || '',
-			participantCount: participants.length,
-			settings: {mute:false}
-		};
-
-		var updates = {};
-
-		participants.forEach(function(participant){
-			// add participant to chat-members
-			firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function(){
-				updates = {};
-				// add user-chat entry for participant
-				updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
-				firebase.database().ref().update(updates).then(function(){
-					observer();
-				});
+						}
+					});
+					if(counter==2){
+						chatExist=chat;
+					}
+				})
 			});
 		});
 	}
 
-	else{
-		// chat already existe
-		// try and find chat in local chatList. if found move that chat to the top
-		// if its not in the local list add  new instance to chatList using the MercurioChat constructor
-		// and add it to the top of the list. call observer at the end
-		var chatFound = false;
-		self.chatList.forEach(function(chat, index){
-			if(chat.chatId === chatExist.key && !chatFound){
-				chatFound=true;
-				self.chatList.splice(index, 1);
-				self.chatList.unshift(chat);
-					}
+	if(participants.length > 1) {
+		// chat client owner is not the only participant in the list
+		// receive observer call back in addChat parameters and register the callback to this
+		//self.participantsAreReadyObserver = observer;
+		if (chatExist == null) {
+			var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
+			var newChatKey = newChatRef.key;
+
+			var chatInfo = {
+				lastMessage: {},
+				timeStamp: new Date().getTime(),
+				title: title || '',
+				participantCount: participants.length,
+				settings: {mute: false}
+			};
+
+			var updates = {};
+
+			participants.forEach(function (participant) {
+				// add participant to chat-members
+				firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function () {
+					updates = {};
+					// add user-chat entry for participant
+					updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
+					firebase.database().ref().update(updates).then(function () {
+						observer();
+					});
 				});
+			});
+		}
+		else {
+			// chat already existe
+			// try and find chat in local chatList. if found move that chat to the top
+			// if its not in the local list add  new instance to chatList using the MercurioChat constructor
+			// and add it to the top of the list. call observer at the end
+			var chatFound = false;
+			self.chatList.forEach(function (chat, index) {
+				if (chat.chatId === chatExist.key && !chatFound) {
+					chatFound = true;
+					self.chatList.splice(index, 1);
+					self.chatList.unshift(chat);
+				}
+			});
 
-		if(!chatFound){
-			var chat;
+			if (!chatFound) {
+				var chat;
 
-			chat = new MercurioChat(chatExist.key, chatExist.val().participantCount, self.participantsAreReadyObserver,
+				chat = new MercurioChat(chatExist.key, chatExist.val().participantCount, self.participantsAreReadyObserver,
 					chatExist.val().lastMessage, chatExist.val().settings, chatExist.val().timeStamp, chatExist.val().title, self.chatClientOwner);
 
-			self.chatList.unshift(chat);
+				self.chatList.unshift(chat);
+			}
+			observer();
 		}
-		observer();
 	}
-}
 
 	/* buggy code for avoiding duplicate non-group chats
 	var existingParticipants = [];
@@ -298,9 +297,35 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 
 	var self = this;
 
-	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
+	function sendPushNotification(pushToken, participant){
+		var tokenArray = [];
+		var user = {"firstName":"Hi"};
+		if(pushToken != null){
+			//Convert Not Iterable JSON to an array
+			var array = Object.keys(pushToken);
+			tokenArray = angular.copy(array);
+		}
+		else{
+			user = participant;
+		}
+		if(tokenArray.length>0){
+			$.ajax({
+		    url: "/sendNotification",
+		    type: "post",
+		    contentType: "application/json; charset=utf-8",
+		    data: JSON.stringify(
+					{
+						"tokens" : tokenArray,
+						"messageTitle" :  user.firstName,
+						"messageBody" : message.textContent
+					}
+				)
+		  });
+		}
 
-	var iOSTokens = [];
+	}
+
+	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
 
 	self.chatList[chatIndex].participantList.forEach(function(participant){
 
@@ -308,8 +333,9 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 			firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + participant.userId).set(0);
 		}
 
-		firebase.database().ref().child('user-tokens/' + participant.userId).once('child_added', function(snapshot){
-			iOSTokens.push(snapshot.key);
+		firebase.database().ref().child('user-tokens/'+participant.userId).once('value', function(snapshot){
+			// console.log("sending... "+snapshot.val());
+			sendPushNotification(snapshot.val(), participant);
 		});
 
 		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
@@ -320,11 +346,6 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 		updates['/user-chats/' + participant.userId + "/" + self.chatList[chatIndex].chatId + "/lastMessage"] = message;
 
 		firebase.database().ref().update(updates);
-	});
-
-	iOSTokens.forEach(function(token){
-		// this may run before all tokens are fetched :( maybe i should delay a few seconds..?
-		// curl with token to send push notification
 	});
 
 	// var chat = self.chatList[chatIndex];
@@ -339,7 +360,7 @@ and adds it to its corresponding recent chat
 @params: chatIndex - index of the recent chat to which the send message belongs to
 @params: type - string containing type of concrete message to receive
 @params: message - JSON object containing the received message's content
-
+		 
 messageContent must be structured as shown below:
 
 *** JSON example of message here ***

@@ -5,11 +5,29 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ChatController', ['$rootScope', '$scope', '$stateParams', 'chatClientService', 'accountService', '$location', '$anchorScroll', '$state', '$mdDialog', function($rootScope, $scope, $stateParams, chatClientService, accountService, $location, $anchorScroll, $state, $mdDialog){
+    angular.module('mercurio').controller('ChatController', ['$rootScope', '$scope', '$stateParams', 'chatClientService', 'accountService', '$location', '$anchorScroll', '$state', '$mdDialog', '$timeout', function($rootScope, $scope, $stateParams, chatClientService, accountService, $location, $anchorScroll, $state, $mdDialog, $timeout){
 
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
         self.chatClientService = chatClientService;
+        // var listener = setInterval(function(){
+        //   if($rootScope.chatList.length > 0){
+        //     self.contact = accountService.activeAccount.contactManager.contactList[$stateParams.contactIndex];
+        //     $rootScope.contact = accountService.activeAccount.contactManager.contactList[$stateParams.contactIndex];
+        //     clearInterval(listener);
+        //   }
+        //   console.log("interval")
+        // },10);
+        // var counter=0;
+        // var imgListener = null;
+        // imgListener = setInterval(function(){
+        //   if($scope.imglink.length > 0){
+        //     $scope.$apply();
+        //     clearInterval(imgListener);
+        //   }
+        //   console.log("interval")
+        // },10);
+
         /*self.chat = chatClientService.chatClient.chatList[self.chatIndex];
         self.messageList = self.chat.messageList;
         self.participantList = self.chat.participantList;
@@ -32,6 +50,43 @@
             $rootScope.multimedia = null;
         };
 
+        // var pictureListener = null;
+        // $scope.getPicture = function(){
+        //   console.log("in");
+        //   pictureListener = setInterval(function(chatList){
+        //     if(typeof(chatClientService) != 'undefined' || !null){
+        //       var avatarUrl = '';
+        //       var chat = chatClientService.chatClient.chatList[self.chatIndex];
+        //       var chatClientOwner = chatClientService.chatClient.chatClientOwner;
+        //       if(chat.title.length > 0){
+        //
+        //           avatarUrl = 'images/default_group_avatar.png';
+        //       }
+        //       else{
+        //           chat.participantList.forEach(function (participant) {
+        //               if (chatClientOwner !== participant.userId) {
+        //                   if(participant.picture === ""){
+        //                       avatarUrl = 'images/default_contact_avatar.png';
+        //                   }
+        //                   else{
+        //                       avatarUrl = participant.picture;
+        //                   }
+        //               }
+        //           });
+        //       }
+        //       $rootScope.$apply();
+        //       return avatarUrl;
+        //       clearInterval(pictureListener);
+        //     }
+        //     console.log("interval")
+        //   },10);
+        //
+        // }
+
+        self.reloadScope = function(){
+            console.log("in")
+            $rootScope.$apply();
+        }
 
         self.showMultimediaSelectionTextDialog = function(event) {
             $mdDialog.show({
@@ -95,7 +150,7 @@
 
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
-
+            // $state.reload();
         }
 
         self.isMessageFromMe = function(message){
@@ -152,7 +207,7 @@
 
         if(chatClientService.chatClient.chatList.length > 0){
             chatClientService.chatClient.chatList[$stateParams.chatIndex]
-                .markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+                .markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
         }
 
         $location.hash('bottom');
