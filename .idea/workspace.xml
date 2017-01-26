@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdd229d5-cd9f-4de6-bf73-7ca578e5d3d7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/notification.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/push-notification-server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/account/AccountService.js" afterPath="$PROJECT_DIR$/public/src/account/AccountService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/ChatClientService.js" afterPath="$PROJECT_DIR$/public/src/chats/ChatClientService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/ChatController.js" afterPath="$PROJECT_DIR$/public/src/chats/ChatController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/ChatGroupDetailsController.js" afterPath="$PROJECT_DIR$/public/src/chats/ChatGroupDetailsController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/contacts/ContactController.js" afterPath="$PROJECT_DIR$/public/src/contacts/ContactController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChatClient.js" afterPath="$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChatClient.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/MercurioUtils.js" afterPath="$PROJECT_DIR$/public/src/MercurioUtils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/chats/chat.html" afterPath="$PROJECT_DIR$/public/src/chats/chat.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/contacts/contactProfile.html" afterPath="$PROJECT_DIR$/public/src/contacts/contactProfile.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mercurio-server.js" afterPath="$PROJECT_DIR$/mercurio-server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/src/phone/recentCallList.html" afterPath="$PROJECT_DIR$/public/src/phone/recentCallList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/www" afterPath="$PROJECT_DIR$/bin/www" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="web-interface-mercurio.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,11 +31,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="210" column="9" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
-              <folding>
-                <marker date="1485448969000" expanded="true" signature="140:8355" placeholder="[...]" />
-                <marker date="1485448969000" expanded="true" signature="6085:6095" placeholder="{...}" />
-                <marker date="1485448969000" expanded="true" signature="6085:8354" placeholder="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -95,12 +78,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.3089245">
+              <caret line="66" column="104" selection-start-line="66" selection-start-column="104" selection-end-line="66" selection-end-column="104" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -220,15 +205,19 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="13" column="45" selection-start-line="7" selection-start-column="83" selection-end-line="7" selection-end-column="133" />
-              <folding />
+              <folding>
+                <marker date="1485448969000" expanded="true" signature="137:2428" placeholder="[...]" />
+                <marker date="1485448969000" expanded="true" signature="358:2427" placeholder="{...}" />
+                <marker date="1485448969000" expanded="true" signature="1087:1982" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MercurioChat.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MercurioChat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.61555076">
+            <state vertical-scroll-proportion="0.0">
               <caret line="105" column="89" selection-start-line="105" selection-start-column="89" selection-end-line="105" selection-end-column="89" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -281,7 +270,6 @@
         <option value="$PROJECT_DIR$/public/src/chats/CreateChatController.js" />
         <option value="$PROJECT_DIR$/public/src/MercurioUtils.js" />
         <option value="$PROJECT_DIR$/mercurio-server.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/public/src/account/AuthenticationController.js" />
         <option value="$PROJECT_DIR$/public/src/mercurio-ng.js" />
         <option value="$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChatClient.js" />
@@ -292,6 +280,7 @@
         <option value="$PROJECT_DIR$/public/src/chats/ChatController.js" />
         <option value="$PROJECT_DIR$/public/lib/mercurio-sdk/account/MercurioAccount.js" />
         <option value="$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChat.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
       </list>
     </option>
   </component>
@@ -766,7 +755,7 @@
       <workItem from="1485200900910" duration="6289000" />
       <workItem from="1485272866486" duration="12937000" />
       <workItem from="1485358046272" duration="8153000" />
-      <workItem from="1485448928133" duration="1328000" />
+      <workItem from="1485448928133" duration="2066000" />
     </task>
     <task id="LOCAL-00001" summary="Mercurio chat's digest cycle bug has finally been squashed.">
       <created>1485299407067</created>
@@ -780,23 +769,31 @@
       <option name="project" value="LOCAL" />
       <updated>1485375836798</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Merge branch 'ralo-web-interface' of https://bitbucket.org/optivon/web-interface-mercurio into bal-web-interface&#10;&#10;# Conflicts:&#10;#&#9;mercurio-server.js&#10;#&#9;public/index.html&#10;#&#9;public/lib/mercurio-sdk/chat/MercurioChatClient.js&#10;#&#9;public/src/chats/ChatClientService.js&#10;#&#9;public/src/chats/chat.html&#10;">
+      <created>1485450402818</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1485450402818</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29277000" />
+    <option name="totallyTimeSpent" value="30015000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329235" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329235" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33013698" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24959612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -805,15 +802,13 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33013698" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -822,7 +817,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Mercurio chat's digest cycle bug has finally been squashed." />
     <MESSAGE value="added profile sync query and message info callback (needs testing)" />
-    <option name="LAST_COMMIT_MESSAGE" value="added profile sync query and message info callback (needs testing)" />
+    <MESSAGE value="Merge branch 'ralo-web-interface' of https://bitbucket.org/optivon/web-interface-mercurio into bal-web-interface&#10;&#10;# Conflicts:&#10;#&#9;mercurio-server.js&#10;#&#9;public/index.html&#10;#&#9;public/lib/mercurio-sdk/chat/MercurioChatClient.js&#10;#&#9;public/src/chats/ChatClientService.js&#10;#&#9;public/src/chats/chat.html&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'ralo-web-interface' of https://bitbucket.org/optivon/web-interface-mercurio into bal-web-interface&#10;&#10;# Conflicts:&#10;#&#9;mercurio-server.js&#10;#&#9;public/index.html&#10;#&#9;public/lib/mercurio-sdk/chat/MercurioChatClient.js&#10;#&#9;public/src/chats/ChatClientService.js&#10;#&#9;public/src/chats/chat.html&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -909,7 +905,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="133" selection-start-line="7" selection-start-column="83" selection-end-line="7" selection-end-column="133" />
-          <folding />
+          <folding>
+            <marker date="1485448969000" expanded="true" signature="137:2428" placeholder="[...]" />
+            <marker date="1485448969000" expanded="true" signature="358:2427" placeholder="{...}" />
+            <marker date="1485448969000" expanded="true" signature="1087:1982" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -938,7 +938,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -947,11 +947,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="76" column="66" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="66" />
-          <folding>
-            <marker date="1485448969000" expanded="true" signature="140:8355" placeholder="[...]" />
-            <marker date="1485448969000" expanded="true" signature="6085:6095" placeholder="{...}" />
-            <marker date="1485448969000" expanded="true" signature="6085:8354" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -977,7 +973,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="65" column="67" selection-start-line="65" selection-start-column="67" selection-end-line="65" selection-end-column="67" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1074,7 +1072,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1125,7 +1123,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="45" selection-start-line="7" selection-start-column="83" selection-end-line="7" selection-end-column="133" />
-          <folding />
+          <folding>
+            <marker date="1485448969000" expanded="true" signature="137:2428" placeholder="[...]" />
+            <marker date="1485448969000" expanded="true" signature="358:2427" placeholder="{...}" />
+            <marker date="1485448969000" expanded="true" signature="1087:1982" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1201,28 +1203,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChatClient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="85" column="21" selection-start-line="85" selection-start-column="21" selection-end-line="85" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/src/chats/ChatController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="210" column="9" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
-          <folding>
-            <marker date="1485448969000" expanded="true" signature="140:8355" placeholder="[...]" />
-            <marker date="1485448969000" expanded="true" signature="6085:6095" placeholder="{...}" />
-            <marker date="1485448969000" expanded="true" signature="6085:8354" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/account/MercurioAccount.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1269,20 +1249,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
+    <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChat.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <caret line="105" column="89" selection-start-line="105" selection-start-column="89" selection-end-line="105" selection-end-column="89" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChatClient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="21" selection-start-line="85" selection-start-column="21" selection-end-line="85" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/src/chats/ChatController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="210" column="9" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/lib/mercurio-sdk/chat/MercurioChat.js">
+    <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61555076">
-          <caret line="105" column="89" selection-start-line="105" selection-start-column="89" selection-end-line="105" selection-end-column="89" />
+        <state vertical-scroll-proportion="0.3089245">
+          <caret line="66" column="104" selection-start-line="66" selection-start-column="104" selection-end-line="66" selection-end-column="104" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
