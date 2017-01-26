@@ -17,23 +17,21 @@
 
         self.instantiateChatClient = function(userId){
             self.chatClient = new MercurioChatClient(userId, self.onMessageReceived);
-
             //TODO repeat this for:
-            // accountService.activeAccount.contactManager.contactList
-            // phoneService.phone.recentCallList
-            // crmService.crmManager.crmList
+           // accountService.activeAccount.contactManager.contactList
+           // phoneService.phone.recentCallList
+           // crmService.crmManager.crmList
+           // Spinner Variable
 
-            $rootScope.chatListIsReady = false;
-            $rootScope.chatList = self.chatClient.chatList;
+           $rootScope.chatListIsReady = false;
+           $rootScope.chatList = self.chatClient.chatList;
 
-            var unwatchChatList = $rootScope.$watch('chatList', function (chatList) {
-
-                if(chatList.length > 0){
-                    $rootScope.chatListIsReady = true;
-                    unwatchChatList();
-                }
-
-            });
+          //  $rootScope.$watch('chatList', function () {
+          //      if($rootScope.chatList.length > 0){
+          //          $rootScope.chatListIsReady = true;
+          //          console.log("chat")
+          //      }
+          //  });
         }
 
         self.onMessageReceived = function(receivedChat, index){

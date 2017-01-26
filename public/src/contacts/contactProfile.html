@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <md-card class="wrapper" style="width: 97%; height: 350px; background-size: 100% 100%; background-image:url({{contactCtrl.contact.picture | contactListAvatarFilter}});" class="col-lg-12 col-md-12" >
+                        <md-card class="wrapper" style="width: 97%; height: 350px; background-size: 100% 100%; background-image:url({{contact.picture | contactListAvatarFilter}});" class="col-lg-12 col-md-12" >
                             <!-- <ul style="padding-top:1%" layout="column"  class="col-lg-2 col-md-2 col-lg-push-10 col-md-push-10 social-icons icon-circle icon-rotate list-unstyled list-inline">
                                 <li>
                                     <a href=""><i class="fa fa-facebook"></i></a>
@@ -55,12 +55,12 @@
                     </div>
                     <div style="padding-left: 3%;" class="row">
                         <md-input-container class="md-icon-float md-block">
-                            <label style = "color: white;">{{contactCtrl.contact.firstName}} {{contactCtrl.contact.lastName}}</label>
+                            <label style = "color: white;">{{contact.firstName}} {{contact.lastName}}</label>
                             <div style = "margin-left: 70%;">
-                            <p  ng-if= "contactCtrl.contact.availability == 0" style="color: white;" > Offline</p>
-                            <p  ng-if= "contactCtrl.contact.availability == 1" style="color: white;" > Online</p>
-                            <p  ng-if= "contactCtrl.contact.availability == 2" style="color: white;" > Away</p>
-                            <p  ng-if= "contactCtrl.contact.availability == 3" style="color: white;" > Busy</p>
+                            <p  ng-if= "contact.availability == 0" style="color: white;" > Offline</p>
+                            <p  ng-if= "contact.availability == 1" style="color: white;" > Online</p>
+                            <p  ng-if= "contact.availability == 2" style="color: white;" > Away</p>
+                            <p  ng-if= "contact.availability == 3" style="color: white;" > Busy</p>
                           </div>
                             <md-icon style = "color: white;" class="fa fa-user"></md-icon>
                             <input id="name" type="text" disabled>
@@ -68,13 +68,13 @@
 
                         <md-input-container style="color: white; margin-top: -5%;" class="md-icon-float md-block">
                             <md-icon style = "color: white;" class="fa fa-phone"></md-icon>
-                            <label style= "color: white" id="phone-number">{{contactCtrl.contact.phone}} </label>
-                            <p style="margin-left: 70%; color: white;"> {{contactCtrl.contact.status}}</p>
+                            <label style= "color: white" id="phone-number">{{contact.phone}} </label>
+                            <p style="margin-left: 70%; color: white;"> {{contact.status}}</p>
                             <input id="name" type="text" disabled>
                         </md-input-container>
 
                         <md-input-container style="margin-top: -5%;" class="md-icon-float md-block">
-                            <label style = "color: white;">{{contactCtrl.contact.email}}</label>
+                            <label style = "color: white;">{{contact.email}}</label>
                             <md-icon style = "color: white;" class="fa fa-envelope"></md-icon>
                             <input id="email" type="text" disabled>
                         </md-input-container>
