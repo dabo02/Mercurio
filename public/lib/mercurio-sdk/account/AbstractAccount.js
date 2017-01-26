@@ -15,7 +15,7 @@
 */
 
 function AbstractAccount(userId, firstName, lastName, phone, picture, status, availability, 
-	email, extension, sipUsername, sipPassword,accountSettings){
+	email, extension, sipUsername, sipPassword,accountSettings, companyId){
 	
 	if(this.constructor === AbstractAccount){
 		throw new ConstructorError("Cannot instantiate AbstractAccount class!");
@@ -36,6 +36,7 @@ function AbstractAccount(userId, firstName, lastName, phone, picture, status, av
     this.accountSettings = accountSettings
     //this.contactManager = contactManager;
     this.extension = extension;
+	this.companyId = companyId;
     
 }
 

@@ -39,7 +39,7 @@
 
         self.createNewChat = function(contacts){
 
-            if(contacts.length > 2 && !self.groupChatCheckbox){
+            if(contacts.length > 1 && !self.groupChatCheckbox){
                 self.groupChatCheckbox = true;
                 return;
             }
@@ -55,17 +55,6 @@
             }
 
         };
-
-        //$scope.$watch(
-        //    "asyncContacts",
-        //    function( newValue, oldValue ) {
-        //        console.log('contact added');
-        //    }, true
-        //);
-
-        //  ???
-
-
 
     }]);
 })();

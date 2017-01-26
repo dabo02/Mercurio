@@ -359,7 +359,7 @@ and adds it to its corresponding recent chat
 @params: chatIndex - index of the recent chat to which the send message belongs to
 @params: type - string containing type of concrete message to receive
 @params: message - JSON object containing the received message's content
-
+		 
 messageContent must be structured as shown below:
 
 *** JSON example of message here ***

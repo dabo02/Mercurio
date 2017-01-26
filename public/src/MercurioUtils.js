@@ -203,13 +203,16 @@
     .filter('chatListTextContentPreviewFilter', function () {
         return function (message) {
 
+            var filteredTextContent = ''
+
             if(message.textContent.length > 16){
-                return message.textContent.slice(0, 15) + "...";
+                filteredTextContent = message.textContent.slice(0, 15) + "...";
             }
             else{
-                return message.textContent;
+                filteredTextContent = message.textContent;
             }
 
+            return filteredTextContent;
         };
     })
 
@@ -343,7 +346,7 @@
                 return callerId;
             }
             else{
-                return 'Unkown'
+                return 'Unkown';
             }
         };
     })
