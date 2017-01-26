@@ -18,16 +18,17 @@
         self.sidebarMissedCalls = [];
         self.sidebarIncomingCalls = [];
         self.sidebarOutgoingCalls = [];
-        self.phoneService.phone.recentCallList.forEach(function(call){
-          if(!call.answered){
-            self.sidebarMissedCalls.push(call);
-          }
-          else if(call.incoming){
-            self.sidebarIncomingCalls.push(call);
-          }
-          else{
-            self.sidebarOutgoingCalls.push(call);
-          }
+        self.phoneService.phone.recentCallList.forEach(function(call, index) {
+            call.realIndex = index;
+            if(!call.answered){
+              self.sidebarMissedCalls.push(call);
+            }
+            else if(call.incoming){
+              self.sidebarIncomingCalls.push(call);
+            }
+            else{
+              self.sidebarOutgoingCalls.push(call);
+            }
         });
         phoneService.sidebarMissedCalls = angular.copy(self.sidebarMissedCalls);
         phoneService.sidebarIncomingCalls = angular.copy(self.sidebarIncomingCalls);
@@ -92,14 +93,14 @@
           }
 
           self.allCalls = [];
-          self.phoneService.phone.recentCallList.map(function(call){
+          self.phoneService.phone.recentCallList.map(function(call, index){
             if(otherUserPhoneNumber === call.from || otherUserPhoneNumber === call.to){
-              self.allCalls.push(call);
+                self.allCalls.push(call);
             }
           })
           phoneService.callDetailsCalls = angular.copy(self.allCalls);
           var contactList = self.phoneService.activeAccount.contactManager.contactList;
-          var contact=
+          var contact =
           {
             "firstName" : "Unknown",
             "phone" : otherUserPhoneNumber,
@@ -121,8 +122,13 @@
           filterCalls(phoneService.callDetailsCalls);
         }
 
-        self.showDeleteConfirm = function(event) {
-            var callIndex = phoneService.selectedCallDetailsIndex;
+        self.showDeleteConfirm = function(event, index) {
+            if (index == null) {
+                var callIndex = phoneService.selectedCallDetailsIndex;
+            } else {
+                var callIndex = index;
+            }
+            // var callIndex = phoneService.selectedCallDetailsIndex.recentCallList;
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to delete this call from your recents list?')
