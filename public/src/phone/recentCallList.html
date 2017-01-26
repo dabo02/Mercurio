@@ -299,9 +299,9 @@
     </md-autocomplete> -->
     <md-nav-bar md-selected-nav-item="sidebarNavItem" nav-bar-aria-label="navigation links">
       <md-nav-item style="margin-left:-5%" flex="25" md-nav-click="goto('all')" name="all">({{recentCallListCtrl.phoneService.phone.recentCallList.length}}) All</md-nav-item>
-      <md-nav-item flex="25" md-nav-click="goto('missed')" name="missed">({{recentCallListCtrl.phoneService.sidebarMissedCalls.length}}) Missed</md-nav-item>
-      <md-nav-item flex="25" md-nav-click="goto('incoming')" name="incoming">({{recentCallListCtrl.phoneService.sidebarIncomingCalls.length}}) In</md-nav-item>
-      <md-nav-item flex="25" md-nav-click="goto('outgoing')" name="outgoing">({{recentCallListCtrl.phoneService.sidebarOutgoingCalls.length}}) Out</md-nav-item>
+      <md-nav-item flex="25" md-nav-click="goto('missed')" name="missed">({{sidebarMissedCalls.length}}) Missed</md-nav-item>
+      <md-nav-item flex="25" md-nav-click="goto('incoming')" name="incoming">({{sidebarIncomingCalls.length}}) In</md-nav-item>
+      <md-nav-item flex="25" md-nav-click="goto('outgoing')" name="outgoing">({{sidebarOutgoingCalls.length}}) Out</md-nav-item>
     </md-nav-bar>
 
     <!-- All calls -->
@@ -339,7 +339,7 @@
     </md-button>
 
     <!-- Missed calls -->
-    <md-button ng-show="sidebarNavItem=='missed'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarMissedCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+    <md-button ng-show="sidebarNavItem=='missed'" ng-repeat="call in sidebarMissedCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
                 <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
@@ -369,7 +369,7 @@
     </md-button>
 
     <!-- Incoming calls -->
-    <md-button ng-show="sidebarNavItem=='incoming'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarIncomingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+    <md-button ng-show="sidebarNavItem=='incoming'" ng-repeat="call in sidebarIncomingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
                 <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
@@ -398,7 +398,7 @@
     </md-button>
 
     <!-- Outgoing calls -->
-    <md-button ng-show="sidebarNavItem=='outgoing'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarOutgoingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+    <md-button ng-show="sidebarNavItem=='outgoing'" ng-repeat="call in sidebarOutgoingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
                 <img ng-click="selectCallIndex($index)" style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:contactListCtrl.contactList}}" class="md-avatar"/>
