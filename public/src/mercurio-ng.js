@@ -21,8 +21,7 @@
                 .primaryPalette('blue')
                 .accentPalette('red');
 
-        }).factory("Auth", ["$firebaseAuth",
-            function($firebaseAuth) {
+        }).factory("Auth", ["$firebaseAuth", function($firebaseAuth) {
                 var ref = new firebase.database().ref();
                 return $firebaseAuth(ref);
             }

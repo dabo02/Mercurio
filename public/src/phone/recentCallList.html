@@ -18,7 +18,7 @@
             <form ng-cloak style="overflow-x:hidden" ng-controller="RecentCallListController as RecentCallsCtrl">
               <md-toolbar>
                   <div class="md-toolbar-tools">
-                      <h2 class="pull-left col-xs-6">Call Details</h2>
+                      <h2 style = "color: white;" class="pull-left col-xs-6">Call Details</h2>
                       <div class ="col-xs-6" style="left:3%;">
                         <md-button class="pull-right md-icon-button fa fa-close" ng-click="callDetailsCtrl.closeCallDetailsDialog()">
                         </md-button>
@@ -337,8 +337,12 @@
             <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
+    <div ng-show="sidebarNavItem=='all' && recentCallListCtrl.phoneService.phone.recentCallList.length==0">
+      <h3> There are no calls </h3>
+    </div>
 
     <!-- Missed calls -->
+
     <md-button ng-show="sidebarNavItem=='missed'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarMissedCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
@@ -367,6 +371,9 @@
             <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
+    <div ng-show="sidebarNavItem=='missed' && recentCallListCtrl.phoneService.sidebarMissedCalls.length==0">
+      <h3> There are no missed calls </h3>
+    </div>
 
     <!-- Incoming calls -->
     <md-button ng-show="sidebarNavItem=='incoming'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarIncomingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
@@ -396,6 +403,9 @@
             <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
+    <div ng-show="sidebarNavItem=='incoming' && recentCallListCtrl.phoneService.sidebarIncomingCalls.length==0">
+      <h3> There are no incoming calls </h3>
+    </div>
 
     <!-- Outgoing calls -->
     <md-button ng-show="sidebarNavItem=='outgoing'" ng-repeat="call in recentCallListCtrl.phoneService.sidebarOutgoingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
@@ -425,5 +435,8 @@
             <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
+    <div ng-show="sidebarNavItem=='outgoing' && recentCallListCtrl.phoneService.sidebarOutgoingCalls.length==0">
+      <h3> There are no outgoing calls </h3>
+    </div>
 
 </md-content>

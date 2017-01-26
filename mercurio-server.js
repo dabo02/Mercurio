@@ -455,11 +455,12 @@ app.post('/validateToken', function (req, res) {
     cleanData = body.data.toString();
     res.send(cleanData);
   });
+
 });
 
 app.post('/sendNotification', notification.sendPushNotification);
 
-app.all('/*', function(req, res, next) {
+app.all('/*', function(req, res) {
   // Just send the index.html for other files to support HTML5Mode
   res.sendFile(__dirname + '/public/index.html');
 });

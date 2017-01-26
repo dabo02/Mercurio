@@ -20,8 +20,8 @@ exports.sendPushNotification = function (req, res) {
           to : token,
           priority:'high',
           notification : {
-            title : "Hi",
-            body : "Someone has wrote you...",
+            title : req.body.messageTitle,
+            body : req.body.messageBody,
             sound : true
           }
     };
