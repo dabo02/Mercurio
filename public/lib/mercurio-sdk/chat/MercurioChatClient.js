@@ -247,19 +247,29 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 
 	var self = this;
 
-	function sendPushNotification(pushToken){
+	function sendPushNotification(pushToken, participant){
 		var tokenArray = [];
+		var user = {"firstName":"Hi"};
 		if(pushToken != null){
 			//Convert Not Iterable JSON to an array
 			var array = Object.keys(pushToken);
 			tokenArray = angular.copy(array);
+		}
+		else{
+			user = participant;
 		}
 		if(tokenArray.length>0){
 			$.ajax({
 		    url: "/sendNotification",
 		    type: "post",
 		    contentType: "application/json; charset=utf-8",
-		    data: JSON.stringify({"tokens": tokenArray})
+		    data: JSON.stringify(
+					{
+						"tokens" : tokenArray,
+						"messageTitle" :  user.firstName,
+						"messageBody" : message.textContent
+					}
+				)
 		  });
 		}
 
@@ -275,7 +285,7 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 
 		firebase.database().ref().child('user-tokens/'+participant.userId).once('value', function(snapshot){
 			// console.log("sending... "+snapshot.val());
-			sendPushNotification(snapshot.val());
+			sendPushNotification(snapshot.val(), participant);
 		});
 
 		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
