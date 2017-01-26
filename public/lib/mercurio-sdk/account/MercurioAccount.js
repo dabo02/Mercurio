@@ -25,7 +25,7 @@ function MercurioAccount(user, accountReadyCallback){
 					snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture, 
 					snapshot.val().status, snapshot.val().availability, snapshot.val().email, 
 					snapshot.val().extension, snapshot.val().sipUsername,
-					snapshot.val().sipPassword, snapshot.val().settings]);
+					snapshot.val().sipPassword, snapshot.val().settings, snapshot.val().companyId]);
 				accountReadyCallback(self);
 			}
 			else{
@@ -156,7 +156,47 @@ MercurioAccount.prototype.saveProfileInfo = function(firstName, lastName, email,
 	
 	
 	firebase.database().ref().update(updates);
-	
-	
+
+	this.syncProfileUpdate();
 	// TODO - add error management callback
+}
+
+MercurioAccount.prototype.syncProfileUpdate = function() {
+
+	var self = this;
+
+	var contact ={
+		availability: self.availability,
+		email: self.email,
+		firstName: self.firstName,
+		lastName: self.lastName,
+		phone: self.phone || '',
+		picture: self.picture,
+		status: self.status,
+		extension: self.extension || '',
+		companyId: self.companyId,
+		userId: self.userId
+	}
+
+	firebase.database().ref("account").once("value", function (snap) {
+
+		var myBusinessGroupAccountKeys = [];
+
+		snap.forEach(function (childSnapshot) {
+			//if its not me and the account belongs to my company
+			if (childSnapshot.key != self.userId && self.companyId === childSnapshot.val().companyId) {
+				myBusinessGroupAccountKeys.push(childSnapshot.key);
+			}
+		})
+
+		myBusinessGroupAccountKeys.forEach(function(accountKey, index){
+			firebase.database().ref("user-contacts/"+accountKey)
+				.orderByChild("userId")
+				.equalTo(self.userId)
+				.on("child_added", function(snapshot){
+
+					firebase.database().ref("user-contacts/"+accountKey+"/"+snapshot.key).set(contact);
+				})
+		})
+	})
 }

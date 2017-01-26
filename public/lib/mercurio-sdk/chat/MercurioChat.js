@@ -82,19 +82,33 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 	
 		if(messageSnapshot.exists()){
 		
-			firebase.database().ref('message-info/' + messageSnapshot.key).on("value", function(messageInfoSnapshot) {
+			firebase.database().ref('message-info/' + messageSnapshot.key).once("value", function(messageInfoSnapshot) {
 	
 				if(messageInfoSnapshot.exists()){
 		
 					if(messageInfoSnapshot.val()['has-message'][chatClientOwner]){
 						var message;
-						message = new Message(messageSnapshot.key, messageSnapshot.val().from, messageSnapshot.val().multimediaUrl, messageSnapshot.val().textContent, messageSnapshot.val().timeStamp, messageInfoSnapshot.val().read);
+						message = new Message(messageSnapshot.key, messageSnapshot.val().from, messageSnapshot.val().multimediaUrl, messageSnapshot.val().textContent, messageSnapshot.val().timeStamp, messageInfoSnapshot.val().read[chatClientOwner]);
 						self.messageList.push(message);
 					}
 				}
 
 			});
-	
+
+			// listen for read events when messages are read for the first time
+			firebase.database().ref('message-info/' + messageSnapshot.key).on("child_changed", function(messageInfoSnapshot) {
+
+				if(messageInfoSnapshot.exists()){
+
+					self.messageList.forEach(function(message, index){
+						if(message.messageId === messageInfoSnapshot.key){
+							// found updated message
+							message.read = messageInfoSnapshot.val().read[chatClientOwner];
+						}
+					});
+				}
+
+			});
 			
 		}
 
@@ -236,7 +250,7 @@ MercurioChat.prototype.toggleNotifications = function(userId, value){
 	firebase.database().ref().update(updates);
 }
 
-MercurioChat.prototype.markAllMessagesAsRead = function(userId){
+MercurioChat.prototype.markUnreadMessagesAsRead = function(userId){
 
 	var self = this;
 	

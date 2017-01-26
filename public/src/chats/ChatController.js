@@ -152,7 +152,7 @@
 
         if(chatClientService.chatClient.chatList.length > 0){
             chatClientService.chatClient.chatList[$stateParams.chatIndex]
-                .markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+                .markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
         }
 
         $location.hash('bottom');
