@@ -296,11 +296,11 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chatIndex, message
 MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey, message){
 
 	var self = this;
-	var senderUser = {"firstName":""};
+	var user = {"firstName":""};
 	function sendPushNotification(pushToken, participant){
 		var tokenArray = [];
 		if(pushToken == null){
-			senderUser = participant;
+			user = participant;
 		}
 		else{
 			//Convert Not Iterable JSON to an array
@@ -315,7 +315,7 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 		    data: JSON.stringify(
 					{
 						"tokens" : tokenArray,
-						"messageTitle" :  senderUser.firstName,
+						"messageTitle" :  user.firstName,
 						"messageBody" : message.textContent
 					}
 				)
