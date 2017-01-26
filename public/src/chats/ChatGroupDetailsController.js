@@ -18,17 +18,16 @@
 
         self.isChatClientOwnerGroupMember = false;
         var chatSettingsFetched = false;
-        var listener = setInterval(function(){
-          if(chatClientService.chatClient.chatList.length > 0 && !chatSettingsFetched){
-            self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
-            self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
-            $rootScope.newMuteSetting = self.newMuteSetting;
-            $rootScope.newChatTitle = self.newChatTitle;
-            chatSettingsFetched = true;
-            clearInterval(listener);
-          }
-          console.log("interval")
-        },10);
+        // var listener = setInterval(function(){
+        //   if(chatClientService.chatClient.chatList.length > 0 && !chatSettingsFetched){
+        //     self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
+        //     self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
+        //     $rootScope.newMuteSetting = self.newMuteSetting;
+        //     $rootScope.newChatTitle = self.newChatTitle;
+        //     chatSettingsFetched = true;
+        //     clearInterval(listener);
+        //   }
+        // },10);
 
         self.showChatGroupDetailsDialog = function(event) {
 
