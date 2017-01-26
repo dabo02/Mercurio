@@ -61,7 +61,7 @@
             $mdDialog.hide();
             self.contactSearchString = '';
             self.phone.endCall();
-            self.addCallToCRMCallFinished(self.phone.currentCalls[0]);
+            self.addFinishedCallToCRM(self.phone.currentCalls[0]);
             self.phone.currentCalls = [];
             if($state.current.name != "call")
             {
@@ -122,7 +122,7 @@
             self.ringbackTone.currentTime = 0;
         }
 
-        self.addCallToCRMCallFinished = function(call, event){
+        self.addFinishedCallToCRM = function(call, event){
             if(call.from === self.activeAccount.phone){
               self.selectedNumber = call.to;
               self.selectedCallDirection = 'Outgoing';

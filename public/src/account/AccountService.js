@@ -53,9 +53,16 @@
                 }
 
             }
-
+            //Change variable...
+            $rootScope.isAccountReady = true;
             $rootScope.spinnerActivated = false;
             $rootScope.$apply();
+
+            // setInterval(function(){
+            //   $rootScope.$apply();
+            //   console.log("interval")
+            // }, 2000)
+
         });
 
         $rootScope.$watch('activeAccount', function (currentUser) {
