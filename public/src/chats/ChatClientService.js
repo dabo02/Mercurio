@@ -77,7 +77,7 @@
 
         self.isChatListAvailable = function(){
 
-            if(self.chatClient.chatList.length > 0){
+            if($rootScope.chatList.length > 0){
                 return true;
             }
             else{

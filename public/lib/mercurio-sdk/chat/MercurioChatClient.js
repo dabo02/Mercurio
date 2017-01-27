@@ -296,17 +296,16 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chatIndex, message
 MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey, message){
 
 	var self = this;
-
+	var user = {"firstName":""};
 	function sendPushNotification(pushToken, participant){
 		var tokenArray = [];
-		var user = {"firstName":"Hi"};
-		if(pushToken != null){
+		if(pushToken == null){
+			user = participant;
+		}
+		else{
 			//Convert Not Iterable JSON to an array
 			var array = Object.keys(pushToken);
 			tokenArray = angular.copy(array);
-		}
-		else{
-			user = participant;
 		}
 		if(tokenArray.length>0){
 			$.ajax({
