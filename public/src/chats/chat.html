@@ -175,6 +175,8 @@
                                         <h4 style= "color: white;" ng-controller = "ContactListController as contactListCtrl" ng-click = "contactListCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="chatList[chatCtrl.chatIndex].title.length === 0">
                                             {{chatList[chatCtrl.chatIndex] | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
+                                        <input id="myInput" type="file" style="visibility:hidden" />
+                                        <input type="button" value="Show Dialog" onclick="$('#myInput').click();" />
                                     </a>
 
                                     <md-fab-speed-dial class="md-secondary" md-open="options.isOpen" md-direction="{{options.selectedDirection}}"
@@ -217,7 +219,7 @@
                                         <md-menu-divider></md-menu-divider>
                                       </div>
                                         <md-menu-item>
-                                            <md-button ng-click="chatList[chatCtrl.chatIndex].settings.mute)">
+                                            <md-button ng-click="chatList[chatCtrl.chatIndex].settings.mute">
                                                 Mute
                                             </md-button>
                                         </md-menu-item>
