@@ -55,10 +55,11 @@
                                                 <p style="color: white; font-size:20px; word-break: break-all" flex="50">{{contact.firstName}} {{contact.lastName}}</p>
                                                 <p style="color: white;" > {{contact.status}}</p>
                                             </div>
-                                            <p class="col-lg-3 col-md-3" ng-if= "contact.availability == 0" style="color: white;" > Offline</p>
-                                            <p class="col-lg-3 col-md-3" ng-if= "contact.availability == 1" style="color: white;" > Online</p>
-                                            <p class="col-lg-3 col-md-3" ng-if= "contact.availability == 2" style="color: white;" > Away</p>
-                                            <p class="col-lg-3 col-md-3" ng-if= "contact.availability == 3" style="color: white;" > Busy</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 0" style="color: white;" > Available</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 1" style="color: white;" > Busy</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 2" style="color: white;" > On a Call</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 3" style="color: white;" > Unavailable</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 4" style="color: white;" > Offline</p>
                                         </md-list-item>
                                     </md-list>
                                 </md-button>

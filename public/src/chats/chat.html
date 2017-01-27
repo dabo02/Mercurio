@@ -210,14 +210,22 @@
                                         <md-icon style="color: white; font-size:22px;" class="fa fa-ellipsis-v"></md-icon>
                                     </md-button>
                                     <md-menu-content width="4">
-                                      <div ng-if="chatList[chatCtrl.chatIndex].title.length > 0">
-                                        <md-menu-item>
-                                            <md-button>
+                                      <div ng-if="chatList[chatCtrl.chatIndex].title.length > 0" >
+                                        <md-menu-item ng-controller="ChatGroupDetailsController as chatGroupCtrl">
+                                            <md-button ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)" >
                                                 Group Details
                                             </md-button>
                                         </md-menu-item>
+                                        </div>
+                                        <div ng-if="chatList[chatCtrl.chatIndex].title.length == 0">
+                                          <md-menu-item ng-controller = "ContactListController as contactListCtrl">
+                                              <md-button ng-click = "contactListCtrl.viewContactById(chatCtrl.getChatParticipantUserId())">
+                                                  Contact Profile
+                                              </md-button>
+                                          </md-menu-item>
+                                          </div>
                                         <md-menu-divider></md-menu-divider>
-                                      </div>
+
                                         <md-menu-item>
                                             <md-button ng-click="chatList[chatCtrl.chatIndex].settings.mute">
                                                 Mute
