@@ -139,14 +139,21 @@
                     type: type
                 }
 
-                chatClientService.chatClient.sendMultimediaMessage(self.chatIndex, message);
+                chatClientService.chatClient.sendMultimediaMessage(self.chatIndex, message, function(progress, uploadingImage, message){
+                  $rootScope.progress = progress;
+                  $rootScope.uploadingImage = uploadingImage;
+                  chatClientService.uploadingImage = uploadingImage;
+                  chatClientService.progress = progress;
+                  chatClientService.opacity = progress/100+0.1;
+                  $rootScope.uploadingInfo = message;
+                  $rootScope.$digest();
+                  if(!uploadingImage){
+                    self.closeMultimediaSelectionPreviewDialog();
+                  }
+                });
                 self.textContentToSend = '';
                 //document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
                 //document.getElementById("chatMessageInput").className = "md-icon-float md-block flex-offset-5 flex-85 md-input-focused";
-
-                if($rootScope.multimedia){
-                    self.closeMultimediaSelectionPreviewDialog();
-                }
 
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
