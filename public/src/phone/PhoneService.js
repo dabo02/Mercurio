@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').service('phoneService', ['crmService', '$location', '$mdDialog', '$state', function(crmService, $location, $mdDialog, $state){
+    angular.module('mercurio').service('phoneService', ['crmService', '$location', '$mdDialog', '$state', '$timeout', function(crmService, $location, $mdDialog, $state, $timeout){
 
         var self = this;
         self.phone;
@@ -66,6 +66,10 @@
             if($state.current.name != "call")
             {
                 $state.reload();
+                $timeout(function(){
+
+                    $scope.$apply();
+                })
             }else {
                 $state.go('dialer');
             };

@@ -60,20 +60,24 @@
                 switch(accountService.activeAccount.availability){
 
                     case 0:
-                        self.availability = 'Offline';
-                        return 'Offline';
+                        self.availability = 'Online';
+                        return 'Online';
 
                     case 1:
-                        self.availability = 'Online';
-                        return 'Online'
+                        self.availability = 'Away';
+                        return 'Away'
 
                     case 2:
-                        self.availability = 'Away';
-                        return 'Away';
-
-                    case 3:
                         self.availability = 'Busy';
                         return 'Busy';
+
+                    case 3:
+                        self.availability = 'onACall';
+                        return 'onACall';
+
+                    case 4:
+                        self.availability = 'Offline';
+                        return 'Offline';
                 }
             }
         }

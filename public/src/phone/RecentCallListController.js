@@ -5,38 +5,16 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('RecentCallListController', ['$scope', '$state', 'phoneService', '$mdDialog', function($scope, $state, phoneService, $mdDialog){
+    angular.module('mercurio').controller('RecentCallListController', ['$scope', '$state', 'phoneService', '$mdDialog', '$rootScope', function($scope, $state, phoneService, $mdDialog, $rootScope){
 
         var self = this;
         self.phoneService = phoneService;
+        $scope.phoneService = self.phoneService;
         $scope.currentNavItem = "all";
         $scope.sidebarNavItem = "all";
 
         $scope.selectedCallIndex = undefined;
-
-        self.sidebarMissedCalls = [];
-        self.sidebarIncomingCalls = [];
-        self.sidebarOutgoingCalls = [];
-        self.phoneService.phone.recentCallList.forEach(function(call){
-          if(!call.answered){
-            self.sidebarMissedCalls.push(call);
-          }
-          else if(call.incoming){
-            self.sidebarIncomingCalls.push(call);
-          }
-          else{
-            self.sidebarOutgoingCalls.push(call);
-          }
-        });
-        phoneService.sidebarMissedCalls = angular.copy(self.sidebarMissedCalls);
-        phoneService.sidebarIncomingCalls = angular.copy(self.sidebarIncomingCalls);
-        phoneService.sidebarOutgoingCalls = angular.copy(self.sidebarOutgoingCalls);
-
-        self.sidebarMissedCalls = [];
-        self.sidebarIncomingCalls = [];
-        self.sidebarOutgoingCalls = [];
-
-
+        filterSidebarCalls();
         $scope.selectCallIndex = function (index) {
             if ($scope.selectedCallIndex !== index) {
                 $scope.selectedCallIndex = index;
@@ -77,6 +55,36 @@
           self.outgoingCalls = [];
         }
 
+        function filterSidebarCalls(){
+            self.sidebarMissedCalls = [];
+            self.sidebarIncomingCalls = [];
+            self.sidebarOutgoingCalls = [];
+            self.phoneService.phone.recentCallList.forEach(function(call, index) {
+                call.realIndex = index;
+                if(!call.answered){
+                    self.sidebarMissedCalls.push(call);
+                }
+                else if(call.incoming){
+                    self.sidebarIncomingCalls.push(call);
+                }
+                else{
+                    self.sidebarOutgoingCalls.push(call);
+                }
+            });
+            phoneService.sidebarMissedCalls = angular.copy(self.sidebarMissedCalls);
+            phoneService.sidebarIncomingCalls = angular.copy(self.sidebarIncomingCalls);
+            phoneService.sidebarOutgoingCalls = angular.copy(self.sidebarOutgoingCalls);
+
+            $rootScope.sidebarMissedCalls = phoneService.sidebarMissedCalls;
+            $rootScope.sidebarIncomingCalls = phoneService.sidebarIncomingCalls;
+            $rootScope.sidebarOutgoingCalls = phoneService.sidebarOutgoingCalls;
+
+            self.sidebarMissedCalls = [];
+            self.sidebarIncomingCalls = [];
+            self.sidebarOutgoingCalls = [];
+
+        };
+
         self.fetchCallDetails = function(index){
           phoneService.selectedCallDetailsIndex = index;
           console.log(phoneService.selectedCallDetailsIndex);
@@ -91,14 +99,14 @@
           }
 
           self.allCalls = [];
-          self.phoneService.phone.recentCallList.map(function(call){
+          self.phoneService.phone.recentCallList.map(function(call, index){
             if(otherUserPhoneNumber === call.from || otherUserPhoneNumber === call.to){
-              self.allCalls.push(call);
+                self.allCalls.push(call);
             }
           })
           phoneService.callDetailsCalls = angular.copy(self.allCalls);
           var contactList = self.phoneService.activeAccount.contactManager.contactList;
-          var contact=
+          var contact =
           {
             "firstName" : "Unknown",
             "phone" : otherUserPhoneNumber,
@@ -120,8 +128,13 @@
           filterCalls(phoneService.callDetailsCalls);
         }
 
-        self.showDeleteConfirm = function(event) {
-            var callIndex = phoneService.selectedCallDetailsIndex;
+        self.showDeleteConfirm = function(event, index) {
+            if (index == null) {
+                var callIndex = phoneService.selectedCallDetailsIndex;
+            } else {
+                var callIndex = index;
+            }
+            // var callIndex = phoneService.selectedCallDetailsIndex.recentCallList;
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to delete this call from your recents list?')
@@ -132,7 +145,17 @@
 
             $mdDialog.show(confirm).then(function() {
                 //$scope.status = 'You decided to get rid of your debt.';
+                var recentCallsLength = phoneService.phone.recentCallList.length;
                 phoneService.phone.deleteCalls([callIndex]);
+                var interval = setInterval(function(){
+                    if(recentCallsLength != phoneService.phone.recentCallList.length){
+                        filterSidebarCalls(phoneService.phone.recentCallList);
+                        console.log('im here');
+                        clearInterval(interval);
+                        $rootScope.$apply();
+                    }
+                }, 500);
+
                 //$state.go('dialer');
             }, function() {
                 //$scope.status = 'You decided to keep your debt.';
@@ -143,6 +166,12 @@
           phoneService.phone.addNewCall(false, self.phoneService.callDetailsContact.phone, self.phoneService.activeAccount.phone, false, new Date().getTime());
 					$state.go('call', {'callIndex' : 0});
         }
+
+        self.redial = function(phoneNumber){
+            phoneService.phone.addNewCall(false, phoneNumber, self.phoneService.activeAccount.phone, false, new Date().getTime());
+            $state.go('call', {'callIndex' : 0});
+        };
+
 
     }]);
 })();
