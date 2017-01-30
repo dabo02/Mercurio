@@ -262,7 +262,7 @@ Sends a chat message to server
 		 message - AbstractMessage object
 */
 
-MercurioChatClient.prototype.sendMultimediaMessage = function(chatIndex, message){
+MercurioChatClient.prototype.sendMultimediaMessage = function(chat, message){
 
 	var self = this;
 
@@ -270,16 +270,16 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chatIndex, message
 		message.multimediaUrl = "";
 	}
 
-	var newMessageKey = self.chatList[chatIndex].addMessage(message);
+	var newMessageKey = chat.addMessage(message);
 
 	if(message.multimediaUrl){
-		firebase.storage().ref().child('chats/' + self.chatList[chatIndex].chatId + '/images/' + newMessageKey).put(message.multimediaUrl)
+		firebase.storage().ref().child('chats/' + chat.chatId + '/images/' + newMessageKey).put(message.multimediaUrl)
 		.then(function(multimediaSnapshot) {
 
 			message.multimediaUrl = multimediaSnapshot.downloadURL;
 
 			var updates = {};
-			updates['/chat-messages/' + self.chatList[chatIndex].chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
+			updates['/chat-messages/' + chat.chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
 
 			firebase.database().ref().update(updates);
 
@@ -288,12 +288,12 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chatIndex, message
 	}
 	else{
 
-		self.sendTextMessage(chatIndex, newMessageKey, message);
+		self.sendTextMessage(chat, newMessageKey, message);
 	}
 
 }
 
-MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey, message){
+MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, message){
 
 	var self = this;
 	var user = {"firstName":""};
@@ -326,7 +326,7 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 
 	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
 
-	self.chatList[chatIndex].participantList.forEach(function(participant){
+	chat.participantList.forEach(function(participant){
 
 		if(participant.userId !== self.chatClientOwner){
 			firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + participant.userId).set(0);
@@ -342,7 +342,7 @@ MercurioChatClient.prototype.sendTextMessage = function(chatIndex, newMessageKey
 		var updates = {};
 		message.messageId = newMessageKey;
 
-		updates['/user-chats/' + participant.userId + "/" + self.chatList[chatIndex].chatId + "/lastMessage"] = message;
+		updates['/user-chats/' + participant.userId + "/" + chat.chatId + "/lastMessage"] = message;
 
 		firebase.database().ref().update(updates);
 	});

@@ -139,7 +139,7 @@
                     type: type
                 }
 
-                chatClientService.chatClient.sendMultimediaMessage(self.chatIndex, message);
+                chatClientService.chatClient.sendMultimediaMessage(chatClientService.selectedChat, message);
                 self.textContentToSend = '';
                 //document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
                 //document.getElementById("chatMessageInput").className = "md-icon-float md-block flex-offset-5 flex-85 md-input-focused";
@@ -163,8 +163,7 @@
         }
 
         self.toggleMute = function(value){
-            chatClientService.chatClient.chatList[$stateParams.chatIndex]
-                .toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
+            chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
         }
 
         $scope.multimediaSelected = function(element) {
@@ -188,7 +187,7 @@
 
         self.getChatParticipantUserId = function(){
           var userId = null;
-          chatClientService.chatClient.chatList[self.chatIndex].participantList.forEach(function (participant) {
+          chatClientService.selectedChat.participantList.forEach(function (participant) {
               if (chatClientService.chatClient.chatClientOwner != participant.userId) {
                   userId = participant.userId;
               }
@@ -206,8 +205,7 @@
         }
 
         if(chatClientService.chatClient.chatList.length > 0){
-            chatClientService.chatClient.chatList[$stateParams.chatIndex]
-                .markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+            chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
         }
 
         $location.hash('bottom');

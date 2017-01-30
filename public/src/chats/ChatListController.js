@@ -33,6 +33,7 @@
 
         self.viewChat = function(chatIndex){
             console.log('view chat clicked: chat index = ' + chatIndex);
+            chatClientService.selectedChat = chatClientService.chatClient.chatList[chatIndex];
             $state.go('chat', {'chatIndex' : chatIndex, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
         }
 
