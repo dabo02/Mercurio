@@ -329,16 +329,16 @@
         </md-list>
 
         <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
-        <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
+        <div style = "color: white;" layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
 
-            <span style = "color: white;"ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
+            <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
 
             <br/>
-            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <span  ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
             <br ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"/>
-            <span style = "color: white;" ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
+            <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
             <br/>
-            <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+            <span ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
     <div ng-show="sidebarNavItem=='all' && recentCallListCtrl.phoneService.phone.recentCallList.length==0">
@@ -362,16 +362,16 @@
         </md-list>
 
         <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
-        <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
+        <div style = "color: white;" layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
 
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
 
             <br/>
-            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <span  ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <br ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"/>
+            <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
             <br/>
-            <span style = "color: white;">Send Text Message</span>
-            <br/>
-            <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+            <span  ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
     <div ng-show="sidebarNavItem=='missed' && recentCallListCtrl.phoneService.sidebarMissedCalls.length==0">
@@ -394,16 +394,16 @@
         </md-list>
 
         <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
-        <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
+        <div style = "color: white;"layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
 
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
 
             <br/>
-            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <span ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <br ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"/>
+            <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
             <br/>
-            <span style = "color: white;">Send Text Message</span>
-            <br/>
-            <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+            <span  ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
     <div ng-show="sidebarNavItem=='incoming' && recentCallListCtrl.phoneService.sidebarIncomingCalls.length==0">
@@ -426,16 +426,16 @@
         </md-list>
 
         <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
-        <div layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
+        <div style = "color: white;"layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
 
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
 
             <br/>
-            <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <span ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+            <br ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"/>
+            <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
             <br/>
-            <span style = "color: white;">Send Text Message</span>
-            <br/>
-            <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+            <span ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
     <div ng-show="sidebarNavItem=='outgoing' && recentCallListCtrl.phoneService.sidebarOutgoingCalls.length==0">
