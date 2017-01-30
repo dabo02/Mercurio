@@ -15,18 +15,22 @@
 
         $scope.selectedCallIndex = undefined;
         filterSidebarCalls();
+
         $scope.selectCallIndex = function (index) {
             if ($scope.selectedCallIndex !== index) {
                 $scope.selectedCallIndex = index;
+                self.fetchCallDetails(index)
             }
             else {
                 $scope.selectedCallIndex = undefined;
+                phoneService.callDetailsContact = undefined;
             }
         };
 
         self.missedCalls = [];
         self.outgoingCalls = [];
         self.incomingCalls = [];
+
         function filterCalls(calls){
           calls.forEach(function(call){
             if(!call.answered){
