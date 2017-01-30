@@ -22,9 +22,9 @@
         self.logoutButtonClicked = function(){
 
             authenticationService.logout();
-            //chatClientService.chatClient = null;
-            //phoneService.phone = null;
-            //crmService.crmManager = null;
+            chatClientService.chatClient = null;
+            phoneService.phone = null;
+            crmService.crmManager = null;
         }
 
         self.changePasswordButtonClicked = function(){

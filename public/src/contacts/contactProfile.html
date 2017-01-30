@@ -57,11 +57,11 @@
                         <md-input-container class="md-icon-float md-block">
                             <label style = "color: white;">{{contact.firstName}} {{contact.lastName}}</label>
                             <div style = "margin-left: 70%;">
-                            <p  ng-if= "contactCtrl.contact.availability == 0" style="color: white;" > Available</p>
-                            <p  ng-if= "contactCtrl.contact.availability == 1" style="color: white;" > Busy</p>
-                            <p  ng-if= "contactCtrl.contact.availability == 2" style="color: white;" > On a Call</p>
-                            <p  ng-if= "contactCtrl.contact.availability == 3" style="color: white;" > Unavailable</p>
-                            <p  ng-if= "contactCtrl.contact.availability == 4" style="color: white;" > Offline</p>
+                            <p  ng-if= "contactCtrl.contact.availability == 0" style="color: white;" >Online</p>
+                            <p  ng-if= "contactCtrl.contact.availability == 1" style="color: white;" >Away</p>
+                            <p  ng-if= "contactCtrl.contact.availability == 2" style="color: white;" >Busy</p>
+                            <p  ng-if= "contactCtrl.contact.availability == 3" style="color: white;" >On a Call</p>
+                            <p  ng-if= "contactCtrl.contact.availability == 4" style="color: white;" >Offline</p>
                           </div>
                             <md-icon style = "color: white;" class="fa fa-user"></md-icon>
                             <input id="name" type="text" disabled>

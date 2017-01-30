@@ -24,6 +24,10 @@
                         </md-button>
                         <md-button class="pull-right md-icon-button fa fa-trash" ng-click="RecentCallsCtrl.showDeleteConfirm($event)">
                         </md-button>
+                          <md-button class="pull-right md-icon-button" ng-show="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"
+                                     ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">
+                              <img style= "height: 20px; background-color: transparent;" ng-src= "images/add_chat.png"></img>
+                          </md-button>
                         <md-button class="pull-right md-icon-button fa fa-phone" ng-click="callDetailsCtrl.closeCallDetailsDialog(); RecentCallsCtrl.call();">
                         </md-button>
                       </div>
@@ -332,7 +336,7 @@
             <br/>
             <span style = "color: white;" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
             <br/>
-            <span style = "color: white;">Send Text Message</span>
+            <span style = "color: white;" ng-show="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
             <br/>
             <span style = "color: white;" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>

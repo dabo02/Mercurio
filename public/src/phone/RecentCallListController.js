@@ -113,7 +113,7 @@
             "picture" : "../../images/default_contact_avatar.png"
           };
           contactList.map(function(mercurioContact){
-            if(mercurioContact.phone == otherUserPhoneNumber){
+            if(mercurioContact.phone == otherUserPhoneNumber || mercurioContact.extension == otherUserPhoneNumber){
               contact = angular.copy(mercurioContact);
             }
           });

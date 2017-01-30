@@ -243,7 +243,7 @@
                 participant = to;
             }
             contactList.forEach(function(contact){
-                if(contact.phone == participant){
+                if(contact.phone == participant || contact.extension == participant){
                     participant = contact.firstName + " " + contact.lastName ;
                 }
             })
