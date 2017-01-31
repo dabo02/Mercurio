@@ -10,6 +10,7 @@
         var self = this;
         self.crmService = crmService;
         self.phoneService = phoneService;
+        self.callInsertDetails = {};
 
         self.addCallToCRMButtonClicked = function(call, event){
           if(call.from === phoneService.activeAccount.phone){
@@ -78,14 +79,29 @@
                     result: 'Successful'
                 };
 
-
+                crmService.callInserted = false;
                 console.log("\n\nCall to insert info:\n\n" + info.subject);
-                crmService.crmManager.crmList[0].addCall(info, function(call){
-                    console.log(call);
+                crmService.crmManager.crmList[0].addCall(info, function(message){
+                        crmService.callInserted = true;
+                        if(message.result === 'Success'){
+                            self.callInsertDetails.cssClass = true;
+                        }else{
+                            self.callInsertDetails.cssClass = false;
+                        }
+                        self.callInsertDetails.result = message.result;
+                        self.callInsertDetails.msg = message.message;
+                        $scope.$apply();
+                        setTimeout(function(){
+                            crmService.callInserted = false;
+                            $scope.$apply();
+                        },3000);
+
+
+
                 });
             });
 
-            //$mdDialog.hide();
+
         }
 
         self.closeAddCallToCRMDialog = function(){

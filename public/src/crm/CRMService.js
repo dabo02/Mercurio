@@ -15,6 +15,7 @@
         self.selectedNumber = null;
         self.callableRecords = null;
         self.isFetching = false;
+        self.callInserted = false;
 
         self.instantiateCRMManager = function(userId){
             self.crmManager = new MercurioCRMManager(userId);

@@ -751,3 +751,11 @@ $duration: 1.4s;
   right: 20px; /* Adjust to where you want it */
   z-index: 9999;
  }
+
+.call-insert-success {
+    color: #4CAF50;
+}
+
+.call-insert-error {
+    color: #F44336;
+}
