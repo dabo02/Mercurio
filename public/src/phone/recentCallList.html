@@ -252,7 +252,7 @@
                     <div class="md-dialog-content">
                       <md-input-container class="md-icon-float md-block" flex="100">
                           <label>Subject</label>
-                          <input ng-model="crmCtrl.subject"></input>
+                          <input ng-model="crmCtrl.subject"/>
                       </md-input-container>
                         <md-input-container ng-if="crmCtrl.isCallableRecordListAvailable()">
                             <label>Choose a CRM entry</label>
@@ -276,7 +276,7 @@
                 </md-dialog-content>
 
                 <md-dialog-content ng-if="!crmCtrl.isCallableRecordListAvailable()">
-                    <h1 style = "font-size: 18px; margin-top: 2%" flex-offset = "5" >There are no records in your CRM that match the selected phone number.</h3>
+                    <h3 style = "font-size: 18px; margin-top: 2%" flex-offset = "5" >There are no records in your CRM that match the selected phone number.</h3>
                 </md-dialog-content>
 
                 <md-dialog-actions layout="row">
