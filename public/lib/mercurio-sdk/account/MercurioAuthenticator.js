@@ -26,11 +26,24 @@ Requests firebase to login user
 @params: email - string containing user's email
 @params: password - string containing user's password
 */
-
-MercurioAuthenticator.prototype.login = function(email, password){
-	firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-		console.log(error);
+MercurioAuthenticator.prototype.login = function(email, password, feedback){
+	if(typeof(email)!='undefined' && typeof(password)!='undefined'){
+		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+	  // Handle Errors here.
+	  var errorCode = error.code;
+	  var errorMessage = error.message;
+	  if (errorCode === 'auth/wrong-password') {
+	    feedback('Wrong password.');
+	  } else {
+	    feedback(errorMessage);
+	  }
+	  feedback(error);
 	});
+	}
+	else{
+		feedback('Please type email and password');
+	}
+
 }
 
 /*
@@ -89,7 +102,7 @@ MercurioAuthenticator.prototype.changePassword = function(newPassword){
 		  // An error happened.
 		});
 	});
-	
+
 }
 
 MercurioAuthenticator.prototype.publishAccount = function(account){
@@ -97,11 +110,11 @@ MercurioAuthenticator.prototype.publishAccount = function(account){
 }
 
 MercurioAuthenticator.prototype.setAccountObserver = function(observer){
-	
+
 	var self = this;
-	
+
 	firebase.auth().onAuthStateChanged(function(user) {
-	
+
 		if(user){
 			if(!self.userAvailable){
 				self.userAvailable = true;
@@ -116,4 +129,3 @@ MercurioAuthenticator.prototype.setAccountObserver = function(observer){
 		}
 	});
 }
-
