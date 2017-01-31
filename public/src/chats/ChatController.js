@@ -12,7 +12,7 @@
         self.chatClientService = chatClientService;
 
         var listener = setInterval(function(){
-          if(chatClientService.chatClient.chatList.length > 0){
+          if(chatClientService.selectedChat){
             self.newMuteSetting = chatClientService.selectedChat.settings.mute;
             clearInterval(listener);
           }
@@ -174,7 +174,7 @@
         }
 
         self.toggleMute = function(value){
-          
+          self.newMuteSetting = value;
           chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
         }
 

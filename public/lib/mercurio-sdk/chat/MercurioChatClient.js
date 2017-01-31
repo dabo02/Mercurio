@@ -266,7 +266,7 @@ Sends a chat message to server
 		 message - AbstractMessage object
 */
 
-MercurioChatClient.prototype.sendMultimediaMessage = function(chat, message){
+MercurioChatClient.prototype.sendMultimediaMessage = function(chat, message, sendUploadStatus){
 
 	var self = this;
 
@@ -277,7 +277,7 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chat, message){
 	var newMessageKey = chat.addMessage(message);
 
 	if(message.multimediaUrl){
-		var uploadTask = firebase.storage().ref().child('chats/' + self.chatList[chatIndex].chatId + '/images/' + newMessageKey).put(message.multimediaUrl);
+		var uploadTask = firebase.storage().ref().child('chats/' + chat.chatId + '/images/' + newMessageKey).put(message.multimediaUrl);
 
 		//
 		// Listen for state changes, errors, and completion of the upload.

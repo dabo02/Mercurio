@@ -336,11 +336,8 @@
 
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
 
-            <br/>
-            <span  ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
-            <br ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"/>
+            <span  ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)" ng-show="crmCtrl.crmService.crmManager.crmList.length > 0 && crmCtrl.crmService.crmManager.crmList[0].validated">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
             <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
-            <br/>
             <span ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
@@ -369,11 +366,8 @@
 
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
 
-            <br/>
-            <span  ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
-            <br ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"/>
+            <span  ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)" ng-show="crmCtrl.crmService.crmManager.crmList.length > 0 && crmCtrl.crmService.crmManager.crmList[0].validated">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
             <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
-            <br/>
             <span  ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
@@ -401,12 +395,9 @@
 
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
 
-            <br/>
-            <span ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
-            <br ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"/>
-            <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
-            <br/>
-            <span  ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
+            <span  ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)" ng-show="crmCtrl.crmService.crmManager.crmList.length > 0 && crmCtrl.crmService.crmManager.crmList[0].validated">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
+             <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
+           <span  ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>
     <div ng-show="sidebarNavItem=='incoming' && recentCallListCtrl.phoneService.sidebarIncomingCalls.length==0">
@@ -433,11 +424,8 @@
 
             <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails($index); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
 
-            <br/>
-            <span ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
-            <br ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl"/>
+            <span  ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)" ng-show="crmCtrl.crmService.crmManager.crmList.length > 0 && crmCtrl.crmService.crmManager.crmList[0].validated">Add To CRM</span><!--data-toggle="modal" data-target='#addCallToCRMModal' ng-click="crmCtrl.markCallAsSelected(call)">Add to CRM</span>-->
             <span  ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">Send Text Message</span>
-            <br/>
             <span ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)">Delete</span>
         </div>
     </md-button>

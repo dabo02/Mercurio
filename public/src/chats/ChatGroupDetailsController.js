@@ -46,7 +46,7 @@
         self.exitGroup = function(){
           var listener = setInterval(function(){
             if(chatClientService.chatClient.chatList.length > 0){
-              chatClientService.chatClient.chatList[$stateParams.chatIndex]
+              chatClientService.selectedChat
                   .exitChatGroup(chatClientService.chatClient.chatClientOwner);
               self.closeChatGroupDetailsDialog();
               clearInterval(listener);
@@ -62,7 +62,7 @@
 
             // if selected contacts array contains at least one contacts
             if(contacts.length > 0){
-                chatClientService.chatClient.chatList[$stateParams.chatIndex].addParticipants(contacts);
+                chatClientService.selectedChat.addParticipants(contacts);
             }
         }
 
@@ -75,8 +75,8 @@
         }
 
         self.saveGroupDetails = function(){
-            if(self.newChatTitle != chatClientService.chatClient.chatList[$stateParams.chatIndex].title){
-                chatClientService.chatClient.chatList[$stateParams.chatIndex].saveChatTitle(self.newChatTitle);
+            if(self.newChatTitle != chatClientService.selectedChat.title){
+                chatClientService.selectedChat.saveChatTitle(self.newChatTitle);
             }
 
             // if(self.newMuteSetting != chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute){
@@ -89,8 +89,8 @@
         }
         //
         var listener = setInterval(function(){
-          if(chatClientService.chatClient.chatList.length > 0){
-            chatClientService.chatClient.chatList[$stateParams.chatIndex].participantList.forEach(function(participant){
+          if(chatClientService.selectedChat){
+            chatClientService.selectedChat.participantList.forEach(function(participant){
                 if(participant.userId == chatClientService.chatClient.chatClientOwner){
                     self.isChatClientOwnerGroupMember = true;
                 }
