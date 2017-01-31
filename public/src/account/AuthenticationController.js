@@ -9,13 +9,21 @@
         self.resetPasswordEmailError = '';
         self.resetPasswordEmailSent = false;
         self.email = '';
+        self.authenticationService = authenticationService;
 
         //if user is already logged in change state to dialer
 
         self.loginButtonClicked = function(email, password){
-            $rootScope.spinnerActivated = true;
+            // $rootScope.spinnerActivated = true;
             //$rootScope.$apply();
-            authenticationService.login(email, password);
+            authenticationService.login(email, password, function(error){
+              authenticationService.feedback = error;
+              $rootScope.$apply();
+              setTimeout(function(){
+                authenticationService.feedback = '';
+                $rootScope.$apply();
+              },3000);
+            });
 
         }
 
