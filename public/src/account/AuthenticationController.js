@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, $mdDialog, $rootScope){
+    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope){
 
         var self = this;
 
@@ -19,6 +19,18 @@
 
         }
 
+        self.showResetPasswordDialog = function(event) {
+
+            $mdDialog.show({
+                templateUrl: 'resetPasswordForm',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                escapeToClose: true,
+                clickOutsideToClose:true
+                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            });
+        };
+
         self.logoutButtonClicked = function(){
 
             authenticationService.logout();
@@ -32,17 +44,7 @@
             authenticationService.changePassword();
         }
 
-        self.showResetPasswordDialog = function(event) {
 
-            $mdDialog.show({
-                templateUrl: 'resetPasswordForm',
-                parent: angular.element(document.body),
-                targetEvent: event,
-                escapeToClose: true,
-                clickOutsideToClose:true
-                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            });
-        }
 
         self.closeResetPasswordDialog = function(){
             $mdDialog.hide()

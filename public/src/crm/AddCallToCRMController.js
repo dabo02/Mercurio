@@ -65,7 +65,7 @@
 
                 info = {
                     smOwnerId: record.smOwnerId.toString(),
-                    subject: self.notes,
+                    subject: self.subject,
                     callType: crmService.selectedCallDirection,
                     callPurpose: 'Demo',
                     callFromTo: callFromTo,
@@ -73,13 +73,13 @@
                     module: callFromTo + 's',
                     startTime: '2011-06-10 22:10:00',
                     duration: '60:00',
-                    description: "This is just a test",
+                    description: self.notes,
                     billable: false,
                     result: 'Successful'
                 };
 
 
-                console.log("\n\nCall to insert info:\n\n" + info);
+                console.log("\n\nCall to insert info:\n\n" + info.subject);
                 crmService.crmManager.crmList[0].addCall(info, function(call){
                     console.log(call);
                 });

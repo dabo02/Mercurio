@@ -16,15 +16,11 @@
         // self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
         // self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
 
-        self.isChatClientOwnerGroupMember = false;
-        var chatSettingsFetched = false;
+        self.isChatClientOwnerGroupMember = true;
         // var listener = setInterval(function(){
-        //   if(chatClientService.chatClient.chatList.length > 0 && !chatSettingsFetched){
+        //   if(chatClientService.chatClient.chatList.length > 0){
         //     self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
         //     self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
-        //     $rootScope.newMuteSetting = self.newMuteSetting;
-        //     $rootScope.newChatTitle = self.newChatTitle;
-        //     chatSettingsFetched = true;
         //     clearInterval(listener);
         //   }
         // },10);
@@ -83,10 +79,11 @@
                 chatClientService.chatClient.chatList[$stateParams.chatIndex].saveChatTitle(self.newChatTitle);
             }
 
-            if(self.newMuteSetting != chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute){
-                chatClientService.chatClient.chatList[$stateParams.chatIndex]
-                    .toggleNotifications(chatClientService.chatClient.chatClientOwner, self.newMuteSetting);
-            }
+            // if(self.newMuteSetting != chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute){
+            //     chatClientService.chatClient.chatList[$stateParams.chatIndex]
+            //         .toggleNotifications(chatClientService.chatClient.chatClientOwner, self.newMuteSetting);
+            //         console.log(self.newMuteSetting);
+            // }
 
             self.closeChatGroupDetailsDialog();
         }

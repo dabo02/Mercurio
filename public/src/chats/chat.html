@@ -68,14 +68,14 @@
                                         </md-list-item>
                                     </md-list>
                                 </div>
-                                <div flex="80" flex-offset="10" layout="row" style="padding-top:3%" ng-controller="ChatController as chatCtrl">
+                                <!-- <div flex="80" flex-offset="10" layout="row" style="padding-top:3%" ng-controller="ChatController as chatCtrl">
                                     <md-input-container class=" md-icon-float md-block">
-                                        <md-checkbox md-no-ink ng-model="chatGroupCtrl.newMuteSetting" ng-value="chatGroupCtrl.chatClientService.selectedChat.settings.mute"
-                                                     ng-change="chatGroupCtrl.muteSettingChanged()" aria-label="Mute Group">
+                                        <md-checkbox md-no-ink ng-model="chatGroupCtrl.newMuteSetting" ng-value="chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].settings.mute"
+                                                     ng-change="chatGroupCtrl.muteSettingChanged();" aria-label="Mute Group">
                                             Mute Group
                                         </md-checkbox>
                                     </md-input-container>
-                                </div>
+                                </div> -->
                             </md-dialog-content>
 
                             <md-dialog-actions layout="row">
@@ -223,12 +223,18 @@
                                           </md-menu-item>
                                           </div>
                                         <md-menu-divider></md-menu-divider>
-
+                                        <div ng-controller = "ChatController as chatCtrl">
                                         <md-menu-item>
-                                            <md-button ng-click="chatCtrl.chatClientService.selectedChat.settings.mute">
-                                                Mute
+                                            <md-button ng-if= "!chatCtrl.newMuteSetting" ng-click="chatCtrl.toggleMute(true)">
+                                                 Mute
+                                            </md-button>
+                                            <md-button ng-if= "chatCtrl.newMuteSetting" ng-click="chatCtrl.toggleMute(false)">
+                                                 Unmute
                                             </md-button>
                                         </md-menu-item>
+                                      </div>
+
+
                                         <!--<md-menu-divider></md-menu-divider>-->
                                         <!--<md-menu-item>-->
                                             <!--<md-button>-->

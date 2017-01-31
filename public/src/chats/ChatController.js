@@ -10,6 +10,15 @@
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
         self.chatClientService = chatClientService;
+
+        var listener = setInterval(function(){
+          if(chatClientService.chatClient.chatList.length > 0){
+            self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
+            clearInterval(listener);
+          }
+          console.log("interval")
+        },10);
+
         // var listener = setInterval(function(){
         //   if($rootScope.chatList.length > 0){
         //     self.contact = accountService.activeAccount.contactManager.contactList[$stateParams.contactIndex];
@@ -82,11 +91,6 @@
         //   },10);
         //
         // }
-
-        self.reloadScope = function(){
-            console.log("in")
-            $rootScope.$apply();
-        }
 
         self.showMultimediaSelectionTextDialog = function(event) {
             $mdDialog.show({
@@ -163,7 +167,8 @@
         }
 
         self.toggleMute = function(value){
-            chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
+          
+          chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
         }
 
         $scope.multimediaSelected = function(element) {
