@@ -4,10 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var https = require('https')
+var https = require('https');
 var qs = require('querystring');
 var loop = require('lupus');
-
+var x2j = require('xml2json');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var notification = require('./routes/notification');
@@ -98,7 +98,7 @@ app.post("/insertLead", function(req, res){
   request.write(queryInfo);
   request.end();
   body.on('update', function () {
-    cleanData = body.data.toString();
+    cleanData = x2j.toJson(body.data.toString());
     res.send(cleanData);
   });
 });
@@ -163,7 +163,7 @@ app.post("/insertAccount", function(req, res){
   request.write(queryInfo);
   request.end();
   body.on('update', function () {
-    cleanData = body.data.toString();
+    cleanData = x2j.toJson(body.data.toString());
     res.send(cleanData);
   });
 });
@@ -239,7 +239,7 @@ app.post("/insertCalls", function (req, res) {
   request.write(queryInfo);
   request.end();
   body.on('update', function () {
-    cleanData = body.data.toString();
+    cleanData = x2j.toJson(body.data.toString());
     res.send(cleanData);
   });
 
