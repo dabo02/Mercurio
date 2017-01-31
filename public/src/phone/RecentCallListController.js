@@ -149,6 +149,7 @@
 
             $mdDialog.show(confirm).then(function() {
                 //$scope.status = 'You decided to get rid of your debt.';
+                $scope.selectedCallIndex = null;
                 var recentCallsLength = phoneService.phone.recentCallList.length;
                 phoneService.phone.deleteCalls([callIndex]);
                 var interval = setInterval(function(){
