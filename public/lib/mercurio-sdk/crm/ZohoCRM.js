@@ -92,6 +92,7 @@ ZohoCRM.prototype.addCall = function(callInfo, cb) {
     description: callInfo.description,
     billable: callInfo.billable,
     result: callInfo.result,
+    url: url
      };
   $.ajax({
     url: route,
