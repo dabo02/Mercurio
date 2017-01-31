@@ -44,7 +44,7 @@
             //}
 
 
-            if(chat.messageList[chat.messageList.length - 1].read[chatClientService.chatClient.chatClientOwner] == 0){
+            if(chat.messageList[chat.messageList.length - 1].read == 0){
                 return {
                     "font-weight":"bold"
                 };

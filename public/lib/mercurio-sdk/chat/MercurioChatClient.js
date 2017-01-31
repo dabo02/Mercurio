@@ -11,7 +11,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	self.chatList = [];
 	self.chatClientOwner = userId;
 	self.messageReceivedObserver = messageReceivedObserver;
-
+	self.chatIsReadyToSendObserver = null;
 	//Uploading Image variables
 	self.uploadingImage = false;
 	self.uploadingProgress = 0;
@@ -96,6 +96,11 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 					snapshot.val().lastMessage, snapshot.val().settings, snapshot.val().timeStamp, snapshot.val().title, self.chatClientOwner);
 
 			self.chatList.unshift(chat);
+
+			if(self.chatIsReadyToSendObserver){
+				self.chatIsReadyToSendObserver(chat);
+			}
+
 		//}
 
 	});
@@ -123,7 +128,8 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 
 	var self = this;
 	var participants = [];
-	var chatExist = null;
+	var existingChat = null;
+	self.chatIsReadyToSendObserver = observer;
 
 	contacts.forEach(function(contact){
 		if(contact.userId != '' || contact.userId !== undefined){
@@ -149,7 +155,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 						}
 					});
 					if(counter==2){
-						chatExist=chat;
+						existingChat=chat;
 					}
 				})
 			});
@@ -160,7 +166,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 		// chat client owner is not the only participant in the list
 		// receive observer call back in addChat parameters and register the callback to this
 		//self.participantsAreReadyObserver = observer;
-		if (chatExist == null) {
+		if (existingChat == null) {
 			var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
 			var newChatKey = newChatRef.key;
 
@@ -181,7 +187,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 					// add user-chat entry for participant
 					updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
 					firebase.database().ref().update(updates).then(function () {
-						observer();
+						//observer();
 					});
 				});
 			});
@@ -192,23 +198,27 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 			// if its not in the local list add  new instance to chatList using the MercurioChat constructor
 			// and add it to the top of the list. call observer at the end
 			var chatFound = false;
+			var newChat = null;
 			self.chatList.forEach(function (chat, index) {
-				if (chat.chatId === chatExist.key && !chatFound) {
+				if (chat.chatId === existingChat.key && !chatFound) {
 					chatFound = true;
 					self.chatList.splice(index, 1);
 					self.chatList.unshift(chat);
+					newChat = chat;
 				}
 			});
 
 			if (!chatFound) {
 				var chat;
 
-				chat = new MercurioChat(chatExist.key, chatExist.val().participantCount, self.participantsAreReadyObserver,
-					chatExist.val().lastMessage, chatExist.val().settings, chatExist.val().timeStamp, chatExist.val().title, self.chatClientOwner);
+				chat = new MercurioChat(existingChat.key, existingChat.val().participantCount, self.participantsAreReadyObserver,
+					existingChat.val().lastMessage, existingChat.val().settings, existingChat.val().timeStamp, existingChat.val().title, self.chatClientOwner);
 
 				self.chatList.unshift(chat);
+				newChat = chat;
 			}
-			observer();
+
+			self.chatIsReadyToSendObserver(newChat);
 		}
 	}
 

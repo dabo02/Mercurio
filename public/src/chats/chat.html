@@ -149,7 +149,7 @@
                             <md-dialog-content>
 
                                 <md-card flex="60" flex-offset="20" layout="row" style="margin-top:3%">
-                                    <img style="height:300px;" ng-src= "{{multimediaChatCtrl.chatClientService.chatClient.selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
+                                    <img style="height:300px;" ng-src= "{{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
 
                                 </md-card>
                                 <div layout="row">
@@ -227,7 +227,7 @@
                                           </md-menu-item>
                                           </div>
                                         <md-menu-divider></md-menu-divider>
-                                        <div ng-controller = "ChatController as chatCtrl">
+                                        <div>
                                         <md-menu-item>
                                             <md-button ng-if= "!chatCtrl.newMuteSetting" ng-click="chatCtrl.toggleMute(true)">
                                                  Mute

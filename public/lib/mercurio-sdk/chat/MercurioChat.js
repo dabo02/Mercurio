@@ -77,11 +77,15 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 	
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
-	
+
+	var newMessageKey = null;
+
 	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToLast(1 * pageNumber * limit).on("child_added", function(messageSnapshot) {
 	
 		if(messageSnapshot.exists()){
-		
+
+			newMessageKey = messageSnapshot.key;
+
 			firebase.database().ref('message-info/' + messageSnapshot.key).once("value", function(messageInfoSnapshot) {
 	
 				if(messageInfoSnapshot.exists()){
@@ -94,25 +98,10 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 				}
 
 			});
-
-			// listen for read events when messages are read for the first time
-			firebase.database().ref('message-info/' + messageSnapshot.key).on("child_changed", function(messageInfoSnapshot) {
-
-				if(messageInfoSnapshot.exists()){
-
-					self.messageList.forEach(function(message, index){
-						if(message.messageId === messageInfoSnapshot.key){
-							// found updated message
-							message.read = messageInfoSnapshot.val().read[chatClientOwner];
-						}
-					});
-				}
-
-			});
-			
 		}
 
 	});
+
 	
 	/*
 	
@@ -255,7 +244,22 @@ MercurioChat.prototype.markUnreadMessagesAsRead = function(userId){
 	var self = this;
 	
 	self.messageList.forEach(function(message){
-		if(message.read[userId] == 0){
+		if(message.read == 0){
+
+			firebase.database().ref('message-info/' + message.messageId + '/read' + userId).on("child_changed", function(messageInfoSnapshot) {
+
+				if(messageInfoSnapshot.exists()){
+
+					self.messageList.forEach(function(message){
+						if(message.messageId === messageInfoSnapshot.key){
+							// found updated message
+							message.read = messageInfoSnapshot.val().read[chatClientOwner];
+						}
+					});
+				}
+
+			});
+
 			firebase.database().ref().child('message-info/' + message.messageId + "/read/" + userId).set(new Date().getTime());
 		}
 	});

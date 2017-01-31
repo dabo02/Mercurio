@@ -10,9 +10,12 @@
         var self = this;
         self.chatClient;
         self.selectedMessageIndex = null;
+        self.selectedChat = null;
 
-        self.chatIsReadyToSendObserver = function(){
-            $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+        self.chatIsReadyToSendObserver = function(newChat){
+            self.selectedChat = newChat;
+            //$state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+            $state.reload();
         };
 
         self.instantiateChatClient = function(userId){
