@@ -243,24 +243,24 @@ MercurioChat.prototype.markUnreadMessagesAsRead = function(userId){
 
 	var self = this;
 	
-	self.messageList.forEach(function(message){
-		if(message.read == 0){
+	self.messageList.forEach(function(oldMessage){
+		if(oldMessage.read == 0){
 
-			firebase.database().ref('message-info/' + message.messageId + '/read' + userId).on("child_changed", function(messageInfoSnapshot) {
+			firebase.database().ref('message-info/' + oldMessage.messageId + "/read/" + userId).on("value", function(messageInfoSnapshot) {
 
 				if(messageInfoSnapshot.exists()){
 
-					self.messageList.forEach(function(message){
-						if(message.messageId === messageInfoSnapshot.key){
+					self.messageList.forEach(function(newMessage){
+						if(newMessage.messageId === oldMessage.messageId){
 							// found updated message
-							message.read = messageInfoSnapshot.val().read[chatClientOwner];
+							oldMessage.read = messageInfoSnapshot.val();
 						}
 					});
 				}
 
 			});
 
-			firebase.database().ref().child('message-info/' + message.messageId + "/read/" + userId).set(new Date().getTime());
+			firebase.database().ref().child('message-info/' + oldMessage.messageId + "/read/" + userId).set(new Date().getTime());
 		}
 	});
 }
