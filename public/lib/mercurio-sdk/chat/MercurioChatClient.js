@@ -12,6 +12,10 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	self.chatClientOwner = userId;
 	self.messageReceivedObserver = messageReceivedObserver;
 
+	//Uploading Image variables
+	self.uploadingImage = false;
+	self.uploadingProgress = 0;
+
 	var pageNumber = 1;
 	var limit = 50;
 
@@ -273,18 +277,54 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chat, message){
 	var newMessageKey = chat.addMessage(message);
 
 	if(message.multimediaUrl){
-		firebase.storage().ref().child('chats/' + chat.chatId + '/images/' + newMessageKey).put(message.multimediaUrl)
-		.then(function(multimediaSnapshot) {
+		var uploadTask = firebase.storage().ref().child('chats/' + self.chatList[chatIndex].chatId + '/images/' + newMessageKey).put(message.multimediaUrl);
 
-			message.multimediaUrl = multimediaSnapshot.downloadURL;
+		//
+		// Listen for state changes, errors, and completion of the upload.
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+          function(snapshot) {
+						self.uploadingImage = true;
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+						if(progress<100){
+							sendUploadStatus(progress, true, message);
+						}
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+          }, function(error) {
+						self.uploading = false;
+          switch (error.code) {
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
 
-			var updates = {};
-			updates['/chat-messages/' + chat.chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
 
-			firebase.database().ref().update(updates);
+            case 'storage/unknown':
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        }, function() {
+          // Upload completed successfully, now we can get the download URL
+					message.multimediaUrl = uploadTask.snapshot.downloadURL;
 
-			self.sendTextMessage(chatIndex, newMessageKey, message);
-		});
+					var updates = {};
+					updates['/chat-messages/' + chat.chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
+
+					firebase.database().ref().update(updates);
+					console.log("sending...!!")
+					self.sendTextMessage(chat, newMessageKey, message);
+					sendUploadStatus(100, false, message);
+        });
 	}
 	else{
 
@@ -318,7 +358,13 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 						"messageTitle" :  user.firstName,
 						"messageBody" : message.textContent
 					}
-				)
+				),
+				success: function() {
+					tokenArray.length = 0;
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					tokenArray.length = 0;
+				}
 		  });
 		}
 
@@ -359,7 +405,7 @@ and adds it to its corresponding recent chat
 @params: chatIndex - index of the recent chat to which the send message belongs to
 @params: type - string containing type of concrete message to receive
 @params: message - JSON object containing the received message's content
-		 
+
 messageContent must be structured as shown below:
 
 *** JSON example of message here ***

@@ -113,8 +113,12 @@
                             <md-dialog-content>
 
                                 <md-card flex="60" flex-offset="20" layout="row" style="margin-top:3%">
-                                    <img id="multimediaPreview" class="md-card-image" style="height:300px;">
+                                    <img id="multimediaPreview" class="md-card-image" style="opacity:{{multimediaChatCtrl.chatClientService.opacity}}; height:300px; position:relative;">
+                                    <div style="left: 0; position:absolute; text-align:center; margin-top: 10%; width: 100%" ng-if="multimediaChatCtrl.chatClientService.uploadingImage" layout="row" layout-sm="column" layout-align="space-around">
+                                      <md-progress-circular md-mode="determinate" value="{{multimediaChatCtrl.chatClientService.progress}}" md-diameter="200"></md-progress-circular>
+                                    </div>
                                 </md-card>
+
 
                                 <div layout="row" class="messagePreviewChatMessageInput">
                                     <!--<p id="smile" style="margin-top: 3%; font-size: 22px;" class="fa fa-smile-o text-center" flex="10"></p>-->
