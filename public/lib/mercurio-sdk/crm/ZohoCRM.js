@@ -92,6 +92,7 @@ ZohoCRM.prototype.addCall = function(callInfo, cb) {
     description: callInfo.description,
     billable: callInfo.billable,
     result: callInfo.result,
+    url: url
      };
   $.ajax({
     url: route,
@@ -100,16 +101,28 @@ ZohoCRM.prototype.addCall = function(callInfo, cb) {
     data: JSON.stringify(data),
     dataType: "json",
     success: function (response) {
+      var msg = {};
       succ.push(response);
-      if (succ) {
-        cb(succ);
-      }
+      if (succ[0].response.error) {
+          msg = {
+            result: 'Error',
+            message: succ[0].response.error.message
+          };
+      } else {
+         msg = {
+           result: 'Success',
+           message: succ[0].response.result.message
+         }
+    }
+	    cb(msg);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus, errorThrown);
-      console.warn(jqXHR.responseText);
+	    var msg = {
+		    result: 'Server Error',
+		    message: 'Internal Server Error check connection or contact Mercurio development team'
+	    };
+	    cb(msg);
     }
-
   });
 
 }

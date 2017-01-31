@@ -4,9 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var https = require('https')
+var https = require('https');
 var qs = require('querystring');
 var loop = require('lupus');
+var x2j = require('xml2json');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -98,7 +99,7 @@ app.post("/insertLead", function(req, res){
   request.write(queryInfo);
   request.end();
   body.on('update', function () {
-    cleanData = body.data.toString();
+    cleanData = x2j.toJson(body.data.toString());
     res.send(cleanData);
   });
 });
@@ -163,27 +164,47 @@ app.post("/insertAccount", function(req, res){
   request.write(queryInfo);
   request.end();
   body.on('update', function () {
-    cleanData = body.data.toString();
+    cleanData = x2j.toJson(body.data.toString());
     res.send(cleanData);
   });
 });
 
 app.post("/insertCalls", function (req, res) {
 
-  var d = '\<Calls>'+
-      '\<row no="1">'+
-      '\<FL val="SMOWNERID">'+req.body.callInfo.smOwnerId+'\</FL>'+
-      '\<FL val="Subject">'+req.body.callInfo.subject+'\</FL>'+
-      '\<FL val="CallType">'+req.body.callInfo.callType+'\</FL>'+
-      '\<FL val="Call Purppose">'+req.body.callInfo.callPurpose+'\</FL>'+
-      '\<FL val="SEID">'+req.body.callInfo.leadId+'\</FL>'+
-      '\<FL val="SEMODULE">Leads\</FL>'+
-      '\<FL val="Call Start Time">'+req.body.callInfo.startTime+'\</FL>'+
-      '\<FL val="Call Duration">'+req.body.callInfo.duration+'\</FL>'+
-      '\<FL val="Description">'+req.body.callInfo.description+'\</FL>'+
-      '\<FL val="Billable">'+req.body.callInfo.billable+'\</FL>'+
-      '\<FL val="Call Result">'+req.body.callInfo.result+'\</FL>'+
-      '\</row>'+
+  var d = '\<Calls>' +
+      '\<row no="1">' +
+      '\<FL val="SMOWNERID">' + req.body.smOwnerId + '\</FL>' +
+      '\<FL val="Subject">' + req.body.subject + '\</FL>' +
+      '\<FL val="Call Type">' + req.body.callType + '\</FL>';
+  if (req.body.callPurpose) {
+    d += '\<FL val="Call Purpose">' + req.body.callPurpose + '\</FL>';
+  }
+  if (req.body.module === 'Contacts') {
+    d+= '\<FL val="CONTACTID">' + req.body.id + '\</FL>';
+  } else {
+    d += '\<FL val="SEID">' + req.body.id + '\</FL>';
+  }
+  d += '\<FL val="SEMODULE">'+req.body.module+'\</FL>';
+
+  if (req.body.startTime) {
+    d += '\<FL val="Call Start Time">' + req.body.startTime + '\</FL>';
+  }
+  if (req.body.duration) {
+    d += '\<FL val="Call Duration">' + req.body.duration + '\</FL>';
+  }
+  if (req.body.description) {
+    d += '\<FL val="Description">' + req.body.description + '\</FL>';
+  }
+  if (req.body.billable) {
+    d += '\<FL val="Billable">' + req.body.billable + '\</FL>';
+  }
+  if (req.body.result) {
+    d += '\<FL val="Call Result">' + req.body.result + '\</FL>';
+  }
+  if (req.body.callFromTo) {
+    d += '\<FL val="Call From/To">' + req.body.callFromTo + '\</FL>';
+  }
+  d += '\</row>' +
       '\</Calls>';
 
   var queryInfo = qs.stringify({
@@ -219,7 +240,7 @@ app.post("/insertCalls", function (req, res) {
   request.write(queryInfo);
   request.end();
   body.on('update', function () {
-    cleanData = body.data.toString();
+    cleanData = x2j.toJson(body.data.toString());
     res.send(cleanData);
   });
 
@@ -478,8 +499,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    res.status(err.status || 500)
-        .send({
+    res.status(err.status || 500).send('error', {
       message: err.message,
       error: err
     });
@@ -489,11 +509,10 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500)
-      .send({
-        message: err.message,
-        error: err
-      });
+  res.status(err.status || 500).send({
+    message: err.message,
+    error: {}
+  });
 });
 
 

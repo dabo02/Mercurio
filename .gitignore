@@ -3,3 +3,8 @@
 .idea/
 node_modules/
 *.iml
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+web-interface-mercurio.zip
