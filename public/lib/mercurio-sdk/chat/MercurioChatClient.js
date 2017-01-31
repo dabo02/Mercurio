@@ -331,7 +331,7 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chat, message, sen
 					updates['/chat-messages/' + chat.chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
 
 					firebase.database().ref().update(updates);
-					console.log("sending...!!")
+
 					self.sendTextMessage(chat, newMessageKey, message);
 					sendUploadStatus(100, false, message);
         });
@@ -358,6 +358,10 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 			tokenArray = angular.copy(array);
 		}
 		if(tokenArray.length>0){
+			var containsMultimedia = false;
+			if(message.multimediaUrl.length>0){
+				containsMultimedia = true;
+			}
 			$.ajax({
 		    url: "/sendNotification",
 		    type: "post",
@@ -366,7 +370,8 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 					{
 						"tokens" : tokenArray,
 						"messageTitle" :  user.firstName,
-						"messageBody" : message.textContent
+						"messageBody" : message.textContent,
+						"hasMultimedia" : containsMultimedia
 					}
 				),
 				success: function() {
@@ -389,8 +394,13 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 		}
 
 		firebase.database().ref().child('user-tokens/'+participant.userId).once('value', function(snapshot){
-			// console.log("sending... "+snapshot.val());
-			sendPushNotification(snapshot.val(), participant);
+
+			firebase.database().ref().child("user-chats").child(participant.userId).child(chat.chatId)
+			.once('value', function(actualChat){
+				if(!actualChat.val().settings.mute){
+					sendPushNotification(snapshot.val(), participant);
+				}
+			});
 		});
 
 		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
