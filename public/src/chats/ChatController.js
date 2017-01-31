@@ -13,7 +13,7 @@
 
         var listener = setInterval(function(){
           if(chatClientService.chatClient.chatList.length > 0){
-            self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
+            self.newMuteSetting = chatClientService.selectedChat.settings.mute;
             clearInterval(listener);
           }
           console.log("interval")
@@ -209,12 +209,30 @@
             // $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
         }
 
-        if(chatClientService.chatClient.chatList.length > 0){
-            chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
-        }
 
         $location.hash('bottom');
         $anchorScroll();
 
+        if(chatClientService.chatClient.chatList.length > 0) {
+
+            if (!chatClientService.selectedChat) {
+                chatClientService.selectedChat = chatClientService.chatClient.chatList[$stateParams.chatIndex]; // reset selected chat
+            }
+
+            $scope.selectedChat = chatClientService.selectedChat;
+            $scope.$watch(
+                'selectedChat',
+                function (newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        $scope.selectedChat.lastMessage = newVal.lastMessage;
+                    }
+                }, true
+            );
+
+            chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+        }
+        else{
+            $state.go('dialer');
+        }
     }]);
 })();

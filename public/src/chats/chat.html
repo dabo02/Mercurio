@@ -166,14 +166,14 @@
 
                             <md-list flex="90" flex-offset="5">
                                 <md-list-item class="md-1-line">
-                                    <img ng-src="{{chatCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
+                                    <img ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
                                     <a class="md-list-item-text" layout="column">
-                                        <h4 style= "color: white;" ng-if="chatCtrl.chatClientService.selectedChat.title.length > 0"
+                                        <h4 style= "color: white;" ng-if="selectedChat.title.length > 0"
                                             ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
-                                                {{chatCtrl.chatClientService.selectedChat.title}}
+                                                {{selectedChat.title}}
                                         </h4>
-                                        <h4 style= "color: white;" ng-controller = "ContactListController as contactListCtrl" ng-click = "contactListCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="chatCtrl.chatClientService.selectedChat.title.length === 0">
-                                            {{chatCtrl.chatClientService.selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
+                                        <h4 style= "color: white;" ng-controller = "ContactListController as contactListCtrl" ng-click = "contactListCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
+                                            {{selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
                                     </a>
 
@@ -248,11 +248,11 @@
 
                         </div>
                         <div id="conversation" class= "scrollable-content" style="width: 100%;height:350px" class="col-lg-12 col-md-12" scroll-glue>
-                            <div ng-repeat="message in chatCtrl.chatClientService.selectedChat.messageList track by $index" class="row">
+                            <div ng-repeat="message in selectedChat.messageList track by $index" class="row">
                                 <div ng-if="!chatCtrl.isMessageFromMe(message)" flex-offset="10" flex="55">
                                     <md-card class="receivedMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row">
                                         <p>
-                                            {{message.from | messageListParticipantNameFilter : chatCtrl.chatClientService.selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}
+                                            {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}
                                         </p>
                                         <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;">
                                         <p ng-if="message.textContent.length > 0">
@@ -260,7 +260,7 @@
                                         </p>
                                     </md-card>
                                     <p ng-if="!message.multimediaUrl" class="receivedMessage">
-                                        {{message.from | messageListParticipantNameFilter : chatCtrl.chatClientService.selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}, {{message.textContent}}
+                                        {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}, {{message.textContent}}
                                     </p>
                                 </div>
                                 <div ng-if="chatCtrl.isMessageFromMe(message)"flex-offset="35" flex="55">
