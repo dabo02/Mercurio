@@ -26,5 +26,64 @@
     </div>-->
     <recent-call-list ng-controller="RecentCallListController as recentCallListCtrl" ng-if="navCtrl.viewingRecentCalls"></recent-call-list>
     <chat-list ng-controller="ChatListController as chatListCtrl" ng-if="navCtrl.viewingRecentChats"></chat-list>
+    <script type="text/ng-template" id="createChatForm">
+        <md-dialog flex="40" aria-label="Create New Chat" ng-controller="CreateChatController as createChatCtrl">
+            <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
+                <md-toolbar class="mercurioBlueBackground">
+                    <div class="md-toolbar-tools">
+                        <h2>Create New {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}</h2>
+                        <span flex></span>
+                        <md-button class="md-icon-button" ng-click="createChatCtrl.closeCreateChatDialog()">
+                            &times;
+                        </md-button>
+                    </div>
+                </md-toolbar>
+
+                <md-dialog-content>
+                    <md-card-title style="padding-top: 0%; margin: 10px;">
+                        <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
+
+                            <md-content class="chipschatListCtrlContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                <md-contact-chips
+                                        ng-model="contactListCtrl.asyncContacts"
+                                        md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                        md-contact-name="name"
+                                        md-contact-image="picture"
+                                        md-require-match="false"
+                                        md-highlight-flags="i"
+                                        filter-selected="contactListCtrl.filterSelected"
+                                        placeholder="Search for Contacts">
+                                </md-contact-chips>
+                            </md-content>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <div flex="80" flex-offset="10" layout="row">
+                        <md-input-container class=" md-icon-float md-block">
+                            <md-checkbox md-no-ink ng-model="createChatCtrl.groupChatCheckbox" aria-label="Create Group Chat">
+                                New Group Chat
+                            </md-checkbox>
+                            <label></label>
+                        </md-input-container>
+                    </div>
+                    <div flex="80" flex-offset="10" layout="row">
+                        <md-input-container ng-if="createChatCtrl.groupChatCheckbox" class="md-icon-float md-block" flex="100">
+                            <label>Title</label>
+                            <input required md-no-asterisk type="text" ng-model="createChatCtrl.title">
+                        </md-input-container>
+                    </div>
+                </md-dialog-content>
+
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button ng-click="createChatCtrl.closeCreateChatDialog()">
+                        Close
+                    </md-button>
+                    <md-button ng-click="createChatCtrl.createNewChat(contactListCtrl.asyncContacts)">
+                        Create {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}
+                    </md-button>
+                </md-dialog-actions>
+            </form>
+        </md-dialog>
+    </script>
     <!--<recents></recents>-->
 </md-content>

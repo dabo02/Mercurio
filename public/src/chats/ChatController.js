@@ -230,11 +230,17 @@
             }
 
             $scope.selectedChat = chatClientService.selectedChat;
+
             $scope.$watch(
                 'selectedChat',
                 function (newVal, oldVal) {
                     if (newVal !== oldVal) {
+
                         $scope.selectedChat.lastMessage = newVal.lastMessage;
+
+                        $timeout(function(){
+                            $scope.$apply();
+                        });
                     }
                 }, true
             );
