@@ -19,7 +19,8 @@
 
             $mdThemingProvider.theme('default')
                 .primaryPalette('blue')
-                .accentPalette('red');
+                .accentPalette('red')
+                .foregroundPalette[3] = "rgba(0,0,0,0.97)";
 
         }).factory("Auth", ["$firebaseAuth", function($firebaseAuth) {
                 var ref = new firebase.database().ref();
