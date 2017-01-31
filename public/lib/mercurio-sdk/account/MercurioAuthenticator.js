@@ -34,10 +34,10 @@ MercurioAuthenticator.prototype.login = function(email, password, feedback){
 	  var errorMessage = error.message;
 	  if (errorCode === 'auth/wrong-password') {
 	    feedback('Wrong password.');
-	  } else {
+	  }
+		else {
 	    feedback(errorMessage);
 	  }
-	  feedback(error);
 	});
 	}
 	else{
