@@ -14,16 +14,16 @@
 */
 
 function MercurioAccount(user, accountReadyCallback){
-	
+
 	var self = this;
-	
+
 	firebase.database().ref('account/' + user.uid).on('value', function(snapshot) {
-	
+
 		if(snapshot.exists()){
 			if(!self.userId){
-				AbstractAccount.apply(self, [snapshot.key, snapshot.val().firstName, 
-					snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture, 
-					snapshot.val().status, snapshot.val().availability, snapshot.val().email, 
+				AbstractAccount.apply(self, [snapshot.key, snapshot.val().firstName,
+					snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture,
+					snapshot.val().status, snapshot.val().availability, snapshot.val().email,
 					snapshot.val().extension, snapshot.val().sipUsername,
 					snapshot.val().sipPassword, snapshot.val().settings, snapshot.val().companyId]);
 				accountReadyCallback(self);
@@ -36,7 +36,7 @@ function MercurioAccount(user, accountReadyCallback){
 				self.availability = snapshot.val().availability;
 			}
 		}
-	});			
+	});
 }
 
 MercurioAccount.prototype = Object.create(AbstractAccount.prototype);
@@ -49,20 +49,54 @@ Requests server to save profile picture and update database to reflect these cha
 @params: picture - string containing path to profile picture
 */
 
-MercurioAccount.prototype.savePicture = function(picture){
+MercurioAccount.prototype.savePicture = function(picture, sendUploadStatus){
 	// TODO - upload picture to firebase and retrieve url to uploaded file
-	
+
 	var self = this;
-	
+
 	var updates = {};
-	firebase.storage().ref().child('user/' + this.userId + '/profile/profile_picture').put(picture)
-		.then(function(snapshot) {
-			console.log(snapshot.downloadURL);
-		  	updates['account/' + self.userId + '/picture'] = snapshot.downloadURL;
+	var uploadTask = firebase.storage().ref().child('user/' + this.userId + '/profile/profile_picture').put(picture);
+
+	// Listen for state changes, errors, and completion of the upload.
+			uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+				function(snapshot) {
+					self.uploadingImage = true;
+					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					console.log('Upload is ' + progress + '% done');
+					if(progress<100){
+						sendUploadStatus(progress, true);
+					}
+					switch (snapshot.state) {
+						case firebase.storage.TaskState.PAUSED: // or 'paused'
+							console.log('Upload is paused');
+							break;
+						case firebase.storage.TaskState.RUNNING: // or 'running'
+							console.log('Upload is running');
+							break;
+					}
+				}, function(error) {
+					self.uploading = false;
+				switch (error.code) {
+					case 'storage/unauthorized':
+						// User doesn't have permission to access the object
+						break;
+
+					case 'storage/canceled':
+						// User canceled the upload
+						break;
+
+					case 'storage/unknown':
+						// Unknown error occurred, inspect error.serverResponse
+						break;
+				}
+			}, function() {
+				// Upload completed successfully, now we can get the download URL
+				updates['account/' + self.userId + '/picture'] = uploadTask.snapshot.downloadURL;
 		  	firebase.database().ref().update(updates);
-		  	
-		});
-	
+				sendUploadStatus(100, false);
+			});
+
 	// TODO - add error management callback
 }
 
@@ -73,12 +107,12 @@ Requests server to save username in database
 */
 
 MercurioAccount.prototype.saveUsername = function(username){
-	
+
 	var updates = {};
 	updates['account/' + this.userId + '/username'] = username;
-	
+
 	firebase.database().ref().update(updates);
-	
+
 	// TODO - add error management callback
 }
 
@@ -92,9 +126,9 @@ MercurioAccount.prototype.saveAvailability = function(availability){
 
 	var updates = {};
 	updates['account/' + this.userId + '/availability'] = availability;
-	
+
 	firebase.database().ref().update(updates);
-	
+
 	// TODO - add error management callback
 }
 
@@ -103,14 +137,14 @@ Requests server to save user status in database
 @method
 @params: status - string containing user status information
 */
- 
+
 MercurioAccount.prototype.saveStatus = function(status){
 
 	var updates = {};
 	updates['account/' + this.userId + '/status'] = status;
-	
+
 	firebase.database().ref().update(updates);
-	
+
 	// TODO - add error management callback
 }
 
@@ -130,31 +164,31 @@ Requests server to save user profile information in database
 */
 
 MercurioAccount.prototype.saveProfileInfo = function(firstName, lastName, email, status, availability){
-	
+
 	var updates = {};
 	var updateFlag = false;
-	
+
 	if(firstName !== ''){
 		updates['account/' + this.userId + '/firstName'] = firstName;
 	}
-	
+
 	if(lastName !== ''){
 		updates['account/' + this.userId + '/lastName'] = lastName;
 	}
-	
+
 	if(email !== ''){
 		updates['account/' + this.userId + '/email'] = email;
 	}
-	
+
 	if(status !== ''){
 		updates['account/' + this.userId + '/status'] = status;
 	}
-	
+
 	if(availability !== ''){
 		updates['account/' + this.userId + '/availability'] = availability;
 	}
-	
-	
+
+
 	firebase.database().ref().update(updates);
 
 	this.syncProfileUpdate();

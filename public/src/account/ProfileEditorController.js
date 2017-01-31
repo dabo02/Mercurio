@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ProfileEditorController', ['$scope', 'accountService', '$mdDialog', function($scope, accountService, $mdDialog) {
+    angular.module('mercurio').controller('ProfileEditorController', ['$scope', 'accountService', '$mdDialog', '$rootScope', function($scope, accountService, $mdDialog, $rootScope) {
 
         var self = this;
         self.firstName = '',
@@ -16,7 +16,7 @@
         self.availability = '';
         self.newAvailability = '';
         self.pictureChosen = true;
-
+        self.accountService = accountService;
         self.activeAccount = accountService.activeAccount;
 
         self.showProfileEditorDialog = function(event) {
@@ -44,7 +44,16 @@
                 accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
                     self.statusMessage, parseInt(self.newAvailability));
                 if(self.picture){
-                    accountService.activeAccount.savePicture(self.picture);
+                    accountService.activeAccount.savePicture(self.picture, function(progress, uploadingImage){
+                      accountService.uploadingImage = uploadingImage;
+                      accountService.progress = progress;
+                      accountService.opacity = progress/100+0.1;
+                      $rootScope.$digest();
+                      if(!uploadingImage){
+                        //close dialog
+                        self.closeProfileEditorDialog();
+                      }
+                    });
                 }
             }
         }
