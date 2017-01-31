@@ -46,7 +46,8 @@
                 type: 'zoho',
                 validated: true
             };
-            $scope.validatedCRM = crmService.crmManager.crmList[0].validated;
+
+            $scope.validatedCRM = crmService.crmManager.crmList.length > 0 ? crmService.crmManager.crmList[0].validated : false;
 
             $scope.$watch("validatedCRM", function(validated){
               //$scope.$apply();

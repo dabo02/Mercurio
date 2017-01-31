@@ -81,10 +81,10 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 	var callInfo = {
 		answered: answered,
 		duration: '0:00:00',
-		from: from,
+		from: "" + from,
 		incoming: incoming,
 		timeStamp: timeStamp,
-		to: to
+		to: "" + to
 	};
 
 	var updates = {};

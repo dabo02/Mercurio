@@ -33,6 +33,7 @@
 
         self.viewChat = function(chatIndex){
             console.log('view chat clicked: chat index = ' + chatIndex);
+            chatClientService.selectedChat = chatClientService.chatClient.chatList[chatIndex];
             $state.go('chat', {'chatIndex' : chatIndex, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
         }
 
@@ -80,18 +81,5 @@
                 //$scope.status = 'You decided to keep your debt.';
             });
         };
-
-        chatClientService.chatClient.chatList.forEach(function(chat, index){
-           $scope.chatList = [];
-           $scope.chatList[index] = chat;
-           $scope.$watch(
-               'chatList[' + index + ']',
-               function (newVal, oldVal) {
-                   if ( newVal !== oldVal ) {
-                       chat.lastMessage = newVal.lastMessage;
-                   }
-               }, true
-           );
-        });
     }]);
 })();

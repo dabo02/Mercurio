@@ -60,7 +60,10 @@
                 </div>
 
                 <md-card>
-                    <img id="profilePicturePreview" class="md-card-image" alt="Washed Out" style="height:300px;" ng-src="{{profileCtrl.getProfilePicture()}}"/>
+                    <img id="profilePicturePreview" class="md-card-image" alt="Washed Out" style="opacity:{{profileCtrl.accountService.opacity}}; height:300px; position:relative;" ng-src="{{profileCtrl.getProfilePicture()}}"/>
+                    <div style="left: 0; position:absolute; text-align:center; margin-top: 10%; width: 100%" ng-if="profileCtrl.accountService.uploadingImage" layout="row" layout-sm="column" layout-align="space-around">
+                      <md-progress-circular md-mode="determinate" value="{{profileCtrl.accountService.progress}}" md-diameter="200"></md-progress-circular>
+                    </div>
                     <md-card-actions layout="row" layout-align="end end">
 
                             <input style="visibility:hidden;" onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
@@ -71,7 +74,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button ng-click="profileCtrl.saveProfileInfo()" data-dismiss="modal" class="btn btn-success">Save</button>
+                <button ng-click="profileCtrl.saveProfileInfo()" class="btn btn-success">Save</button>
             </div>
         </div>
     </div>

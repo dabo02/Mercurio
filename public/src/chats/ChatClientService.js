@@ -55,7 +55,7 @@
                         // received chat is listed after the chat i am currently viewing
                         // move the chat i'm viewing one spot down the list and update the route to continue viewing it
                         var newIndex = parseInt($state.params.chatIndex, 10) + 1;
-                        $state.go('chat', {'chatIndex' : newIndex, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                        $state.go('chat');//, {'chatIndex' : newIndex, 'chatClientOwner' : self.chatClient.chatClientOwner});
                     }
                     else if($state.params.chatIndex == receivedChatIndex){
 
@@ -65,10 +65,10 @@
                         // I am currently viewing the received chat and it is now positioned at index 0 so the route
                         // is updated to continue viewing it
                         if(receivedChatIndex == 0){
-                            $state.reload();
+                            $state.go('chat');//$state.reload();
                         }
                         else{
-                            $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                            $state.go('chat');//$state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
                         }
                     }
                 }

@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, $mdDialog, $rootScope){
+    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope){
 
         var self = this;
 
@@ -19,19 +19,6 @@
 
         }
 
-        self.logoutButtonClicked = function(){
-
-            authenticationService.logout();
-            //chatClientService.chatClient = null;
-            //phoneService.phone = null;
-            //crmService.crmManager = null;
-        }
-
-        self.changePasswordButtonClicked = function(){
-
-            authenticationService.changePassword();
-        }
-
         self.showResetPasswordDialog = function(event) {
 
             $mdDialog.show({
@@ -42,7 +29,22 @@
                 clickOutsideToClose:true
                 //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             });
+        };
+
+        self.logoutButtonClicked = function(){
+
+            authenticationService.logout();
+            chatClientService.chatClient = null;
+            phoneService.phone = null;
+            crmService.crmManager = null;
         }
+
+        self.changePasswordButtonClicked = function(){
+
+            authenticationService.changePassword();
+        }
+
+
 
         self.closeResetPasswordDialog = function(){
             $mdDialog.hide()

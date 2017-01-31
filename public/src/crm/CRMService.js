@@ -20,6 +20,7 @@
             self.crmManager = new MercurioCRMManager(userId);
           }
 
+        //this one chows the add cal to crm dialog and fetches callable records
         self.addCallToCRM = function(phone, type, event, insertCallsAutomatically){
           if(insertCallsAutomatically || insertCallsAutomatically==null){
             self.isFetching=true;

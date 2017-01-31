@@ -79,7 +79,7 @@ ZohoCRM.prototype.addCall = function(callInfo, cb) {
   var url = "crm.zoho.com";
   var succ = [];
   var data = {
-    token: this.crmToken,
+    token: this.token,
     smOwnerId: callInfo.smOwnerId,
     subject: callInfo.subject,
     callType: callInfo.callType,

@@ -10,6 +10,15 @@
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
         self.chatClientService = chatClientService;
+
+        var listener = setInterval(function(){
+          if(chatClientService.selectedChat){
+            self.newMuteSetting = chatClientService.selectedChat.settings.mute;
+            clearInterval(listener);
+          }
+          console.log("interval")
+        },10);
+
         // var listener = setInterval(function(){
         //   if($rootScope.chatList.length > 0){
         //     self.contact = accountService.activeAccount.contactManager.contactList[$stateParams.contactIndex];
@@ -83,11 +92,6 @@
         //
         // }
 
-        self.reloadScope = function(){
-            console.log("in")
-            $rootScope.$apply();
-        }
-
         self.showMultimediaSelectionTextDialog = function(event) {
             $mdDialog.show({
                 templateUrl: 'multimediaTextView',
@@ -139,14 +143,19 @@
                     type: type
                 }
 
-                chatClientService.chatClient.sendMultimediaMessage(self.chatIndex, message);
-                self.textContentToSend = '';
+                chatClientService.chatClient.sendMultimediaMessage(chatClientService.selectedChat, message, function(progress, uploadingImage, message){
+                  chatClientService.uploadingImage = uploadingImage;
+                  chatClientService.progress = progress;
+                  chatClientService.opacity = progress/100+0.1;
+                  chatClientService.message = message;
+                  $rootScope.$digest();
+                  if(!uploadingImage){
+                    self.textContentToSend = '';
+                    self.closeMultimediaSelectionPreviewDialog();
+                  }
+                });
                 //document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
                 //document.getElementById("chatMessageInput").className = "md-icon-float md-block flex-offset-5 flex-85 md-input-focused";
-
-                if($rootScope.multimedia){
-                    self.closeMultimediaSelectionPreviewDialog();
-                }
 
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
@@ -163,8 +172,8 @@
         }
 
         self.toggleMute = function(value){
-            chatClientService.chatClient.chatList[$stateParams.chatIndex]
-                .toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
+          self.newMuteSetting = value;
+          chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
         }
 
         $scope.multimediaSelected = function(element) {
@@ -188,7 +197,7 @@
 
         self.getChatParticipantUserId = function(){
           var userId = null;
-          chatClientService.chatClient.chatList[self.chatIndex].participantList.forEach(function (participant) {
+          chatClientService.selectedChat.participantList.forEach(function (participant) {
               if (chatClientService.chatClient.chatClientOwner != participant.userId) {
                   userId = participant.userId;
               }
@@ -204,14 +213,31 @@
             // $('#multimediaPreview').attr('src', multimediaURL);
             // $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
         }
-
-        if(chatClientService.chatClient.chatList.length > 0){
-            chatClientService.chatClient.chatList[$stateParams.chatIndex]
-                .markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
-        }
+        
 
         $location.hash('bottom');
         $anchorScroll();
 
+        if(chatClientService.chatClient.chatList.length > 0) {
+
+            if (!chatClientService.selectedChat) {
+                chatClientService.selectedChat = chatClientService.chatClient.chatList[$stateParams.chatIndex]; // reset selected chat
+            }
+
+            $scope.selectedChat = chatClientService.selectedChat;
+            $scope.$watch(
+                'selectedChat',
+                function (newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        $scope.selectedChat.lastMessage = newVal.lastMessage;
+                    }
+                }, true
+            );
+
+            chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+        }
+        else{
+            $state.go('dialer');
+        }
     }]);
 })();

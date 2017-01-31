@@ -5,7 +5,7 @@ exports.sendPushNotification = function (req, res) {
 
   //send push notification
   var FCM = require('fcm-push');
-  var serverkey = 'AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8';
+  var serverkey = 'AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg';
   var fcm = new FCM(serverkey);
   var tokenArray = req.body.tokens;
   //   var pushTokens = [
