@@ -5,7 +5,13 @@ exports.sendPushNotification = function (req, res) {
 
   //send push notification
   var FCM = require('fcm-push');
-  var serverkey = 'AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg';
+
+  //Development Key
+  // var serverkey = 'AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg';
+
+  //Production Key
+  var serverkey = 'AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8';
+
   var fcm = new FCM(serverkey);
   var tokenArray = req.body.tokens;
   //   var pushTokens = [
@@ -16,12 +22,16 @@ exports.sendPushNotification = function (req, res) {
 
   for(var i = 0; i < tokenArray.length; i++){
     var token = tokenArray[i];
+    var bodyMessage = req.body.message;
+    if(req.body.hasMultimedia){
+      bodyMessage = "\uD83D\uDCF7"+ " "+bodyMessage;
+    }
     var message =  {
           to : token,
           priority:'high',
           notification : {
             title : req.body.messageTitle,
-            body : req.body.messageBody,
+            body : bodyMessage,
             sound : true
           }
     };
