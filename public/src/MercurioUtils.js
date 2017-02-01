@@ -258,6 +258,7 @@
 
             var avatarUrl = 'images/caller-avatar.png';
             var participant;
+
             if(incoming){
                 participant = from;
             }
@@ -267,7 +268,9 @@
 
             contactList.forEach(function(contact){
                 if(contact.phone == participant || contact.extension == participant){
-                    avatarUrl = contact.picture;
+                    if(contact.picture.length > 0){
+                        avatarUrl = contact.picture;
+                    }
                 }
             })
 
