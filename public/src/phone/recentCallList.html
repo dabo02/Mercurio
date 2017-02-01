@@ -236,8 +236,11 @@
           </div>
 
 
+              <div ng-show="crmCtrl.callInsertionInProgress" class="row" style="padding-top:25%" ng-cloak>
+                  <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="isAccountReady" md-diameter="50"></md-progress-circular>
+              </div>
 
-            <div ng-show="!crmCtrl.crmService.isFetching">
+            <div ng-show="!crmCtrl.crmService.isFetching && !crmCtrl.callInsertionInProgress">
                 <md-toolbar>
                     <div class="md-toolbar-tools">
                         <h2>Add Call to CRM</h2>

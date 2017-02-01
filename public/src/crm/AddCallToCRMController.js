@@ -11,6 +11,7 @@
         self.crmService = crmService;
         self.phoneService = phoneService;
         self.callInsertDetails = {};
+        self.callInsertionInProgress = false;
 
         self.addCallToCRMButtonClicked = function(call, event){
           if(call.from === phoneService.activeAccount.phone){
@@ -44,6 +45,8 @@
         }
 
         self.addCallToCRM = function(){
+
+            self.callInsertionInProgress = true;
 
             var info = {};
 
@@ -82,6 +85,7 @@
                 crmService.callInserted = false;
                 console.log("\n\nCall to insert info:\n\n" + info.subject);
                 crmService.crmManager.crmList[0].addCall(info, function(message){
+                        self.callInsertionInProgress = false;
                         crmService.callInserted = true;
                         if(message.result === 'Success'){
                             self.callInsertDetails.cssClass = true;

@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').service('phoneService', ['crmService', '$location', '$mdDialog', '$state', '$timeout', function(crmService, $location, $mdDialog, $state, $timeout){
+    angular.module('mercurio').service('phoneService', ['crmService', '$location', '$mdDialog', '$state', '$timeout', '$rootScope', function(crmService, $location, $mdDialog, $state, $timeout, $rootScope){
 
         var self = this;
         self.phone;
@@ -60,7 +60,6 @@
             self.stopRingbackTone();
             $mdDialog.hide();
             self.contactSearchString = '';
-            self.phone.endCall();
             self.addFinishedCallToCRM(self.phone.currentCalls[0]);
             self.phone.currentCalls = [];
             if($state.current.name != "call")
@@ -68,14 +67,11 @@
                 $state.reload();
                 $timeout(function(){
 
-                    $scope.$apply();
+                    $rootScope.$apply();
                 })
             }else {
                 $state.go('dialer');
             };
-
-
-
         }
 
         self.webRTCStateObserver = function(webRTCState){
