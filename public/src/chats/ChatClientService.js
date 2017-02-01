@@ -15,7 +15,12 @@
         self.chatIsReadyToSendObserver = function(newChat){
             self.selectedChat = newChat;
             //$state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
-            $state.reload();
+            if($state.current.name == 'chat'){
+                $state.reload();
+            }
+            else{
+                $state.go('chat');
+            }
         };
 
         self.instantiateChatClient = function(userId){

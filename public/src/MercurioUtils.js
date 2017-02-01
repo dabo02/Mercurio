@@ -254,11 +254,19 @@
     })
 
     .filter('callListAvatarFilter', function () {
-        return function (from, contactList) {
+        return function (from, to, incoming, contactList) {
 
-            var avatarUrl = 'images/contacts.png'
+            var avatarUrl = 'images/caller-avatar.png';
+            var participant;
+            if(incoming){
+                participant = from;
+            }
+            else{
+                participant = to;
+            }
+
             contactList.forEach(function(contact){
-                if(contact.phone == from){
+                if(contact.phone == participant || contact.extension == participant){
                     avatarUrl = contact.picture;
                 }
             })
