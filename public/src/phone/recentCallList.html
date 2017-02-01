@@ -248,17 +248,15 @@
                     </div>
                 </md-toolbar>
 
-                <md-dialog-content ng-show="crmCtrl.crmService.callInserted">
-                    <div class="md-dialog-content">
+                <md-dialog-content ng-if="crmCtrl.isCallableRecordListAvailable()">
+                    <div ng-show="crmCtrl.crmService.callInserted" class="md-block">
 
-                        <h4 ng-class="{'call-insert-success': crmCtrl.callInsertDetails.cssClass, 'call-insert-error': !crmCtrl.callInsertDetails.cssClass}">{{crmCtrl.callInsertDetails.result}}</h4>
+                        <h4 ng-class="{'call-insert-success': crmCtrl.callInsertDetails.cssClass, 'call-insert-error': !crmCtrl.callInsertDetails.cssClass}">{{crmCtrl.callInsertDetails.result}}
+                        <img style="height: 20px;" ng-show = "crmCtrl.callInsertDetails.result == 'Success'" ng-src="images/ic_check_green.png" alt=""></h4>
+                        <img style="height: 20px;" ng-show = "(crmCtrl.callInsertDetails.result == 'Error' || crmCtrl.callInsertDetails.result == 'Server Error')" ng-src="images/ic_exclamation_red.png" alt=""></h4>
                         </br>
-                        <label>{{crmCtrl.callInsertDetails.msg}}</label>
+                        <label style="color: #909090;">{{crmCtrl.callInsertDetails.msg}}</label>
                     </div>
-
-                </md-dialog-content>
-
-                <md-dialog-content ng-if="crmCtrl.isCallableRecordListAvailable() && !crmCtrl.crmService.callInserted">
                     <div class="md-dialog-content">
                       <md-input-container class="md-icon-float md-block" flex="100">
                           <label>Subject</label>

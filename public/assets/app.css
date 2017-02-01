@@ -754,8 +754,12 @@ $duration: 1.4s;
 
 .call-insert-success {
     color: #4CAF50;
+    font-size: 14px;
+    border-bottom: solid 1px #808080;
 }
 
 .call-insert-error {
     color: #F44336;
+    font-size: 14px;
+    border-bottom: solid 1px #808080;
 }
