@@ -35,7 +35,7 @@
 function JanusPhone(userId, phoneInitializationObserver) {
 
 	var self = this;
-	self.debug = true;
+	self.debug = false;
 	self.audioConferenceHandler = null;
 	self.videoPluginHandler = null;
 	self.sipCallHandler = null;
