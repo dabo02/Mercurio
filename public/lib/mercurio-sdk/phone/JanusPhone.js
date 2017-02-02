@@ -35,7 +35,7 @@
 function JanusPhone(userId, phoneInitializationObserver) {
 
 	var self = this;
-	self.debug = false;
+	self.debug = true;
 	self.audioConferenceHandler = null;
 	self.videoPluginHandler = null;
 	self.sipCallHandler = null;
@@ -224,7 +224,9 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 		callback: function() {
 
 			self.janus = new Janus({
-				server: 'ws://ec2-54-165-3-139.compute-1.amazonaws.com:8080',
+				server: 'https://mercurygateway.optivon.com:443/janus',
+				// server: 'wss://mercurydev.optivon.com:8443',
+
 				success: function() {
 					Janus.debug("Succesfully Connected to server: " + this.server);
 					self.janus.attach({

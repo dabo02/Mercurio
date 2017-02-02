@@ -119,7 +119,7 @@ ZohoCRM.prototype.addCall = function(callInfo, cb) {
     error: function (jqXHR, textStatus, errorThrown) {
 	    var msg = {
 		    result: 'Server Error',
-		    message: 'Internal Server Error check connection or contact Mercurio development team'
+		    message: 'Internal Server Error check connection or contact Mercury development team.'
 	    };
 	    cb(msg);
     }
