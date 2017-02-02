@@ -16,7 +16,6 @@
             $rootScope.contact = accountService.activeAccount.contactManager.contactList[$stateParams.contactIndex];
             clearInterval(listener);
           }
-          console.log("interval")
         },10);
         // $rootScope.contact = accountService.activeAccount.contactManager.contactList[$stateParams.contactIndex];
     }]);

@@ -24,7 +24,7 @@ angular.module('users')
     self.noCache = false;
 
     $scope.getChipInfo= function(chip_info) {
-        console.log(chip_info);
+
     };
 
     /**
@@ -93,7 +93,6 @@ angular.module('users')
     }
 
     function loadContacts() {
-        console.log('load contacts called');
         contacts.forEach(function(contact){
             contact.name = contact.firstName + " " + contact.lastName;
             contact._lowername = contact.name.toLowerCase();
@@ -157,7 +156,6 @@ angular.module('users')
     $scope.selectedContact;
 
     self.viewContact = function(contactIndex){
-        console.log('view contact clicked: contact index = ' + contactIndex);
         $state.go('contact-profile', {'contactIndex' : contactIndex});
     }
 

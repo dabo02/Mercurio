@@ -338,7 +338,6 @@ $scope.displayContacts = function(){
                 }
 
         contacts.push($scope.newContact);
-        console.log(contacts);
     }
 
 
@@ -415,7 +414,7 @@ $scope.displayContacts = function(){
 
                     }, function(error) {
                     // An error happened.
-                    console.log(error);
+                    console.error(error);
                     });
           }
 

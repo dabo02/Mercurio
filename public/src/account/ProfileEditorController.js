@@ -128,7 +128,6 @@
         }
 
         self.profilePictureChosen = function(){
-            console.log('picture chosen');
         }
 
         $scope.profilePictureSelected = function(element) {

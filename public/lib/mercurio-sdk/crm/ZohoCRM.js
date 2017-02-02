@@ -63,7 +63,7 @@ ZohoCRM.prototype.validateToken = function(crmOwnerId) {
 		firebase.database().ref().update(updates);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus, errorThrown);
+      console.warn(textStatus, errorThrown);
       console.warn(jqXHR.responseText);
     }
 
@@ -168,7 +168,7 @@ ZohoCRM.prototype.addLead = function(leadInfo, cb) {
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
-        console.log(textStatus, errorThrown);
+        console.warn(textStatus, errorThrown);
         console.warn(jqXHR.responseText);
       }
 
@@ -199,7 +199,7 @@ ZohoCRM.prototype.addAccount = function(acctInfo, cb) {
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus, errorThrown);
+      console.warn(textStatus, errorThrown);
       console.warn(jqXHR.responseText);
     }
 
@@ -234,7 +234,7 @@ ZohoCRM.prototype.searchCallableRecords = function(phone, cb){
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-           console.log(textStatus, errorThrown);
+           console.warn(textStatus, errorThrown);
         }
 
     });

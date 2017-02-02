@@ -54,9 +54,8 @@ Requests firebase to logout user
 
 MercurioAuthenticator.prototype.logout = function(){
 	firebase.auth().signOut().then(function() {
-		console.log("\n\nsigned our succesfully\n\n");
 	}, function(error) {
-		console.log("\n\nerror signing out	\n\n");
+		console.error("\n\nerror signing out	\n\n");
 	});
 }
 
