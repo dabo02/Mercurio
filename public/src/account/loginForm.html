@@ -39,11 +39,8 @@
 
 <div style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');height:100%" ng-controller="AuthenticationController as authCtrl" ng-cloak onload="checkUrl()">
 
-    <div ng-if="spinnerActivated" class="row" style="padding-top:15%" ng-cloak>
-        <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="!spinnerActivated" md-diameter="200"></md-progress-circular>
-    </div>
 
-    <form ng-if="!spinnerActivated" style="padding-top: 5%;" ng-cloak ng-submit="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">
+    <form style="padding-top: 5%;" ng-submit="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">
 
         <md-card flex="45" flex-offset="30" style="margin: 10% auto; background:rgba(0,0,0,0.50);">
               <div layout="column" style="height: 5%; background:rgba(0,0,0,0); ">
@@ -62,11 +59,8 @@
                 <div flex="75" flex-offset = "5" >
                     <md-input-container class="md-icon-float md-block" >
                         <!-- Use floating label instead of placeholder -->
-
                         <label style= "color: white">Email</label>
-                        <form name="myForm">
                           <input style= "color: white; border-color: yellow;" ng-model="authCtrl.email" name="email">
-                        </form>
                     </md-input-container>
                   </div>
                 </div>
