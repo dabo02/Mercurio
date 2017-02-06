@@ -48,7 +48,7 @@
                                     </md-card-title-text>
                                     <div flex="80" flex-offset="10" layout="row">
                                         <span flex></span>
-                                        <md-button ng-if="contactListCtrl.asyncContacts.length > 0" ng-click="chatGroupCtrl.addParticipantsToGroup(contactListCtrl.asyncContacts)">
+                                        <md-button ng-if="contactListCtrl.asyncContacts.length > 0" ng-click="chatGroupCtrl.addParticipantsToGroup(contactListCtrl.asyncContacts); contactListCtrl.delete()">
                                             Add
                                         </md-button>
                                     </div>

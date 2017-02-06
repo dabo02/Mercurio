@@ -26,7 +26,7 @@
         self.isChatListAvailable = function() {
             return chatClientService.isChatListAvailable();
         }
-
+        
         self.chatListCounter = function(counter){
           self.counter++;
         }
