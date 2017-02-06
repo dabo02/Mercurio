@@ -42,22 +42,18 @@ app.controller('NavCtrl',
 }]);
 
 app.controller('AllCtrl', function($scope, $compile) {
-  console.log('inside all controller');
 
 });
 
 app.controller('EditCtrl', function($scope, $compile) {
-  console.log('inside edit controller');
 
 });
 
 app.controller('MissedCtrl', function($scope, $compile) {
-  console.log('inside missed controller');
 
 });
 
 app.controller('RecentCtrl', function($scope, $compile) {
-  console.log('inside recent controller');
 
 });
 

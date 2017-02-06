@@ -16,7 +16,6 @@
             self.newMuteSetting = chatClientService.selectedChat.settings.mute;
             clearInterval(listener);
           }
-          console.log("interval")
         },10);
 
         // var listener = setInterval(function(){

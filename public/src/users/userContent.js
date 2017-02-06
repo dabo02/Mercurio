@@ -15,7 +15,6 @@
       self.delayedQuerySearch = delayedQuerySearch;
 
         $scope.getChipInfo= function(chip_info) {
-            console.log(chip_info);
         }
 
       self.userCallHistory = [

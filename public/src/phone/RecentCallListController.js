@@ -91,7 +91,6 @@
 
         self.fetchCallDetails = function(index){
           phoneService.selectedCallDetailsIndex = index;
-          console.log(phoneService.selectedCallDetailsIndex);
           var selectedCall = self.phoneService.phone.recentCallList[index];
           var myPhoneNumber = self.phoneService.activeAccount.phone;
           var otherUserPhoneNumber;
@@ -155,7 +154,6 @@
                 var interval = setInterval(function(){
                     if(recentCallsLength != phoneService.phone.recentCallList.length){
                         filterSidebarCalls(phoneService.phone.recentCallList);
-                        console.log('im here');
                         clearInterval(interval);
                         $rootScope.$apply();
                     }

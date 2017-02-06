@@ -83,7 +83,6 @@
                 };
 
                 crmService.callInserted = false;
-                console.log("\n\nCall to insert info:\n\n" + info.subject);
                 crmService.crmManager.crmList[0].addCall(info, function(message){
                         self.callInsertionInProgress = false;
                         crmService.callInserted = true;

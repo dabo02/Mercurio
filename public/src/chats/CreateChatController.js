@@ -18,7 +18,6 @@
         self.groupChatCheckbox = false;
 
         self.newContactChipSelected = function(contacts){
-            console.log('new contact chip selected');
         }
 
         self.showCreateChatDialog = function(event) {

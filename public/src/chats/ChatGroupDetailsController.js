@@ -51,7 +51,6 @@
               self.closeChatGroupDetailsDialog();
               clearInterval(listener);
             }
-            console.log("interval")
           },10);
             // chatClientService.chatClient.chatList[$stateParams.chatIndex]
             //     .exitChatGroup(chatClientService.chatClient.chatClientOwner);
@@ -97,7 +96,6 @@
             });
             clearInterval(listener);
           }
-          console.log("interval")
         },10);
         //
         // chatClientService.chatClient.chatList[$stateParams.chatIndex].participantList.forEach(function(participant){

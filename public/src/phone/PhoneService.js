@@ -32,7 +32,7 @@
         }
 
         self.userIsRegisteredObserver = function(){
-            console.log('user is registered');
+
         }
 
         self.incomingCallObserver = function(){
@@ -55,7 +55,6 @@
         }
 
         self.callHangupObserver = function(){
-            console.log('call hung up');
             self.stopRingTone();
             self.stopRingbackTone();
             $mdDialog.hide();
@@ -85,7 +84,6 @@
             }
         }
         self.callAcceptedObserver = function(){
-            console.log('call accepted');
             self.phone.createAnswerOnAccepted();
         }
 
@@ -97,15 +95,12 @@
             }, false);
 
             self.ringbackTone.play();
-            console.log('call in progress');
         }
 
         self.localStreamObserver = function(){
-            console.log('local stream added')
         }
 
         self.remoteStreamObserver = function(){
-            console.log('remote stream added');
         }
 
         self.stopRingTone = function(){
