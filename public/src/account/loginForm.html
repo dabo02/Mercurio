@@ -1,0 +1,89 @@
+<script type="text/ng-template" id="resetPasswordForm">
+    <md-dialog flex="40" aria-label="Reset Password Form" ng-controller="AuthenticationController as authCtrl">
+        <form ng-cloak>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>Recover Password</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="authCtrl.closeResetPasswordDialog()">
+                        &times;
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <md-input-container style="margin-top:10%" class="md-icon-float md-block flex-80 flex-offset-10" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
+                    <label>Email</label>
+                    <md-icon class="fa fa-envelope"></md-icon>
+                    <input id="email" type="text" ng-model="authCtrl.email">
+                </md-input-container>
+                <h4 class="flex-80 flex-offset-10" style="margin-top:3%" ng-if="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">Mercurio password reset link has been sent</h4>
+                <h4 class="flex-80 flex-offset-10" style="margin-top:3%" ng-if="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length > 0">There was an error sending your Mercurio password reset link.</h4>
+            </md-dialog-content>
+
+            <md-dialog-actions layout="row">
+
+                <span flex></span>
+                <md-button ng-click="authCtrl.closeResetPasswordDialog()">
+                    Close
+                </md-button>
+                <md-button ng-click="authCtrl.sendResetPasswordEmail(); authCtrl.closeResetPasswordDialog()" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
+                    Reset Password
+                </md-button>
+
+            </md-dialog-actions>
+
+        </form>
+    </md-dialog>
+</script>
+
+<div style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');height:100%" ng-controller="AuthenticationController as authCtrl" ng-cloak onload="checkUrl()">
+
+
+    <form style="padding-top: 5%;" ng-submit="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">
+
+        <md-card flex="45" flex-offset="30" style="margin: 10% auto; background:rgba(0,0,0,0.50);">
+              <div layout="column" style="height: 5%; background:rgba(0,0,0,0); ">
+                  <h2 class="text-center" style="font-size: 22px;color: white;"> Log in </h2>
+              </div>
+
+            <div layout="column">
+              <h3 class="text-center" style="color:#FFFF00">{{authCtrl.authenticationService.feedback}}</h3>
+            </div>
+
+            <div layout= "row">
+              <div flex="0" flex-offset="5"  style="padding-top: 5%;">
+                <i class="fa fa-envelope" style="font-size:20px; color: white;"></i>
+              </div>
+
+                <div flex="75" flex-offset = "5" >
+                    <md-input-container class="md-icon-float md-block" >
+                        <!-- Use floating label instead of placeholder -->
+                        <label style= "color: white">Email</label>
+                          <input style= "color: white; border-color: yellow;" ng-model="authCtrl.email" name="email">
+                    </md-input-container>
+                  </div>
+                </div>
+
+            <div layout="row">
+                <div flex="0" flex-offset="5"  style="padding-top: 5%;">
+                    <i class="fa fa-unlock-alt" style="font-size:22px; color: white;"></i>
+                </div>
+                <div flex="75" flex-offset = "5">
+                    <md-input-container class="md-icon-float md-block">
+                        <!-- Use floating label instead of placeholder -->
+                        <label style= "color: white">Password</label>
+                        <input style= "color: white; border-color: yellow;" ng-model="authCtrl.password" type="password">
+                        <a style= "color: white; padding-bottom: 10%;" href="" ng-click="authCtrl.showResetPasswordDialog($event)">Forgot password?</a>
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="row">
+                <!-- <div class="col-lg-11 col-md-11 col-lg-push-1 col-md-push-1">
+                    <p style="color:red; font-weight:bold;" id="feedback" href=""></p>
+                </div> -->
+                <md-button class="md-raised md-primary" flex="60" flex-offset="20" style="width:100%; margin-bottom:4%;" ng-click="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">Login</md-button>
+            </div>
+        </md-card>
+    </form>
+</div>

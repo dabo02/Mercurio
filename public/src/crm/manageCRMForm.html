@@ -1,0 +1,42 @@
+<div class="modal fade" id="manageCRMModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title text-center">Manage CRM</h3>
+            </div>
+            <div class="modal-body">
+
+                <div layout="row">
+                    <md-input-container class="md-icon-float md-block" flex="100">
+                        <label>CRM Name</label>
+                        <md-icon class="fa fa-comment-o"></md-icon>
+                        <input required md-no-asterisk type="text" ng-model="crmCtrl.name" placeholder="{{crmCtrl.getCRMName()}}">
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-icon-float md-block" flex="100">
+                        <label>2-Factor Authentication Token</label>
+                        <md-icon class="fa fa-circle-o"></md-icon>
+                        <input required md-no-asterisk type="text" ng-model="crmCtrl.token" placeholder="{{crmCtrl.getCRMToken()}}">
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class=" md-icon-float md-block">
+                        <md-checkbox md-no-ink ng-model="crmCtrl.insertCallsCheckbox" aria-label="Insert Calls" placeholder="{{crmCtrl.getCRMInsertCallsBool()}}">
+                            Insert all calls into CRM database automatically
+                        </md-checkbox>
+                        <label></label>
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="crmCtrl.addCRM(); crmCtrl.closeManageCRMDialog()" data-dismiss="modal" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

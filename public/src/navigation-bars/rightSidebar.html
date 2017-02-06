@@ -1,0 +1,89 @@
+<md-content style="overflow-x: hidden; margin-top: 20px; background-color: transparent; padding-left:5px; padding-right:5px;">
+    <!--<div class="scrollable" ng-if="navCtrl.viewingRecentCalls">
+        <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+            <a flex="33" ><md-nav-item md-nav-click="goto('page1')" name="page1">Edit</md-nav-item></a>
+            <a flex="33" ><md-nav-item md-nav-click="goto('page2')" name="page2">All</md-nav-item></a>
+            <a flex="33" ><md-nav-item md-nav-click="goto('page3')" name="page3">Missed</md-nav-item></a>
+            <!-- these require actual routing with ui-router or ng-route, so they won't work in the demo
+            <md-nav-item md-nav-sref="app.page4" name="page4">Page Four</md-nav-item>
+            <md-nav-item md-nav-href="#page5" name="page5">Page Five</md-nav-item>
+
+        </md-nav-bar>
+
+        <md-autocomplete style="margin-top:2%;" flex
+                         md-input-name="autocompleteField"
+                         md-input-minlength="2"
+                         md-input-maxlength="18"
+                         md-no-cache="ctrl.noCache"
+                         md-selected-item="ctrl.selectedItem"
+                         md-search-text="ctrl.searchText"
+                         md-items="item in ctrl.querySearch(ctrl.searchText)"
+                         md-item-text="item.display"
+                         md-floating-label="Search">
+        </md-autocomplete>
+
+
+    </div>-->
+    <recent-call-list ng-controller="RecentCallListController as recentCallListCtrl" ng-if="navCtrl.viewingRecentCalls"></recent-call-list>
+    <chat-list ng-controller="ChatListController as chatListCtrl" ng-if="navCtrl.viewingRecentChats"></chat-list>
+    <script type="text/ng-template" id="createChatForm">
+        <md-dialog flex="40" aria-label="Create New Chat" ng-controller="CreateChatController as createChatCtrl">
+            <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
+                <md-toolbar class="mercurioBlueBackground">
+                    <div class="md-toolbar-tools">
+                        <h2>Create New {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}</h2>
+                        <span flex></span>
+                        <md-button class="md-icon-button" ng-click="createChatCtrl.closeCreateChatDialog()">
+                            &times;
+                        </md-button>
+                    </div>
+                </md-toolbar>
+
+                <md-dialog-content>
+                    <md-card-title style="padding-top: 0%; margin: 10px;">
+                        <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
+
+                            <md-content class="chipschatListCtrlContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                <md-contact-chips
+                                        ng-model="contactListCtrl.asyncContacts"
+                                        md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                        md-contact-name="name"
+                                        md-contact-image="picture"
+                                        md-require-match="false"
+                                        md-highlight-flags="i"
+                                        filter-selected="contactListCtrl.filterSelected"
+                                        placeholder="Search for Contacts">
+                                </md-contact-chips>
+                            </md-content>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <div flex="80" flex-offset="10" layout="row">
+                        <md-input-container class=" md-icon-float md-block">
+                            <md-checkbox md-no-ink ng-model="createChatCtrl.groupChatCheckbox" aria-label="Create Group Chat">
+                                New Group Chat
+                            </md-checkbox>
+                            <label></label>
+                        </md-input-container>
+                    </div>
+                    <div flex="80" flex-offset="10" layout="row">
+                        <md-input-container ng-if="createChatCtrl.groupChatCheckbox" class="md-icon-float md-block" flex="100">
+                            <label>Title</label>
+                            <input required md-no-asterisk type="text" ng-model="createChatCtrl.title">
+                        </md-input-container>
+                    </div>
+                </md-dialog-content>
+
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button ng-click="createChatCtrl.closeCreateChatDialog()">
+                        Close
+                    </md-button>
+                    <md-button ng-click="createChatCtrl.createNewChat(contactListCtrl.asyncContacts)">
+                        Create {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}
+                    </md-button>
+                </md-dialog-actions>
+            </form>
+        </md-dialog>
+    </script>
+    <!--<recents></recents>-->
+</md-content>

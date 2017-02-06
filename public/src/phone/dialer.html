@@ -1,0 +1,165 @@
+<div style="height:100%;" ng-show="navCtrl.isAccountAvailable()" layout="column" ng-controller="UserController as user">
+    <nav-bar></nav-bar>
+    <div flex layout="row">
+        <left-sidebar></left-sidebar>
+
+        <md-content flex="75" id="main-content" ng-controller="DialerController as dialerCtrl" style="position:relative; background-color: transparent;">
+                    <!--<div style="padding-top:3%;">-->
+                        <!--<p style = "color: white;" flex-offset="15" flex="70">Welcome to Mercurio. Let's get stared!</p>-->
+                    <!--</div>-->
+                    <!--<video class='rounded centered' id='localStream' autoplay></video>-->
+                    <!--<video class='rounded centered' id='remoteStream' autoplay></video>-->
+
+                    <call-status-toolbar></call-status-toolbar>
+                    <md-card ng-controller="ContactListController as contactListCtrl" flex-offset="30" flex="40" style="border: 1px solid white; margin-top: 10%; background:rgba(0,0,0,0.6);" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+                        <!--<md-card-title style="margin-top: 0%; margin-left: 7%;">-->
+
+                              <!--<span flex="20" class="dialer-icons">-->
+                                <!--<a><i style="color:#1565c0;" class="fa fa-user"></i></a>-->
+                              <!--</span>-->
+
+                            <!--<p ng-controller="ProfileEditorController as profileCtrl" style="font-size: 20px; line-height: 40px;" flex="80">-->
+                                <!--{{profileCtrl.getFirstName()}}-->
+                            <!--</p>-->
+                        <!--</md-card-title>-->
+                        <md-card-title style="padding-top: 0%;">
+                            <md-card-title-text flex="80"  flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
+
+                                <md-content ng-if="!dialerCtrl.dialing" class="chipsdemoContactChips" style = "background:rgba(0,0,0,0);" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                    <md-contact-chips
+                                            ng-click="contactListCtrl.loadContacts()"
+                                            ng-model="contactListCtrl.asyncContacts"
+                                            md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                            md-contact-name="name"
+                                            md-contact-image="picture"
+                                            md-require-match="true"
+                                            md-highlight-flags="i"
+                                            filter-selected="contactListCtrl.filterSelected"
+                                            md-transform-chip=""
+                                            placeholder="Name, Phone Number"
+                                            ng-change="">
+                                    </md-contact-chips>
+                                </md-content>
+
+                                <md-input-container ng-if="dialerCtrl.dialing" class=" md-icon-float md-block">
+                                    <input id="dialedNumber" type="text" ng-model="dialerCtrl.dialedNumber">
+                                </md-input-container>
+                                <!--<md-button style="border-radius:40px; min-width:0px;">-->
+                                <!--<span class="dialer-icons">-->
+                                  <!--<a data-toggle="modal" data-target='#addContactModal' style="margin-right:0px; background-color:#1565c0;"><i style="color:#ffc107;margin-left: 3px; line-height: 19px;" class="fa fa-user-plus fa-lg"></i></a>-->
+                                <!--</span>-->
+                                <!--</md-button>-->
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-title-text class="flex-80 flex-offset-10">
+
+
+                            <!--&lt;!&ndash;First dialer row ( 1, 2, 3, videocall)&ndash;&gt;-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-lg-8 col-lg-push-1 col-md-8 col-md-push-1">-->
+                                    <!--<div class="row">-->
+                                        <!--<div id="1" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 style="padding-bottom:45%;" class="text-center">1</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center"> </p></md-button>-->
+                                        <!--</div>-->
+                                        <!--<div id="2" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">2</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">ABC</p></md-button>-->
+                                        <!--</div>-->
+                                        <!--<div id="3" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">3</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">DEF</p></md-button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--&lt;!&ndash;<div style="padding-top:6%;" class="col-lg-2 col-lg-push-1 col-md-2 col-md-push-1">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<md-button style="border-radius:40px; min-width:0px;">&ndash;&gt;-->
+                                              <!--&lt;!&ndash;<span class="dialer-icons">&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<a style="margin-right:0px;"><i style="color:#1565c0;" class="fa fa-video-camera"></i></a>&ndash;&gt;-->
+                                              <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--</div>-->
+
+                            <!--&lt;!&ndash;Second dialer row ( 4, 5, 6, text)&ndash;&gt;-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-lg-8 col-lg-push-1 col-md-8 col-md-push-1">-->
+                                    <!--<div class="row">-->
+                                        <!--<div id="4" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">4</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">GHI</p></md-button>-->
+                                        <!--</div>-->
+                                        <!--<div id="5" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">5</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">JKL</p></md-button>-->
+                                        <!--</div>-->
+                                        <!--<div id="6" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">6</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">MNO</p></md-button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--&lt;!&ndash;<div style="padding-top:6%;" class="col-lg-2 col-lg-push-1 col-md-2 col-md-push-1">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<md-button style="border-radius:40px; min-width:0px;">&ndash;&gt;-->
+                                              <!--&lt;!&ndash;<span class="dialer-icons">&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<a style="margin-right:0px;"><i style="color:#1565c0;" class="fa fa-envelope"></i></a>&ndash;&gt;-->
+                                              <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--</div>-->
+
+                            <!--&lt;!&ndash;Third dialer row ( 7, 8, 9)&ndash;&gt;-->
+                            <!--<div class="row">-->
+                                <!--<div  class="col-lg-8 col-lg-push-1 col-md-8 col-md-push-1">-->
+                                    <!--<div class="row">-->
+                                        <!--<div id="7" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">7</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">PQRS</p></md-button>-->
+                                        <!--</div>-->
+                                        <!--<div id="8" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">8</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">TUV</p></md-button>-->
+                                        <!--</div>-->
+                                        <!--<div id="9" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">9</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">WXYZ</p></md-button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--&lt;!&ndash;Fourth dialer row ( *, 0, #)&ndash;&gt;-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-lg-8 col-lg-push-1 col-md-8 col-md-push-1">-->
+                                    <!--<div class="row">-->
+                                        <!--<div id="*" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">*</h3></md-button>-->
+                                        <!--</div>-->
+                                        <!--<div id="0" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">0</h3>-->
+                                                <!--<p style="margin:-10px 0 0 0; font-size:70%" class="text-center">+</p></md-button>-->
+                                        <!--</div>-->
+                                        <!--<div id="#" ng-click="dialer.dial()" class="col-lg-4 col-lg-push-1 col-md-4 col-md-push-1">-->
+                                            <!--<md-button><h3 class="text-center">#</h3></md-button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--&lt;!&ndash;Call icon&ndash;&gt;-->
+                            <div class="row" style="margin-bottom:-25px">
+                                  <span style="display:table;" class="dialer-icons col-lg-12 col-lg-push-5 col-md-12 col-md-push-5">
+                                            <a href="" ng-click="dialerCtrl.makeCall(contactListCtrl.asyncContacts)" id="callIcon" style="width:50px; height:50px; background-color:#4caf50;">
+                                                <i style="font-size:25px; line-height:50px; color:#ffffff" class="fa fa-phone fa-lg"></i>
+                                            </a>
+                                  </span>
+                            </div>
+
+                        </md-card-title-text>
+
+                    </md-card>
+        </md-content>
+        <right-sidebar class="scrollable-content" flex="25"></right-sidebar>
+
+    </div>
+</div>

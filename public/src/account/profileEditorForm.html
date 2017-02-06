@@ -1,0 +1,81 @@
+<div class="modal fade" id="customizeModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title text-center">Profile Editor</h3>
+            </div>
+            <div class="modal-body">
+
+                <div layout="row">
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Status Message</label>
+                        <md-icon class="fa fa-comment-o"></md-icon>
+                        <input id="statusMessage" type="text" ng-model="profileCtrl.statusMessage" placeholder="{{profileCtrl.getStatusMessage()}}">
+                    </md-input-container>
+                    <!--<md-input-container class="md-icon-float md-block">
+                        <label>Availability</label>-->
+                        <md-icon class="fa fa-circle-o"></md-icon>
+                        <md-select id="availablity" ng-model="profileCtrl.selectedAvailability"  class="md-no-underline">
+                            <md-option value="Offline">Offline</md-option>
+                            <md-option value="Online">Online</md-option>
+                            <md-option value="Away">Away</md-option>
+                            <md-option value="Busy">Busy</md-option>
+                        </md-select>
+                        <!--<input id="availablity" type="text" ng-model="profileCtrl.availability" placeholder="{{profileCtrl.getAvailability()}}">-->
+                    <!--</md-input-container>-->
+                </div>
+
+                <div layout="row">
+                    <md-input-container class=" md-icon-float md-block">
+                        <label>First Name</label>
+                        <md-icon style="left:7%;" class="fa fa-user"></md-icon>
+                        <input id="firstName" type="text" ng-model="profileCtrl.firstName" placeholder="{{profileCtrl.getFirstName()}}">
+                    </md-input-container>
+                    <md-input-container class=" md-icon-float md-block">
+                        <label>Last Name</label>
+                        <md-icon style="left:7%;" class="fa fa-user"></md-icon>
+                        <input id="lastName" type="text" ng-model="profileCtrl.lastName" placeholder="{{profileCtrl.getLastName()}}">
+                    </md-input-container>
+
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Email</label>
+                        <md-icon class="fa fa-envelope"></md-icon>
+                        <input id="email" type="text" ng-model="profileCtrl.email" placeholder="{{profileCtrl.getEmail()}}">
+                    </md-input-container>
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Phone</label>
+                        <md-icon class="fa fa-phone"></md-icon>
+                        <input id="phone" type="text" ng-model="profileCtrl.phone" placeholder="{{profileCtrl.getPhone()}}">
+                    </md-input-container>
+                    <md-input-container class="md-icon-float md-block">
+                        <label>Ext.</label>
+                        <md-icon class="fa fa-hashtag"></md-icon>
+                        <input id="extension" type="text" ng-model="profileCtrl.extension" placeholder="{{profileCtrl.getExtension()}}">
+                    </md-input-container>
+                </div>
+
+                <md-card>
+                    <img id="profilePicturePreview" class="md-card-image" alt="Washed Out" style="opacity:{{profileCtrl.accountService.opacity}}; height:300px; position:relative;" ng-src="{{profileCtrl.getProfilePicture()}}"/>
+                    <div style="left: 0; position:absolute; text-align:center; margin-top: 10%; width: 100%" ng-if="profileCtrl.accountService.uploadingImage" layout="row" layout-sm="column" layout-align="space-around">
+                      <md-progress-circular md-mode="determinate" value="{{profileCtrl.accountService.progress}}" md-diameter="200"></md-progress-circular>
+                    </div>
+                    <md-card-actions layout="row" layout-align="end end">
+
+                            <input style="visibility:hidden;" onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
+                            <label style="margin-top: -1%;" class="btn btn-info" for="profileImage">Choose an Image</label>
+
+                    </md-card-actions>
+                </md-card>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="profileCtrl.saveProfileInfo()" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
