@@ -139,8 +139,8 @@
                         <input required md-no-asterisk type="text" ng-model="crmCtrl.token" placeholder="{{crmCtrl.getCRMToken()}}"
                                ng-change="crmCtrl.crmTokenChanged()" required>
                     </md-input-container>
-                    <img style="margin-top: 4%; height: 20px;" ng-show = "crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_check_green.png" alt=""></p>
-                    <img style="margin-top: 4%; height: 20px;" ng-show = "!crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_exclamation_red.png" alt=""></p>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "showCheckmark && !savingCRMInfo" ng-src="images/ic_check_green.png" alt=""></p>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "showExclamationPoint && !savingCRMInfo" ng-src="images/ic_exclamation_red.png" alt=""></p>
                 </div>
 
                 <div layout="row">
