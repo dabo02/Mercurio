@@ -60,10 +60,10 @@
                                 </div>
                                 <div flex="80" flex-offset="10" layout="row" class="scrollableList fixedRows" >
                                     <md-list>
-                                        <md-list-item class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
-                                            <img ng-src="{{participant.picture}}" class="md-avatar" alt="{{participant.firstName}}" />
+                                        <md-list-item ng-controller = "ContactListController as contactListCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
+                                            <img ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="{{participant.picture}}" class="md-avatar" alt="{{participant.firstName}}" />
                                             <div class="md-list-item-text compact">
-                                                <h3>{{participant.firstName}} {{participant.lastName}}</h3>
+                                                <h3 ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
                                             </div>
                                         </md-list-item>
                                     </md-list>
