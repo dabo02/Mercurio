@@ -217,7 +217,7 @@
             // $('#multimediaPreview').attr('src', multimediaURL);
             // $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
         }
-        
+
 
         $location.hash('bottom');
         $anchorScroll();
@@ -229,7 +229,6 @@
             }
 
             $scope.selectedChat = chatClientService.selectedChat;
-
             $scope.$watch(
                 'selectedChat',
                 function (newVal, oldVal) {

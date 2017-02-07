@@ -44,7 +44,7 @@
 
                 participantList.forEach(function (participant) {
                     if (from === participant.userId) {
-                        participantName = participant.firstName + ' ' + participant.lastName + ', ';
+                        participantName = participant.firstName + ' ' + participant.lastName;
                     }
                 });
             }
