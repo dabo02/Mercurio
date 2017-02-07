@@ -38,11 +38,18 @@
 
                   <div>
                     <md-list style="margin-top:-3%;">
-                      <md-list-item class="md-3-line" ng-controller="ContactListController as contactListCtrl">
+                      <md-list-item ng-hide="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" class="md-3-line" ng-controller="ContactListController as contactListCtrl">
                         <img ng-click="callDetailsCtrl.closeCallDetailsDialog(); contactListCtrl.viewContactById(RecentCallsCtrl.phoneService.callDetailsContact.userId);" ng-src="{{RecentCallsCtrl.phoneService.callDetailsContact.picture}}" class="md-avatar">
                         <div class="md-list-item-text" style="margin-top:15px;">
                           <h3 ng-click="callDetailsCtrl.closeCallDetailsDialog(); contactListCtrl.viewContactById(RecentCallsCtrl.phoneService.callDetailsContact.userId);">{{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}</h3>
                           <h4 ng-click="callDetailsCtrl.closeCallDetailsDialog(); contactListCtrl.viewContactById(RecentCallsCtrl.phoneService.callDetailsContact.userId);">{{RecentCallsCtrl.phoneService.callDetailsContact.phone}}</h4>
+                        </div>
+                      </md-list-item>
+                      <md-list-item ng-show="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" class="md-3-line" ng-controller="ContactListController as contactListCtrl">
+                        <img ng-src="{{RecentCallsCtrl.phoneService.callDetailsContact.picture}}" class="md-avatar">
+                        <div class="md-list-item-text" style="margin-top:15px;">
+                          <h3>{{RecentCallsCtrl.phoneService.callDetailsContact.firstName}}</h3>
+                          <h4>{{RecentCallsCtrl.phoneService.callDetailsContact.phone}}</h4>
                         </div>
                       </md-list-item>
                     </md-list>
