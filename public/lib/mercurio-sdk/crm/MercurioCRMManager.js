@@ -9,7 +9,9 @@ function MercurioCRMManager(userId){
 
 	this.crmList = [];
 	var self = this;
-	
+
+	self.validationCompleteObserver = null;
+
 	AbstractCRMManager.apply(this, arguments);
 	
 	firebase.database().ref('user-crms/' + self.crmManagerOwner).on("child_added", function(snapshot) {
@@ -19,7 +21,7 @@ function MercurioCRMManager(userId){
 			var crm = new ZohoCRM(snapshot.key, snapshot.val().insertCallsAutomatically,
 					snapshot.val().name, snapshot.val().token, snapshot.val().type,
 					snapshot.val().validated);	
-			crm.validateToken(self.crmManagerOwner);
+			crm.validateToken(self.crmManagerOwner, self.validationCompleteObserver);
 			self.crmList.push(crm);
 		}
 
@@ -36,6 +38,10 @@ function MercurioCRMManager(userId){
 				crm.token = snapshot.val().token;
 				crm.type = snapshot.val().type;
 				crm.validated = snapshot.val().validated;
+
+				if(self.validationCompleteObserver){
+					self.validationCompleteObserver();
+				}
 			}
 		});
 	}
@@ -57,10 +63,12 @@ Requests server to add a CRM to the database
 @params: crmInfo - JSON object with CRM attributes
 */
 
-MercurioCRMManager.prototype.addCRM = function(crmInfo){
+MercurioCRMManager.prototype.addCRM = function(crmInfo, validationCompleteObserver){
 
 	var self = this;
-	
+
+	self.validationCompleteObserver = validationCompleteObserver;
+
 	if(self.crmList.length < 1){
 		firebase.database().ref().child('user-crms/' + self.crmManagerOwner).push(crmInfo);
 	}

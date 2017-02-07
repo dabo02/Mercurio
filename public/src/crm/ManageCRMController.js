@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ManageCRMController', ['crmService', '$mdDialog', '$scope', function(crmService, $mdDialog, $scope){
+    angular.module('mercurio').controller('ManageCRMController', ['crmService', '$mdDialog', '$scope', '$timeout', function(crmService, $mdDialog, $scope, $timeout){
 
         var self = this;
 
@@ -44,16 +44,16 @@
                 name: self.name,
                 token: self.token,
                 type: 'zoho',
-                validated: true
+                validated: false
             };
 
-            $scope.validatedCRM = crmService.crmManager.crmList.length > 0 ? crmService.crmManager.crmList[0].validated : false;
+            $scope.savingCRMInfo = true;
 
-            $scope.$watch("validatedCRM", function(validated){
-              //$scope.$apply();
+            crmService.crmManager.addCRM(crmInfo, function(){
+                $timeout(function(){
+                    $scope.$apply();
+                });
             });
-
-            crmService.crmManager.addCRM(crmInfo);
             self.saveCRMDetailsButtonIsAvailable = false;
         }
 
@@ -87,9 +87,35 @@
             self.saveCRMDetailsButtonIsAvailable = true;
         }
 
+        self.findCRMAuthTokenButtonClicked = function(){
+            window.open("https://accounts.zoho.com/apiauthtoken/create?SCOPE=ZohoCRM/crmapi");
+        }
+
         self.newInsertCallsAutomaticallySetting = self.getCRMInsertCallsSetting() || false;
         self.token = self.getCRMToken() || '';
         self.name = self.getCRMName() || '';
 
+        $scope.$watch("crm.validated", function(validated){
+            if(validated){
+                $scope.showCheckmark = true;
+                $scope.showExclamationPoint = false;
+            }
+            else{
+                $scope.showCheckmark = false;
+                $scope.showExclamationPoint = true;
+            }
+        }, true);
+
+        if(crmService.crmManager.crmList.length > 0){
+            $scope.showCheckmark = crmService.crmManager.crmList[0].validated;
+            $scope.showExclamationPoint = crmService.crmManager.crmList[0].validated;
+            $scope.crm = crmService.crmManager.crmList[0];
+        }
+        else {
+            $scope.chowCheckmark = false;
+            $scope.showExclamationPoint = false;
+            $scope.savingCRMInfo = false;
+            $scope.crm = null;
+        }
     }])
 })();

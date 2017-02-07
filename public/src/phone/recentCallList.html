@@ -212,7 +212,7 @@
     </script> -->
 
     <script type="text/ng-template" id="addCallToCRMForm">
-        <md-dialog flex = "30" aria-label="Add Call To CRM" ng-controller="AddCallToCRMController as crmCtrl">
+        <md-dialog flex ="30" aria-label="Add Call To CRM" ng-controller="AddCallToCRMController as crmCtrl">
 
           <form ng-cloak>
             <div ng-show = "crmCtrl.crmService.isFetching">
@@ -228,22 +228,22 @@
 
               <md-dialog-content>
                   <div class="md-dialog-content">
-                      <md-content>
-                          <md-progress-linear md-mode="query" ng-disabled="crmCtrl.isCallableRecordListAvailable()"></md-progress-linear>
-                      </md-content>
+
+                          <md-progress-circular class="md-hue-2" style="margin: 0 auto 0 auto;" ng-disabled="crmCtrl.isCallableRecordListAvailable()" md-diameter="60"></md-progress-circular>
+
                   </div>
               </md-dialog-content>
           </div>
 
 
-              <div ng-show="crmCtrl.callInsertionInProgress" class="row" style="padding-top:25%" ng-cloak>
-                  <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="isAccountReady" md-diameter="50"></md-progress-circular>
-              </div>
 
-            <div ng-show="!crmCtrl.crmService.isFetching && !crmCtrl.callInsertionInProgress">
+
+
+
+            <div ng-show="!crmCtrl.crmService.isFetching">
                 <md-toolbar>
                     <div class="md-toolbar-tools">
-                        <h2>Add Call to CRM</h2>
+                        <h2>Log Call to CRM</h2>
                         <span flex></span>
                         <md-button class="md-icon-button" ng-click="crmCtrl.closeAddCallToCRMDialog()">
                             &times;
@@ -251,18 +251,28 @@
                     </div>
                 </md-toolbar>
 
-                <md-dialog-content ng-if="crmCtrl.isCallableRecordListAvailable()">
+
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+
+                        <md-progress-circular ng-if="crmCtrl.callInsertionInProgress" class="md-hue-2" style="margin: 0 auto 0 auto;" ng-disabled="!crmCtrl.callInsertionInProgress" md-diameter="60"></md-progress-circular>
+
+                    </div>
+                </md-dialog-content>
+
+
+                <md-dialog-content ng-if="crmCtrl.isCallableRecordListAvailable() && !crmCtrl.callInsertionInProgress">
                     <div ng-show="crmCtrl.crmService.callInserted" class="md-block">
                         <h3 ng-class="{'call-insert-success': crmCtrl.callInsertDetails.cssClass, 'call-insert-error': !crmCtrl.callInsertDetails.cssClass}">{{crmCtrl.callInsertDetails.msg}}</h3>
                     </div>
                     <div class="md-dialog-content">
                       <md-input-container class="md-icon-float md-block" flex="100">
                           <label>Subject</label>
-                          <input ng-model="crmCtrl.subject"/>
+                          <input ng-model="crmCtrl.subject" required/>
                       </md-input-container>
                         <md-input-container ng-if="crmCtrl.isCallableRecordListAvailable()">
                             <label>Choose a CRM entry</label>
-                            <md-select ng-model="crmCtrl.selectedRecords" multiple="true">
+                            <md-select ng-model="crmCtrl.selectedRecords" multiple="true" required>
                                 <md-optgroup ng-if="crmCtrl.isCallableLeadListAvailable()" label="Leads">
                                     <md-option ng-value="lead" ng-repeat="lead in crmCtrl.crmService.callableRecords['Leads']">{{lead.name}}</md-option>
                                 </md-optgroup>
@@ -276,7 +286,7 @@
                         </md-input-container>
                         <md-input-container ng-if="crmCtrl.isCallableRecordListAvailable()" class="md-icon-float md-block" flex="100">
                             <label>Notes</label>
-                            <textarea ng-model="crmCtrl.notes"></textarea>
+                            <textarea ng-model="crmCtrl.notes" required></textarea>
                         </md-input-container>
                     </div>
                 </md-dialog-content>
@@ -285,13 +295,13 @@
                     <h3 style = "font-size: 18px; margin-top: 2%" flex-offset = "5" >There are no records in your CRM that match the selected phone number.</h3>
                 </md-dialog-content>
 
-                <md-dialog-actions layout="row">
+                <md-dialog-actions layout="row" ng-if=" !crmCtrl.callInsertionInProgress">
                     <span flex></span>
                     <md-button ng-click="crmCtrl.closeAddCallToCRMDialog()">
-                        Close
+                        Cancel
                     </md-button>
                     <md-button ng-if="crmCtrl.isCallableRecordListAvailable()" ng-click="crmCtrl.addCallToCRM()">
-                        Add Call
+                        Log Call
                     </md-button>
                 </md-dialog-actions>
               </div>
