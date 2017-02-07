@@ -17,12 +17,14 @@
                         <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
                             <md-toolbar class="mercurioBlueBackground">
                                 <div class="md-toolbar-tools">
+
                                     <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block">
-                                        <h2><input style="color:white;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text"></h2>
+                                        <h2><input style="color:white; border-color: black;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text"></h2>
                                     </md-input-container>
 
                                     <!--<h2>{{chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].title}}</h2>-->
                                     <span flex></span>
+                                    <md-icon ng-click = "chatGroupCtrl.editGroupName()" style="margin-bottom: 2%;" class="fa fa-pencil-square-o"></md-icon>
                                     <md-button class="md-icon-button" ng-click="chatGroupCtrl.closeChatGroupDetailsDialog()">
                                         &times;
                                     </md-button>
