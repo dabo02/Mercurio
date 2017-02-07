@@ -51,11 +51,10 @@
                 </div>
 
                 <div layout="row" class="flex-80 flex-offset-10">
-                    <md-input-container class="md-icon-float md-block">
+                    <md-content style="background-color: white; padding-right: 150px; padding-left: 40px; padding-bottom: 30px " class="md-icon-float">
                         <label>Email</label>
-                        <md-icon class="fa fa-envelope"></md-icon>
-                        <input id="email" type="text" ng-model="profileCtrl.email" placeholder="{{profileCtrl.getEmail()}}">
-                    </md-input-container>
+                        <i style = "position: fixed; margin-top: 1%; padding-right: 10px" class="fa fa-envelope">{{profileCtrl.getEmail()}}</i>
+                    </md-content>
                     <md-content style= "background-color: white; margin-left: 5%;" class="md-icon-float">
                         <label >Phone</label>
                         <i style = "position: fixed; margin-top: 1%;" class="fa fa-phone"> {{profileCtrl.getPhone()}}</i>
