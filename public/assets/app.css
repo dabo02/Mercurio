@@ -753,11 +753,15 @@ $duration: 1.4s;
  }
 
 .call-insert-success {
-    color: #4CAF50;
-    text-align: center;
+  color: #4CAF50;
+  text-align: center;
 }
 
 .call-insert-error {
-    color: #F44336;
-    text-align: center;
+  color: #F44336;
+  text-align: center;
+}
+
+.md-button{
+  text-transform: none;
 }
