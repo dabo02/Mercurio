@@ -18,6 +18,7 @@
         self.pictureChosen = true;
         self.accountService = accountService;
         self.activeAccount = accountService.activeAccount;
+        self.statusInputLimit = '10';
 
         self.showProfileEditorDialog = function(event) {
 
