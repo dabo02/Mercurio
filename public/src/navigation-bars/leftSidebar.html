@@ -139,8 +139,9 @@
                         <input required md-no-asterisk type="text" ng-model="crmCtrl.token" placeholder="{{crmCtrl.getCRMToken()}}"
                                ng-change="crmCtrl.crmTokenChanged()" required>
                     </md-input-container>
-                    <img style="margin-top: 4%; height: 20px;" ng-show = "showCheckmark && !savingCRMInfo" ng-src="images/ic_check_green.png" alt=""></p>
-                    <img style="margin-top: 4%; height: 20px;" ng-show = "showExclamationPoint && !savingCRMInfo" ng-src="images/ic_exclamation_red.png" alt=""></p>
+                    <!--<md-progress-circular ng-if="savingCRMInfo" class="md-hue-2" style="margin: 0 auto 0 auto;" ng-disabled="!savingCRMInfo" md-diameter="20px"></md-progress-circular>-->
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "showCheckmark && !savingCRMInfo" ng-src="images/ic_check_green.png" alt=""/>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "showExclamationPoint && !savingCRMInfo" ng-src="images/ic_exclamation_red.png" alt=""/>
                 </div>
 
                 <div layout="row">
@@ -153,7 +154,7 @@
                     </md-input-container>
                   </div>
               <div layout="row">
-                <a href="https://accounts.zoho.com/apiauthtoken/create?SCOPE=ZohoCRM/crmapi">Find your 2-Factor Authentication Token </a>
+                <a href="" ng-click="crmCtrl.findCRMAuthTokenButtonClicked()">Find your 2-Factor Authentication Token </a>
               </div>
 
 

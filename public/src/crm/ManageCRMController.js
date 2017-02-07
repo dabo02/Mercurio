@@ -87,49 +87,28 @@
             self.saveCRMDetailsButtonIsAvailable = true;
         }
 
+        self.findCRMAuthTokenButtonClicked = function(){
+            window.open("https://accounts.zoho.com/apiauthtoken/create?SCOPE=ZohoCRM/crmapi");
+        }
+
         self.newInsertCallsAutomaticallySetting = self.getCRMInsertCallsSetting() || false;
         self.token = self.getCRMToken() || '';
         self.name = self.getCRMName() || '';
 
-        //$timeout(function(){
-
-            $scope.$watch("crm.validated", function(validated){
-                if(validated){
-                    $scope.showCheckmark = true;
-                    $scope.showExclamationPoint = false;
-                }
-                else{
-                    $scope.showCheckmark = false;
-                    $scope.showExclamationPoint = true;
-                }
-
-                if($scope.savingCRMInfo){
-                    $scope.savingCRMInfo = false;
-                }
-
-
-            }, true);
-        //});
-
-        //$scope.$watch("crm.validated", function(validated){
-        //    if(validated){
-        //        $scope.showCheckmark = true;
-        //        $scope.showExclamationPoint = false;
-        //    }
-        //    else{
-        //        $scope.showCheckmark = false;
-        //        $scope.showExclamationPoint = true;
-        //    }
-        //
-        //    if($scope.savingCRMInfo){
-        //        $scope.savingCRMInfo = false;
-        //    }
-        //}, true);
+        $scope.$watch("crm.validated", function(validated){
+            if(validated){
+                $scope.showCheckmark = true;
+                $scope.showExclamationPoint = false;
+            }
+            else{
+                $scope.showCheckmark = false;
+                $scope.showExclamationPoint = true;
+            }
+        }, true);
 
         if(crmService.crmManager.crmList.length > 0){
             $scope.showCheckmark = crmService.crmManager.crmList[0].validated;
             $scope.showExclamationPoint = crmService.crmManager.crmList[0].validated;
-            $scope.savingCRMInfo = false;
             $scope.crm = crmService.crmManager.crmList[0];
         }
         else {
