@@ -88,7 +88,7 @@
                                 <md-button ng-click="chatGroupCtrl.closeChatGroupDetailsDialog()">
                                     Close
                                 </md-button>
-                                <md-button ng-show="chatGroupCtrl.saveGroupDetailsButtonIsAvailable" ng-click="chatGroupCtrl.saveGroupDetails()">
+                                <md-button ng-show="chatGroupCtrl.saveGroupDetailsButtonIsAvailable && chatGroupCtrl.newChatTitle" ng-click="chatGroupCtrl.saveGroupDetails()">
                                     Save
                                 </md-button>
                                 <!--<md-button ng-click="chatGroupCtrl.saveChatGroupDetails()">
