@@ -19,6 +19,8 @@
         self.accountService = accountService;
         self.activeAccount = accountService.activeAccount;
         self.statusInputLimit = '10';
+        self.saved = null;
+        self.msg = "";
 
         self.showProfileEditorDialog = function(event) {
 
@@ -52,7 +54,15 @@
                       $rootScope.$digest();
                       if(!uploadingImage){
                         //close dialog
-                        self.closeProfileEditorDialog();
+                      self.msg = "Profile info saved succesfully";
+                      self.saved = true;
+                      $scope.$apply();
+                      setTimeout(function(){
+                          self.saved = null;
+                          $scope.$apply();
+                          self.closeProfileEditorDialog();
+                      }, 3000);
+
                       }
                     });
                 }

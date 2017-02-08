@@ -761,3 +761,13 @@ $duration: 1.4s;
     color: #F44336;
     text-align: center;
 }
+
+.profile-save-success {
+    color: #4CAF50;
+    text-align: center;
+}
+
+.profile-save-error {
+    color: #F44336;
+    text-align: center;
+}
