@@ -103,6 +103,7 @@
         };
 
         self.fetchCallDetails = function(selectedCall, callType){
+          phoneService.callDetailsSelectedCall = selectedCall;
           if(callType === 'recent'){
             phoneService.selectedCallDetailsIndex = self.phoneService.phone.recentCallList.indexOf(selectedCall);
           }
