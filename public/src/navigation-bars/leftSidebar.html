@@ -138,24 +138,23 @@
                         <md-icon class="fa fa-circle-o"></md-icon>
                         <input required md-no-asterisk type="text" ng-model="crmCtrl.token" placeholder="{{crmCtrl.getCRMToken()}}"
                                ng-change="crmCtrl.crmTokenChanged()" required>
+                        <a href="" ng-click="crmCtrl.findCRMAuthTokenButtonClicked()">Find your 2-Factor Authentication Token</a>
                     </md-input-container>
                     <!--<md-progress-circular ng-if="savingCRMInfo" class="md-hue-2" style="margin: 0 auto 0 auto;" ng-disabled="!savingCRMInfo" md-diameter="20px"></md-progress-circular>-->
-                    <img style="margin-top: 4%; height: 20px;" ng-show = "showCheckmark && !savingCRMInfo" ng-src="images/ic_check_green.png" alt=""/>
-                    <img style="margin-top: 4%; height: 20px;" ng-show = "showExclamationPoint && !savingCRMInfo" ng-src="images/ic_exclamation_red.png" alt=""/>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "crm.validated" ng-src="images/ic_check_green.png" alt=""/>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "!crm.validated" ng-src="images/ic_exclamation_red.png" alt=""/>
                 </div>
 
                 <div layout="row">
                     <md-input-container class=" md-icon-float md-block">
                         <md-checkbox md-no-ink ng-model="crmCtrl.newInsertCallsAutomaticallySetting" ng-value="crmCtrl.crmManager.crmList[0].insertCallsAutomatically"
                                      aria-label="Insert Calls" ng-change="crmCtrl.insertCallsCheckboxChanged()">
-                            Insert all calls into CRM database automatically
+                            Show "Log Call to CRM" dialog after each call ends.
                         </md-checkbox>
                         <label></label>
                     </md-input-container>
                   </div>
-              <div layout="row">
-                <a href="" ng-click="crmCtrl.findCRMAuthTokenButtonClicked()">Find your 2-Factor Authentication Token </a>
-              </div>
+
 
 
             </md-dialog-content>
@@ -247,7 +246,7 @@
 
         <md-list-item layout="row" ng-controller="ManageCRMController as crmCtrl">
             <md-button layout="row">
-                <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img ng-src="images/contacts.png" alt=""></p>
+                <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img ng-src="images/ic_crm_gray_24dp.png" alt=""></p>
                 <p style = "color: white;" flex="80" ng-click="crmCtrl.showManageCRMDialog()">CRM Manager</p>
                 <img style="height: 20px;" ng-show = "crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_check_green.png" alt=""></p>
                 <img style="height: 20px;" ng-show = "!crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_exclamation_red.png" alt=""></p>

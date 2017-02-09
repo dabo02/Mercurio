@@ -54,6 +54,7 @@
                     $scope.$apply();
                 });
             });
+
             self.saveCRMDetailsButtonIsAvailable = false;
         }
 
@@ -95,26 +96,10 @@
         self.token = self.getCRMToken() || '';
         self.name = self.getCRMName() || '';
 
-        $scope.$watch("crm.validated", function(validated){
-            if(validated){
-                $scope.showCheckmark = true;
-                $scope.showExclamationPoint = false;
-            }
-            else{
-                $scope.showCheckmark = false;
-                $scope.showExclamationPoint = true;
-            }
-        }, true);
-
         if(crmService.crmManager.crmList.length > 0){
-            $scope.showCheckmark = crmService.crmManager.crmList[0].validated;
-            $scope.showExclamationPoint = crmService.crmManager.crmList[0].validated;
             $scope.crm = crmService.crmManager.crmList[0];
         }
         else {
-            $scope.chowCheckmark = false;
-            $scope.showExclamationPoint = false;
-            $scope.savingCRMInfo = false;
             $scope.crm = null;
         }
     }])

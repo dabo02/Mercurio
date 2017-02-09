@@ -21,26 +21,15 @@
             self.crmManager = new MercurioCRMManager(userId);
           }
 
-        //this one chows the add cal to crm dialog and fetches callable records
-        self.addCallToCRM = function(phone, type, event, insertCallsAutomatically){
-          if(insertCallsAutomatically || insertCallsAutomatically==null){
-            self.isFetching=true;
-            self.showAddCallToCRMDialog(event);
-            self.callableRecords = null;
-            /*
-            if(call.from !== accountService.activeAccount.phone){
-                crmService.selectedNumber = call.from;
-                crmService.selectedCallDirection = 'Missed';
+        //this one s
+        // hows the add cal to crm dialog and fetches callable records
+        self.fetchCallableRecords = function(phone){//}, type, event, insertCallsAutomatically){
 
-                if(call.answered){
-                    crmService.selectedCallDirection = 'Incoming';
-                }
-            }
-            else{
-                crmService.selectedNumber = call.to;
-                crmService.selectedCallDirection = 'Outgoing';
-            }
-            */
+          //if(insertCallsAutomatically || insertCallsAutomatically==null){
+
+            self.isFetching=true;
+            //self.showAddCallToCRMDialog(event);
+            self.callableRecords = null;
 
             self.crmManager.crmList[0].searchCallableRecords(phone, function(records){
                 self.callableRecords = records;
@@ -48,7 +37,21 @@
                         self.isFetching = false;
                     });
             });
-          }
+          //}
+        }
+
+        self.getPhoneNumberToLog = function(call, myPhone){
+            var selectedNumber;
+            if(call.from === myPhone){
+                selectedNumber = call.to;
+                self.selectedCallDirection = 'Outgoing';
+            }
+            else{
+                selectedNumber = call.from;
+                self.selectedCallDirection = 'Incoming';
+            }
+
+            return selectedNumber;
         }
 
         self.showAddCallToCRMDialog = function(event) {
@@ -61,10 +64,6 @@
                 clickOutsideToClose:true
                 //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             });
-        }
-
-        self.closeAddCallToCRMDialog = function(){
-            $mdDialog.hide()
         }
 
         self.isCRMListEmpty = function(){

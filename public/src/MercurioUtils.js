@@ -340,6 +340,10 @@
             var callerId = '';
             var phone = '';
 
+            if(!call){
+                return;
+            }
+
             if(call.incoming){
                 phone = call.from;
             }
@@ -365,6 +369,10 @@
     .filter('currentCallPhoneNumberFilter', function () {
         return function (call) {
 
+            if(!call){
+                return;
+            }
+
             if(call.incoming){
                return call.from;
             }
@@ -379,6 +387,10 @@
 
             var avatarUrl = '';
             var phone = '';
+
+            if(!call){
+                return;
+            }
 
             if(call.incoming){
                 phone = call.from;

@@ -37,6 +37,8 @@
 
         self.incomingCallObserver = function(){
 
+            crmService.fetchCallableRecords(self.phone.callerId, self.activeAccount.phone);
+
             self.ringTone.addEventListener('ended', function() {
                 this.currentTime = 0;
                 this.play();
@@ -59,8 +61,15 @@
             self.stopRingbackTone();
             $mdDialog.hide();
             self.contactSearchString = '';
-            self.addFinishedCallToCRM(self.phone.currentCalls[0]);
+
+            if(crmService.crmManager.crmList != undefined && crmService.crmManager.crmList != null && crmService.crmManager.crmList.length > 0){
+                crmService.showAddCallToCRMDialog();//, self.selectedCallDirection, event, crmService.crmManager.crmList[0].insertCallsAutomatically);
+            }
+
             self.phone.currentCalls = [];
+
+            window.onbeforeunload = null;
+
             if($state.current.name != "call")
             {
                 $state.reload();
@@ -89,12 +98,18 @@
 
         self.callInProgressObserver = function(){
 
+            crmService.fetchCallableRecords(crmService.getPhoneNumberToLog(self.phone.currentCalls[0], self.activeAccount.phone));
+
             self.ringbackTone.addEventListener('ended', function() {
                 this.currentTime = 0;
                 this.play();
             }, false);
 
             self.ringbackTone.play();
+
+            window.onbeforeunload = function() {
+                return "";
+            }
         }
 
         self.localStreamObserver = function(){
@@ -112,23 +127,6 @@
             self.ringbackTone.pause();
             self.ringbackTone.currentTime = 0;
         }
-
-        self.addFinishedCallToCRM = function(call, event){
-            if(call.from === self.activeAccount.phone){
-              self.selectedNumber = call.to;
-              self.selectedCallDirection = 'Outgoing';
-            }
-            else{
-              self.selectedNumber = call.from;
-              self.selectedCallDirection = 'Incoming';
-            }
-
-            if(crmService.crmManager.crmList != undefined && crmService.crmManager.crmList != null && crmService.crmManager.crmList.length > 0)
-          crmService.addCallToCRM(self.selectedNumber, self.selectedCallDirection, event, crmService.crmManager.crmList[0].insertCallsAutomatically);
-        }
-
-
-
     }]);
 
 })();
