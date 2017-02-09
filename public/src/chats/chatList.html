@@ -33,7 +33,8 @@
       There are no chat
     </h4>
   </md-content> -->
-    <md-list style="margin-top: 0%" ng-show="chatListCtrl.isChatListAvailable()">
+  <div class="scrollable-content">
+    <md-list style="max-height: 400px; margin-top: 0%" ng-show="chatListCtrl.isChatListAvailable()">
         <md-list-item ng-if="chat.lastMessage && chat.messageList.length > 0" ng-repeat="chat in chatListCtrl.chatClient.chatList track by $index" ng-click="chatListCtrl.viewChat($index)" style="background:rgba(0,0,0,0.60); margin-bottom: 2%; padding:0%; width:100%" id="chat-conversation" class="md-2-line">
             <img ng-src="{{chat | chatListAvatarFilter : chatListCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
             <div ng-init= "chatListCtrl.chatListCounter(chatListCtrl.counter)" style="width:100%" class="md-list-item-text" layout="column">
@@ -57,7 +58,7 @@
     </md-content>
 
     </md-list>
-
+</div>
 
     <div class="lock-size float-button" layout="row" layout-align="end end">
         <md-fab-speed-dial md-open="chatListCtrl.isOpen" md-direction="{{chatListCtrl.selectedDirection}}" ng-class="chatListCtrl.selectedMode">

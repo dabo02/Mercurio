@@ -23,16 +23,19 @@
         self.selectedDirection = 'up';
         self.counter=0;
 
+        // self.bodyHeight = $(document).height() * .40;
+
         self.isChatListAvailable = function() {
             return chatClientService.isChatListAvailable();
         }
-        
+
         self.chatListCounter = function(counter){
           self.counter++;
         }
 
         self.viewChat = function(chatIndex){
             chatClientService.selectedChat = chatClientService.chatClient.chatList[chatIndex];
+            localStorage.setItem('chatSaved', JSON.stringify(chatClientService.selectedChat));
             $state.go('chat', {'chatIndex' : chatIndex, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
         }
 
