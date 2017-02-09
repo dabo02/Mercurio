@@ -166,12 +166,21 @@
         };
 
         self.call = function(){
-          phoneService.phone.addNewCall(false, self.phoneService.callDetailsContact.phone, self.phoneService.activeAccount.phone, false, new Date().getTime());
+          phoneService.phone.addNewCall(false, self.phoneService.callDetailsContact.phone, phoneService.activeAccount.phone, false, new Date().getTime());
 					$state.go('call', {'callIndex' : 0});
         }
 
-        self.redial = function(phoneNumber){
-            phoneService.phone.addNewCall(false, phoneNumber, self.phoneService.activeAccount.phone, false, new Date().getTime());
+        self.redial = function(call){
+            var phoneNumber;
+
+            if(call.incoming){
+                phoneNumber = call.from;
+            }
+            else{
+                phoneNumber = call.to;
+            }
+
+            phoneService.phone.addNewCall(false, phoneNumber, phoneService.activeAccount.phone, false, new Date().getTime());
             $state.go('call', {'callIndex' : 0});
         };
 

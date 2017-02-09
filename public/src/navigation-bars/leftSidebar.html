@@ -140,8 +140,8 @@
                                ng-change="crmCtrl.crmTokenChanged()" required>
                     </md-input-container>
                     <!--<md-progress-circular ng-if="savingCRMInfo" class="md-hue-2" style="margin: 0 auto 0 auto;" ng-disabled="!savingCRMInfo" md-diameter="20px"></md-progress-circular>-->
-                    <img style="margin-top: 4%; height: 20px;" ng-show = "showCheckmark && !savingCRMInfo" ng-src="images/ic_check_green.png" alt=""/>
-                    <img style="margin-top: 4%; height: 20px;" ng-show = "showExclamationPoint && !savingCRMInfo" ng-src="images/ic_exclamation_red.png" alt=""/>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "crm.validated" ng-src="images/ic_check_green.png" alt=""/>
+                    <img style="margin-top: 4%; height: 20px;" ng-show = "!crm.validated" ng-src="images/ic_exclamation_red.png" alt=""/>
                 </div>
 
                 <div layout="row">

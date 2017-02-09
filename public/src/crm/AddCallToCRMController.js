@@ -14,15 +14,9 @@
         self.callInsertionInProgress = false;
 
         self.addCallToCRMButtonClicked = function(call, event){
-          if(call.from === phoneService.activeAccount.phone){
-              self.selectedNumber = call.to;
-              crmService.selectedCallDirection = 'Outgoing';
-          }
-          else{
-              self.selectedNumber = call.from;
-              crmService.selectedCallDirection = 'Incoming';
-          }
-          crmService.addCallToCRM(self.selectedNumber, crmService.selectedCallDirection, event);
+
+            crmService.fetchCallableRecords(crmService.getPhoneNumberToLog(call, phoneService.activeAccount.phone));
+            crmService.showAddCallToCRMDialog(event);
         }
 
         self.isCallableRecordListAvailable = function(){
