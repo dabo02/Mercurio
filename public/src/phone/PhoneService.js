@@ -37,7 +37,7 @@
 
         self.incomingCallObserver = function(){
 
-            crmService.fetchCallableRecords(crmService.getPhoneNumberToLog(self.phone.currentCalls[0], self.activeAccount.phone));
+            crmService.fetchCallableRecords(self.phone.callerId, self.activeAccount.phone);
 
             self.ringTone.addEventListener('ended', function() {
                 this.currentTime = 0;

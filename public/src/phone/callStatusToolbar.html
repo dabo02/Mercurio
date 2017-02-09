@@ -1,4 +1,4 @@
-<div layout="row" ng-controller="CallController as callStatusCtrl">
+<div style="padding-top:3%" layout="row" ng-controller="CallController as callStatusCtrl">
     <md-toolbar ng-show="callStatusCtrl.phoneService.phone.currentCalls.length > 0">
         <div class="md-toolbar-tools" ng-if="callStatusCtrl.phoneService.phone.currentCalls.length > 0">
             <md-button aria-label="Call" ng-click="callStatusCtrl.backToCallButtonClicked()">
