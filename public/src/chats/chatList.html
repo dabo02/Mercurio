@@ -34,7 +34,7 @@
     </h4>
   </md-content> -->
   <div class="scrollable-content">
-    <md-list style="max-height: 400px; margin-top: 0%" ng-show="chatListCtrl.isChatListAvailable()">
+    <md-list style="max-height: {{chatListCtrl.bodyHeight}}px; margin-top: 0%" ng-show="chatListCtrl.isChatListAvailable()">
         <md-list-item ng-if="chat.lastMessage && chat.messageList.length > 0" ng-repeat="chat in chatListCtrl.chatClient.chatList track by $index" ng-click="chatListCtrl.viewChat($index)" style="background:rgba(0,0,0,0.60); margin-bottom: 2%; padding:0%; width:100%" id="chat-conversation" class="md-2-line">
             <img ng-src="{{chat | chatListAvatarFilter : chatListCtrl.chatClient.chatClientOwner}}" class="md-avatar"/>
             <div ng-init= "chatListCtrl.chatListCounter(chatListCtrl.counter)" style="width:100%" class="md-list-item-text" layout="column">
