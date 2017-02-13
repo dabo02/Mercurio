@@ -751,3 +751,7 @@ $duration: 1.4s;
     color: #F44336;
     text-align: center;
 }
+
+::-webkit-file-upload-button {
+  cursor:pointer;
+}

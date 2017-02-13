@@ -265,7 +265,7 @@
                                             {{message.textContent}}
                                         </p>
                                     </md-card>
-                                    <div ng-if="!message.multimediaUrl" class="receivedMessage">
+                                    <div style= "padding-top: 2%;" ng-if="!message.multimediaUrl" class="receivedMessage">
                                       <p style="font-weight: bold; margin-bottom: -1%;" > {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}} </p>
                                         <p style="padding-right: 50px; margin-bottom: -1%;">{{message.textContent}} </p>
                                           <p style = "font-size: 10px; text-align: right;"> {{message.timeStamp | timeStampFilter}} </p>

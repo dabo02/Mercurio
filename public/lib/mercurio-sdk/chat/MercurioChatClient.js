@@ -15,7 +15,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	//Uploading Image variables
 	self.uploadingImage = false;
 	self.uploadingProgress = 0;
-	var chatListIsReadyObserver = null;
+	self.chatListIsReadyObserver = null;
 
 	var pageNumber = 1;
 	var limit = 50;
@@ -103,18 +103,17 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 				self.chatIsReadyToSendObserver(chat);
 			}
 
-			if(chatListIsReadyObserver){
+			if(self.chatListIsReadyObserver){
 				// 	query fb once for complete chat list and find its length
 				var fbChatListLength = 0;
 				firebase.database().ref('user-chats/' + self.chatClientOwner).once("value", function(snapshot) {
 					fbChatListLength = snapshot.numChildren();
+					if(fbChatListLength == self.chatList.length){
+							self.chatListIsReadyObserver();
+					}
 				});
 
-				if(fbChatListLength == self.chatList.length){
-
-						chatListIsReadyObserver();
-						self.chatListIsReadyObserver = null;
-				}
+				self.chatListIsReadyObserver = null;
 
 			}
 
@@ -444,7 +443,7 @@ messageContent must be structured as shown below:
 
 */
 MercurioChatClient.prototype.setChatListObserver = function(observer){
-	chatListIsReadyObserver = observer;
+	this.chatListIsReadyObserver = observer;
 }
 
 MercurioChatClient.prototype.receiveMessage = function(chatIndex, type, message){

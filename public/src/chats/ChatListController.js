@@ -23,7 +23,6 @@
         self.selectedDirection = 'up';
         self.counter=0;
 
-        self.bodyHeight = $(document).height() * .70;
 
         self.isChatListAvailable = function() {
             return chatClientService.isChatListAvailable();
