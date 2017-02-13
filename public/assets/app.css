@@ -771,3 +771,11 @@ $duration: 1.4s;
     color: #F44336;
     text-align: center;
 }
+
+.password-change-success {
+    color: #4CAF50;
+}
+
+.password-change-error {
+    color: #F44336;
+}

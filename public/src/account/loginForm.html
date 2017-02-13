@@ -17,8 +17,8 @@
                     <md-icon class="fa fa-envelope"></md-icon>
                     <input id="email" type="text" ng-model="authCtrl.email">
                 </md-input-container>
-                <h4 class="flex-80 flex-offset-10" style="margin-top:3%" ng-if="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">Mercurio password reset link has been sent</h4>
-                <h4 class="flex-80 flex-offset-10" style="margin-top:3%" ng-if="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length > 0">There was an error sending your Mercurio password reset link.</h4>
+                <h4 class="flex-80 flex-offset-10 password-change-success" style="margin-top:3%" ng-if="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">Mercurio password reset link has been sent</h4>
+                <h4 class="flex-80 flex-offset-10 password-change-error" style="margin-top:3%" ng-if="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length > 0">There was an error sending your Mercurio password reset link.</h4>
             </md-dialog-content>
 
             <md-dialog-actions layout="row">
@@ -27,7 +27,7 @@
                 <md-button ng-click="authCtrl.closeResetPasswordDialog()">
                     Close
                 </md-button>
-                <md-button ng-click="authCtrl.sendResetPasswordEmail(); authCtrl.closeResetPasswordDialog()" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
+                <md-button ng-click="authCtrl.sendResetPasswordEmail();" ng-hide="authCtrl.resetPasswordEmailSent && authCtrl.resetPasswordEmailError.length == 0">
                     Reset Password
                 </md-button>
 
