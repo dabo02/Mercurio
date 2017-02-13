@@ -765,3 +765,24 @@ $duration: 1.4s;
 .md-button{
   text-transform: none;
 }
+
+
+.profile-save-success {
+    color: #4CAF50;
+    text-align: center;
+}
+
+.profile-save-error {
+    color: #F44336;
+    text-align: center;
+}
+
+.password-change-success {
+    color: #4CAF50;
+    text-align: center;
+}
+
+.password-change-error {
+    color: #F44336;
+    text-align: center;
+}

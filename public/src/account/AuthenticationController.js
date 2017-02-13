@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope){
+    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', '$timeout', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope, $timeout){
 
         var self = this;
 
@@ -67,6 +67,16 @@
                 }
 
                 self.resetPasswordEmailSent = true;
+                $timeout(function(){
+                    $scope.$apply();
+                    setTimeout(function(){
+                           self.resetPasswordEmailSent = false;
+                           $timeout(function(){
+                               $scope.$apply();
+                               self.closeResetPasswordDialog();
+                           });
+                    }, 4000);
+                });
             });
         }
     }]);
