@@ -348,6 +348,8 @@
     </md-nav-bar>
 
     <!-- All calls -->
+
+  <div class="scrollable-content" style="max-height: 53.1vh;">
     <md-button ng-show="sidebarNavItem=='all'" ng-repeat="call in recentCallListCtrl.phoneService.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
 
         <md-list style="padding:0%;">
@@ -389,8 +391,10 @@
     <div ng-show="sidebarNavItem=='all' && recentCallListCtrl.phoneService.phone.recentCallList.length==0">
       <h3 class="text-center"> There are no recent calls.</h3>
     </div>
+  </div>
 
     <!-- Missed calls -->
+    <div class="scrollable-content" style="max-height: 53.1vh;">
     <md-button ng-show="sidebarNavItem=='missed'" ng-repeat="call in sidebarMissedCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
@@ -431,8 +435,10 @@
     <div ng-show="sidebarNavItem=='missed' && recentCallListCtrl.phoneService.sidebarMissedCalls.length==0">
       <h3 class="text-center"> There are no missed calls </h3>
     </div>
+  </div>
 
     <!-- Incoming calls -->
+    <div class="scrollable-content" style="max-height: 53.1vh;">
     <md-button ng-show="sidebarNavItem=='incoming'" ng-repeat="call in sidebarIncomingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
@@ -473,8 +479,10 @@
     <div ng-show="sidebarNavItem=='incoming' && recentCallListCtrl.phoneService.sidebarIncomingCalls.length==0">
       <h3 class="text-center"> There are no incoming calls </h3>
     </div>
+  </div>
 
     <!-- Outgoing calls -->
+    <div class="scrollable-content" style="max-height: 53.1vh;">
     <md-button ng-show="sidebarNavItem=='outgoing'" ng-repeat="call in sidebarOutgoingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
@@ -515,6 +523,7 @@
     <div ng-show="sidebarNavItem=='outgoing' && recentCallListCtrl.phoneService.sidebarOutgoingCalls.length==0">
       <h3 class="text-center"> There are no outgoing calls </h3>
     </div>
+  </div>
 
     <div ng-controller="ChatListController as chatListCtrl" class="lock-size float-button" layout="row" layout-align="end end">
         <md-fab-speed-dial md-open="chatListCtrl.isOpen" md-direction="{{chatListCtrl.selectedDirection}}" ng-class="chatListCtrl.selectedMode">

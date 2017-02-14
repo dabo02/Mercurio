@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').service('chatClientService', ['$state', '$location', '$anchorScroll', '$rootScope', function($state, $location, $anchorScroll, $rootScope){
+    angular.module('mercurio').service('chatClientService', ['$state', '$location', '$anchorScroll', '$rootScope', '$timeout', function($state, $location, $anchorScroll, $rootScope, $timeout){
 
         var self = this;
         self.chatClient;
@@ -14,6 +14,7 @@
 
         self.chatIsReadyToSendObserver = function(newChat){
             self.selectedChat = newChat;
+            localStorage.setItem('chatSaved', JSON.stringify(self.selectedChat));
             //$state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
             if($state.current.name == 'chat'){
                 $state.reload();
@@ -40,6 +41,14 @@
           //          console.log("chat")
           //      }
           //  });
+        }
+
+        self.instantiateSelectedChat = function(chat){
+          var newChat = new MercurioChat (chat.chatId, chat.participantCount, null,
+    					chat.lastMessage, chat.settings, null, chat.title, self.chatClientOwner);
+              newChat.participantList = chat.participantList;
+              newChat.messageList = chat.messageList;
+              return newChat;
         }
 
         self.onMessageReceived = function(receivedChat, index){
@@ -81,6 +90,9 @@
                     }
                 }
             }
+            $timeout(function () {
+              $rootScope.$apply();
+            });
         }
 
         self.isChatListAvailable = function(){

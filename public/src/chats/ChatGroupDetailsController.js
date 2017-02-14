@@ -39,6 +39,10 @@
             }
         }
 
+        self.editGroupName = function(){
+              self.newChatTitle = "";
+            };
+
         self.closeChatGroupDetailsDialog = function(){
             $mdDialog.hide()
         };
