@@ -16,10 +16,23 @@
         $scope.selectedCallIndex = undefined;
         filterSidebarCalls();
 
-        $scope.selectCallIndex = function (index) {
+        $scope.selectCallIndex = function (selectedCall, callType) {
+            var index;
+            if(callType === 'recent'){
+              index = self.phoneService.phone.recentCallList.indexOf(selectedCall);
+            }
+            else if(callType === 'missed'){
+              index = self.phoneService.sidebarMissedCalls.indexOf(selectedCall);
+            }
+            else if(callType === 'incoming'){
+              index = self.phoneService.sidebarIncomingCalls.indexOf(selectedCall);
+            }
+            else{
+              index = self.phoneService.sidebarOutgoingCalls.indexOf(selectedCall);
+            }
             if ($scope.selectedCallIndex !== index) {
                 $scope.selectedCallIndex = index;
-                self.fetchCallDetails(index)
+                self.fetchCallDetails(selectedCall)
             }
             else {
                 $scope.selectedCallIndex = undefined;
@@ -89,9 +102,20 @@
 
         };
 
-        self.fetchCallDetails = function(index){
-          phoneService.selectedCallDetailsIndex = index;
-          var selectedCall = self.phoneService.phone.recentCallList[index];
+        self.fetchCallDetails = function(selectedCall, callType){
+          phoneService.callDetailsSelectedCall = selectedCall;
+          if(callType === 'recent'){
+            phoneService.selectedCallDetailsIndex = self.phoneService.phone.recentCallList.indexOf(selectedCall);
+          }
+          else if(callType === 'missed'){
+            phoneService.selectedCallDetailsIndex = self.phoneService.sidebarMissedCalls.indexOf(selectedCall);
+          }
+          else if(callType === 'incoming'){
+            phoneService.selectedCallDetailsIndex = self.phoneService.sidebarIncomingCalls.indexOf(selectedCall);
+          }
+          else{
+            phoneService.selectedCallDetailsIndex = self.phoneService.sidebarOutgoingCalls.indexOf(selectedCall);
+          }
           var myPhoneNumber = self.phoneService.activeAccount.phone;
           var otherUserPhoneNumber;
           if(selectedCall.from != myPhoneNumber){
@@ -166,12 +190,21 @@
         };
 
         self.call = function(){
-          phoneService.phone.addNewCall(false, self.phoneService.callDetailsContact.phone, self.phoneService.activeAccount.phone, false, new Date().getTime());
+          phoneService.phone.addNewCall(false, self.phoneService.callDetailsContact.phone, phoneService.activeAccount.phone, false, new Date().getTime());
 					$state.go('call', {'callIndex' : 0});
         }
 
-        self.redial = function(phoneNumber){
-            phoneService.phone.addNewCall(false, phoneNumber, self.phoneService.activeAccount.phone, false, new Date().getTime());
+        self.redial = function(call){
+            var phoneNumber;
+
+            if(call.incoming){
+                phoneNumber = call.from;
+            }
+            else{
+                phoneNumber = call.to;
+            }
+
+            phoneService.phone.addNewCall(false, phoneNumber, phoneService.activeAccount.phone, false, new Date().getTime());
             $state.go('call', {'callIndex' : 0});
         };
 

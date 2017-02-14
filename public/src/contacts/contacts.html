@@ -3,7 +3,7 @@
     <div flex layout="row">
         <left-sidebar></left-sidebar>
 
-        <md-content flex="75" id="main-content" style="padding-bottom:10%;background-color: transparent; width:100%; overflow-x: hidden; overflow-y: hidden;">
+        <md-content flex="70" id="main-content" style="padding-bottom:10%;background-color: transparent; width:100%; overflow-x: hidden; overflow-y: hidden;">
 
 
             <div style="padding-top:3%" class="row">
@@ -53,7 +53,7 @@
                                             </div>
                                             <div style= "margin-left: 2%; margin-top: 2%;" class="col-lg-7 col-md-7" layout="column">
                                                 <p style="color: white; font-size:20px; word-break: break-all" flex="50">{{contact.firstName}} {{contact.lastName}}</p>
-                                                <p style="color: white;" > {{contact.status}}</p>
+                                                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;" > {{contact.status}}</p>
                                             </div>
                                             <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 0" style="color: white;" >Online</p>
                                             <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 1" style="color: white;" >Away</p>
@@ -73,6 +73,8 @@
 
 
         </md-content>
-        <right-sidebar flex="25"></right-sidebar>
+
+        <right-sidebar flex="30"></right-sidebar>
+
     </div>
 </div>

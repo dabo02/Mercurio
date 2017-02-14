@@ -5,14 +5,14 @@
  */
 
 var app = require('../mercurio-server');
-var debug = require('debug')('sample-app:server');
+var debug = require('debug')('web-interface-mercurio:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3001');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
@@ -87,6 +87,4 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log('Listening on ' + bind);
-
 }

@@ -340,6 +340,10 @@
             var callerId = '';
             var phone = '';
 
+            if(!call){
+                return;
+            }
+
             if(call.incoming){
                 phone = call.from;
             }
@@ -357,13 +361,17 @@
                 return callerId;
             }
             else{
-                return 'Unkown';
+                return 'Unknown';
             }
         };
     })
 
     .filter('currentCallPhoneNumberFilter', function () {
         return function (call) {
+
+            if(!call){
+                return;
+            }
 
             if(call.incoming){
                return call.from;
@@ -379,6 +387,10 @@
 
             var avatarUrl = '';
             var phone = '';
+
+            if(!call){
+                return;
+            }
 
             if(call.incoming){
                 phone = call.from;
@@ -417,7 +429,7 @@
                 return name;
             }
             else{
-                return 'Unkown';
+                return 'Unknown';
             }
         };
     })
