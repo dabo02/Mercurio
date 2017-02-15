@@ -10,7 +10,7 @@
         self.resetPasswordEmailSent = false;
         self.email = '';
         self.authenticationService = authenticationService;
-
+        self.resetPasswordButtonIsAvailable = false;
         //if user is already logged in change state to dialer
 
         self.loginButtonClicked = function(email, password){
@@ -25,6 +25,10 @@
               },3000);
             });
 
+        }
+
+        self.emailChanged = function(){
+          self.resetPasswordButtonIsAvailable = true;
         }
 
         self.showResetPasswordDialog = function(event) {
@@ -64,6 +68,7 @@
             authenticationService.resetPassword(self.email, function(error){
                 if(error){
                     self.resetPasswordEmailError = error.message;
+                    self.resetPasswordButtonIsAvailable = false;
                 }
 
                 self.resetPasswordEmailSent = true;
@@ -73,7 +78,6 @@
                            self.resetPasswordEmailSent = false;
                            $timeout(function(){
                                $scope.$apply();
-                               self.closeResetPasswordDialog();
                            });
                     }, 4000);
                 });
