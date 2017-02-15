@@ -644,6 +644,7 @@ $duration: 1.4s;
   .scrollable-content {
    overflow-x:hidden;
    overflow-y:scroll;
+   padding-right: 1%;
  }
  .scrollable-content::-webkit-scrollbar {
    width:15px;
