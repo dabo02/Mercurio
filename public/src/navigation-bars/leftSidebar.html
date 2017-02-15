@@ -233,14 +233,14 @@
 
         <md-list-item layout="row" ng-controller="ProfileEditorController as profileCtrl">
             <md-button layout="row">
-                <p flex="20" ng-click="profileCtrl.showProfileEditorDialog()"><img ng-src="images/contacts.png" alt=""></p>
+                <p flex="20" ng-click="profileCtrl.showProfileEditorDialog()"><img style= "height: 20px;"ng-src="images/default_contact_avatar-white.png" alt=""></p>
                 <p style = "color: white;" flex="80" ng-click="profileCtrl.showProfileEditorDialog()">Profile</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.contactsLinkClicked()" layout="row">
-                <p flex="20"><img ng-src="images/contacts.png" alt=""></p>
+                <p flex="20"><img ng-src="images/contacts-white.png" alt=""></p>
                 <p style = "color: white;" flex="80">Contacts</p>
             </md-button>
         </md-list-item>
@@ -278,7 +278,7 @@
 
         <md-list-item layout="row" ng-controller="AuthenticationController as authCtrl">
             <md-button ng-click="authCtrl.logoutButtonClicked()" layout="row">
-                <p flex="20"><img ng-src="images/signout.png" alt=""></p>
+                <p flex="20"><img ng-src="images/signout-white.png" alt=""></p>
                 <p style = "color: white;" flex="80">Sign Out</p>
             </md-button>
         </md-list-item>
