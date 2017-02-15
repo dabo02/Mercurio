@@ -355,9 +355,9 @@
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
               <div ng-click="selectCallIndex(call, 'recent')" flex="80" layout="row">
-                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
-                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="60">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
-                <div flex="30" layout="column">
+                <img style="width:40px; height:40px; margin-top:5%; border-radius:35px; margin-left: 5%;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
+                <div flex="50" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
                     <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
@@ -399,9 +399,9 @@
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
               <div ng-click="selectCallIndex(call, 'missed')" flex="80" layout="row">
-                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
-                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="60">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
-                <div flex="30" layout="column">
+                <img style="width:40px; height:40px; margin-top:5%; border-radius:35px; margin-left: 5%;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
+                <div flex="50" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
                     <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
@@ -443,9 +443,9 @@
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
               <div ng-click="selectCallIndex(call, 'incoming')" flex="80" layout="row">
-                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
-                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="60">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
-                <div flex="30" layout="column">
+                <img style="width:40px; height:40px; margin-top:5%; border-radius:35px; margin-left: 5%;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
+                <div flex="50" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
                     <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
@@ -487,9 +487,9 @@
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
               <div ng-click="selectCallIndex(call, 'outgoing')" flex="80" layout="row">
-                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
-                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="60">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
-                <div flex="30" layout="column">
+                <img style="width:40px; height:40px; margin-top:5%; border-radius:35px; margin-left: 5%;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
+                <div flex="50" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
                     <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
