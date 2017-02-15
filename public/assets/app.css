@@ -258,8 +258,6 @@ md-checkbox ._md-label{
 }
 
 #contacts-content{
-    border-radius:8px;
-    border: 1px solid #1565c0;
     margin-bottom:1%;
     overflow-x:hidden;
 }

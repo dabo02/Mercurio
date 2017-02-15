@@ -44,7 +44,7 @@
                     <div style="margin-top:-3%; margin-bottom:10%;" ng-repeat="letter in contactListCtrl.alphabet">
                         <div ng-if="contactListCtrl.setContacts(letter)">
                             <a style="color: white;" id=contact-initial> <h2>{{letter}}</h2> </a>
-                            <md-content style="border-color: white; background:rgba(0,0,0,0.55); overflow-y:hidden" ng-repeat="contact in contactListCtrl.tempContacts track by $index" id="contacts-content">
+                            <md-content style="background:rgba(0,0,0,0.55); overflow-y:hidden" ng-repeat="contact in contactListCtrl.tempContacts track by $index" id="contacts-content">
                                 <md-button ng-click="contactListCtrl.viewContact(contact.realIndex)" style="width:100%;">
                                     <md-list style="background-color: transparent;" id="contacts-card" flex>
                                         <md-list-item class="row">
