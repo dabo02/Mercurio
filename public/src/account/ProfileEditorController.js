@@ -21,6 +21,8 @@
         self.statusInputLimit = '10';
         self.saved = null;
         self.msg = "";
+        self.saveButtonIsAvailable = false;
+
 
         self.showProfileEditorDialog = function(event) {
 
@@ -37,6 +39,10 @@
         self.closeProfileEditorDialog = function(){
             $mdDialog.hide()
         };
+
+        self.profileChanged = function(){
+            self.saveButtonIsAvailable = true;
+        }
 
         self.saveProfileInfo = function(){
             if(accountService.isAccountAvailable()) {
@@ -70,6 +76,7 @@
 
                 }
                 self.msg = "Profile info saved succesfully";
+                self.saveButtonIsAvailable=false;
                 self.saved = true;
                 $timeout(function(){
                     $scope.$apply()});
@@ -116,6 +123,8 @@
                 }
             }
         }
+
+
 
         self.getFirstName = function(){
             if(accountService.isAccountAvailable()) {
