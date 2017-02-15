@@ -247,7 +247,7 @@
 
         <md-list-item layout="row" ng-controller="ManageCRMController as crmCtrl">
             <md-button layout="row">
-                <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img ng-src="images/ic_crm_gray_24dp.png" alt=""></p>
+                <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img style= "height: 25px;" ng-src="images/ic_crm_gray_24dp.png" alt=""></p>
                 <p style = "color: white;" flex="80" ng-click="crmCtrl.showManageCRMDialog()">CRM Manager</p>
                 <img style="height: 20px;" ng-show = "crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_check_green.png" alt=""></p>
                 <img style="height: 20px;" ng-show = "!crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_exclamation_red.png" alt=""></p>
