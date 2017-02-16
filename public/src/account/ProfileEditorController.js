@@ -158,7 +158,12 @@
 
         self.getProfilePicture = function(){
             if(accountService.isAccountAvailable()) {
+              if(accountService.activeAccount.picture === ""){
+                return 'images/default_contact_avatar.png';
+              }
+              else{
                 return accountService.activeAccount.picture;
+              }
             }
         }
 
