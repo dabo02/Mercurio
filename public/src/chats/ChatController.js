@@ -164,6 +164,10 @@
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
             // $state.reload();
+            setTimeout(function(){
+            $rootScope.$apply();
+          }, 10);
+
         }
 
         self.isMessageFromMe = function(message){
@@ -232,18 +236,18 @@
                      chatClientService.selectedChat = chat;
                    }
                  });
-                 hola();
+                 instantiateSelectedChat();
            });
 
         }
         else if(chatClientService.selectedChat){
-            hola();
+            instantiateSelectedChat();
         }
         else{
           $state.go('dialer');
         }
 
-        function hola(){
+        function instantiateSelectedChat(){
           $scope.selectedChat = chatClientService.selectedChat;
           $scope.$watch(
                   'selectedChat',
