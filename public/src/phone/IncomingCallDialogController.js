@@ -10,7 +10,7 @@
 
         var self = this;
         self.phoneService = phoneService;
-
+        self.callerId = phoneService.phone.callerId.substring(1, phoneService.phone.callerId.length);
         self.receiveCall = function() {
             phoneService.stopRingTone();
             $mdDialog.hide();
@@ -29,6 +29,4 @@
         phoneService.phone.addNewCall(false, accountService.activeAccount.phone, phoneService.phone.callerId, true, new Date().getTime());
 
     }])
-})(); 
-
-
+})();

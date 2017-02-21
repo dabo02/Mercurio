@@ -92,7 +92,7 @@
             }
             setTimeout(function(){
             $rootScope.$apply();
-          }, 10);
+          }, 100);
         }
 
         self.isChatListAvailable = function(){
