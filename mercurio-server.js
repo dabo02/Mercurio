@@ -72,7 +72,7 @@ app.post("/insertLead", function(req, res){
     'xmlData': d
   });
   var options = {
-    host: req.body.url,
+    host: "crm.zoho.com",
     port: 443,
     path: '/crm/private/xml/Leads/insertRecords',
     method: 'POST',
@@ -137,7 +137,7 @@ app.post("/insertAccount", function(req, res){
     'xmlData': d
   });
   var options = {
-    host: req.body.url,
+    host: "crm.zoho.com",
     port: 443,
     path: '/crm/private/xml/Accounts/insertRecords',
     method: 'POST',
@@ -213,7 +213,7 @@ app.post("/insertCalls", function (req, res) {
     'xmlData': d
   });
   var options = {
-    host: req.body.url,
+    host: "crm.zoho.com",
     port: 443,
     path: '/crm/private/xml/Calls/insertRecords',
     method: 'POST',
@@ -256,7 +256,7 @@ app.post("/fetchRecords", function(req, res) {
   });
 
   var contactOptions = {
-    host: req.body.url,
+    host: "crm.zoho.com",
     port: 443,
     path: '/crm/private/json/Contacts/searchRecords',
     method: 'POST',
@@ -322,7 +322,7 @@ app.post("/fetchRecords", function(req, res) {
     }
 
     var acctOptions = {
-      host: req.body.url,
+      host: "crm.zoho.com",
       port: 443,
       path: '/crm/private/json/Accounts/searchRecords',
       method: 'POST',
@@ -378,7 +378,7 @@ app.post("/fetchRecords", function(req, res) {
         }
       }
       var leadOptions = {
-        host: req.body.url,
+        host: "crm.zoho.com",
         port: 443,
         path: '/crm/private/json/Leads/searchRecords',
         method: 'POST',
@@ -427,7 +427,8 @@ app.post("/fetchRecords", function(req, res) {
                 name: ""
               };
               leadRecord.leadId = cleanData.response.result.Leads.row.FL[0].content;
-              leadRecord.smOwnerId = cleanData.response.result.Leads.row.FL[2].content;
+              leadRecord.smOwnerId = cleanData.response.result.Leads.row.FL[1].content;
+              leadRecord.name = cleanData.response.result.Leads.row.FL[4].content + " " + cleanData.response.result.Leads.row.FL[5].content;
               records.Leads.push(leadRecord);
             }
           }
@@ -446,7 +447,7 @@ app.post('/validateToken', function (req, res) {
     'type': 'api'
   });
   var options = {
-    host: req.body.url,
+    host: "crm.zoho.com",
     port: 443,
     path: '/crm/private/json/Info/getModules',
     method: 'POST',

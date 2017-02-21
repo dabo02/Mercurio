@@ -224,6 +224,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 		callback: function() {
 
 			self.janus = new Janus({
+				//server: 'http://mercurygateway.optivon.com:8088/janus',
 				server: 'https://mercurygateway.optivon.com:8443/janus',
 				success: function() {
 					Janus.debug("Succesfully Connected to server: " + this.server);

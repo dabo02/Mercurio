@@ -22,33 +22,21 @@
 
 
     <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
-        authDomain: "mercurio-development.firebaseapp.com",
-        databaseURL: "https://mercurio-development.firebaseio.com",
-        storageBucket: "mercurio-development.appspot.com",
-        messagingSenderId: "203647142462"
-      };
-      firebase.initializeApp(config);
-    </script>
-
     <!--&lt;!&ndash; Firebase &ndash;&gt;-->
     <!--<script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>-->
 
-    <!--<script>-->
-      <!--// Initialize Firebase-->
-     <!--// production db-->
-         <!--var config = {-->
-           <!--apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",-->
-           <!--authDomain: "mercurio-39a44.firebaseapp.com",-->
-           <!--databaseURL: "https://mercurio-39a44.firebaseio.com",-->
-           <!--storageBucket: "mercurio-39a44.appspot.com"-->
-         <!--};-->
+    <script>
+      // Initialize Firebase
+     // production db
+         var config = {
+           apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
+           authDomain: "mercurio-39a44.firebaseapp.com",
+           databaseURL: "https://mercurio-39a44.firebaseio.com",
+           storageBucket: "mercurio-39a44.appspot.com"
+         };
 
-      <!--firebase.initializeApp(config);-->
-    <!--</script>-->
+      firebase.initializeApp(config);
+    </script>
     <script type="text/javascript">
       function checkUrl(){
         firebase.auth().onAuthStateChanged(function(user) {
