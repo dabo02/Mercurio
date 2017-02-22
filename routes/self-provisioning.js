@@ -40,34 +40,36 @@ exports.getPhoneConfigs = function(req, res){
         if(result.phoneConfig.network){
           // Testing purpose, while endpoint pack is not available
           var configs = {
-            "availability" : 0,
-            "companyId" : "-Kbkv5yVzzlBJV5Bz-8K",
-            "commPortalPassword" : "optivon_787",
-            "email" : "figueroaisrael7@gmail.com",
-            "extension" : "2703",
-            "firstName" : "Israel",
-            "lastName" : "Figueroa Fontanez AKA Ralo",
-            "phone" : "7873042703",
-            "picture" : "",
-            "sipPassword" : "5JXsIE/x=AYy$yK",
-            "sipUsername" : "7873042703",
-            "status" : "Wop"
+            // "availability" : 0, DB
+            // "companyId" : "-Kbkv5yVzzlBJV5Bz-8K",  DB
+            "commPortalPassword" : req.body.password,
+            "email" : req.body.email,
+            "extension" : "2704", //NOC
+            "firstName" : "Wilfredo",//junto con lastname NOC
+            "lastName" : "Nieves", //Junto con firstname NOC
+            "phone" : req.body.phone,
+            // "picture" : "", DB
+            "sipPassword" : "e+/gIbZ7QJkSMz8", //NOC
+            "sipUsername" : "7873042704", //NOC
+            // "status" : "Wop" DB
           }
 
-          function syncEmailUpdate(user){
+          function syncEmailUpdate(user, oldAccount){
 
           	var contact ={
-          		availability: configs.availability,
+          		availability: oldAccount.availability,
           		email: configs.email,
           		firstName: configs.firstName,
           		lastName: configs.lastName,
+              name: configs.firstName+" "+configs.lastName,
           		phone: configs.phone,
-          		picture: configs.picture,
-          		status: configs.status,
+          		picture: oldAccount.picture,
+          		status: oldAccount.status,
           		extension: configs.extension,
-          		companyId: configs.companyId,
+          		companyId: oldAccount.companyId,
           		userId: user.uid
           	}
+
           	firebase.database().ref("account").once("value", function (snap) {
 
           		var myBusinessGroupAccountKeys = [];
@@ -106,14 +108,14 @@ exports.getPhoneConfigs = function(req, res){
                 });
               }
               else{
-                console.log("connectin with: "+oldAccount.email+" and "+oldAccount.commPortalPassword);
+                console.log("connecting with: "+oldAccount.email+" and "+oldAccount.commPortalPassword);
                 firebase.auth().signInWithEmailAndPassword(oldAccount.email, oldAccount.commPortalPassword).then(function(user){
                   user.updateEmail(newEmail).then(function() {
                     //Update changes
                     var updates = {};
                     updates['account/' + user.uid + '/email'] = newEmail;
                     firebase.database().ref().update(updates);
-                    syncEmailUpdate(user);
+                    syncEmailUpdate(user, oldAccount);
                   }, function(error) {
                     // An error happened.
                     var responseObject = {"statusCode" : 400, "statusMessage" : "Error updating email"}
