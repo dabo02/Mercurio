@@ -481,7 +481,7 @@ app.post('/validateToken', function (req, res) {
 });
 
 app.post('/sendNotification', notification.sendPushNotification);
-app.post('/getPhoneConfigs', selfProvisioning.getPhoneConfigs);
+app.post('/register', selfProvisioning.getPhoneConfigs);
 
 app.all('/*', function(req, res) {
   // Just send the index.html for other files to support HTML5Mode

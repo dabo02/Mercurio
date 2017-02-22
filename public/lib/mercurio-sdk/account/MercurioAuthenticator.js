@@ -132,7 +132,7 @@ MercurioAuthenticator.prototype.setAccountObserver = function(observer){
 MercurioAuthenticator.prototype.register = function(registerData){
 	$.ajax({
 		type: 'POST',
-		url: '/getPhoneConfigs',
+		url: '/register',
 		cache: false,
 		contentType: "application/json",
 		data: JSON.stringify(registerData),
@@ -140,7 +140,7 @@ MercurioAuthenticator.prototype.register = function(registerData){
 			console.log(data);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log(textStatus);
+			console.log("Error");
 		},
 		dataType: "json"
 	});
