@@ -22,6 +22,7 @@ firebase.initializeApp(config);
 
 exports.getPhoneConfigs = function(req, res){
   var request = require('request');
+
   // Real Data:
   // 7873042704
   // @Snowman19
@@ -358,7 +359,5 @@ exports.getPhoneConfigs = function(req, res){
         }
       });
   }
-  // request(options, callback);
-  var responseObject = {"statusCode" : 400, "statusMessage" : "Account is already registered"}
-  res.send(responseObject);
+  request(options, callback);
 }
