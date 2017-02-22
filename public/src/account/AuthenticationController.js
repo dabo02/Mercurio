@@ -39,6 +39,18 @@
             });
         };
 
+        self.showRegisterAccountDialog = function(event) {
+
+            $mdDialog.show({
+                templateUrl: 'registerAccountForm',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                escapeToClose: true,
+                clickOutsideToClose:true
+                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            });
+        };
+
         self.logoutButtonClicked = function(){
 
             authenticationService.logout();
@@ -55,6 +67,10 @@
 
 
         self.closeResetPasswordDialog = function(){
+            $mdDialog.hide()
+        };
+
+        self.closeRegisterAccountDialog = function(){
             $mdDialog.hide()
         };
 
@@ -78,6 +94,10 @@
                     }, 4000);
                 });
             });
+        }
+
+        self.registerAccount = function(){
+          authenticationService.register(self.registerData);
         }
     }]);
 }());
