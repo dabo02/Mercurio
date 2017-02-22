@@ -44,10 +44,9 @@
                 </div>
                 <div>
                     <p style= "color: white;"ng-style="chatListCtrl.getTextPreviewClass(chat, $index)">
-                        {{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}}
+                        {{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}} <md-icon style= "color: white" aria-label="Delete Chat" flex-offset= "90" class="md-raised fa fa-trash-o" ng-click="chatListCtrl.showDeleteConfirm($event, $index)"></md-icon>
                     </p>
-                    <md-icon style= "color: white" aria-label="Delete Chat" class="md-secondary md-raised fa fa-trash-o" ng-click="chatListCtrl.showDeleteConfirm($event, $index)"></md-icon>
-                </div>
+                  </div>
             </div>
             <md-divider ></md-divider>
         </md-list-item>
