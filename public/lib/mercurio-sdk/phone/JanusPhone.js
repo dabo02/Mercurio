@@ -79,10 +79,10 @@ JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeSta
 	var self = this;
 	self.from = from;
 	self.to = to;
-	if(to.substring(0,1)==9){
+	if(to.substring(0,1)==9 && to.length == 11){
 		self.to = to.substring(1, to.length);
 	}
-	if(from.substring(0,1)==9){
+	if(from.substring(0,1)==9 && from.length == 11){
 		self.from = from.substring(1, from.length);
 	}
 	var newCallRef = firebase.database().ref().child('user-calls/' + self.phoneOwner).push();
