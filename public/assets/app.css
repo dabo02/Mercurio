@@ -778,3 +778,8 @@ $duration: 1.4s;
 ::-webkit-file-upload-button {
   cursor:pointer;
 }
+
+div:focus {
+    outline: none;
+    border: 0;
+ }
