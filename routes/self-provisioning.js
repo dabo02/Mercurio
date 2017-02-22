@@ -359,5 +359,7 @@ exports.getPhoneConfigs = function(req, res){
         }
       });
   }
-  request(options, callback);
+  // request(options, callback);
+  var responseObject = {"statusCode" : 400, "statusMessage" : "Account is already registered"}
+  res.send(responseObject);
 }
