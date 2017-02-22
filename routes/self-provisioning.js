@@ -1,6 +1,6 @@
 var firebase = require('firebase');
 // Initialize Firebase
-
+var http = require('http-request');
 // Development configs
 var config = {
   apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
@@ -36,8 +36,8 @@ exports.getPhoneConfigs = function(req, res){
 
       var parseString = require('xml2js').parseString;
       var xml = body;
-      parseString(xml, function (err, result) {
-        if(result.phoneConfig.network){
+      // parseString(xml, function (err, result) {
+        // if(result.phoneConfig.network){
           // Testing purpose, while endpoint pack is not available
           var configs = {
             // "availability" : 0, DB
@@ -318,7 +318,7 @@ exports.getPhoneConfigs = function(req, res){
           }
 
           function createNewAccount(account){
-
+            console.log("new account")
           }
 
           firebase.database().ref().child('account').once('value', function(snapshot){
@@ -353,11 +353,12 @@ exports.getPhoneConfigs = function(req, res){
               createNewAccount(configs);
             }
           });
-        }
-        else{
-          res.sendStatus(400);
-        }
-      });
+        // }
+        // else{
+        //   res.sendStatus(400);
+        // }
+      // });
   }
-  request(options, callback);
+  // request(options, callback);
+  http.post(options, callback);
 }
