@@ -1,28 +1,29 @@
+var request = require('request');
+var firebase = require('firebase');
+
+
+// Initialize Firebase
+
+// Development configs
+var config = {
+  apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
+  authDomain: "mercurio-development.firebaseapp.com",
+  databaseURL: "https://mercurio-development.firebaseio.com",
+  storageBucket: "mercurio-development.appspot.com",
+  messagingSenderId: "203647142462"
+};
+
+//Production configs
+// var config = {
+//   apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
+//   authDomain: "mercurio-39a44.firebaseapp.com",
+//   databaseURL: "https://mercurio-39a44.firebaseio.com",
+//   storageBucket: "mercurio-39a44.appspot.com"
+// };
+
+firebase.initializeApp(config);
+
 exports.getPhoneConfigs = function(req, res){
-  var request = require('request');
-  var firebase = require('firebase');
-  
-
-  // Initialize Firebase
-
-  // Development configs
-  var config = {
-    apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
-    authDomain: "mercurio-development.firebaseapp.com",
-    databaseURL: "https://mercurio-development.firebaseio.com",
-    storageBucket: "mercurio-development.appspot.com",
-    messagingSenderId: "203647142462"
-  };
-
-  //Production configs
-  // var config = {
-  //   apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
-  //   authDomain: "mercurio-39a44.firebaseapp.com",
-  //   databaseURL: "https://mercurio-39a44.firebaseio.com",
-  //   storageBucket: "mercurio-39a44.appspot.com"
-  // };
-
-  firebase.initializeApp(config);
 
   // Real Data:
   // 7873042704
@@ -360,5 +361,7 @@ exports.getPhoneConfigs = function(req, res){
         }
       });
   }
-  request(options, callback);
+  // request(options, callback);
+  var responseObject = {"statusCode" : 400, "statusMessage" : "Account is already registered"}
+  res.send(responseObject);
 }
