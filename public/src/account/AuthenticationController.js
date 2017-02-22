@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', '$timeout', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope, $timeout){
+    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', '$timeout', '$state', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope, $timeout, $state){
 
         var self = this;
 
@@ -43,18 +43,6 @@
             });
         };
 
-        self.showRegisterAccountDialog = function(event) {
-
-            $mdDialog.show({
-                templateUrl: 'registerAccountForm',
-                parent: angular.element(document.body),
-                targetEvent: event,
-                escapeToClose: true,
-                clickOutsideToClose:true
-                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            });
-        };
-
         self.logoutButtonClicked = function(){
 
             authenticationService.logout();
@@ -74,8 +62,8 @@
             $mdDialog.hide()
         };
 
-        self.closeRegisterAccountDialog = function(){
-            $mdDialog.hide()
+        self.registerButtonClicked = function(){
+          $state.go('register');
         };
 
         self.sendResetPasswordEmail = function(){

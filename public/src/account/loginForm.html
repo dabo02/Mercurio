@@ -39,53 +39,6 @@
     </md-dialog>
 </script>
 
-<!-- Registration Dialog -->
-<script type="text/ng-template" id="registerAccountForm">
-    <md-dialog flex="40" aria-label="Register Account Form" ng-controller="AuthenticationController as authCtrl">
-        <form ng-cloak>
-            <md-toolbar>
-                <div class="md-toolbar-tools">
-                    <h2>Register Account</h2>
-                    <span flex></span>
-                    <md-button class="md-icon-button" ng-click="authCtrl.closeRegisterAccountDialog()">
-                        &times;
-                    </md-button>
-                </div>
-            </md-toolbar>
-
-            <md-dialog-content>
-              <md-input-container style="margin-top:40px;" class="md-icon-float md-block flex-80 flex-offset-10">
-                  <label>email</label>
-                  <md-icon class="fa fa-envelope"></md-icon>
-                  <input id="email" type="text" ng-model="authCtrl.registerData.email">
-              </md-input-container>
-              <div layout="row">
-                <md-input-container class="md-icon-float md-block flex-40 flex-offset-10">
-                    <label>commPortal Password</label>
-                    <md-icon class="fa fa-lock"></md-icon>
-                    <input id="password" type="password" ng-model="authCtrl.registerData.password">
-                </md-input-container>
-                <md-input-container class="md-icon-float md-block flex-40">
-                    <label>Phone Number</label>
-                    <md-icon class="fa fa-phone"></md-icon>
-                    <input id="phone" type="phone" ng-model="authCtrl.registerData.phone">
-                </md-input-container>
-              </div>
-            </md-dialog-content>
-
-            <md-dialog-actions layout="row">
-                <span flex></span>
-                <md-button ng-click="authCtrl.closeRegisterAccountDialog()">
-                    Close
-                </md-button>
-                <md-button ng-click="authCtrl.registerAccount();">
-                    Register
-                </md-button>
-            </md-dialog-actions>
-        </form>
-    </md-dialog>
-</script>
-
 <div style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');height:100%" ng-controller="AuthenticationController as authCtrl" ng-cloak onload="checkUrl()">
 
 
@@ -135,7 +88,7 @@
             <div layout="row">
               <p style="font-size:16px; font-weight:bold;" flex="50"><a class="pull-right" style= "color: white; margin-right:10px;" href="" ng-click="authCtrl.showResetPasswordDialog($event)">Forgot Password?</a></p>
               <md-divider style="border-right:1px solid white; margin-bottom:10px;"></md-divider>
-              <p style="font-size:16px; font-weight:bold;" flex="50"><a style= "color: white; margin-left:10px;" href="" ng-click="authCtrl.showRegisterAccountDialog($event)">Register Account</a></p>
+              <p style="font-size:16px; font-weight:bold;" flex="50"><a style= "color: white; margin-left:10px;" href="" ng-click="authCtrl.registerButtonClicked()">Register Account</a></p>
             </div>
         </md-card>
     </form>

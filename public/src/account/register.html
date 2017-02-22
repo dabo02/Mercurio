@@ -1,0 +1,33 @@
+<!-- Registration Dialog -->
+
+<div style="overflow-y: hidden;height:100%" aria-label="Register Account Form" ng-controller="AuthenticationController as authCtrl">
+        <form style="padding-top: 5%;" ng-cloak>
+          <md-card flex="45" flex-offset="30" style="margin: 10% auto; background:rgba(0,0,0,0.50);">
+            <div layout="column" style="height: 5%; background:rgba(0,0,0,0); ">
+                <h2 class="text-center" style="font-size: 22px;color: white;"> Register </h2>
+            </div>
+              <md-input-container style="margin-top:40px;" class="md-icon-float md-block flex-80 flex-offset-10">
+                  <label style= "color: white;">Email</label>
+                  <md-icon style= "color: white;" class="fa fa-envelope"></md-icon>
+                  <input  style= "color: white; border-color: yellow;" id="email" type="text" ng-model="authCtrl.registerData.email">
+              </md-input-container>
+              <div layout="row">
+                <md-input-container class="md-icon-float md-block flex-40 flex-offset-10">
+                    <label style= "color: white;">commPortal Password</label>
+                    <md-icon style= "color: white;" class="fa fa-lock"></md-icon>
+                    <input  style= "color: white; border-color: yellow;" id="password" type="password" ng-model="authCtrl.registerData.password">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block flex-40">
+                    <label style= "color: white;">Phone Number</label>
+                    <md-icon style= "color: white;" class="fa fa-phone"></md-icon>
+                    <input  style= "color: white; border-color: yellow;" id="phone" type="phone" ng-model="authCtrl.registerData.phone">
+                </md-input-container>
+              </div>
+                <span flex></span>
+              <md-button class="md-raised md-primary" flex="50" flex-offset="25" style="width:100%; margin-bottom:4%;" ng-click="authCtrl.registerAccount();">
+                  Register
+              </md-button>
+                <p style="font-size:16px; font-weight:bold;" flex="50" flex-offset="45"><a style= "color: white; margin-left:10px;" href="#/login"> <i style = "color: white;" class="fa fa-chevron-left"> </i>  Back</a></p>
+              </md-card>
+          </form>
+</div>
