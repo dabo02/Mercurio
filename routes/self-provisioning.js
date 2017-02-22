@@ -1,7 +1,4 @@
-var request = require('request');
 var firebase = require('firebase');
-
-
 // Initialize Firebase
 
 // Development configs
@@ -24,7 +21,7 @@ var config = {
 firebase.initializeApp(config);
 
 exports.getPhoneConfigs = function(req, res){
-
+  var request = require('request');
   // Real Data:
   // 7873042704
   // @Snowman19
