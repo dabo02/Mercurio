@@ -32,10 +32,10 @@ exports.getPhoneConfigs = function(req, res){
       'User-Agent': 'AM_MS_Android_Acc/2.23.00/Huawei/Nexus 6P/7.1.1/Accession Android CommPortal'
     }
   };
-  function callback(error, response, body) {
-
+  function callback(error, data) {
+    // console.log(err)
       var parseString = require('xml2js').parseString;
-      var xml = body;
+      var xml = data.buffer.toString();
       parseString(xml, function (err, result) {
         if(result.phoneConfig.network){
           // Testing purpose, while endpoint pack is not available
@@ -431,7 +431,7 @@ exports.getPhoneConfigs = function(req, res){
         }
       });
   }
-  request(options, callback);
-  // http.post(options, callback);
+  // request(options, callback);
+  http.get(options, callback);
   //change this
 }
