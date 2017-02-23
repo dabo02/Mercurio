@@ -82,6 +82,10 @@
                     authenticate: true,
                     resolve:{}
                 })
+                .state('register', {
+                    url: '/register',
+                    templateUrl: '/src/account/register.html'
+                })
                 .state('login', {
                     url: '/login',
                     templateUrl: '/src/account/loginForm.html'

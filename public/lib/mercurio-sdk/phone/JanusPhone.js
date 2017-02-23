@@ -77,22 +77,29 @@ function JanusPhone(userId, phoneInitializationObserver) {
 JanusPhone.prototype.addNewCall = function(answered, to, from, incoming, timeStamp){
 
 	var self = this;
+	self.from = from;
+	self.to = to;
+	if(to.substring(0,1)==9 && to.length == 11){
+		self.to = to.substring(1, to.length);
+	}
+	if(from.substring(0,1)==9 && from.length == 11){
+		self.from = from.substring(1, from.length);
+	}
 	var newCallRef = firebase.database().ref().child('user-calls/' + self.phoneOwner).push();
 	var callInfo = {
 		answered: answered,
 		duration: '0:00:00',
-		from: "" + from,
+		from: "" + self.from,
 		incoming: incoming,
 		timeStamp: timeStamp,
-		to: "" + to
+		to: "" + self.to
 	};
-
 	var updates = {};
 	// add user-chat entry for participant
 	updates['/user-calls/' + self.phoneOwner + "/" + newCallRef.key] = callInfo;
 	firebase.database().ref().update(updates);
 
-	this.currentCalls.push(new RecentCall(newCallRef.key, answered, '', from, incoming, timeStamp, to));
+	this.currentCalls.push(new RecentCall(newCallRef.key, answered, '', self.from, incoming, timeStamp, self.to));
 }
 
 JanusPhone.prototype.updateFinishedCall = function(){
@@ -419,8 +426,16 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
  **/
 JanusPhone.prototype.makeCall = function(phoneNumber, myStreamTag, peerStreamTag) {
 	var self = this;
+	self.phoneNumber = "";
 	self.localView = document.getElementById(myStreamTag);
 	self.remoteView = document.getElementById(peerStreamTag);
+	if(phoneNumber.length==10){
+		self.phoneNumber = "+1" + phoneNumber;
+	}
+	else{
+		self.phoneNumber = phoneNumber;
+	}
+	console.log(self.phoneNumber);
 	self.sipCallHandler.createOffer({
 		jsep: self.jsepOnMakeCall,
 		media: {
@@ -449,7 +464,7 @@ JanusPhone.prototype.makeCall = function(phoneNumber, myStreamTag, peerStreamTag
 			//				"AnotherHeader": "another string"
 			//			}
 			//		};
-			var body = {request: "call", uri: "sip:" + phoneNumber + "@63.131.240.90"};
+			var body = {request: "call", uri: "sip:" + self.phoneNumber + "@63.131.240.90"};
 			// Note: you can also ask the plugin to negotiate SDES-SRTP, instead of the
 			// default plain RTP, by adding a "srtp" attribute to the request. Valid
 			// values are "sdes_optional" and "sdes_mandatory", e.g.:

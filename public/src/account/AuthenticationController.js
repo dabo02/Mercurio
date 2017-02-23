@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', '$timeout', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope, $timeout){
+    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', '$timeout', '$state', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope, $timeout, $state){
 
         var self = this;
 
@@ -10,7 +10,7 @@
         self.resetPasswordEmailSent = false;
         self.email = '';
         self.authenticationService = authenticationService;
-
+        self.resetPasswordButtonIsAvailable = false;
         //if user is already logged in change state to dialer
 
         self.loginButtonClicked = function(email, password){
@@ -27,22 +27,14 @@
 
         }
 
+        self.emailChanged = function(){
+          self.resetPasswordButtonIsAvailable = true;
+        }
+
         self.showResetPasswordDialog = function(event) {
 
             $mdDialog.show({
                 templateUrl: 'resetPasswordForm',
-                parent: angular.element(document.body),
-                targetEvent: event,
-                escapeToClose: true,
-                clickOutsideToClose:true
-                //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            });
-        };
-
-        self.showRegisterAccountDialog = function(event) {
-
-            $mdDialog.show({
-                templateUrl: 'registerAccountForm',
                 parent: angular.element(document.body),
                 targetEvent: event,
                 escapeToClose: true,
@@ -70,8 +62,8 @@
             $mdDialog.hide()
         };
 
-        self.closeRegisterAccountDialog = function(){
-            $mdDialog.hide()
+        self.registerButtonClicked = function(){
+          $state.go('register');
         };
 
         self.sendResetPasswordEmail = function(){
@@ -80,6 +72,7 @@
             authenticationService.resetPassword(self.email, function(error){
                 if(error){
                     self.resetPasswordEmailError = error.message;
+                    self.resetPasswordButtonIsAvailable = false;
                 }
 
                 self.resetPasswordEmailSent = true;
@@ -89,7 +82,6 @@
                            self.resetPasswordEmailSent = false;
                            $timeout(function(){
                                $scope.$apply();
-                               self.closeResetPasswordDialog();
                            });
                     }, 4000);
                 });

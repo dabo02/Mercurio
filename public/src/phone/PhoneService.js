@@ -62,7 +62,7 @@
             $mdDialog.hide();
             self.contactSearchString = '';
 
-            if(crmService.crmManager.crmList != undefined && crmService.crmManager.crmList != null && crmService.crmManager.crmList.length > 0){
+            if(crmService.crmManager.crmList != undefined && crmService.crmManager.crmList != null && crmService.crmManager.crmList.length > 0 && crmService.crmManager.crmList[0].insertCallsAutomatically && crmService.crmManager.crmList[0].validated){
                 crmService.showAddCallToCRMDialog();//, self.selectedCallDirection, event, crmService.crmManager.crmList[0].insertCallsAutomatically);
             }
 

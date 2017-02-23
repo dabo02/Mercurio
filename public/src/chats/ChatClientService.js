@@ -90,9 +90,9 @@
                     }
                 }
             }
-            $timeout(function () {
-              $rootScope.$apply();
-            });
+            setTimeout(function(){
+            $rootScope.$apply();
+          }, 100);
         }
 
         self.isChatListAvailable = function(){

@@ -350,14 +350,14 @@
     <!-- All calls -->
 
   <div class="scrollable-content" style="max-height: 53.1vh;">
-    <md-button ng-show="sidebarNavItem=='all'" ng-repeat="call in recentCallListCtrl.phoneService.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+    <md-button ng-show="sidebarNavItem=='all'" ng-repeat="call in recentCallListCtrl.phoneService.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-radius: 0px;">
 
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
               <div ng-click="selectCallIndex(call, 'recent')" flex="80" layout="row">
-                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
-                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="60">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
-                <div flex="30" layout="column">
+                <img style="width:40px; height:40px; margin-top:5%; border-radius:35px; margin-left: 4%;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
+                <div flex="50" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
                     <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
@@ -395,13 +395,13 @@
 
     <!-- Missed calls -->
     <div class="scrollable-content" style="max-height: 53.1vh;">
-    <md-button ng-show="sidebarNavItem=='missed'" ng-repeat="call in sidebarMissedCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+    <md-button ng-show="sidebarNavItem=='missed'" ng-repeat="call in sidebarMissedCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-radius: 0px;">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
-              <div ng-click="selectCallIndex(call, 'missed')" flex="70" layout="row">
-                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
-                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
-                <div flex="25" layout="column">
+              <div ng-click="selectCallIndex(call, 'missed')" flex="80" layout="row">
+                <img style="width:40px; height:40px; margin-top:5%; border-radius:35px; margin-left: 4%;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
+                <div flex="50" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
                     <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
@@ -410,8 +410,8 @@
                     <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
                 </div>
               </div>
-              <div flex="30" layout="row">
-                <div style="font-size:22px; padding-top:7%; color:white" flex="20" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div>
+              <div flex="20">
+                <div style="font-size:22px; margin-top:30%; color:white" flex="100" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div>
                 <!--<md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>-->
               </div>
             </md-list-item>
@@ -439,13 +439,13 @@
 
     <!-- Incoming calls -->
     <div class="scrollable-content" style="max-height: 53.1vh;">
-    <md-button ng-show="sidebarNavItem=='incoming'" ng-repeat="call in sidebarIncomingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+    <md-button ng-show="sidebarNavItem=='incoming'" ng-repeat="call in sidebarIncomingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-radius: 0px;">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
-              <div ng-click="selectCallIndex(call, 'incoming')" flex="70" layout="row">
-                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
-                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
-                <div flex="25" layout="column">
+              <div ng-click="selectCallIndex(call, 'incoming')" flex="80" layout="row">
+                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px; margin-left: 5%;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
+                <div flex="50" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
                     <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
@@ -454,8 +454,8 @@
                     <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
                 </div>
               </div>
-              <div flex="30" layout="row">
-                <div style="font-size:22px; padding-top:7%; color:white" flex="20" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div>
+              <div flex="20">
+                <div style="font-size:22px; margin-top:30%; color:white" flex="100" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div>
                 <!--<md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>-->
               </div>
             </md-list-item>
@@ -483,13 +483,13 @@
 
     <!-- Outgoing calls -->
     <div class="scrollable-content" style="max-height: 53.1vh;">
-    <md-button ng-show="sidebarNavItem=='outgoing'" ng-repeat="call in sidebarOutgoingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-bottom:1px solid #eee">
+    <md-button ng-show="sidebarNavItem=='outgoing'" ng-repeat="call in sidebarOutgoingCalls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 1%; width:100%; border-radius: 0px;">
         <md-list style="padding:0%;">
             <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl" style="margin-right:-5%; margin-left:-5%" layout="row">
-              <div ng-click="selectCallIndex(call, 'outgoing')" flex="70" layout="row">
-                <img style="width:40px; height:40px; margin-top:4%; border-radius:35px;" flex="10" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
-                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="50">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
-                <div flex="25" layout="column">
+              <div ng-click="selectCallIndex(call, 'outgoing')" flex="80" layout="row">
+                <img style="width:40px; height:40px; margin-top:5%; border-radius:35px; margin-left: 4%;" flex="15" ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+                <md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</md-truncate>
+                <div flex="50" layout="column">
                     <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
                     <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
@@ -498,8 +498,8 @@
                     <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
                 </div>
               </div>
-              <div flex="30" layout="row">
-                <div style="font-size:22px; padding-top:7%; color:white" flex="20" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div>
+              <div flex="20">
+                <div style="font-size:22px; margin-top:30%; color:white" flex="100" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div>
                 <!--<md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>-->
               </div>
             </md-list-item>

@@ -1,6 +1,6 @@
 <!--start profile editor form dialog-->
 <script type="text/ng-template" id="profileEditorForm">
-    <md-dialog flex="40" aria-label="Profile Editor Form" ng-controller="ProfileEditorController as profileCtrl">
+    <md-dialog  flex="40" aria-label="Profile Editor Form" ng-controller="ProfileEditorController as profileCtrl">
         <form ng-cloak>
             <md-toolbar class="mercurioBlueBackground">
                 <div class="md-toolbar-tools">
@@ -14,23 +14,23 @@
             <div ng-show="profileCtrl.saved" class="md-block">
                 <h3 ng-class="{'profile-save-success': profileCtrl.saved}">{{profileCtrl.msg}}</h3>
             </div>
-            <md-dialog-content>
+            <md-dialog-content style= "overflow-y: hidden">
 
                 <div layout="row" class="flex-80 flex-offset-10" style="margin-top:3%">
                     <md-input-container class="md-icon-float md-block">
                         <label>Status Message</label>
                         <md-icon class="fa fa-comment-o"></md-icon>
-                        <input id="statusMessage" type="text" maxlength="200" ng-value="profileCtrl.getStatusMessage()" placeholder="{{profileCtrl.getStatusMessage()}}">
+                        <input id="statusMessage" type="text" maxlength="200" ng-change = "profileCtrl.profileChanged()" ng-model="profileCtrl.statusMessage" placeholder="{{profileCtrl.getStatusMessage()}}">
                     </md-input-container>
                     <md-input-container class="md-icon-float md-block">
                         <label>Availability</label>
                         <md-icon class="fa fa-circle-o"></md-icon>
-                        <md-select style="min-width: 100px;" id="availability" ng-model="profileCtrl.newAvailability">
-                            <md-option ng-selected="{{profileCtrl.availability === 'Online' ? 'true' : 'false' }}" value="0">Online</md-option>
-                            <md-option ng-selected="{{profileCtrl.availability === 'Away' ? 'true' : 'false' }}" value="1">Away</md-option>
-                            <md-option ng-selected="{{profileCtrl.availability === 'Busy' ? 'true' : 'false' }}" value="2">Busy</md-option>
-                            <md-option ng-selected="{{profileCtrl.availability === 'onACall' ? 'true' : 'false' }}" value="3">On a call</md-option>
-                            <md-option ng-selected="{{profileCtrl.availability === 'Offline' ? 'true' : 'false'}}" value="4">Offline</md-option>
+                        <md-select style="min-width: 100px;" id="availability" ng-change="onChange()" ng-model="profileCtrl.newAvailability">
+                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Online' ? 'true' : 'false' }}" value="0">Online</md-option>
+                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Away' ? 'true' : 'false' }}" value="1">Away</md-option>
+                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Busy' ? 'true' : 'false' }}" value="2">Busy</md-option>
+                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'onACall' ? 'true' : 'false' }}" value="3">On a call</md-option>
+                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Offline' ? 'true' : 'false'}}" value="4">Offline</md-option>
 
 
                         </md-select>
@@ -42,26 +42,26 @@
                     <md-input-container class=" md-icon-float md-block">
                         <label>First Name</label>
                         <md-icon style="left:7%;" class="fa fa-user"></md-icon>
-                        <input id="firstName" type="text" ng-value="profileCtrl.getFirstName()" placeholder="{{profileCtrl.getFirstName()}}">
+                        <input id="firstName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.firstName" placeholder="{{profileCtrl.getFirstName()}}">
                     </md-input-container>
                     <md-input-container class=" md-icon-float md-block">
                         <label>Last Name</label>
                         <md-icon style="left:7%;" class="fa fa-user"></md-icon>
-                        <input id="lastName" type="text" ng-value="profileCtrl.getLastName()" placeholder="{{profileCtrl.getLastName()}}">
+                        <input id="lastName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.lastName" placeholder="{{profileCtrl.getLastName()}}">
                     </md-input-container>
 
                 </div>
 
-                <div layout="row" class="flex-80 flex-offset-10">
-                    <md-content style="background-color: white; padding-right: 100px; padding-left: 40px; padding-bottom: 30px " class="md-icon-float">
+                <div layout="row" class="flex-80 flex-offset-5">
+                    <md-content style="overflow-x: hidden; background-color: white; padding-right: 100px; padding-left: 40px; padding-bottom: 30px " class="md-icon-float">
                         <label style="font-size: 11px">Email</label>
                         <i style = "margin-top: 1%; padding-right: 10px" class="fa fa-envelope">{{profileCtrl.getEmail()}}</i>
                     </md-content>
-                    <md-content style= "background-color: white; margin-left: 5%;" class="md-icon-float">
+                    <md-content style= "overflow-x: hidden; background-color: white; margin-left: -10%;" class="md-icon-float">
                         <label style="font-size: 11px">Phone</label>
-                        <i style = "margin-top: 1%;" class="fa fa-phone"> {{profileCtrl.getPhone()}}</i>
+                        <i style = "margin-top: 1%;" class="fa fa-phone">{{profileCtrl.getPhone()}}</i>
                     </md-content>
-                    <md-content style= "background-color: white; margin-left: 15%;"class="md-icon-float">
+                    <md-content style= "overflow-x: hidden; background-color: white; margin-left: 10%;"class="md-icon-float">
                         <label style="font-size: 11px">Ext.</label>
                         <i style = "margin-top: 1%;" class="fa fa-hashtag">{{profileCtrl.getExtension()}} </i>
                     </md-content>
@@ -96,7 +96,7 @@
                 <md-button ng-disabled = "profileCtrl.accountService.uploadingImage" ng-click="profileCtrl.closeProfileEditorDialog()">
                     Close
                 </md-button>
-                <md-button ng-click="profileCtrl.saveProfileInfo();">
+                <md-button ng-show="profileCtrl.saveButtonIsAvailable" ng-click="profileCtrl.saveProfileInfo();">
                     Save
                 </md-button>
 
@@ -190,10 +190,10 @@
         <md-dialog-content>
 
             <div class="md-dialog-content" layout="row">
-                <p class="center" ng-controller="ContactListController as contactListCtrl">{{incomingCallCtrl.phoneService.phone.callerId | incomingCallNameFilter : contactListCtrl.contactList}}</p>
+                <p class="center" ng-controller="ContactListController as contactListCtrl">{{incomingCallCtrl.callerId | incomingCallNameFilter : contactListCtrl.contactList}}</p>
             </div>
             <div class="md-dialog-content" layout="row">
-                <p class="center" >{{incomingCallCtrl.phoneService.phone.callerId}}</p>
+                <p class="center" >{{incomingCallCtrl.callerId}}</p>
             </div>
             <div class="md-dialog-content" layout="row">
                 <span class="dialer-icons" style="margin:auto;">
@@ -233,21 +233,21 @@
 
         <md-list-item layout="row" ng-controller="ProfileEditorController as profileCtrl">
             <md-button layout="row">
-                <p flex="20" ng-click="profileCtrl.showProfileEditorDialog()"><img ng-src="images/contacts.png" alt=""></p>
+                <p flex="20" ng-click="profileCtrl.showProfileEditorDialog()"><img style= "height: 20px;"ng-src="images/default_contact_avatar-white.png" alt=""></p>
                 <p style = "color: white;" flex="80" ng-click="profileCtrl.showProfileEditorDialog()">Profile</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.contactsLinkClicked()" layout="row">
-                <p flex="20"><img ng-src="images/contacts.png" alt=""></p>
+                <p flex="20"><img ng-src="images/contacts-white.png" alt=""></p>
                 <p style = "color: white;" flex="80">Contacts</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row" ng-controller="ManageCRMController as crmCtrl">
             <md-button layout="row">
-                <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img ng-src="images/ic_crm_gray_24dp.png" alt=""></p>
+                <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img style= "height: 25px;" ng-src="images/ic_crm_gray_24dp.png" alt=""></p>
                 <p style = "color: white;" flex="80" ng-click="crmCtrl.showManageCRMDialog()">CRM Manager</p>
                 <img style="height: 20px;" ng-show = "crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_check_green.png" alt=""></p>
                 <img style="height: 20px;" ng-show = "!crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_exclamation_red.png" alt=""></p>
@@ -278,7 +278,7 @@
 
         <md-list-item layout="row" ng-controller="AuthenticationController as authCtrl">
             <md-button ng-click="authCtrl.logoutButtonClicked()" layout="row">
-                <p flex="20"><img ng-src="images/signout.png" alt=""></p>
+                <p flex="20"><img ng-src="images/signout-white.png" alt=""></p>
                 <p style = "color: white;" flex="80">Sign Out</p>
             </md-button>
         </md-list-item>
