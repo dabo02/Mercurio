@@ -39,8 +39,9 @@ exports.sendPushNotification = function (req, res) {
     fcm.send(message, function(err,response){
       if(err) {
         console.error(err);
+        res.sendStatus(400);
         if(i==tokenArray.length-1){
-          res.send(err);
+          res.sendStatus(400);
         }
       } else {
         if(i==tokenArray.length-1){
