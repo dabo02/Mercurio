@@ -352,45 +352,71 @@ exports.getPhoneConfigs = function(req, res){
             });
           }
 
-          function createNewAccount(account){
-            // //Push company name to firebase DB
-            // var postData = {
-            //   "availability" : 0
-            //   // "companyId" : "-Kbkv5yVzzlBJV5Bz-8K",  DB
-            //   "commPortalPassword" : req.body.password,
-            //   "email" : req.body.email,
-            //   "extension" : "2704", //NOC
-            //   "firstName" : "Wilfredo",//junto con lastname NOC
-            //   "lastName" : "Nieves", //Junto con firstname NOC
-            //   "phone" : req.body.phone,
-            //   "picture" : "",
-            //   "sipPassword" : "e+/gIbZ7QJkSMz8", //NOC
-            //   "sipUsername" : "7873042704", //NOC
-            //   "status" : "Hey I'm using Mercury"
-            // }
-            // // Get a key for a new Post.
-            // var newPostKey = firebase.database().ref().child('companies').push().key;
-            //
-            // var updates = {};
-            // updates['/companies/' + newPostKey] = postData;
-            // // firebase.database().ref().update(updates);
-            // //
-            // //Update changes
-            // updates['account/' + user.uid + '/email'] = newEmail;
-            // updates['account/' + user.uid + '/availability'] = 0;
-            // updates['account/' + user.uid + '/companyId'] = newPostKey;
-            // updates['account/' + user.uid + '/commPortalPassword'] = configs.commPortalPassword;
-            // updates['account/' + user.uid + '/extension'] = configs.extension;
-            // updates['account/' + user.uid + '/firstName'] = configs.firstName;
-            // updates['account/' + user.uid + '/lastName'] = configs.lastName;
-            // updates['account/' + user.uid + '/picture'] = '';
-            // updates['account/' + user.uid + '/sipPassword'] = configs.sipPassword;
-            // updates['account/' + user.uid + '/sipUsername'] = configs.sipUsername;
-            // updates['account/' + user.uid + '/status'] = 'Hi, I am using Mercury.';
-            //
-            // firebase.database().ref().update(updates).then(function(){
-            //   syncUpdates(user);
-            // });
+          function createNewAccount(){
+
+            //Set comany ID
+            var companyId='';
+            var companyName = "Optivon, Inc."; //Replace with NOC credentials
+            firebase.database().ref().child('companies').once('value', function(companiesSnapshot){
+              var valuesArray = Object.values(companiesSnapshot.val());
+              var keysArray = Object.keys(companiesSnapshot.val());
+
+              valuesArray.forEach(function(company, index){
+                if (company.name === companyName){
+                  companyId = keysArray[index];
+                }
+              });
+              if(companyId.length==0){
+                var companyData = {
+                  "name": companyName
+                };
+                // Get a key for a new Post.
+                var newPostKey = firebase.database().ref().child('companies').push().key;
+
+                var updates = {};
+                updates['/companies/' + newPostKey] = companyData;
+                companyId = newPostKey;
+              }
+              var accountData = {
+                "availability" : 0,
+                "companyId" : companyId,
+                "commPortalPassword" : req.body.password,
+                "email" : req.body.email,
+                "extension" : "2704", //NOC
+                "firstName" : "Wilfredo",//junto con lastname NOC
+                "lastName" : "Nieves", //Junto con firstname NOC
+                "phone" : req.body.phone,
+                "picture" : "",
+                "sipPassword" : "e+/gIbZ7QJkSMz8", //NOC
+                "sipUsername" : "7873042704", //NOC
+                "status" : "Hey I'm using Mercury"
+              }
+              // Get a key for a new Post.
+              var newPostKey = firebase.database().ref().child('account').push().key;
+              //
+              // var updates = {};
+              updates['/account/' + newPostKey] = accountData;
+              // firebase.database().ref().update(updates);
+              //
+              //Update changes
+              updates['account/' + newPostKey + '/email'] = accountData.email;
+              updates['account/' + newPostKey + '/availability'] = accountData.availability;
+              updates['account/' + newPostKey + '/companyId'] = accountData.companyId;
+              updates['account/' + newPostKey + '/commPortalPassword'] = accountData.commPortalPassword;
+              updates['account/' + newPostKey + '/extension'] = accountData.extension;
+              updates['account/' + newPostKey + '/firstName'] = accountData.firstName;
+              updates['account/' + newPostKey + '/lastName'] = accountData.lastName;
+              updates['account/' + newPostKey + '/picture'] = accountData.picture;
+              updates['account/' + newPostKey + '/sipPassword'] = accountData.sipPassword;
+              updates['account/' + newPostKey + '/sipUsername'] = accountData.sipUsername;
+              updates['account/' + newPostKey + '/status'] = accountData.status;
+
+              firebase.database().ref().update(updates).then(function(){
+                syncUpdates(user);
+              });
+            })
+
+
           }
 
           firebase.database().ref().child('account').once('value', function(snapshot){
@@ -409,8 +435,8 @@ exports.getPhoneConfigs = function(req, res){
               console.log(accountWithSamePhone.email+" "+configs.email);
               console.log(accountWithSamePhone.commPortalPassword+" "+configs.commPortalPassword);
               if(accountWithSamePhone.email === configs.email && accountWithSamePhone.commPortalPassword === configs.commPortalPassword){
-                // var responseObject = {"statusCode" : 400, "statusMessage" : "Account is already registered"}
-                // res.send(responseObject);
+                var responseObject = {"statusCode" : 400, "statusMessage" : "Account is already registered"}
+                res.send(responseObject);
               }
               else if(accountWithSamePhone.commPortalPassword === configs.commPortalPassword){
                 updateEmail(configs.email, accountWithSamePhone);
@@ -422,7 +448,7 @@ exports.getPhoneConfigs = function(req, res){
             }
             //Phone not exists
             else{
-              createNewAccount(configs);
+              createNewAccount();
             }
           });
         }
