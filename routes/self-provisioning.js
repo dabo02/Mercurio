@@ -409,8 +409,8 @@ exports.getPhoneConfigs = function(req, res){
               console.log(accountWithSamePhone.email+" "+configs.email);
               console.log(accountWithSamePhone.commPortalPassword+" "+configs.commPortalPassword);
               if(accountWithSamePhone.email === configs.email && accountWithSamePhone.commPortalPassword === configs.commPortalPassword){
-                // var responseObject = {"statusCode" : 400, "statusMessage" : "Account is already registered"}
-                // res.send(responseObject);
+                var responseObject = {"statusCode" : 400, "statusMessage" : "Account is already registered"}
+                res.send(responseObject);
               }
               else if(accountWithSamePhone.commPortalPassword === configs.commPortalPassword){
                 updateEmail(configs.email, accountWithSamePhone);
