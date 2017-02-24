@@ -16,6 +16,11 @@
         $scope.selectedCallIndex = undefined;
         filterSidebarCalls();
 
+        $scope.clearSelectedCallIndex = function(){
+            $scope.selectedCallIndex = undefined;
+            phoneService.callDetailsContact = undefined;
+        }
+
         $scope.selectCallIndex = function (selectedCall, callType) {
             var index;
             if(callType === 'recent'){
@@ -172,7 +177,7 @@
 
             $mdDialog.show(confirm).then(function() {
                 //$scope.status = 'You decided to get rid of your debt.';
-                $scope.selectedCallIndex = null;
+                $scope.selectedCallIndex = undefined;
                 var recentCallsLength = phoneService.phone.recentCallList.length;
                 phoneService.phone.deleteCalls([callIndex]);
                 var interval = setInterval(function(){

@@ -115,9 +115,6 @@
                 <div class="md-toolbar-tools">
                     <h2>CRM Manager</h2>
                     <span flex></span>
-                    <md-button class="md-icon-button" ng-click="crmCtrl.closeManageCRMDialog()">
-                        &times;
-                    </md-button>
                 </div>
             </md-toolbar>
 
@@ -213,6 +210,30 @@
 </script>
 <!--end incoming call dialog-->
 
+<!--start about dialog-->
+<script type="text/ng-template" id="aboutDialog">
+    <md-dialog aria-label="About Mercury" ng-controller="AboutDialogController as aboutCtrl">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>About Mercury</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+
+            <span flex></span>
+            <md-button ng-click="aboutCtrl.closeAboutDialog()">
+                Close
+            </md-button>
+
+        </md-dialog-actions>
+    </md-dialog>
+</script>
+<!--end about dialog-->
+
 <md-sidenav id="sidenav" style = "background:rgba(0,0,0,0.65);" ng-click="navCtrl.toggleLeftSidebar()" md-component-id="left" class="md-whiteframe-z2" >
     <md-list>
 
@@ -233,7 +254,7 @@
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.homeLinkClicked()" layout="row">
-                <p flex="20"><md-button class="md-icon-button fa fa-phone"></md-button></p>
+                <p style = "color: white;font-size:20px;"flex="20"><md-button style="margin:0%;" class="md-icon-button fa fa-home"></md-button></p>
                 <p style = "color: white;" flex="80">Home</p>
             </md-button>
         </md-list-item>
@@ -247,14 +268,14 @@
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.contactsLinkClicked()" layout="row">
-                <p flex="20"><img ng-src="images/contacts-white.png" alt=""></p>
+                <p style = "color: white;font-size:20px;"flex="20"><md-button style="margin:0%;" class="md-icon-button fa fa-users"></md-button></p>
                 <p style = "color: white;" flex="80">Contacts</p>
             </md-button>
         </md-list-item>
 
-        <md-list-item layout="row" ng-controller="ManageCRMController as crmCtrl">
+        <md-list-item style="margin-left:2.5%;" layout="row" ng-controller="ManageCRMController as crmCtrl">
             <md-button layout="row">
-                <p flex="20" ng-click="crmCtrl.showManageCRMDialog()"><img style= "height: 25px;" ng-src="images/ic_crm_gray_24dp.png" alt=""></p>
+                <p flex="20"  ng-click="crmCtrl.showManageCRMDialog()"><img style="height: 25px;" ng-src="images/ic_crm_gray_24dp.png" alt=""></p>
                 <p style = "color: white;" flex="80" ng-click="crmCtrl.showManageCRMDialog()">CRM Manager</p>
                 <img style="height: 20px;" ng-show = "crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_check_green.png" alt=""></p>
                 <img style="height: 20px;" ng-show = "!crmCtrl.crmManager.crmList[0].validated" ng-src="images/ic_exclamation_red.png" alt=""></p>
@@ -276,16 +297,16 @@
             </md-button>
         </md-list-item> -->
 
-        <md-list-item ng-controller="AboutDialogController" layout="row">
-            <md-button ng-click="aboutDialogCtrl.showAboutDialog()" layout="row">
-                <p flex="20"><img ng-src="images/info.png" alt=""></p>
+        <md-list-item ng-controller="AboutDialogController as aboutCtrl" layout="row">
+            <md-button ng-click="aboutCtrl.showAboutDialog()" layout="row">
+                <p style = "color: white;font-size:20px;"flex="20"><md-button style="margin:0%;" class="md-icon-button fa fa-info"></md-button></p>
                 <p style = "color: white;" flex="80">About</p>
             </md-button>
         </md-list-item>
 
         <md-list-item layout="row" ng-controller="AuthenticationController as authCtrl">
             <md-button ng-click="authCtrl.logoutButtonClicked()" layout="row">
-                <p flex="20"><img ng-src="images/signout-white.png" alt=""></p>
+                <p style = "color: white;font-size:20px;"flex="20"><md-button style="margin:0%;" class="md-icon-button fa fa-power-off"></md-button></p>
                 <p style = "color: white;" flex="80">Sign Out</p>
             </md-button>
         </md-list-item>
