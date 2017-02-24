@@ -1,5 +1,5 @@
 angular.module('users')
-.controller('ContactListController', ['$rootScope', '$scope', 'accountService', '$q', '$timeout', '$state', 'phoneService', function ($rootScope, $scope, accountService, $q, $timeout, $state, phoneService) {
+.controller('ContactListController', ['$rootScope', '$scope', 'accountService', '$q', '$timeout', '$state', 'phoneService', '$mdDialog', function ($rootScope, $scope, accountService, $q, $timeout, $state, phoneService, $mdDialog) {
 
     var self = this;
     self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -156,6 +156,22 @@ angular.module('users')
         }
     }
 
+    self.showProfileEditorDialog = function(event) {
+
+        $mdDialog.show({
+            templateUrl: 'profileEditorForm',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            escapeToClose: true,
+            clickOutsideToClose:true
+            //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        });
+    }
+
+    self.closeProfileEditorDialog = function(){
+        $mdDialog.hide()
+    };
+
     $scope.selectedContact;
 
     self.viewContact = function(contactIndex){
@@ -179,6 +195,9 @@ angular.module('users')
     };
 
     self.viewContactById = function(id){
+      if(id == accountService.activeAccount.userId){
+        self.showProfileEditorDialog();
+      }
       self.contactList.forEach(function (contact, index) {
           if (id == contact.userId) {
              self.viewContact(index);
