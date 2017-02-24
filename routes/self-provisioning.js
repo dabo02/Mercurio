@@ -395,9 +395,16 @@ exports.getPhoneConfigs = function(req, res){
 
           firebase.database().ref().child('account').once('value', function(snapshot){
             //Convert Not Iterable JSON to an array
-      			var array = Object.values(snapshot.val());
+      		// 	var array = Object.values(snapshot.val());
+	          var keysArray = Object.keys(snapshot.val());
+	          var valuesArray = [];
+	          keysArray.map(function(key){
+		          valuesArray.push(snapshot.val()[key]);
+	          })
+	          var array = valuesArray.slice();
             var phoneExists = false;
             var accountWithSamePhone;
+
             //Improve complexity
             array.map(function(account){
               if(account.phone === configs.phone){
