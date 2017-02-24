@@ -127,7 +127,7 @@
                     <md-input-container class="md-icon-float md-block" flex="100">
                         <label>CRM Name</label>
                         <md-icon class="fa fa-comment-o"></md-icon>
-                        <input required md-no-asterisk type="text" ng-model="crmCtrl.name" placeholder="{{crmCtrl.getCRMName()}}"
+                        <input required md-no-asterisk type="text" ng-model="crmCtrl.name"
                                ng-change="crmCtrl.crmNameChanged()" required>
 
                     </md-input-container>
@@ -137,7 +137,7 @@
                     <md-input-container class="md-icon-float md-block" flex="100">
                         <label>2-Factor Authentication Token</label>
                         <md-icon class="fa fa-circle-o"></md-icon>
-                        <input required md-no-asterisk type="text" ng-model="crmCtrl.token" placeholder="{{crmCtrl.getCRMToken()}}"
+                        <input required md-no-asterisk type="text" ng-model="crmCtrl.token"
                                ng-change="crmCtrl.crmTokenChanged()" required>
                         <a href="" ng-click="crmCtrl.findCRMAuthTokenButtonClicked()">Find your 2-Factor Authentication Token</a>
                     </md-input-container>
@@ -231,12 +231,19 @@
             </md-card-actions>
         </md-card>
 
-        <md-list-item layout="row" ng-controller="ProfileEditorController as profileCtrl">
-            <md-button layout="row">
-                <p flex="20" ng-click="profileCtrl.showProfileEditorDialog()"><img style= "height: 20px;"ng-src="images/default_contact_avatar-white.png" alt=""></p>
-                <p style = "color: white;" flex="80" ng-click="profileCtrl.showProfileEditorDialog()">Profile</p>
+        <md-list-item layout="row">
+            <md-button ng-click="navCtrl.homeLinkClicked()" layout="row">
+                <p flex="20"><md-button class="md-icon-button fa fa-phone"></md-button></p>
+                <p style = "color: white;" flex="80">Home</p>
             </md-button>
         </md-list-item>
+
+        <!--<md-list-item layout="row" ng-controller="ProfileEditorController as profileCtrl">-->
+            <!--<md-button layout="row">-->
+                <!--<p flex="20" ng-click="profileCtrl.showProfileEditorDialog()"><img style= "height: 20px;"ng-src="images/default_contact_avatar-white.png" alt=""></p>-->
+                <!--<p style = "color: white;" flex="80" ng-click="profileCtrl.showProfileEditorDialog()">Profile</p>-->
+            <!--</md-button>-->
+        <!--</md-list-item>-->
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.contactsLinkClicked()" layout="row">
@@ -269,12 +276,12 @@
             </md-button>
         </md-list-item> -->
 
-        <!--<md-list-item layout="row">-->
-            <!--<md-button layout="row">-->
-                <!--<p flex="20"><img ng-src="images/info.png" alt=""></p>-->
-                <!--<p style = "color: white;" flex="80">About Mercurio</p>-->
-            <!--</md-button>-->
-        <!--</md-list-item>-->
+        <md-list-item ng-controller="AboutDialogController" layout="row">
+            <md-button ng-click="aboutDialogCtrl.showAboutDialog()" layout="row">
+                <p flex="20"><img ng-src="images/info.png" alt=""></p>
+                <p style = "color: white;" flex="80">About</p>
+            </md-button>
+        </md-list-item>
 
         <md-list-item layout="row" ng-controller="AuthenticationController as authCtrl">
             <md-button ng-click="authCtrl.logoutButtonClicked()" layout="row">

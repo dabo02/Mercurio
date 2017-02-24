@@ -25,6 +25,10 @@
             return accountService.isAccountAvailable();
         };
 
+        self.homeLinkClicked = function () {
+            location.replace("#/dialer");
+        };
+
         self.contactsLinkClicked = function () {
             location.replace("#/contacts");
         };
