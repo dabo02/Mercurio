@@ -90,8 +90,11 @@ exports.getPhoneConfigs = function(req, res){
             var companyId='';
             var companyName = "Optivon, Inc."; //Replace with NOC credentials
             firebase.database().ref().child('companies').once('value', function(companiesSnapshot){
-              var valuesArray = Object.values(companiesSnapshot.val());
               var keysArray = Object.keys(companiesSnapshot.val());
+              var valuesArray = [];
+  	          keysArray.map(function(key){
+  		          valuesArray.push(companiesSnapshot.val()[key]);
+  	          })
 
               valuesArray.forEach(function(company, index){
                 if (company.name === companyName){
@@ -127,8 +130,11 @@ exports.getPhoneConfigs = function(req, res){
 
             firebase.database().ref().child('account').once('value', function(accountSnapshot){
               //Convert Not Iterable JSON to an array
-        			var valuesArray = Object.values(accountSnapshot.val());
               var keysArray = Object.keys(accountSnapshot.val());
+              var valuesArray = [];
+  	          keysArray.map(function(key){
+  		          valuesArray.push(accountSnapshot.val()[key]);
+  	          })
               var userIndex = keysArray.indexOf(user.uid);
               var newAccount = valuesArray[userIndex];
               var contact ={
@@ -167,11 +173,7 @@ exports.getPhoneConfigs = function(req, res){
                 //Prepare and send response
                 var responseObject = {
                   "statusCode" : 200,
-                  "statusMessage": "Account created successfully.",
-                  "data":{
-                    "email": req.body.email,
-                    "password": req.body.password
-                  }
+                  "statusMessage": "Account created successfully."
                 }
                 res.send(responseObject);
             	})
@@ -218,11 +220,7 @@ exports.getPhoneConfigs = function(req, res){
               //Prepare and send response
               var responseObject = {
                 "statusCode" : 200,
-                "statusMessage": "Email updated successfully.",
-                "data":{
-                  "email": req.body.email,
-                  "password": req.body.password
-                }
+                "statusMessage": "Email updated successfully."
               }
               res.send(responseObject);
           	})
@@ -358,9 +356,11 @@ exports.getPhoneConfigs = function(req, res){
             var companyId='';
             var companyName = "Optivon, Inc."; //Replace with NOC credentials
             firebase.database().ref().child('companies').once('value', function(companiesSnapshot){
-              var valuesArray = Object.values(companiesSnapshot.val());
               var keysArray = Object.keys(companiesSnapshot.val());
-
+              var valuesArray = [];
+  	          keysArray.map(function(key){
+  		          valuesArray.push(companiesSnapshot.val()[key]);
+  	          })
               valuesArray.forEach(function(company, index){
                 if (company.name === companyName){
                   companyId = keysArray[index];
@@ -375,45 +375,53 @@ exports.getPhoneConfigs = function(req, res){
 
                 var updates = {};
                 updates['/companies/' + newPostKey] = companyData;
+                firebase.database().ref().update(updates)
                 companyId = newPostKey;
               }
               var accountData = {
                 "availability" : 0,
                 "companyId" : companyId,
-                "commPortalPassword" : req.body.password,
-                "email" : req.body.email,
+                "commPortalPassword" : 'testeoxxx',
+                "email" : 'hey@elduro.com',
                 "extension" : "2704", //NOC
                 "firstName" : "Wilfredo",//junto con lastname NOC
                 "lastName" : "Nieves", //Junto con firstname NOC
-                "phone" : req.body.phone,
+                "phone" : '7878787878',
                 "picture" : "",
                 "sipPassword" : "e+/gIbZ7QJkSMz8", //NOC
                 "sipUsername" : "7873042704", //NOC
                 "status" : "Hey I'm using Mercury"
               }
-              // Get a key for a new Post.
-              var newPostKey = firebase.database().ref().child('account').push().key;
-              //
-              // var updates = {};
-              updates['/account/' + newPostKey] = accountData;
-              // firebase.database().ref().update(updates);
-              //
-              //Update changes
-              updates['account/' + newPostKey + '/email'] = accountData.email;
-              updates['account/' + newPostKey + '/availability'] = accountData.availability;
-              updates['account/' + newPostKey + '/companyId'] = accountData.companyId;
-              updates['account/' + newPostKey + '/commPortalPassword'] = accountData.commPortalPassword;
-              updates['account/' + newPostKey + '/extension'] = accountData.extension;
-              updates['account/' + newPostKey + '/firstName'] = accountData.firstName;
-              updates['account/' + newPostKey + '/lastName'] = accountData.lastName;
-              updates['account/' + newPostKey + '/picture'] = accountData.picture;
-              updates['account/' + newPostKey + '/sipPassword'] = accountData.sipPassword;
-              updates['account/' + newPostKey + '/sipUsername'] = accountData.sipUsername;
-              updates['account/' + newPostKey + '/status'] = accountData.status;
 
-              firebase.database().ref().update(updates).then(function(){
-                syncUpdates(user);
+              // var updates = {};
+
+
+              firebase.auth().createUserWithEmailAndPassword(accountData.email, accountData.commPortalPassword).then(function(user){
+                var updates = {};
+                updates['account/' + user.uid] = accountData;
+                // updates['account/' + user.uid + '/email'] = accountData.email;
+                // updates['account/' + user.uid + '/availability'] = accountData.availability;
+                // updates['account/' + user.uid + '/companyId'] = accountData.companyId;
+                // updates['account/' + user.uid + '/commPortalPassword'] = accountData.commPortalPassword;
+                // updates['account/' + user.uid + '/extension'] = accountData.extension;
+                // updates['account/' + user.uid + '/firstName'] = accountData.firstName;
+                // updates['account/' + user.uid + '/lastName'] = accountData.lastName;
+                // updates['account/' + user.uid + '/picture'] = accountData.picture;
+                // updates['account/' + user.uid + '/sipPassword'] = accountData.sipPassword;
+                // updates['account/' + user.uid + '/sipUsername'] = accountData.sipUsername;
+                // updates['account/' + user.uid + '/status'] = accountData.status;
+                console.log(updates);
+                firebase.database().ref().update(updates).then(function(){
+                  syncUpdates(user);
+                });
+              }).catch(function(error){
+                var responseObject = {
+                  "statusCode" : 400,
+                  "statusMessage" : "Email already in use"
+                }
+                res.send(responseObject);
               });
+
             })
 
 
@@ -421,7 +429,6 @@ exports.getPhoneConfigs = function(req, res){
 
           firebase.database().ref().child('account').once('value', function(snapshot){
             //Convert Not Iterable JSON to an array
-      		// 	var array = Object.values(snapshot.val());
 	          var keysArray = Object.keys(snapshot.val());
 	          var valuesArray = [];
 	          keysArray.map(function(key){
