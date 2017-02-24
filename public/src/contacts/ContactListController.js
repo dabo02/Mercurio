@@ -8,7 +8,7 @@ angular.module('users')
     var contacts = accountService.activeAccount.contactManager.contactList;
     self.contactList = accountService.activeAccount.contactManager.contactList;
     self.accountService = accountService;
-
+    self.contactProfile = null;
     var pendingSearch, cancelSearch = angular.noop;
     var cachedQuery, lastSearch;
     self.allContacts = loadContacts();
@@ -22,6 +22,7 @@ angular.module('users')
     self.selectedItem;
     self.searchText;
     self.noCache = false;
+    self.selectedContact = accountService.selectedContact;
 
     $scope.getChipInfo= function(chip_info) {
 
@@ -172,10 +173,27 @@ angular.module('users')
         $mdDialog.hide()
     };
 
-    $scope.selectedContact;
+    self.showProfileContactDialog = function(event) {
 
-    self.viewContact = function(contactIndex){
-        $state.go('contact-profile', {'contactIndex' : contactIndex});
+        $mdDialog.show({
+            templateUrl: 'contactProfile',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            escapeToClose: true,
+            clickOutsideToClose:true
+            //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        });
+    }
+
+    self.closeProfileContactDialog = function(){
+        $mdDialog.hide()
+    };
+
+
+
+    self.viewContact = function(contact, event){
+      accountService.selectedContact = contact;
+      self.showProfileContactDialog(event);
     }
 
     self.getContactByNumber = function(number){
@@ -200,7 +218,7 @@ angular.module('users')
       }
       self.contactList.forEach(function (contact, index) {
           if (id == contact.userId) {
-             self.viewContact(index);
+             self.viewContact(contact);
           }
 
     });

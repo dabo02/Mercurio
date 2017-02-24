@@ -95,7 +95,6 @@
 
     .filter('contactListAvatarFilter', function () {
         return function (picture) {
-
             var avatarUrl = '';
 
             if(picture === ""){
