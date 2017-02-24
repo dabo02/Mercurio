@@ -20,7 +20,7 @@
                     <md-input-container class="md-icon-float md-block">
                         <label>Status Message</label>
                         <md-icon class="fa fa-comment-o"></md-icon>
-                        <input id="statusMessage" type="text" maxlength="200" ng-change = "profileCtrl.profileChanged()" ng-model="profileCtrl.statusMessage" placeholder="{{profileCtrl.getStatusMessage()}}">
+                        <input id="statusMessage" type="text" maxlength="200" ng-change = "profileCtrl.profileChanged()" ng-model="profileCtrl.statusMessage">
                     </md-input-container>
                     <md-input-container class="md-icon-float md-block">
                         <label>Availability</label>
@@ -42,12 +42,12 @@
                     <md-input-container class=" md-icon-float md-block">
                         <label>First Name</label>
                         <md-icon style="left:7%;" class="fa fa-user"></md-icon>
-                        <input id="firstName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.firstName" placeholder="{{profileCtrl.getFirstName()}}">
+                        <input id="firstName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.firstName" required>
                     </md-input-container>
                     <md-input-container class=" md-icon-float md-block">
                         <label>Last Name</label>
                         <md-icon style="left:7%;" class="fa fa-user"></md-icon>
-                        <input id="lastName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.lastName" placeholder="{{profileCtrl.getLastName()}}">
+                        <input id="lastName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.lastName" required>
                     </md-input-container>
 
                 </div>
