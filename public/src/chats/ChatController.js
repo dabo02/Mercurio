@@ -164,6 +164,10 @@
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
             // $state.reload();
+            setTimeout(function(){
+            $rootScope.$apply();
+          }, 100);
+
         }
 
         self.isMessageFromMe = function(message){
@@ -217,37 +221,72 @@
             // $('#multimediaPreview').attr('src', multimediaURL);
             // $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
         }
-        
+
 
         $location.hash('bottom');
         $anchorScroll();
 
-        if(chatClientService.chatClient.chatList.length > 0) {
 
-            if (!chatClientService.selectedChat) {
-                chatClientService.selectedChat = chatClientService.chatClient.chatList[$stateParams.chatIndex]; // reset selected chat
-            }
+        if(!chatClientService.selectedChat){
+          chatClientService.chatClient.setChatListObserver(function () {
 
-            $scope.selectedChat = chatClientService.selectedChat;
+                 var savedChat = JSON.parse(localStorage.getItem('chatSaved'));
+                 chatClientService.chatClient.chatList.forEach(function (chat){
+                   if(savedChat.chatId == chat.chatId){
+                     chatClientService.selectedChat = chat;
+                   }
+                 });
+                 instantiateSelectedChat();
+           });
 
-            $scope.$watch(
-                'selectedChat',
-                function (newVal, oldVal) {
-                    if (newVal !== oldVal) {
-
-                        $scope.selectedChat.lastMessage = newVal.lastMessage;
-
-                        $timeout(function(){
-                            $scope.$apply();
-                        });
-                    }
-                }, true
-            );
-
-            chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+        }
+        else if(chatClientService.selectedChat){
+            instantiateSelectedChat();
         }
         else{
-            $state.go('dialer');
+          $state.go('dialer');
         }
+
+        function instantiateSelectedChat(){
+          $scope.selectedChat = chatClientService.selectedChat;
+          $scope.$watch(
+                  'selectedChat',
+                  function (newVal, oldVal) {
+                      if (newVal !== oldVal) {
+
+                          $scope.selectedChat.lastMessage = newVal.lastMessage;
+
+                          $timeout(function(){
+                              $scope.$apply();
+                          });
+                      }
+                  }, true
+              );
+          chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+        }
+        // if(chatClientService.chatClient.chatList.length > 0) {
+        //
+        //     $scope.selectedChat = chatClientService.selectedChat;
+        //     localStorage.setItem('chatClientService.selectedChat', JSON.stringify(chatClientService.selectedChat));
+        //     $scope.$watch(
+        //         'selectedChat',
+        //         function (newVal, oldVal) {
+        //             if (newVal !== oldVal) {
+        //
+        //                 $scope.selectedChat.lastMessage = newVal.lastMessage;
+        //
+        //                 $timeout(function(){
+        //                     $scope.$apply();
+        //                 });
+        //             }
+        //         }, true
+        //     );
+        //
+        //     chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+        // }
+        // else{
+        //   console.log(JSON.parse(localStorage.getItem('chatClientService.selectedChat')));
+        //     $state.go('dialer');
+        // }
     }]);
 })();

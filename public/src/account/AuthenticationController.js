@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope){
+    angular.module('users').controller('AuthenticationController', ['$scope', 'authenticationService', 'accountService', 'chatClientService', 'phoneService', 'crmService', '$mdDialog', '$rootScope', '$timeout', '$state', function($scope, authenticationService, accountService, chatClientService, phoneService, crmService, $mdDialog, $rootScope, $timeout, $state){
 
         var self = this;
 
@@ -10,7 +10,7 @@
         self.resetPasswordEmailSent = false;
         self.email = '';
         self.authenticationService = authenticationService;
-
+        self.resetPasswordButtonIsAvailable = false;
         //if user is already logged in change state to dialer
 
         self.loginButtonClicked = function(email, password){
@@ -25,6 +25,10 @@
               },3000);
             });
 
+        }
+
+        self.emailChanged = function(){
+          self.resetPasswordButtonIsAvailable = true;
         }
 
         self.showResetPasswordDialog = function(event) {
@@ -58,16 +62,34 @@
             $mdDialog.hide()
         };
 
+        self.registerButtonClicked = function(){
+          $state.go('register');
+        };
+
         self.sendResetPasswordEmail = function(){
             self.resetPasswordEmailError = '';
             self.resetPasswordEmailSent = false;
             authenticationService.resetPassword(self.email, function(error){
                 if(error){
                     self.resetPasswordEmailError = error.message;
+                    self.resetPasswordButtonIsAvailable = false;
                 }
 
                 self.resetPasswordEmailSent = true;
+                $timeout(function(){
+                    $scope.$apply();
+                    setTimeout(function(){
+                           self.resetPasswordEmailSent = false;
+                           $timeout(function(){
+                               $scope.$apply();
+                           });
+                    }, 4000);
+                });
             });
+        }
+
+        self.registerAccount = function(){
+          authenticationService.register(self.registerData);
         }
     }]);
 }());

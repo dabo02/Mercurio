@@ -36,11 +36,10 @@ ZohoCRM.prototype.validateToken = function(crmOwnerId) {
 
 	var self = this;
   var route = "/validateToken";
-  var url = "crm.zoho.com";
+
   var succ = [];
   var data = {
-    token: self.token,
-    url: url
+    token: self.token
   };
   $.ajax({
     url: route,
@@ -76,7 +75,7 @@ ZohoCRM.prototype.validateToken = function(crmOwnerId) {
 ZohoCRM.prototype.addCall = function(callInfo, cb) {
 
   var route = "/insertCalls";
-  var url = "crm.zoho.com";
+
   var succ = [];
   var data = {
     token: this.token,
@@ -91,8 +90,7 @@ ZohoCRM.prototype.addCall = function(callInfo, cb) {
     duration: callInfo.duration,
     description: callInfo.description,
     billable: callInfo.billable,
-    result: callInfo.result,
-    url: url
+    result: callInfo.result
      };
   $.ajax({
     url: route,
@@ -148,12 +146,11 @@ Requests CRM server to add a lead to CRM
 ZohoCRM.prototype.addLead = function(leadInfo, cb) {
 
   var route = "/insertLead";
-  var url = "crm.zoho.com";
+
   var succ = [];
   var data = {
     token: this.token,
-    leadInfo: leadInfo,
-    url: url
+    leadInfo: leadInfo
 };
     $.ajax({
       url: route,
@@ -179,12 +176,11 @@ ZohoCRM.prototype.addLead = function(leadInfo, cb) {
 ZohoCRM.prototype.addAccount = function(acctInfo, cb) {
 
   var route = "/insertAccount";
-  var url = "crm.zoho.com";
+
   var succ = [];
   var data = {
     token: this.token,
-    acctInfo: acctInfo,
-    url: url
+    acctInfo: acctInfo
   };
   $.ajax({
     url: route,
@@ -217,12 +213,11 @@ ZohoCRM.prototype.addAccount = function(acctInfo, cb) {
 
 ZohoCRM.prototype.searchCallableRecords = function(phone, cb){
     var route = "/fetchRecords";
-    var url = "crm.zoho.com";
+
     var callableRecords = [];
     var data = {
         token: this.token,
-        telNumber: phone,
-        url: url
+        telNumber: phone
     };
     $.ajax({
         url: route,

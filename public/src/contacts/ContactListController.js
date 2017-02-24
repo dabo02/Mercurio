@@ -27,6 +27,9 @@ angular.module('users')
 
     };
 
+    self.delete = function(){
+      self.asyncContacts = [];
+    };
     /**
      * Search for contacts; use a random delay to simulate a remote call
      */

@@ -5,19 +5,24 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ProfileEditorController', ['$scope', 'accountService', '$mdDialog', '$rootScope', function($scope, accountService, $mdDialog, $rootScope) {
+    angular.module('mercurio').controller('ProfileEditorController', ['$scope', 'accountService', '$mdDialog', '$rootScope', '$timeout', function($scope, accountService, $mdDialog, $rootScope, $timeout) {
 
         var self = this;
-        self.firstName = '',
-        self.lastName = '',
-        self.email = '',
-        self.picture = '',
-        self.statusMessage = '',
-        self.availability = '';
-        self.newAvailability = '';
         self.pictureChosen = true;
         self.accountService = accountService;
         self.activeAccount = accountService.activeAccount;
+        self.firstName = '';
+        self.lastName = '';
+        self.email = '';
+        self.picture = '';
+        self.statusMessage = '';
+        self.availability = '';
+        self.newAvailability = '';
+        self.statusInputLimit = '10';
+        self.saved = null;
+        self.msg = "";
+        self.saveButtonIsAvailable = false;
+
 
         self.showProfileEditorDialog = function(event) {
 
@@ -35,6 +40,10 @@
             $mdDialog.hide()
         };
 
+        self.profileChanged = function(){
+            self.saveButtonIsAvailable = true;
+        }
+
         self.saveProfileInfo = function(){
             if(accountService.isAccountAvailable()) {
                 if(self.newAvailability == ''){
@@ -50,11 +59,35 @@
                       accountService.opacity = progress/100+0.1;
                       $rootScope.$digest();
                       if(!uploadingImage){
-                        //close dialog
-                        self.closeProfileEditorDialog();
+                          self.msg = "Profile pic saved succesfully";
+                          self.saved = true;
+                          $timeout(function(){
+                              $scope.$apply();
+                          });
+                          setTimeout(function(){
+                              self.saved = null;
+                              $timeout(function(){
+                                  $scope.$apply();
+                                  self.closeProfileEditorDialog();
+                              });
+                          }, 3000);
                       }
                     });
+
                 }
+                self.msg = "Profile info saved succesfully";
+                self.saveButtonIsAvailable=false;
+                self.saved = true;
+                $timeout(function(){
+                    $scope.$apply()});
+                setTimeout(function(){
+                    self.saved = null;
+                    $timeout(function(){
+                        $scope.$apply()
+                        self.closeProfileEditorDialog();
+                    });
+
+                }, 3000);
             }
         }
 
@@ -91,6 +124,8 @@
             }
         }
 
+
+
         self.getFirstName = function(){
             if(accountService.isAccountAvailable()) {
                 return accountService.activeAccount.firstName;
@@ -123,7 +158,12 @@
 
         self.getProfilePicture = function(){
             if(accountService.isAccountAvailable()) {
+              if(accountService.activeAccount.picture === ""){
+                return 'images/default_contact_avatar.png';
+              }
+              else{
                 return accountService.activeAccount.picture;
+              }
             }
         }
 

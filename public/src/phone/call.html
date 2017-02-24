@@ -2,14 +2,14 @@
     <nav-bar></nav-bar>
     <div flex layout="row">
         <left-sidebar></left-sidebar>
-        <md-content flex="70" id="main-content" ng-controller="CallController as callCtrl" style="position:relative;background-color:transparent;">
+        <md-content class= "scrollable-content" flex="70" id="main-content" ng-controller="CallController as callCtrl" style="position:relative;background-color:transparent;">
             <!--<video class='rounded centered' id='localStream' autoplay></video>-->
             <!--<video class='rounded centered' id='remoteStream' autoplay></video>-->
 
             <div style="padding-top:3%" class="row">
                 <div class="col-lg-2 col-md-2 col-lg-push-5 col-md-push-5">
                     <span style="display:table;margin:0 auto;" class="dialer-icons">
-                        <a href="#/dialer" id="dialer-circle" style="width:50px; height:50px; margin-right:0px;"><img id="dialer" src="images/dialer.png"></a>
+                        <a href="#/dialer" id="dialer-circle" style="width:50px; height:50px; margin-right:0px;"><i style="margin-top: 5%; color: #087be4; font-size: 30px;" class="fa fa-home"></i></a>
                     </span>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                     </md-card-title-media>
                 </md-card-title>
 
-                <md-content style="margin-top:25%; border-bottom:1px solid #1565c0;background-color: transparent;" layout="row" flex="65" flex-offset="30">
+                <md-content style="margin-top:25%; background-color: transparent;" layout="row" flex="65" flex-offset="25">
                     <md-button  style= "margin-bottom: 10%;" ng-click="callCtrl.showDTMFDialog()" class="md-fab md-primary mercurioBlueBackground">
                       <md-icon style="font-size: 25px;"class="fa fa-th"></md-icon>
                     </md-button>
@@ -156,6 +156,9 @@
                   </md-button>
 
                 </md-content>
+
+                <div style="border-bottom:1px solid #1565c0;" flex="60" flex-offset="20">
+                </div>
 
                 <!--<md-content ng-click="" id="call-button" layout="row" flex="45" flex-offset="35" style="margin-top:100px; border-left:1px solid #1565c0; border-right:1px solid #1565c0;background-color: transparent;">-->
                     <!--<div flex="50"><img id="dialer-image" src="images/dialer_green.png" style="height:35px; margin:auto; margin-left:50%;"></div>-->
@@ -189,7 +192,7 @@
                         <!--<p class="text-center">Video</p>-->
                     <!--</div>-->
                 <!--</md-content>-->
-                <md-content flex-offset="35" flex="50" style="margin-bottom:-25px;background-color: transparent;overflow-y: hidden; margin-top:10%;">
+                <md-content flex-offset="30" flex="45" style="margin-bottom:-25px;background-color: transparent;overflow-y: hidden; margin-top:10%;">
                           <span style="display:table; margin:0 auto;" class="dialer-icons">
                                     <a href="" ng-click="callCtrl.endCall()" id="callIcon" style="width:50px; height:50px; background-color:red;">
                                         <i style="font-size:25px; line-height:50px; color:#ffffff" class="fa fa-phone fa-lg"></i>
@@ -198,6 +201,8 @@
                 </md-content>
             </md-card>
         </md-content>
-        <right-sidebar class="scrollable-content" flex="30"></right-sidebar>
+
+        <right-sidebar flex="30"></right-sidebar>
+
     </div>
 </div>

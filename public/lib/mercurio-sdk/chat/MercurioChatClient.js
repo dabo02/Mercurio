@@ -15,6 +15,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	//Uploading Image variables
 	self.uploadingImage = false;
 	self.uploadingProgress = 0;
+	self.chatListIsReadyObserver = null;
 
 	var pageNumber = 1;
 	var limit = 50;
@@ -69,6 +70,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	self.fetchChatListPage(pageNumber, limit);
 }
 
+
 MercurioChatClient.prototype.getChatList = function(){
 	return this.chatList;
 }
@@ -101,6 +103,20 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 				self.chatIsReadyToSendObserver(chat);
 			}
 
+			if(self.chatListIsReadyObserver){
+				// 	query fb once for complete chat list and find its length
+				var fbChatListLength = 0;
+				firebase.database().ref('user-chats/' + self.chatClientOwner).once("value", function(snapshot) {
+					fbChatListLength = snapshot.numChildren();
+					if(fbChatListLength == self.chatList.length){
+							self.chatListIsReadyObserver();
+					}
+				});
+
+				self.chatListIsReadyObserver = null;
+
+			}
+
 		//}
 
 	});
@@ -117,13 +133,11 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 		});
 	});
 }
-
 /*
 Requests server to create a chat and add it to the database
 @method
 @params: chatInfo - JSON object with chat attributes (including participantCount)
 */
-
 MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 
 	var self = this;
@@ -428,6 +442,9 @@ messageContent must be structured as shown below:
 *** JSON example of message here ***
 
 */
+MercurioChatClient.prototype.setChatListObserver = function(observer){
+	this.chatListIsReadyObserver = observer;
+}
 
 MercurioChatClient.prototype.receiveMessage = function(chatIndex, type, message){
 
