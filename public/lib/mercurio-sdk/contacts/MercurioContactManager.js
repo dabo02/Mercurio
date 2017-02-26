@@ -6,28 +6,29 @@ uses AbstractContactManager, MercurioContact, Contact, MissingImplementationErro
 function MercurioContactManager(userId){
 
 	var self = this;
-	
+	self.contactObserver = undefined;
+
 	AbstractContactManager.apply(self, arguments);
-	
+
 	//check if parameter types are correct
 	self.contactListQuery = firebase.database().ref('user-contacts/' + userId).on("child_added", function(snapshot) {
-	
+
 		if(snapshot.exists()){
-		
+
 			var contact;
-			contact = new MercurioContact(snapshot.val().firstName, snapshot.val().lastName, 
+			contact = new MercurioContact(snapshot.val().firstName, snapshot.val().lastName,
 			snapshot.val().email, snapshot.val().picture, snapshot.val().phone, snapshot.val().extension,
 			snapshot.val().userId, snapshot.val().status, snapshot.val().availability, snapshot.key);
-				
+
 			self.contactList.push(contact);
 		}
 
 	});
-	
+
 	firebase.database().ref('user-contacts/' + userId).on('child_changed', function(snapshot) {
-	  	//compare contact ids from local contact list to snapshot keys in order to find local 
+	  	//compare contact ids from local contact list to snapshot keys in order to find local
 		//reference to contact; use that contact's setters to update the local reference
-	  
+
 	  	self.contactList.forEach(function(contact, index){
 			if(contact.contactId === snapshot.key){
 				self.contactList[index].setFirstName(snapshot.val().firstName);
@@ -41,11 +42,16 @@ function MercurioContactManager(userId){
 				self.contactList[index].setAvailability(snapshot.val().availability);
 			}
 		});
+
+		if(self.contactObserver()){
+					self.contactObserver();
+				}
+
 	});
-	
+
 	firebase.database().ref('user-contacts/' + userId).on('child_removed', function(snapshot) {
-	
-		//compare contact ids from local contact list to snapshot keys in order to find local 
+
+		//compare contact ids from local contact list to snapshot keys in order to find local
 		//reference to contact; remove contact from local contacts list
 
 		self.contactList.forEach(function(contact, index){
@@ -69,7 +75,7 @@ MercurioContactManager.prototype.addContact = function(userId, contactInfo){
 
 	//determine if contact number belongs to a mercurio user and if so find that user's id
 	//before updating the new contact's attributes in firebase
-	
+
 	var updates = {};
 	updates['/user-contacts/' + userId + "/" + newContactKey] = contactInfo;
 
@@ -77,13 +83,17 @@ MercurioContactManager.prototype.addContact = function(userId, contactInfo){
 }
 
 MercurioContactManager.prototype.getContact = function(index){
-	
+
 	return this.contactList[index];
 }
 
 MercurioContactManager.prototype.getContactList = function(index){
-	
+
 	return this.contactList;
+}
+
+MercurioContactManager.prototype.setContactObserver = function(contactObserver){
+	this.contactObserver = contactObserver;
 }
 
 MercurioContactManager.prototype.deleteContacts = function(userId, indices){
@@ -112,7 +122,7 @@ MercurioContactManager.prototype.updateContact = function(userId, index, contact
 }
 
 MercurioContactManager.prototype.searchContacts = function(searchTerm){
-	
+
 	var self = this;
 	var searchResults = [];
 
@@ -127,6 +137,6 @@ MercurioContactManager.prototype.searchContacts = function(searchTerm){
 			searchResults.push(contact);
 		}
 	});
-	
+
 	return searchResults;
 }

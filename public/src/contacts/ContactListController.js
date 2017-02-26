@@ -208,8 +208,11 @@ angular.module('users')
 
     };
 
-    self.selectedItemChange = function(index){
-        self.viewContact(index);
+    self.selectedItemChange = function(contact){
+        if(contact){
+        self.viewContact(contact);
+        self.searchText = '';
+      }
     };
 
     self.viewContactById = function(id){
@@ -223,5 +226,10 @@ angular.module('users')
 
     });
   };
+
+
+  accountService.activeAccount.contactManager.setContactObserver(function(){
+            $scope.$apply();
+        })
 
 }]);
