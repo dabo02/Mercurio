@@ -3,6 +3,7 @@
     <div flex layout="row">
         <left-sidebar></left-sidebar>
         <md-content flex="70" id="main-content" style="position:relative;background-color: transparent;overflow:hidden;">
+            <call-status-toolbar></call-status-toolbar>
             <div style="padding-top:3%" layout="row">
                 <div flex="50" flex-offset="25">
                     <span style="display:table;margin:0 auto;" class="dialer-icons">
@@ -10,8 +11,8 @@
                     </span>
                 </div>
             </div>
-            <call-status-toolbar></call-status-toolbar>
-            <div ng-controller="ChatController as chatCtrl" class="row">
+
+            <div style="margin-top:3%" ng-controller="ChatController as chatCtrl" class="row">
                 <script type="text/ng-template" id="chatGroupDetails">
                     <md-dialog flex="40" aria-label="Chat Group Details" ng-controller="ChatGroupDetailsController as chatGroupCtrl">
                         <form ng-controller="ContactListController as contactListCtrl" ng-cloak>

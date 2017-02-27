@@ -40,7 +40,7 @@
 
         self.addCallToCRM = function(){
 
-            if(self.subject.length == 0 || self.notes.length == 0 || self.selectedRecords.length == 0){
+            if(self.selectedRecords.length == 0){
 
                 return;
             }
