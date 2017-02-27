@@ -132,12 +132,32 @@ MercurioAuthenticator.prototype.setAccountObserver = function(observer){
 MercurioAuthenticator.prototype.register = function(registerData){
 	$.ajax({
 		type: 'POST',
-		url: '/register',
+		url: '/authenticate',
 		cache: false,
 		contentType: "application/json",
 		data: JSON.stringify(registerData),
 		success: function(data) {
-			console.log(data);
+			if(data.statusCode==200){
+				$.ajax({
+					type: 'POST',
+					url: '/'+data.route,
+					cache: false,
+					contentType: "application/json",
+					data: JSON.stringify(data),
+					success: function(data) {
+						console.log(data);
+						//Log in HERE
+						MercurioAuthenticator.prototype.login(registerData.email, registerData.password);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log("Error");
+					},
+					dataType: "json"
+				});
+			}
+			else{
+				console.log("error");
+			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Error");
