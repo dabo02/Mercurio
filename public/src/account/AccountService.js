@@ -10,6 +10,7 @@
         var self = this;
 
         self.activeAccount =  null;
+        self.selectedContact = null;
 
         self.isAccountAvailable = function(){
 

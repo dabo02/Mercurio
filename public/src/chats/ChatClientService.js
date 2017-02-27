@@ -16,6 +16,9 @@
             self.selectedChat = newChat;
             localStorage.setItem('chatSaved', JSON.stringify(self.selectedChat));
             //$state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+            setTimeout(function(){
+              $rootScope.$apply();
+            },1000);
             if($state.current.name == 'chat'){
                 $state.reload();
             }

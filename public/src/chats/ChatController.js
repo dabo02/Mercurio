@@ -97,7 +97,7 @@
                 parent: angular.element(document.body),
                 //targetEvent: event,
                 escapeToClose: true,
-                clickOutsideToClose:false
+                clickOutsideToClose:true
                 //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             });
         }

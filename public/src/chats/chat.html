@@ -19,8 +19,9 @@
                             <md-toolbar class="mercurioBlueBackground">
                                 <div class="md-toolbar-tools">
 
-                                    <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block">
-                                        <h2><input style="color:white; border-color: black;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text"></h2>
+                                    <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block" >
+                                        <h2 ng-show="!chatGroupCtrl.canEdit">{{chatGroupCtrl.chatClientService.selectedChat.title}}</h2>
+                                        <h2><input style="color:white; border-color: black;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-show="chatGroupCtrl.canEdit"></h2>
                                     </md-input-container>
 
                                     <!--<h2>{{chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].title}}</h2>-->
@@ -64,7 +65,7 @@
                                 <div flex="80" flex-offset="10" layout="row" class="scrollableList fixedRows" >
                                     <md-list>
                                         <md-list-item ng-controller = "ContactListController as contactListCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
-                                            <img ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="{{participant.picture}}" class="md-avatar" alt="{{participant.firstName}}" />
+                                            <img ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
                                             <div class="md-list-item-text compact">
                                                 <h3 ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
                                             </div>
@@ -155,7 +156,7 @@
                                     <img style="height:300px;" ng-src= "{{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
                                 </md-card>
                                 <div layout="row">
-                                    <p flex = "40" flex-offset="50"> {{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].textContent}} </p>
+                                    <p flex = "40" flex-offset="40"> {{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].textContent}} </p>
                                 </div>
                             </md-dialog-content>
 

@@ -31,6 +31,17 @@
         };
     })
 
+    .filter('participantPicture', function () {
+        return function (participant) {
+
+            if(!participant.picture){
+                return 'images/default_contact_avatar.png';
+            }
+
+            return participant.picture;
+          };
+    })
+
     .filter('messageListParticipantNameFilter', function () {
         return function (from, participantList) {
 
@@ -84,7 +95,6 @@
 
     .filter('contactListAvatarFilter', function () {
         return function (picture) {
-
             var avatarUrl = '';
 
             if(picture === ""){
