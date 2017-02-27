@@ -49,7 +49,7 @@
                 phoneService.instantiatePhone(account);
                 crmService.instantiateCRMManager(account.userId);
 
-                if($state.current.name == 'login'){
+                if($state.current.name == 'login' || $state.current.name == 'register'){
                     $state.go('dialer');
                 }
 
