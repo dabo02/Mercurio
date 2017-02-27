@@ -19,41 +19,22 @@
               <md-toolbar ng-controller = "AddCallToCRMController as crmCtrl">
                   <div class="md-toolbar-tools">
                       <!-- <h2 style = "color: white;" class="pull-left col-xs-6">Call Details</h2> -->
-                      <div flex="60" flex-offset = "20">
-                        <div ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName != 'Unknown' && (crmCtrl.crmService.crmManager.crmList.length > 0 || crmCtrl.crmService.crmManager.crmList[0].validated)" flex="80" flex-offset="10">
+                      <div style="margin:auto">
+
                           <md-button class="md-icon-button fa fa-phone" ng-click="callDetailsCtrl.closeCallDetailsDialog(); RecentCallsCtrl.call();">
                           </md-button>
-                          <md-button class="md-icon-button" ng-controller="CreateChatController as createChatCtrl"
-                                     ng-click="createChatCtrl.createNewChat([RecentCallsCtrl.phoneService.callDetailsContact])">
-                              <img style= "height: 20px; background-color: transparent;" ng-src= "images/add_chat.png"></img>
+                          <md-button style="font-size:20px;" class="md-icon-button" ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([RecentCallsCtrl.phoneService.callDetailsContact])">
+                              <img style= "height: 20px; background-color: transparent;" ng-src= "images/add_chat.png">
                           </md-button>
-                          <md-button  class="md-icon-button" ng-click="crmCtrl.addCallToCRMButtonClicked(RecentCallsCtrl.phoneService.callDetailsSelectedCall, $event)">
-                              <img style= "height: 25px; background-color: transparent;" ng-src= "images/ic_crm_gray_24dp.png"></img>
+                          <md-button  class="md-icon-button" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(RecentCallsCtrl.phoneService.callDetailsSelectedCall, $event)" ng-show="crmCtrl.crmService.crmManager.crmList.length > 0 && crmCtrl.crmService.crmManager.crmList[0].validated">
+                              <img style= "height: 25px; background-color: transparent;" ng-src= "images/ic_crm_gray_24dp.png">
                           </md-button>
                           <md-button class="md-icon-button fa fa-trash" ng-click="RecentCallsCtrl.showDeleteConfirm($event)">
                           </md-button>
-                        </div>
-                        <div ng-hide="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown' || crmCtrl.crmService.crmManager.crmList.length > 0 || crmCtrl.crmService.crmManager.crmList[0].validated" flex="60" flex-offset="20">
-                          <md-button class="md-icon-button fa fa-phone" ng-click="callDetailsCtrl.closeCallDetailsDialog(); RecentCallsCtrl.call();">
-                          </md-button>
-                          <md-button class="md-icon-button" ng-controller="CreateChatController as createChatCtrl"
-                                     ng-click="createChatCtrl.createNewChat([RecentCallsCtrl.phoneService.callDetailsContact])">
-                              <img style= "height: 20px; background-color: transparent;" ng-src= "images/add_chat.png"></img>
-                          </md-button>
-                          <md-button class="md-icon-button fa fa-trash" ng-click="RecentCallsCtrl.showDeleteConfirm($event)">
-                          </md-button>
-                        </div>
-                        <div ng-if="RecentCallsCtrl.phoneService.callDetailsContact.firstName === 'Unknown'" flex="40" flex-offset="30">
-                          <md-button class="md-icon-button fa fa-phone" ng-click="callDetailsCtrl.closeCallDetailsDialog(); RecentCallsCtrl.call();">
-                          </md-button>
-                          <md-button class="md-icon-button fa fa-trash" ng-click="RecentCallsCtrl.showDeleteConfirm($event)">
-                          </md-button>
-                        </div>
+
                       </div>
-                      <div flex="20">
-                        <md-button class="pull-right md-icon-button fa fa-close" ng-click="callDetailsCtrl.closeCallDetailsDialog()">
-                        </md-button>
-                    </div>
+
+
                   </div>
               </md-toolbar>
 
@@ -211,6 +192,12 @@
                   </div>
                 </md-dialog-content>
             </form>
+            <md-dialog-actions layout="row">
+                <span flex></span>
+                <md-button ng-click="callDetailsCtrl.closeCallDetailsDialog()">
+                    Close
+                </md-button>
+            </md-dialog-actions>
         </md-dialog>
     </script>
 
@@ -242,7 +229,7 @@
     </script> -->
 
     <script type="text/ng-template" id="addCallToCRMForm">
-        <md-dialog flex = "30" aria-label="Add Call To CRM" ng-controller="AddCallToCRMController as crmCtrl">
+        <md-dialog flex = "30" aria-label="Log Call To CRM" ng-controller="AddCallToCRMController as crmCtrl">
 
           <form ng-cloak>
             <div ng-show = "crmCtrl.crmService.isFetching">
@@ -258,17 +245,33 @@
 
               <md-dialog-content>
                   <div class="md-dialog-content">
-                      <md-content>
-                          <md-progress-linear md-mode="query" ng-disabled="crmCtrl.isCallableRecordListAvailable()"></md-progress-linear>
-                      </md-content>
+                      <div class="row">
+                          <md-progress-circular style="margin: 3% auto 0 auto;" ng-disabled="crmCtrl.isCallableRecordListAvailable()" md-diameter="50"></md-progress-circular>
+                      </div>
                   </div>
               </md-dialog-content>
           </div>
 
 
-              <div ng-show="crmCtrl.callInsertionInProgress" class="row" style="padding-top:25%" ng-cloak>
-                  <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="isAccountReady" md-diameter="50"></md-progress-circular>
-              </div>
+          <div ng-show="crmCtrl.callInsertionInProgress">
+              <md-toolbar>
+                  <div class="md-toolbar-tools">
+                      <h2>Logging Call to CRM...</h2>
+                      <span flex></span>
+                      <md-button class="md-icon-button" ng-click="crmCtrl.closeAddCallToCRMDialog()">
+                          &times;
+                      </md-button>
+                  </div>
+              </md-toolbar>
+
+              <md-dialog-content>
+                  <div class="md-dialog-content">
+                      <div class="row">
+                          <md-progress-circular style="margin: 3% auto 0 auto;" ng-disabled="!crmCtrl.callInsertionInProgress!" md-diameter="50"></md-progress-circular>
+                      </div>
+                  </div>
+              </md-dialog-content>
+          </div>
 
             <div ng-show="!crmCtrl.crmService.isFetching && !crmCtrl.callInsertionInProgress">
                 <md-toolbar>
@@ -292,7 +295,7 @@
                       </md-input-container>
                         <md-input-container ng-if="crmCtrl.isCallableRecordListAvailable()">
                             <label>Choose a CRM entry</label>
-                            <md-select ng-model="crmCtrl.selectedRecords" multiple="true">
+                            <md-select ng-model="crmCtrl.selectedRecords" multiple="true" required>
                                 <md-optgroup ng-if="crmCtrl.isCallableLeadListAvailable()" label="Leads">
                                     <md-option ng-value="lead" ng-repeat="lead in crmCtrl.crmService.callableRecords['Leads']">{{lead.name}}</md-option>
                                 </md-optgroup>
@@ -340,7 +343,7 @@
                      md-item-text="item.display"
                      md-floating-label="Search">
     </md-autocomplete> -->
-    <md-nav-bar md-selected-nav-item="sidebarNavItem" nav-bar-aria-label="navigation links">
+    <md-nav-bar ng-click="clearSelectedCallIndex()" md-selected-nav-item="sidebarNavItem" nav-bar-aria-label="navigation links">
       <md-nav-item style="margin-left:-5%" flex="25" md-nav-click="goto('all')" name="all">({{recentCallListCtrl.phoneService.phone.recentCallList.length}}) All</md-nav-item>
       <md-nav-item flex="25" md-nav-click="goto('missed')" name="missed">({{sidebarMissedCalls.length}}) Missed</md-nav-item>
       <md-nav-item flex="25" md-nav-click="goto('incoming')" name="incoming">({{sidebarIncomingCalls.length}}) In</md-nav-item>

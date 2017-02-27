@@ -11,12 +11,12 @@
         self.pictureChosen = true;
         self.accountService = accountService;
         self.activeAccount = accountService.activeAccount;
-        self.firstName = '';
-        self.lastName = '';
-        self.email = '';
-        self.picture = '';
-        self.statusMessage = '';
-        self.availability = '';
+        self.firstName = angular.copy(accountService.activeAccount.firstName);
+        self.lastName = angular.copy(accountService.activeAccount.lastName);
+        self.email = angular.copy(accountService.activeAccount.email);
+        self.picture = '';//angular.copy(accountService.activeAccount.picture);
+        self.statusMessage = angular.copy(accountService.activeAccount.status);
+        self.availability = angular.copy(accountService.activeAccount.availability);
         self.newAvailability = '';
         self.statusInputLimit = '10';
         self.saved = null;
@@ -46,48 +46,53 @@
 
         self.saveProfileInfo = function(){
             if(accountService.isAccountAvailable()) {
-                if(self.newAvailability == ''){
-                    self.newAvailability = accountService.activeAccount.availability;
+
+                if(self.firstName != '' && self.lastName != ''){
+                    if(self.newAvailability == ''){
+                        self.newAvailability = accountService.activeAccount.availability;
+                    }
+
+                    accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
+                        self.statusMessage, parseInt(self.newAvailability));
+                    if(self.picture){
+                        accountService.activeAccount.savePicture(self.picture, function(progress, uploadingImage){
+                            accountService.uploadingImage = uploadingImage;
+                            accountService.progress = progress;
+                            accountService.opacity = progress/100+0.1;
+                            $rootScope.$digest();
+                            if(!uploadingImage){
+                                self.msg = "Profile info and picture saved successfully";
+                                self.saved = true;
+                                $timeout(function(){
+                                    $scope.$apply();
+                                });
+                                setTimeout(function(){
+                                    self.saved = null;
+                                    $timeout(function(){
+                                        $scope.$apply();
+                                    });
+                                }, 3000);
+                            }
+                        });
+
+                    }
+
+                    else{
+                        self.msg = "Profile info saved successfully";
+                        self.saveButtonIsAvailable=false;
+                        self.saved = true;
+                        $timeout(function(){
+                            $scope.$apply()});
+                        setTimeout(function(){
+                            self.saved = null;
+                            $timeout(function(){
+                                $scope.$apply()
+                            });
+
+                        }, 3000);
+                    }
                 }
 
-                accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
-                    self.statusMessage, parseInt(self.newAvailability));
-                if(self.picture){
-                    accountService.activeAccount.savePicture(self.picture, function(progress, uploadingImage){
-                      accountService.uploadingImage = uploadingImage;
-                      accountService.progress = progress;
-                      accountService.opacity = progress/100+0.1;
-                      $rootScope.$digest();
-                      if(!uploadingImage){
-                          self.msg = "Profile pic saved succesfully";
-                          self.saved = true;
-                          $timeout(function(){
-                              $scope.$apply();
-                          });
-                          setTimeout(function(){
-                              self.saved = null;
-                              $timeout(function(){
-                                  $scope.$apply();
-                                  self.closeProfileEditorDialog();
-                              });
-                          }, 3000);
-                      }
-                    });
-
-                }
-                self.msg = "Profile info saved succesfully";
-                self.saveButtonIsAvailable=false;
-                self.saved = true;
-                $timeout(function(){
-                    $scope.$apply()});
-                setTimeout(function(){
-                    self.saved = null;
-                    $timeout(function(){
-                        $scope.$apply()
-                        self.closeProfileEditorDialog();
-                    });
-
-                }, 3000);
             }
         }
 
@@ -174,6 +179,8 @@
 
             self.pictureChosen = true;
 
+            self.profileChanged();
+
             $scope.$apply(function(scope) {
 
                 self.picture = element.files[0];
@@ -187,6 +194,15 @@
         };
 
         self.getAvailability();
+
+        accountService.activeAccount.setProfileObserver(function(){
+            self.firstName = angular.copy(accountService.activeAccount.firstName);
+            self.lastName = angular.copy(accountService.activeAccount.lastName);
+            self.email = angular.copy(accountService.activeAccount.email);
+            self.statusMessage = angular.copy(accountService.activeAccount.status);
+            self.availability = angular.copy(accountService.activeAccount.availability);
+            $scope.$apply();
+        })
 
     }]);
 })();

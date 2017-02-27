@@ -25,19 +25,18 @@
         // hows the add cal to crm dialog and fetches callable records
         self.fetchCallableRecords = function(phone){//}, type, event, insertCallsAutomatically){
 
-          //if(insertCallsAutomatically || insertCallsAutomatically==null){
+            //if(phone.length >= 10){
+                self.isFetching=true;
+                //self.showAddCallToCRMDialog(event);
+                self.callableRecords = null;
 
-            self.isFetching=true;
-            //self.showAddCallToCRMDialog(event);
-            self.callableRecords = null;
-
-            self.crmManager.crmList[0].searchCallableRecords(phone, function(records){
-                self.callableRecords = records;
-                  $rootScope.$apply(function(){
+                self.crmManager.crmList[0].searchCallableRecords(phone, function(records){
+                    self.callableRecords = records;
+                    $rootScope.$apply(function(){
                         self.isFetching = false;
                     });
-            });
-          //}
+                });
+            //}
         }
 
         self.getPhoneNumberToLog = function(call, myPhone){

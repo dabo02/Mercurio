@@ -16,6 +16,7 @@
 function MercurioAccount(user, accountReadyCallback){
 
 	var self = this;
+	self.profileObserver = undefined;
 
 	firebase.database().ref('account/' + user.uid).on('value', function(snapshot) {
 
@@ -34,6 +35,10 @@ function MercurioAccount(user, accountReadyCallback){
 				self.email = snapshot.val().email;
 				self.status = snapshot.val().status;
 				self.availability = snapshot.val().availability;
+
+				if(self.profileObserver()){
+					self.profileObserver()
+				}
 			}
 		}
 	});
@@ -230,4 +235,8 @@ MercurioAccount.prototype.syncProfileUpdate = function() {
 				})
 		})
 	})
+}
+
+MercurioAccount.prototype.setProfileObserver = function(profileObserver){
+	this.profileObserver = profileObserver;
 }
