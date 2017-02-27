@@ -1,5 +1,5 @@
 angular.module('users')
-.controller('ContactListController', ['$rootScope', '$scope', 'accountService', '$q', '$timeout', '$state', 'phoneService', function ($rootScope, $scope, accountService, $q, $timeout, $state, phoneService) {
+.controller('ContactListController', ['$rootScope', '$scope', 'accountService', '$q', '$timeout', '$state', 'phoneService', '$mdDialog', function ($rootScope, $scope, accountService, $q, $timeout, $state, phoneService, $mdDialog) {
 
     var self = this;
     self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -8,7 +8,7 @@ angular.module('users')
     var contacts = accountService.activeAccount.contactManager.contactList;
     self.contactList = accountService.activeAccount.contactManager.contactList;
     self.accountService = accountService;
-
+    self.contactProfile = null;
     var pendingSearch, cancelSearch = angular.noop;
     var cachedQuery, lastSearch;
     self.allContacts = loadContacts();
@@ -22,6 +22,7 @@ angular.module('users')
     self.selectedItem;
     self.searchText;
     self.noCache = false;
+    self.selectedContact = accountService.selectedContact;
 
     $scope.getChipInfo= function(chip_info) {
 
@@ -156,10 +157,43 @@ angular.module('users')
         }
     }
 
-    $scope.selectedContact;
+    self.showProfileEditorDialog = function(event) {
 
-    self.viewContact = function(contactIndex){
-        $state.go('contact-profile', {'contactIndex' : contactIndex});
+        $mdDialog.show({
+            templateUrl: 'profileEditorForm',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            escapeToClose: true,
+            clickOutsideToClose:true
+            //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        });
+    }
+
+    self.closeProfileEditorDialog = function(){
+        $mdDialog.hide()
+    };
+
+    self.showProfileContactDialog = function(event) {
+
+        $mdDialog.show({
+            templateUrl: 'contactProfile',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            escapeToClose: true,
+            clickOutsideToClose:true
+            //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        });
+    }
+
+    self.closeProfileContactDialog = function(){
+        $mdDialog.hide()
+    };
+
+
+
+    self.viewContact = function(contact, event){
+      accountService.selectedContact = contact;
+      self.showProfileContactDialog(event);
     }
 
     self.getContactByNumber = function(number){
@@ -174,17 +208,28 @@ angular.module('users')
 
     };
 
-    self.selectedItemChange = function(index){
-        self.viewContact(index);
+    self.selectedItemChange = function(contact){
+        if(contact){
+        self.viewContact(contact);
+        self.searchText = '';
+      }
     };
 
     self.viewContactById = function(id){
+      if(id == accountService.activeAccount.userId){
+        self.showProfileEditorDialog();
+      }
       self.contactList.forEach(function (contact, index) {
           if (id == contact.userId) {
-             self.viewContact(index);
+             self.viewContact(contact);
           }
 
     });
   };
+
+
+  accountService.activeAccount.contactManager.setContactObserver(function(){
+            $scope.$apply();
+        })
 
 }]);

@@ -13,6 +13,7 @@
         self.chatClientService = chatClientService;
         self.chatClient = chatClientService.chatClient;
         self.saveGroupDetailsButtonIsAvailable = false;
+        self.canEdit = false;
         // self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
         // self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
 
@@ -40,7 +41,7 @@
         }
 
         self.editGroupName = function(){
-              self.newChatTitle = "";
+              self.canEdit = true;
             };
 
         self.closeChatGroupDetailsDialog = function(){
@@ -67,6 +68,9 @@
             if(contacts.length > 0){
                 chatClientService.selectedChat.addParticipants(contacts);
             }
+            setTimeout(function(){
+            $rootScope.$apply();
+          }, 100);
         }
 
         self.chatTitleChanged = function(){
