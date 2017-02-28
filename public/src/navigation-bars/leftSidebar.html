@@ -212,15 +212,16 @@
 
 <!--start about dialog-->
 <script type="text/ng-template" id="aboutDialog">
-    <md-dialog aria-label="About Mercury" ng-controller="AboutDialogController as aboutCtrl">
+    <md-dialog flex="30" aria-label="About Mercury" ng-controller="AboutDialogController as aboutCtrl">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>About Mercury</h2>
             </div>
         </md-toolbar>
-        <md-dialog-content>
-
+        <md-dialog-content flex="80" flex-offset="10" style="padding-top: 2%;">
+            <p style="text-align: center;">Mercury orchestrates back-office systems and provides mobility and flexibility to today's business environment.</p>
+            <h5 style="text-align: center;">v0.0.1</h5>
         </md-dialog-content>
         <md-dialog-actions layout="row">
 

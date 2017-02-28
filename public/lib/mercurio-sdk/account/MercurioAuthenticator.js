@@ -145,7 +145,6 @@ MercurioAuthenticator.prototype.register = function(registerData){
 					contentType: "application/json",
 					data: JSON.stringify(data),
 					success: function(data) {
-						console.log(data);
 						//Log in HERE
 						MercurioAuthenticator.prototype.login(registerData.email, registerData.password);
 					},

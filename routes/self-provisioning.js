@@ -37,7 +37,7 @@ exports.authenticate = function(req, res){
       var parseString = require('xml2js').parseString;
       var xml = data.buffer.toString();
       parseString(xml, function (err, result) {
-        if(result.phoneConfig.network){
+        if(result.phoneConfig.network && !err){
           // Testing purpose, while endpoint pack is not available
           var configs = {
             // "availability" : 0, DB
@@ -78,6 +78,7 @@ exports.authenticate = function(req, res){
               if(previousAccount.email === configs.email && previousAccount.commPortalPassword === configs.commPortalPassword){
                 var responseObject = {"statusCode" : 400, "statusMessage" : "Account is already registered"}
                 res.send(responseObject);
+
               }
               else if(previousAccount.commPortalPassword === configs.commPortalPassword){
                 // updateEmail(configs.email, previousAccount);
@@ -126,7 +127,11 @@ exports.authenticate = function(req, res){
           });
         }
         else{
-          res.sendStatus(400);
+          var responseObject = {
+            "statusCode":400,
+            "statusMessage":"There are no records corresponding to your credentials."
+          }
+          res.send(responseObject);
         }
       });
   }
