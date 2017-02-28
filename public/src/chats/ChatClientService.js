@@ -58,15 +58,20 @@
 
             $location.hash('bottom'); //identify that this bottom means the message list bottom of current chat - use index
             $anchorScroll();
-
+            var notify;
+            var sender;
             if(receivedChat.lastMessage.from !== self.chatClient.chatClientOwner){
-
+              console.log(receivedChat);
+                receivedChat.participantList.forEach(function(participant){
+                  if(participant.userId == receivedChat.lastMessage.from){
+                    sender= participant;
+                  }
+                })
                 if(!receivedChat.settings.mute){
                     var sound = new Audio("audio/pickup_coin.wav");
                     sound.play();
                     sound.currentTime=0;
                 }
-
 
                 var receivedChatIndex = index;
 
@@ -92,6 +97,16 @@
                         }
                     }
                 }
+                Notification.requestPermission();
+                notify = new Notification('New Message Recieved from ' + sender.firstName + ' ' + sender.lastName, {
+                  body: receivedChat.lastMessage.textContent,
+                  icon: sender.picture
+                });
+                notify.onclick = function(event){
+                  var chatURL =  "http://localhost:3000/#/chat/" + receivedChatIndex + "/" + self.chatClient.chatClientOwner
+                  window.open(chatURL, "_self");
+                }
+                 setTimeout(notify.close.bind(notify), 4000);
             }
             setTimeout(function(){
             $rootScope.$apply();
