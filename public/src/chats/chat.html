@@ -82,7 +82,7 @@
             </md-dialog-content>
           </md-dialog>
         </script>
-        
+
         <md-content flex="70" id="main-content" style="position:relative;background-color: transparent;overflow:hidden;">
             <call-status-toolbar></call-status-toolbar>
             <div style="padding-top:3%" layout="row">
@@ -346,13 +346,16 @@
                             <div ng-repeat="message in selectedChat.messageList track by $index" class="row">
                                 <div ng-if="!chatCtrl.isMessageFromMe(message)" flex-offset="10" flex="55">
                                     <md-card class="receivedMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row" style="padding-bottom:10px;">
-                                        <p>
-                                            {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}
+                                        <p style="font-weight: bold;">
+                                            {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </p>
                                         <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;">
                                         <p ng-if="message.textContent.length > 0" style="margin-top: 5px; margin-bottom: 0px;">
                                             {{message.textContent}}
                                         </p>
+                                        <p style = "font-size: 10px; text-align: right;">
+                                        {{message.timeStamp | timeStampFilter}}
+                                      </p>
                                     </md-card>
                                     <div style= "padding-top: 2%;" ng-if="!message.multimediaUrl" class="receivedMessage">
                                       <p style="font-weight: bold; margin-bottom: -1%;" > {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}} </p>

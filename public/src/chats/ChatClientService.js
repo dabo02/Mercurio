@@ -61,7 +61,6 @@
             var notify;
             var sender;
             if(receivedChat.lastMessage.from !== self.chatClient.chatClientOwner){
-              console.log(receivedChat);
                 receivedChat.participantList.forEach(function(participant){
                   if(participant.userId == receivedChat.lastMessage.from){
                     sender= participant;
@@ -97,16 +96,22 @@
                         }
                     }
                 }
-                Notification.requestPermission();
-                notify = new Notification('New Message Recieved from ' + sender.firstName + ' ' + sender.lastName, {
-                  body: receivedChat.lastMessage.textContent,
-                  icon: sender.picture
+
+                Notification.requestPermission(function(permission){
+                  if(permission === "granted"){
+                    var options = {
+                      body: receivedChat.lastMessage.textContent,
+                      icon: sender.picture
+                      }
+                  notify = new Notification('New Message Received from ' + sender.firstName + ' ' + sender.lastName, options);
+                  notify.onclick = function(event){
+                    var chatURL =  "http://localhost:3000/#/chat/0/" + self.chatClient.chatClientOwner
+                    window.open(chatURL);
+                  }
+                   setTimeout(notify.close.bind(notify), 4000);
+                 }
                 });
-                notify.onclick = function(event){
-                  var chatURL =  "http://localhost:3000/#/chat/" + receivedChatIndex + "/" + self.chatClient.chatClientOwner
-                  window.open(chatURL, "_self");
-                }
-                 setTimeout(notify.close.bind(notify), 4000);
+
             }
             setTimeout(function(){
             $rootScope.$apply();
