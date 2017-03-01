@@ -6,7 +6,7 @@
 
 function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	lastMessage, settings, timeStamp, title, chatClientOwner){
-	
+
 	var self = this;
 	self.chatId = chatId;
 	self.lastMessage = lastMessage;
@@ -16,35 +16,35 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	self.participantList =[]; //array of participants
 	self.messageList = [];
 	self.participantCount = participantCount;
-	
+
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
-	
+
 		if(snapshot.exists() && snapshot.val()){
 			// if participant has true value instantiate participnat and add to list
 			var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
-			
+
 				self.participantList.push(newParticipant);
-				
+
 				// if(self.participantList.length === participantCount){
 // 					if(participantsAreReadyObserver){
 // 						//participantsAreReadyObserver(self);
 // 						//participantsAreReadyObserver = undefined;
 // 					}
 // 				}
-			});	
+			});
 		}
 	});
-	
+
 	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
-	
+
 		if(snapshot.exists()){
-			
+
 			if(snapshot.val()){
 				// if value changed to true instantiate new participant and add to list
 				var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
-				
+
 					self.participantList.push(newParticipant);
-				
+
 				});
 			}
 			else{
@@ -54,10 +54,10 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 						self.participantList.splice(index, 1);
 					}
 				});
-			}	
+			}
 		}
 	});
-	
+
 	var pageNumber = 1;
 	var limit = 50;
 
@@ -71,25 +71,25 @@ MercurioChat.prototype.getMessageList = function(){
 MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatClientOwner){
 
 	var self = this;
-	
+
 	//empty out messageList to make room for it's updated copy
 	self.messageList = [];
-	
+
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
 
 	var newMessageKey = null;
 
 	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToLast(1 * pageNumber * limit).on("child_added", function(messageSnapshot) {
-	
+
 		if(messageSnapshot.exists()){
 
 			newMessageKey = messageSnapshot.key;
 
 			firebase.database().ref('message-info/' + messageSnapshot.key).once("value", function(messageInfoSnapshot) {
-	
+
 				if(messageInfoSnapshot.exists()){
-		
+
 					if(messageInfoSnapshot.val()['has-message'][chatClientOwner]){
 						var message;
 						message = new Message(messageSnapshot.key, messageSnapshot.val().from, messageSnapshot.val().multimediaUrl, messageSnapshot.val().textContent, messageSnapshot.val().timeStamp, messageInfoSnapshot.val().read[chatClientOwner]);
@@ -102,36 +102,32 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 
 	});
 
-	
-	/*
-	
-	***** I BELEIVE THIS IS NOT NEEDED *****
-	
-	firebase.database().ref('chat-messages/' + self.chatId).limitToFirst(pageNumber * limit).once('child_changed', function(snapshot) {
-	  	//compare contact ids from local contact list to snapshot keys in order to find local 
+	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_changed', function(snapshot) {
+	  	//compare contact ids from local contact list to snapshot keys in order to find local
 		//reference to contact; use that contact's setters to update the local reference
-	  
+
 	  	self.messageList.forEach(function(message, index){
 			if(message.messageId === snapshot.key){
-				self.messageList[index].setFirstName(snapshot.val().firstName);
-				self.messageList[index].setLastName(snapshot.val().lastName);
-				self.messageList[index].setEmails(snapshot.val().emails);
-				self.messageList[index].setPicture(snapshot.val().picture);
-				self.messageList[index].setPhoneNumbers(snapshot.val().phoneNumbers);
-				self.messageList[index].setUserId(snapshot.val().userId);
-				self.messageList[index].setStatus(snapshot.val().status);
-				self.messageList[index].setAvailability(snapshot.val().availability);
+				self.messageList[index].multimediaUrl = snapshot.val().multimediaUrl;
+
+				// self.messageList[index].setLastName(snapshot.val().lastName);
+				// self.messageList[index].setEmails(snapshot.val().emails);
+				// self.messageList[index].setPicture(snapshot.val().picture);
+				// self.messageList[index].setPhoneNumbers(snapshot.val().phoneNumbers);
+				// self.messageList[index].setUserId(snapshot.val().userId);
+				// self.messageList[index].setStatus(snapshot.val().status);
+				// self.messageList[index].setAvailability(snapshot.val().availability);
 			}
 		});
 	});
-	
-	
-	
+
+/*
+
 	******* REVIEW CASE WHEN MESSAGE IS DELETED *******
-	
+
 	firebase.database().ref('chat-messages/' + self.chatId).limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
-	
-		//compare message ids from local message list to snapshot keys in order to find local 
+
+		//compare message ids from local message list to snapshot keys in order to find local
 		//reference to message; remove message from local contacts list
 
 		self.messageList.forEach(function(message, index){
@@ -149,25 +145,24 @@ MercurioChat.prototype.addMessage = function(message){
 
 	//determine if contact number belongs to a mercurio user and if so find that user's id
 	//before updating the new contact's attributes in firebase
-	
+
 	var updates = {};
 	updates['/chat-messages/' + this.chatId + "/" + newMessageKey] = message;
-
 	firebase.database().ref().update(updates);
-	
+
 	return newMessageKey;
 }
 
 MercurioChat.prototype.addParticipants = function(contacts){
 
 	var self = this;
-	
+
 	var newParticipants = [];
 
 	contacts.forEach(function(contact){
 		if(contact.userId != '' || contact.userId !== undefined){
 			// contact is a mercurio user
-			
+
 			var isNewParticipant = true; // innocent until proven guilty
 			self.participantList.forEach(function(participant){
 				if(participant.userId === contact.userId){
@@ -175,28 +170,28 @@ MercurioChat.prototype.addParticipants = function(contacts){
 					isNewParticipant = false;
 				}
 			});
-			
+
 			if(isNewParticipant){
 				// contact is not an existing group member
 				newParticipants.push(contact.userId);
 			}
 		}
 	});
-	
+
 	if(newParticipants.length > 0){
 		// there is at least one mercurio user to add as new chat member
-		
-		
+
+
 		var newParticipantCount = self.participantCount + newParticipants.length;
 		var updates = {};
-		
+
 		// update participant count for existing chat members
 		self.participantList.forEach(function(participant){
 			updates = {};
 			updates['/user-chats/' + participant.userId + "/" + self.chatId + '/participantCount'] = newParticipantCount;
 			firebase.database().ref().update(updates);
 		});
-	
+
 		var chatInfo = {
 			lastMessage: {},
 			timeStamp: new Date().getTime(),
@@ -204,8 +199,8 @@ MercurioChat.prototype.addParticipants = function(contacts){
 			participantCount: newParticipantCount,
 			settings: {mute:false}
 		};
-		
-		
+
+
 		newParticipants.forEach(function(participant){
 			// add participant to chat-members
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant).set(true).then(function(){
@@ -215,8 +210,8 @@ MercurioChat.prototype.addParticipants = function(contacts){
 				firebase.database().ref().update(updates);
 			});
 		});
-	
-		
+
+
 	}
 }
 
@@ -242,7 +237,7 @@ MercurioChat.prototype.toggleNotifications = function(userId, value){
 MercurioChat.prototype.markUnreadMessagesAsRead = function(userId){
 
 	var self = this;
-	
+
 	self.messageList.forEach(function(oldMessage){
 		if(oldMessage.read == 0){
 
@@ -268,7 +263,7 @@ MercurioChat.prototype.markUnreadMessagesAsRead = function(userId){
 MercurioChat.prototype.saveChatTitle = function(newChatTitle){
 
 	var self = this;
-	
+
 	// update chat title for existing chat members
 	self.participantList.forEach(function(participant){
 		updates = {};
@@ -280,15 +275,15 @@ MercurioChat.prototype.saveChatTitle = function(newChatTitle){
 MercurioChat.prototype.exitChatGroup = function(userId){
 
 	var self = this;
-	
+
 	self.participantList.forEach(function(participant){
 		updates = {};
 		updates['/user-chats/' + participant.userId + "/" + self.chatId + '/participantCount'] = self.participantCount - 1;
-		
+
 		if(participant.userId === userId){
 			updates['/chat-members/' + self.chatId + "/" + participant.userId] = false;
 		}
-		
+
 		firebase.database().ref().update(updates);
 	});
 }

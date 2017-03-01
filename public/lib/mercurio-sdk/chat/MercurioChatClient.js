@@ -299,6 +299,13 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chat, message, sen
 	}
 
 	var newMessageKey = chat.addMessage(message);
+	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
+	firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + self.chatClientOwner).set(true);
+	chat.participantList.forEach(function(participant){
+		if(participant.userId !== self.chatClientOwner){
+			firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
+	}
+	});
 
 	if(message.multimediaUrl){
 		var uploadTask = firebase.storage().ref().child('chats/' + chat.chatId + '/images/' + newMessageKey).put(message.multimediaUrl);
@@ -395,8 +402,6 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 		}
 
 	}
-
-	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
 
 	chat.participantList.forEach(function(participant){
 
