@@ -266,7 +266,7 @@
     .filter('callListAvatarFilter', function () {
         return function (from, to, incoming, contactList) {
 
-            var avatarUrl = 'images/caller-avatar.png';
+            var avatarUrl = 'images/default_contact_avatar.png';
             var participant;
 
             if(incoming){
@@ -275,6 +275,7 @@
             else{
                 participant = to;
             }
+
 
             contactList.forEach(function(contact){
                 if(contact.phone == participant || contact.extension == participant){

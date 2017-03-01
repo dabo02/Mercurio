@@ -120,7 +120,7 @@
 
                     case 3:
                         self.availability = 'onACall';
-                        return 'onACall';
+                        return 'On a Call';
 
                     case 4:
                         self.availability = 'Offline';
