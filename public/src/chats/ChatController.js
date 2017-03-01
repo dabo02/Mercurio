@@ -215,6 +215,17 @@
 
       };
 
+      self.getChatParticipantAvailability = function(){
+        var availability = null;
+        chatClientService.selectedChat.participantList.forEach(function (participant) {
+            if (chatClientService.chatClient.chatClientOwner != participant.userId) {
+                availability = participant.availability;
+            }
+          });
+        return availability;
+
+    };
+
         self.multimediaClicked = function(messageIndex){
             chatClientService.selectedMessageIndex = messageIndex;
             self.showMultimediaSelectionTextDialog();
