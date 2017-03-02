@@ -28,21 +28,21 @@
     <script>
       // Initialize Firebase
      // production db
-      //  var config = {
-      //    apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
-      //    authDomain: "mercurio-39a44.firebaseapp.com",
-      //    databaseURL: "https://mercurio-39a44.firebaseio.com",
-      //    storageBucket: "mercurio-39a44.appspot.com"
-      //  };
+       var config = {
+         apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
+         authDomain: "mercurio-39a44.firebaseapp.com",
+         databaseURL: "https://mercurio-39a44.firebaseio.com",
+         storageBucket: "mercurio-39a44.appspot.com"
+       };
 
      // Development DB
-     var config = {
-       apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
-       authDomain: "mercurio-development.firebaseapp.com",
-       databaseURL: "https://mercurio-development.firebaseio.com",
-       storageBucket: "mercurio-development.appspot.com",
-       messagingSenderId: "203647142462"
-     };
+    //  var config = {
+    //    apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
+    //    authDomain: "mercurio-development.firebaseapp.com",
+    //    databaseURL: "https://mercurio-development.firebaseio.com",
+    //    storageBucket: "mercurio-development.appspot.com",
+    //    messagingSenderId: "203647142462"
+    //  };
 
       firebase.initializeApp(config);
     </script>
@@ -258,6 +258,7 @@
   <script src="/node_modules/angularjs-scroll-glue/src/scrollglue.js"></script>
   <script src="/node_modules/angularfire/dist/angularfire.min.js"></script>
 
+  <script src="/bower_components/exif-js/exif.js"></script>
   <script src="/bower_components/janus-gateway/html/janus.js"></script>
   <script src="/bower_components/janus-gateway/html/adapter.js"></script>
   <script src="/bower_components/janus-gateway/html/jquery.blockUI.js"></script>
@@ -298,6 +299,7 @@
   <script src="/src/chats/ChatGroupDetailsDirective.js"></script>
   <script src="/src/chats/ChatGroupDetailsController.js"></script>
   <script src="/src/chats/CreateChatController.js"></script>
+  <script src="/src/chats/imgOrientation.js"></script>
 
   <script src="/src/phone/callDirective.js"></script>
 
