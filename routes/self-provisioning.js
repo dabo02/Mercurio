@@ -110,12 +110,12 @@ exports.authenticate = function(req, res){
                 "newAccount": {
                   "availability" : 0,
                   "companyId" : '',
-                  "commPortalPassword" : 'testeoxxx',
-                  "email" : 'hey@elduro.com',
+                  "commPortalPassword" : configs.commPortalPassword,
+                  "email" : configs.email,
                   "extension" : "2704", //NOC
                   "firstName" : "Wilfredo",//junto con lastname NOC
                   "lastName" : "Nieves", //Junto con firstname NOC
-                  "phone" : '7878787878',
+                  "phone" : configs.phone,
                   "picture" : "",
                   "sipPassword" : "e+/gIbZ7QJkSMz8", //NOC
                   "sipUsername" : "7873042704", //NOC
@@ -433,6 +433,65 @@ exports.replaceAccount = function(req, res){
 }
 
 exports.createNewAccount = function(req, res){
+
+  function contactsScript(contact){
+    firebase.database().ref("account").once("value", function (snap) {
+
+      var myBusinessGroupAccountKeys = [];
+      var myBusinessGroupAccountValues = [];
+      snap.forEach(function (childSnapshot) {
+        //if its not me and the account belongs to my company
+        if (childSnapshot.key != contact.userId && contact.companyId === childSnapshot.val().companyId) {
+          myBusinessGroupAccountKeys.push(childSnapshot.key);
+          myBusinessGroupAccountValues.push(childSnapshot.val());
+        }
+      })
+      console.log("values: "+myBusinessGroupAccountValues);
+      var updates = {};
+      myBusinessGroupAccountKeys.forEach(function(accountKey, index){
+        firebase.database().ref("user-contacts/"+accountKey)
+          .orderByChild("userId")
+          .equalTo(contact.userId)
+          .once("value", function(snapshot){
+            // Get a key for a new Post.
+            var newContactKey = firebase.database().ref().child('user-contacts/'+accountKey).push().key;
+            var myKey = firebase.database().ref().child('user-contacts/'+contact.userId).push().key;
+
+            var newAccount = myBusinessGroupAccountValues[index];
+
+            var otherContact ={
+              availability: newAccount.availability,
+              email: newAccount.email,
+              firstName: newAccount.firstName,
+              lastName: newAccount.lastName,
+              phone: newAccount.phone,
+              picture: newAccount.picture,
+              status: newAccount.status,
+              extension: newAccount.extension,
+              companyId: newAccount.companyId,
+              userId: accountKey
+            }
+
+            updates["user-contacts/"+accountKey+"/"+myKey] = contact;
+            updates["user-contacts/"+contact.userId+"/"+newContactKey] = otherContact;
+
+            if(index==myBusinessGroupAccountKeys.length-1){
+              firebase.database().ref().update(updates).then(function(){
+                //Prepare and send response
+                var responseObject = {
+                  "statusCode" : 200,
+                  "statusMessage": "Account created successfully."
+                }
+                res.send(responseObject);
+              });
+            }
+
+          });
+      });
+
+    })
+  }
+
   function syncUpdates(user){
 
     firebase.database().ref().child('account').once('value', function(accountSnapshot){
@@ -449,7 +508,6 @@ exports.createNewAccount = function(req, res){
         email: newAccount.email,
         firstName: newAccount.firstName,
         lastName: newAccount.lastName,
-        name: newAccount.firstName+" "+newAccount.lastName,
         phone: newAccount.phone,
         picture: newAccount.picture,
         status: newAccount.status,
@@ -458,32 +516,33 @@ exports.createNewAccount = function(req, res){
         userId: user.uid
       }
 
-      firebase.database().ref("account").once("value", function (snap) {
-
-        var myBusinessGroupAccountKeys = [];
-
-        snap.forEach(function (childSnapshot) {
-          //if its not me and the account belongs to my company
-          if (childSnapshot.key != contact.userId && contact.companyId === childSnapshot.val().companyId) {
-            myBusinessGroupAccountKeys.push(childSnapshot.key);
-          }
-        })
-
-        myBusinessGroupAccountKeys.forEach(function(accountKey, index){
-          firebase.database().ref("user-contacts/"+accountKey)
-            .orderByChild("userId")
-            .equalTo(contact.userId)
-            .on("child_added", function(snapshot){
-              firebase.database().ref("user-contacts/"+accountKey+"/"+snapshot.key).set(contact);
-            })
-        })
-        //Prepare and send response
-        var responseObject = {
-          "statusCode" : 200,
-          "statusMessage": "Account created successfully."
-        }
-        res.send(responseObject);
-      })
+      // firebase.database().ref("account").once("value", function (snap) {
+      //
+      //   var myBusinessGroupAccountKeys = [];
+      //
+      //   snap.forEach(function (childSnapshot) {
+      //     //if its not me and the account belongs to my company
+      //     if (childSnapshot.key != contact.userId && contact.companyId === childSnapshot.val().companyId) {
+      //       myBusinessGroupAccountKeys.push(childSnapshot.key);
+      //     }
+      //   })
+      //
+      //   myBusinessGroupAccountKeys.forEach(function(accountKey, index){
+      //     firebase.database().ref("user-contacts/"+accountKey)
+      //       .orderByChild("userId")
+      //       .equalTo(contact.userId)
+      //       .on("child_added", function(snapshot){
+      //         firebase.database().ref("user-contacts/"+accountKey+"/"+snapshot.key).set(contact);
+      //       })
+      //   })
+      //   //Prepare and send response
+      //   var responseObject = {
+      //     "statusCode" : 200,
+      //     "statusMessage": "Account created successfully."
+      //   }
+      //   res.send(responseObject);
+      // })
+      contactsScript(contact);
     });
 
 
