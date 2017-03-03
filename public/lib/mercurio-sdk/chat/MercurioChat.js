@@ -103,20 +103,10 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 	});
 
 	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_changed', function(snapshot) {
-	  	//compare contact ids from local contact list to snapshot keys in order to find local
-		//reference to contact; use that contact's setters to update the local reference
-
+		//When the multimediaUrl is assign from firebase, assign it locally. 
 	  	self.messageList.forEach(function(message, index){
 			if(message.messageId === snapshot.key){
 				self.messageList[index].multimediaUrl = snapshot.val().multimediaUrl;
-
-				// self.messageList[index].setLastName(snapshot.val().lastName);
-				// self.messageList[index].setEmails(snapshot.val().emails);
-				// self.messageList[index].setPicture(snapshot.val().picture);
-				// self.messageList[index].setPhoneNumbers(snapshot.val().phoneNumbers);
-				// self.messageList[index].setUserId(snapshot.val().userId);
-				// self.messageList[index].setStatus(snapshot.val().status);
-				// self.messageList[index].setAvailability(snapshot.val().availability);
 			}
 		});
 	});

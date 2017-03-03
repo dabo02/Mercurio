@@ -22,7 +22,7 @@
 
             chat.participantList.forEach(function (participant) {
                 if (chat.lastMessage.from === participant.userId) {
-                    participantName = participant.firstName + ' ' + participant.lastName;
+                    participantName = participant.firstName;
                 }
             });
 
@@ -216,10 +216,14 @@
             var filteredTextContent = ''
 
             if(message.textContent.length > 16){
-                filteredTextContent = message.textContent.slice(0, 15) + "...";
+                filteredTextContent = message.textContent.slice(0, 13) + "...";
+            }
+            else if(message.type == "image"){
+                filteredTextContent = "Multimedia \uD83D\uDCF7";
+
             }
             else{
-                filteredTextContent = message.textContent;
+              filteredTextContent = message.textContent;
             }
 
             return filteredTextContent;

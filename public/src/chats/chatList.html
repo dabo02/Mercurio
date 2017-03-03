@@ -42,12 +42,12 @@
                     <h3 md-truncate style= "color: white;" flex="70" ng-style="chatListCtrl.getTextPreviewClass(chat, $index)" >{{chat | chatTitleFilter : chatListCtrl.chatClient.chatClientOwner}}</h3>
                     <p style="color: white; font-size:11.5px;" flex="40">{{chat.lastMessage.timeStamp | timeStampFilter}}</p>
                 </div>
-                <div>
-                    <p style= "color: white;"ng-style="chatListCtrl.getTextPreviewClass(chat, $index)">
-                        {{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}} <md-icon style= "color: white; margin-top: -13.3%;" aria-label="Delete Chat" flex-offset= "90" class="md-raised fa fa-trash-o" ng-click="chatListCtrl.showDeleteConfirm($event, $index)"></md-icon>
-                      <img flex-offset= "70" ng-show = "chat.settings.mute" style="position: absolute; top: 47%; width: 5%; left: 3%" ng-src="images/ic_volume_off_black_24dp.png"/>
+                <div style="padding-bottom: 5%;">
+                    <p md-truncate style= "color: white;"ng-style="chatListCtrl.getTextPreviewClass(chat, $index)">
+                        {{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}}
                     </p>
-
+                    <img flex-offset= "70" ng-show = "chat.settings.mute" style="position: absolute; top: 51%; width: 4%; left: 3%" ng-src="images/ic_volume_off_black_24dp.png"/>
+                    <md-icon style= "position: absolute; color: white; top: 51%; left: 2%;" aria-label="Delete Chat" flex-offset= "90" class="md-raised fa fa-trash-o" ng-click="chatListCtrl.showDeleteConfirm($event, $index)"></md-icon>
                   </div>
             </div>
             <md-divider ></md-divider>

@@ -16,6 +16,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 	self.uploadingImage = false;
 	self.uploadingProgress = 0;
 	self.chatListIsReadyObserver = null;
+	self.chatObserver = undefined;
 
 	var pageNumber = 1;
 	var limit = 50;
@@ -34,6 +35,11 @@ function MercurioChatClient(userId, messageReceivedObserver){
 				chat.timeStamp = snapshot.val().timeStamp;
 				chat.title = snapshot.val().title;
 				chat.participantCount = snapshot.val().participantCount;
+
+				if(self.chatObserver()){
+							self.chatObserver();
+						}
+
 
 				if(!snapshot.val().lastMessage){
 					self.chatList.splice(index, 1);
@@ -449,6 +455,10 @@ messageContent must be structured as shown below:
 */
 MercurioChatClient.prototype.setChatListObserver = function(observer){
 	this.chatListIsReadyObserver = observer;
+}
+
+MercurioChatClient.prototype.setChatObserver = function(chatObserver){
+	this.chatObserver = chatObserver;
 }
 
 MercurioChatClient.prototype.receiveMessage = function(chatIndex, type, message){

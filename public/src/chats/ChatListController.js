@@ -81,5 +81,9 @@
                 //$scope.status = 'You decided to keep your debt.';
             });
         };
+
+        chatClientService.chatClient.setChatObserver(function () {
+                $scope.$apply();
+         });
     }]);
 })();
