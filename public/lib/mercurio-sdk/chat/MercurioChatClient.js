@@ -36,7 +36,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 				chat.title = snapshot.val().title;
 				chat.participantCount = snapshot.val().participantCount;
 
-				if(self.chatObserver()){
+				if(self.chatObserver){
 							self.chatObserver();
 						}
 
