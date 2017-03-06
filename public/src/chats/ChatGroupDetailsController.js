@@ -14,6 +14,8 @@
         self.chatClient = chatClientService.chatClient;
         self.saveGroupDetailsButtonIsAvailable = false;
         self.canEdit = false;
+        self.userIsAParticipant = false;
+        self.userWasAdded = false;
         // self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
         // self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
 
@@ -63,14 +65,29 @@
         };
 
         self.addParticipantsToGroup = function(contacts){
-
             // if selected contacts array contains at least one contacts
             if(contacts.length > 0){
+                chatClientService.selectedChat.participantList.forEach(function(participant){
+                    if(contacts[0].userId == participant.userId){
+                      console.log("Lo encontre?");
+                        self.userIsAParticipant = true;
+                    }
+                })
+                if(!self.userIsAParticipant){
+                self.userWasAdded = true;
                 chatClientService.selectedChat.addParticipants(contacts);
+              }
             }
             setTimeout(function(){
+            //self.userIsAParticipant = false;
             $rootScope.$apply();
           }, 100);
+
+          setTimeout(function(){
+              self.userIsAParticipant = false;
+              self.userWasAdded = false;
+              $rootScope.$apply();
+        }, 3000);
         }
 
         self.chatTitleChanged = function(){

@@ -1,20 +1,20 @@
 (function (angular, EXIF) {
     'use strict';
 
-    angular.module("fix-image-orientation", []).directive('imgFixOrientation', [orient]);
+    angular.module("fixImageOrientation", []).directive('fixImageOrientation', [orient]);
 
 
     function orient() {
         return {
             restrict: 'A',
             scope: {
-                'imgFixOrientation': '='
+                'fixImageOrientation': '='
             },
             link: linkLogic
         };
 
         function linkLogic(scope, element, attrs) {
-            var imageUrl = scope.imgFixOrientation;
+            var imageUrl = scope.fixImageOrientation;
             var xhr = new XMLHttpRequest();
             //Request to get the image from the url
             xhr.open("GET", imageUrl, true);

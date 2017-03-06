@@ -115,9 +115,10 @@
                             </md-toolbar>
 
                             <md-dialog-content>
+                              <h4 style="margin-top: 5%; margin-left: 25%;" ng-show="chatGroupCtrl.userIsAParticipant">User is already in the chat</h4>
+                              <h4 style="margin-top: 5%; margin-left: 35%;" ng-show="chatGroupCtrl.userWasAdded">User was added</h4>
                                 <md-card-title style="padding-top: 0%; margin: 10px;">
                                     <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
-
                                         <md-content class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
                                             <md-contact-chips
                                                     ng-model="contactListCtrl.asyncContacts"
@@ -234,7 +235,7 @@
                             <md-dialog-content>
 
                                 <md-card flex="60" flex-offset="20" layout="row" style="margin-top:3%">
-                                    <img img-fix-orientation="selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl" style="height:300px;" ng-src= "{{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
+                                    <img fix-image-orientation="selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl" style="height:300px;" ng-src= "{{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
                                 </md-card>
                                 <div layout="row">
                                     <p flex = "40" flex-offset="40"> {{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].textContent}} </p>
@@ -355,7 +356,7 @@
                                         <p style="font-weight: bold;">
                                             {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </p>
-                                        <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;" img-fix-orientation="message.multimediaUrl">
+                                        <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;" fix-image-orientation="message.multimediaUrl">
                                         <p ng-if="message.textContent.length > 0" style="margin-top: 5px; margin-bottom: 0px;">
                                             {{message.textContent}}
                                         </p>
@@ -373,7 +374,7 @@
                                 <div ng-if="chatCtrl.isMessageFromMe(message)"flex-offset="35" flex="55">
                                     <md-card class="sentMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row" style="padding-bottom:4px; padding-top:10px;">
 
-                                        <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index);" style="height:150px;" img-fix-orientation="message.multimediaUrl">
+                                        <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index);" style="height:150px;" fix-image-orientation="message.multimediaUrl">
                                         <p ng-if="message.textContent.length > 0" style="margin-top: 5px; margin-bottom: 0px;">
                                             {{message.textContent}}
                                         </p>
