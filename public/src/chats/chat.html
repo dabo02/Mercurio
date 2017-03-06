@@ -234,7 +234,7 @@
                             <md-dialog-content>
 
                                 <md-card flex="60" flex-offset="20" layout="row" style="margin-top:3%">
-                                    <img img-orientation style="height:300px;" ng-src= "{{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
+                                    <img img-fix-orientation="selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl" style="height:300px;" ng-src= "{{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
                                 </md-card>
                                 <div layout="row">
                                     <p flex = "40" flex-offset="40"> {{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].textContent}} </p>
@@ -355,7 +355,7 @@
                                         <p style="font-weight: bold;">
                                             {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </p>
-                                        <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;" img-orientation>
+                                        <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;" img-fix-orientation="message.multimediaUrl">
                                         <p ng-if="message.textContent.length > 0" style="margin-top: 5px; margin-bottom: 0px;">
                                             {{message.textContent}}
                                         </p>
@@ -373,7 +373,7 @@
                                 <div ng-if="chatCtrl.isMessageFromMe(message)"flex-offset="35" flex="55">
                                     <md-card class="sentMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row" style="padding-bottom:4px; padding-top:10px;">
 
-                                        <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;" img-orientation>
+                                        <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index);" style="height:150px;" img-fix-orientation="message.multimediaUrl">
                                         <p ng-if="message.textContent.length > 0" style="margin-top: 5px; margin-bottom: 0px;">
                                             {{message.textContent}}
                                         </p>

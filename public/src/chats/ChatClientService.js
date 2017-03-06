@@ -105,7 +105,7 @@
                       }
                   notify = new Notification('New Message Received from ' + sender.firstName + ' ' + sender.lastName, options);
                   notify.onclick = function(event){
-                    var chatURL =  "http://localhost:3000/#/chat/0/" + self.chatClient.chatClientOwner
+                    var chatURL =  "http://localhost:3000/#/dialer"
                     window.open(chatURL);
                   }
                    setTimeout(notify.close.bind(notify), 4000);

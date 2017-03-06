@@ -91,6 +91,7 @@
         //
         // }
 
+
         self.showMultimediaSelectionTextDialog = function(event) {
             $mdDialog.show({
                 templateUrl: 'multimediaTextView',
@@ -228,8 +229,6 @@
         self.multimediaClicked = function(messageIndex){
             chatClientService.selectedMessageIndex = messageIndex;
             self.showMultimediaSelectionTextDialog();
-            // $('#multimediaPreview').attr('src', multimediaURL);
-            // $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
         }
 
 
@@ -274,29 +273,5 @@
               );
           chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
         }
-        // if(chatClientService.chatClient.chatList.length > 0) {
-        //
-        //     $scope.selectedChat = chatClientService.selectedChat;
-        //     localStorage.setItem('chatClientService.selectedChat', JSON.stringify(chatClientService.selectedChat));
-        //     $scope.$watch(
-        //         'selectedChat',
-        //         function (newVal, oldVal) {
-        //             if (newVal !== oldVal) {
-        //
-        //                 $scope.selectedChat.lastMessage = newVal.lastMessage;
-        //
-        //                 $timeout(function(){
-        //                     $scope.$apply();
-        //                 });
-        //             }
-        //         }, true
-        //     );
-        //
-        //     chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
-        // }
-        // else{
-        //   console.log(JSON.parse(localStorage.getItem('chatClientService.selectedChat')));
-        //     $state.go('dialer');
-        // }
     }]);
 })();

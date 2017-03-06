@@ -1,78 +1,107 @@
-/* global EXIF */
-'use strict';
+(function (angular, EXIF) {
+    'use strict';
 
-// Require library: https://github.com/jseidelin/exif-js
-// Require Jquery (If not have jquery you must handle DOM by native js code)
-/**
-  @description this directive auto rotate image by css base on image orientation value
-  Check the example of image orientation here:
-    https://github.com/recurser/exif-orientation-examples
-  @example
-     <div class="modal-upload-file-thumbnail" ng-if="isOneImageFile">
-      <img ng-src="{{thumbnail}}" img-orientation/>
-    </div>
-**/
+    angular.module("fix-image-orientation", []).directive('imgFixOrientation', [orient]);
 
-angular.module('mercurio').directive('imgOrientation', function(){
-  return {
-    restrict: 'A',
-    link: function(scope, element/*, attrs*/) {
-      function setTransform(transform) {
-        element.css('-ms-transform', transform);
-        element.css('-webkit-transform', transform);
-        element.css('-moz-transform', transform);
-        element.css('transform', transform);
-      }
 
-      var parent = element.parent();
-      $(element).bind('load', function() {
-        EXIF.getData(element[0], function() {
-          var orientation = EXIF.getTag(element[0], 'Orientation');
-          var height = element.height();
-          var width = element.width();
-          if (orientation && orientation !== 1) {
+    function orient() {
+        return {
+            restrict: 'A',
+            scope: {
+                'imgFixOrientation': '='
+            },
+            link: linkLogic
+        };
+
+        function linkLogic(scope, element, attrs) {
+            var imageUrl = scope.imgFixOrientation;
+            var xhr = new XMLHttpRequest();
+            //Request to get the image from the url
+            xhr.open("GET", imageUrl, true);
+            xhr.responseType = "arraybuffer";
+            xhr.onload = function(e) {
+              //transform the respone to array of 8-bit unsigned integers, so we can read the exif data.
+                var arrayBuffer = new Uint8Array(this.response);
+                  //Read data
+                var exifData = EXIF.readFromBinaryFile(arrayBuffer.buffer);
+                 //get the orientation, it is given in numbers from 1-8
+                reOrient(parseInt(exifData.Orientation || 1, 10), element);
+                };
+                xhr.send();
+
+        }
+
+        function reOrient(orientation, element) {
+                //CASES::
+               // 1. nothing
+               // 2. transform: flip horizontal
+               // 3. transform: rotate 180
+               // 4. transform: flip vertical
+               // 5. transform: transpose
+               // 6. transform: rotate 90
+               // 7. transform: transverse
+               // 8. transform: rotate 270
+               // console.log(orientation);
             switch (orientation) {
-              case 2:
-                setTransform('rotateY(180deg)');
-                break;
-              case 3:
-                setTransform('rotate(180deg)');
-                break;
-              case 4:
-                setTransform('rotateX(180deg)');
-                break;
-              case 5:
-                setTransform('rotateZ(90deg) rotateX(180deg)');
-                if (width > height) {
-                  parent.css('height', width + 'px');
-                  element.css('margin-top', ((width -height) / 2) + 'px');
-                }
-                break;
-              case 6:
-                setTransform('rotate(90deg)');
-                if (width > height) {
-                  parent.css('height', width + 'px');
-                  element.css('margin-top', ((width -height) / 2) + 'px');
-                }
-                break;
-              case 7:
-                setTransform('rotateZ(90deg) rotateY(180deg)');
-                if (width > height) {
-                  parent.css('height', width + 'px');
-                  element.css('margin-top', ((width -height) / 2) + 'px');
-                }
-                break;
-              case 8:
-                setTransform('rotate(-90deg)');
-                if (width > height) {
-                  parent.css('height', width + 'px');
-                  element.css('margin-top', ((width -height) / 2) + 'px');
-                }
-                break;
+                case 1:
+                    // No action needed
+                    break;
+                case 2:
+                    element.css({
+                        '-moz-transform': 'scaleX(-1)',
+                        '-o-transform': 'scaleX(-1)',
+                        '-webkit-transform': 'scaleX(-1)',
+                        'transform': 'scaleX(-1)',
+                        'filter': 'FlipH',
+                        '-ms-filter': "FlipH"
+                    });
+                    break;
+                case 3:
+                    element.css({
+                        'transform': 'rotate(180deg)'
+                    });
+                    break;
+                case 4:
+                    element.css({
+                        '-moz-transform': 'scaleX(-1)',
+                        '-o-transform': 'scaleX(-1)',
+                        '-webkit-transform': 'scaleX(-1)',
+                        'transform': 'scaleX(-1) rotate(180deg)',
+                        'filter': 'FlipH',
+                        '-ms-filter': "FlipH"
+                    });
+                    break;
+                case 5:
+                    element.css({
+                        '-moz-transform': 'scaleX(-1)',
+                        '-o-transform': 'scaleX(-1)',
+                        '-webkit-transform': 'scaleX(-1)',
+                        'transform': 'scaleX(-1) rotate(90deg)',
+                        'filter': 'FlipH',
+                        '-ms-filter': "FlipH"
+                    });
+                    break;
+                case 6:
+                    element.css({
+                        'transform': 'rotate(90deg)'
+                    });
+                    break;
+                case 7:
+                    element.css({
+                        '-moz-transform': 'scaleX(-1)',
+                        '-o-transform': 'scaleX(-1)',
+                        '-webkit-transform': 'scaleX(-1)',
+                        'transform': 'scaleX(-1) rotate(-90deg)',
+                        'filter': 'FlipH',
+                        '-ms-filter': "FlipH"
+                    });
+                    break;
+                case 8:
+                    element.css({
+                        'transform': 'rotate(-90deg)'
+                    });
+                    break;
             }
-          }
-        });
-      });
-    }
-  };
-});
+        }// End reOrient()
+    }// End orient()
+})(window.angular, window.EXIF, window);
