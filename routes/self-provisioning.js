@@ -769,11 +769,12 @@ exports.createNewAccount = function(req, res){
 
 
   function createNewAccount(){
-
+    console.log("Enter create new account")
     //Set comany ID
     var companyId='';
     var companyName = "Optivon, Inc."; //Replace with NOC credentials
     firebase.database().ref().child('companies').once('value', function(companiesSnapshot){
+      console.log("in db")
       var keysArray = Object.keys(companiesSnapshot.val());
       var valuesArray = [];
       keysArray.map(function(key){
@@ -800,9 +801,9 @@ exports.createNewAccount = function(req, res){
       accountData.companyId = companyId;
 
       // var updates = {};
+      console.log("Creating auth...")
 
-
-      firebase.auth().createUserWithEmailAndPassword(accountData.email, accountData.commPortalPassword).then(function(user){
+      firebase.auth().createUserWithEmailAndPassword(accountData.email, decrypt(accountData.commPortalPassword)).then(function(user){
         var updates = {};
         updates['account/' + user.uid] = accountData;
         // updates['account/' + user.uid + '/email'] = accountData.email;
@@ -823,7 +824,7 @@ exports.createNewAccount = function(req, res){
       }).catch(function(error){
         var responseObject = {
           "statusCode" : 400,
-          "statusMessage" : "Email already in use"
+          "statusMessage" : "Email already in use or password too short"
         }
         res.send(responseObject);
       });
@@ -844,4 +845,3 @@ function encrypt(text){
 function decrypt(text, key){
   return CryptoJS.AES.decrypt(text, 'QA&\0TnU').toString(CryptoJS.enc.Utf8);
 }
-console.log(encrypt('optivon_939'));
