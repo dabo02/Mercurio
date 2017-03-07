@@ -91,6 +91,7 @@
         //
         // }
 
+
         self.showMultimediaSelectionTextDialog = function(event) {
             $mdDialog.show({
                 templateUrl: 'multimediaTextView',
@@ -157,16 +158,15 @@
                 if(!$rootScope.multimedia){
                     self.textContentToSend = '';
                 }
-
                 //document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
                 //document.getElementById("chatMessageInput").className = "md-icon-float md-block flex-offset-5 flex-85 md-input-focused";
-
+                setTimeout(function(){
+                $rootScope.$apply();
+              }, 100);
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
             // $state.reload();
-            setTimeout(function(){
-            $rootScope.$apply();
-          }, 100);
+
 
         }
 
@@ -215,11 +215,20 @@
 
       };
 
+      self.getChatParticipantAvailability = function(){
+        var availability = null;
+        chatClientService.selectedChat.participantList.forEach(function (participant) {
+            if (chatClientService.chatClient.chatClientOwner != participant.userId) {
+                availability = participant.availability;
+            }
+          });
+        return availability;
+
+    };
+
         self.multimediaClicked = function(messageIndex){
             chatClientService.selectedMessageIndex = messageIndex;
             self.showMultimediaSelectionTextDialog();
-            // $('#multimediaPreview').attr('src', multimediaURL);
-            // $('.messagePreviewChatMessageInput').attr('style', 'visibility:hidden');
         }
 
 
@@ -264,29 +273,5 @@
               );
           chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
         }
-        // if(chatClientService.chatClient.chatList.length > 0) {
-        //
-        //     $scope.selectedChat = chatClientService.selectedChat;
-        //     localStorage.setItem('chatClientService.selectedChat', JSON.stringify(chatClientService.selectedChat));
-        //     $scope.$watch(
-        //         'selectedChat',
-        //         function (newVal, oldVal) {
-        //             if (newVal !== oldVal) {
-        //
-        //                 $scope.selectedChat.lastMessage = newVal.lastMessage;
-        //
-        //                 $timeout(function(){
-        //                     $scope.$apply();
-        //                 });
-        //             }
-        //         }, true
-        //     );
-        //
-        //     chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
-        // }
-        // else{
-        //   console.log(JSON.parse(localStorage.getItem('chatClientService.selectedChat')));
-        //     $state.go('dialer');
-        // }
     }]);
 })();

@@ -22,11 +22,23 @@
 
             chat.participantList.forEach(function (participant) {
                 if (chat.lastMessage.from === participant.userId) {
-                    participantName = participant.firstName + ' ' + participant.lastName;
+                    participantName = participant.firstName;
                 }
             });
 
             return participantName;
+
+        };
+    })
+
+    .filter('countUnreadMessageFilter', function () {
+        return function (chatClient) {
+          var unreadMessage = 0;
+          chatClient.chatList.forEach(function(chat){
+              unreadMessage += chat.unreadMessage;
+          })
+
+          return unreadMessage;
 
         };
     })
@@ -216,10 +228,14 @@
             var filteredTextContent = ''
 
             if(message.textContent.length > 16){
-                filteredTextContent = message.textContent.slice(0, 15) + "...";
+                filteredTextContent = message.textContent.slice(0, 13) + "...";
+            }
+            else if(message.type == "image"){
+                filteredTextContent = "Multimedia \uD83D\uDCF7";
+
             }
             else{
-                filteredTextContent = message.textContent;
+              filteredTextContent = message.textContent;
             }
 
             return filteredTextContent;
