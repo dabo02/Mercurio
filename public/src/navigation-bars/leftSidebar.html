@@ -23,13 +23,13 @@
                         <md-fab-speed-dial md-open="profileCtrl.isOpen" md-direction="{{profileCtrl.selectedDirection}}" ng-class="profileCtrl.selectedMode">
                               <md-fab-trigger>
                                 <md-button aria-label="menu" class="md-fab md-warn">
-                                  <md-icon md-svg-src="img/icons/menu.svg"></md-icon>
+                                    <md-icon style="font-size:22px;" class="fa fa-camera"></md-icon>
                                 </md-button>
                               </md-fab-trigger>
 
                               <md-fab-actions>
                                 <md-button class="md-fab md-raised md-mini">
-                                    <md-icon style="font-size:22px;" class="fa fa-camera">
+                                    <md-icon style="font-size:22px;" class="fa fa-file-image-o">
                                         <input style="z-index: -1; opacity: 0; margin-left: -50%; min-height: 150px; margin-top: -110%;"  onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
                                     </md-icon>
                                 </md-button>
