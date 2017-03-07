@@ -83,7 +83,10 @@
         };
 
         chatClientService.chatClient.setChatObserver(function () {
-                $scope.$apply();
+          setTimeout(function(){
+          $scope.$apply();
+          }, 100);
+
          });
     }]);
 })();

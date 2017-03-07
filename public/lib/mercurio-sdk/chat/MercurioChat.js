@@ -16,6 +16,7 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	self.participantList =[]; //array of participants
 	self.messageList = [];
 	self.participantCount = participantCount;
+	self.unreadMessage = 0;
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 
@@ -94,6 +95,10 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 						var message;
 						message = new Message(messageSnapshot.key, messageSnapshot.val().from, messageSnapshot.val().multimediaUrl, messageSnapshot.val().textContent, messageSnapshot.val().timeStamp, messageInfoSnapshot.val().read[chatClientOwner]);
 						self.messageList.push(message);
+						if(messageInfoSnapshot.val()['read'][chatClientOwner]==0){
+						self.unreadMessage +=1;
+						console.log(self.unreadMessage);
+					}
 					}
 				}
 
@@ -103,7 +108,7 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 	});
 
 	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_changed', function(snapshot) {
-		//When the multimediaUrl is assign from firebase, assign it locally. 
+		//When the multimediaUrl is assign from firebase, assign it locally.
 	  	self.messageList.forEach(function(message, index){
 			if(message.messageId === snapshot.key){
 				self.messageList[index].multimediaUrl = snapshot.val().multimediaUrl;
@@ -246,6 +251,8 @@ MercurioChat.prototype.markUnreadMessagesAsRead = function(userId){
 			});
 
 			firebase.database().ref().child('message-info/' + oldMessage.messageId + "/read/" + userId).set(new Date().getTime());
+			self.unreadMessage -=1;
+			console.log(self.unreadMessage);
 		}
 	});
 }

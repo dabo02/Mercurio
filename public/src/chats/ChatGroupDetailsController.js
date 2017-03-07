@@ -69,7 +69,6 @@
             if(contacts.length > 0){
                 chatClientService.selectedChat.participantList.forEach(function(participant){
                     if(contacts[0].userId == participant.userId){
-                      console.log("Lo encontre?");
                         self.userIsAParticipant = true;
                     }
                 })
@@ -79,7 +78,6 @@
               }
             }
             setTimeout(function(){
-            //self.userIsAParticipant = false;
             $rootScope.$apply();
           }, 100);
 

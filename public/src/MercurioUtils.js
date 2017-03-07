@@ -31,6 +31,18 @@
         };
     })
 
+    .filter('countUnreadMessageFilter', function () {
+        return function (chatClient) {
+          var unreadMessage = 0;
+          chatClient.chatList.forEach(function(chat){
+              unreadMessage += chat.unreadMessage;
+          })
+
+          return unreadMessage;
+
+        };
+    })
+
     .filter('participantPicture', function () {
         return function (participant) {
 
