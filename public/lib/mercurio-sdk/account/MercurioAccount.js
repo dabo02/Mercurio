@@ -121,6 +121,13 @@ MercurioAccount.prototype.saveUsername = function(username){
 	// TODO - add error management callback
 }
 
+MercurioAccount.prototype.deletePicture = function(){
+	var self = this;
+	var updates = {};
+	updates['account/' + self.userId + '/picture'] = "";
+	firebase.database().ref().update(updates);
+}
+
 /*
 Requests server to save user availability in database
 @method

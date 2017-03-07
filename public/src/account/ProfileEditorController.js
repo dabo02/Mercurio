@@ -23,7 +23,16 @@
         self.msg = "";
         self.saveButtonIsAvailable = false;
 
+        self.topDirections = ['left', 'up'];
+        self.bottomDirections = ['down', 'right'];
 
+        self.isOpen = false;
+
+        self.availableModes = ['md-fling', 'md-scale'];
+        self.selectedMode = 'md-fling';
+
+        self.availableDirections = ['up', 'down', 'left', 'right'];
+        self.selectedDirection = 'up';
         self.showProfileEditorDialog = function(event) {
 
             $mdDialog.show({
@@ -48,12 +57,8 @@
             if(accountService.isAccountAvailable()) {
 
                 if(self.firstName != '' && self.lastName != ''){
-                    if(self.newAvailability == ''){
-                        self.newAvailability = accountService.activeAccount.availability;
-                    }
-
                     accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
-                        self.statusMessage, parseInt(self.newAvailability));
+                        self.statusMessage, parseInt(self.availability));
                     if(self.picture){
                         accountService.activeAccount.savePicture(self.picture, function(progress, uploadingImage){
                             accountService.uploadingImage = uploadingImage;
@@ -101,6 +106,10 @@
                 return accountService.activeAccount.status;
             }
         }
+
+        self.deleteProfilePicture = function(){
+            accountService.activeAccount.deletePicture();
+          }
 
         self.getAvailability = function(){
             if(accountService.isAccountAvailable()) {
@@ -207,7 +216,9 @@
             self.email = angular.copy(accountService.activeAccount.email);
             self.statusMessage = angular.copy(accountService.activeAccount.status);
             self.availability = angular.copy(accountService.activeAccount.availability);
+            setTimeout(function(){
             $scope.$apply();
+          }, 100);
         })
 
     }]);
