@@ -31,7 +31,7 @@
                 parent: angular.element(document.body),
                 targetEvent: event,
                 escapeToClose: true,
-                clickOutsideToClose:true
+                clickOutsideToClose: true
                 //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             });
         }
@@ -158,6 +158,12 @@
         self.getExtension = function(){
             if(accountService.isAccountAvailable()) {
                 return accountService.activeAccount.extension;
+            }
+        }
+
+        self.getCompanyName = function(){
+            if(accountService.isAccountAvailable()) {
+                return accountService.activeAccount.companyName;
             }
         }
 

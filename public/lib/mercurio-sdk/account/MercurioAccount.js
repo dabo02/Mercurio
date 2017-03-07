@@ -22,12 +22,15 @@ function MercurioAccount(user, accountReadyCallback){
 
 		if(snapshot.exists()){
 			if(!self.userId){
-				AbstractAccount.apply(self, [snapshot.key, snapshot.val().firstName,
-					snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture,
-					snapshot.val().status, snapshot.val().availability, snapshot.val().email,
-					snapshot.val().extension, snapshot.val().sipUsername,
-					snapshot.val().sipPassword, snapshot.val().settings, snapshot.val().companyId]);
-				accountReadyCallback(self);
+
+				firebase.database().ref('companies/' + snapshot.val().companyId).once('value', function(companySnapshot) {
+					AbstractAccount.apply(self, [snapshot.key, snapshot.val().firstName,
+						snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture,
+						snapshot.val().status, snapshot.val().availability, snapshot.val().email,
+						snapshot.val().extension, snapshot.val().sipUsername,
+						snapshot.val().sipPassword, snapshot.val().settings, companySnapshot.val().name]);
+					accountReadyCallback(self);
+				});
 			}
 			else{
 				self.firstName = snapshot.val().firstName;

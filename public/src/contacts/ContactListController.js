@@ -173,7 +173,7 @@ angular.module('users')
         $mdDialog.hide()
     };
 
-    self.showProfileContactDialog = function(event) {
+    self.showContactProfileDialog = function(event) {
 
         $mdDialog.show({
             templateUrl: 'contactProfile',
@@ -185,7 +185,7 @@ angular.module('users')
         });
     }
 
-    self.closeProfileContactDialog = function(){
+    self.closeContactProfileDialog = function(){
         $mdDialog.hide()
     };
 
@@ -193,7 +193,7 @@ angular.module('users')
 
     self.viewContact = function(contact, event){
       accountService.selectedContact = contact;
-      self.showProfileContactDialog(event);
+      self.showContactProfileDialog(event);
     }
 
     self.getContactByNumber = function(number){
