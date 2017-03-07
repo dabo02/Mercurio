@@ -16,7 +16,7 @@
 
                     <div layout="row" class="flex-80 flex-offset-10" style="margin-top:3%">
                         <md-card flex="100">
-                            <img class="md-card-image" alt="Washed Out" style="height:282px; position:relative;" ng-src="{{contactListCtrl.selectedContact.picture | contactListAvatarFilter}}"/>
+                            <img class="md-card-image" alt="Washed Out" style="height:282px; position:relative;" ng-src="{{contactListCtrl.selectedContact.picture | contactListAvatarFilter}}" fix-image-orientation="contactListCtrl.selectedContact.pictrue" />
                         </md-card>
 
                         <div flex="100" flex-offset="10">
@@ -47,11 +47,11 @@
                             <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                                 <i style = "" class="fa fa-circle-o"></i>
                                 <label style="font-size: 11px">Availability</label>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 0">Online</p>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 1">Away</p>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 2">Busy</p>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 3">On a Call</p>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 4">Offline</p>
+                                <p  ng-if= "contactListCtrl.selectedContact.availability == 0"> <i style="color: green;" ng-if="contactListCtrl.selectedContact.availability == 0" class="fa fa-circle"></i> Online</p>
+                                <p  ng-if= "contactListCtrl.selectedContact.availability == 1"> <i style="color: yellow;" ng-if="contactListCtrl.selectedContact.availability == 1" class="fa fa-circle"></i> Away</p>
+                                <p  ng-if= "contactListCtrl.selectedContact.availability == 2"> <i style="color: red;" ng-if="contactListCtrl.selectedContact.availability == 2" class="fa fa-circle"></i> Busy</p>
+                                <p  ng-if= "contactListCtrl.selectedContact.availability == 3"> <i style="color: blue;" ng-if="contactListCtrl.selectedContact.availability == 3" class="fa fa-circle"></i> On a Call</p>
+                                <p  ng-if= "contactListCtrl.selectedContact.availability == 4"> <i style="color: grey;" ng-if="contactListCtrl.selectedContact.availability == 4" class="fa fa-circle"></i> Offline</p>
                             </md-content>
 
                         </div>
@@ -132,11 +132,12 @@
                                                 <p style="color: white; font-size:20px; word-break: break-all" flex="50">{{contact.firstName}} {{contact.lastName}}</p>
                                                 <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;" > {{contact.status}}</p>
                                             </div>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 0" style="color: white;" >Online</p>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 1" style="color: white;" >Away</p>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 2" style="color: white;" >Busy</p>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 3" style="color: white;" >On a Call</p>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 4" style="color: white;" >Offline</p>
+
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 0" style="color: white;"> <i style="color: green;" ng-if="contact.availability == 0" class="fa fa-circle"></i>  Online</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 1" style="color: white;"> <i style="color: yellow;" ng-if="contact.availability == 1" class="fa fa-circle"></i>  Away</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 2" style="color: white;"> <i style="color: red;" ng-if="contact.availability == 2" class="fa fa-circle"></i>  Busy</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 3" style="color: white;"> <i style="color: blue;" ng-if="contact.availability == 3" class="fa fa-circle"></i>  On a Call</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 4" style="color: white;"> <i style="color: grey;" ng-if="contact.availability == 4" class="fa fa-circle"></i>  Offline</p>
                                         </md-list-item>
                                     </md-list>
                                 </md-button>

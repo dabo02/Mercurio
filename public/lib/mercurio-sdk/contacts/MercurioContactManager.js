@@ -43,7 +43,7 @@ function MercurioContactManager(userId){
 			}
 		});
 
-		if(self.contactObserver()){
+		if(self.contactObserver){
 					self.contactObserver();
 				}
 
