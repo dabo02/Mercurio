@@ -13,22 +13,22 @@ function MercurioCRMManager(userId){
 	self.validationCompleteObserver = null;
 
 	AbstractCRMManager.apply(this, arguments);
-	
+
 	firebase.database().ref('user-crms/' + self.crmManagerOwner).on("child_added", function(snapshot) {
-	
+
 		if(snapshot.exists()){
-		
+
 			var crm = new ZohoCRM(snapshot.key, snapshot.val().insertCallsAutomatically,
 					snapshot.val().name, snapshot.val().token, snapshot.val().type,
-					snapshot.val().validated);	
-			crm.validateToken(self.crmManagerOwner, self.validationCompleteObserver);
+					snapshot.val().validated);
+			crm.validateToken(self.crmManagerOwner);
 			self.crmList.push(crm);
 		}
 
 	});
-	
+
 	firebase.database().ref('user-crms/' + self.crmManagerOwner).on("child_changed", function(snapshot) {
-	
+
 		if(snapshot.exists()){
 			self.crmList.forEach(function(crm, index){
 			if(crm.crmId === snapshot.key){
@@ -84,9 +84,13 @@ Requests server to delete a list of CRMs from the database
 @params: indices - integer array containing indexes of chats to remove from recent chats
 */
 
-MercurioCRMManager.prototype.deleteCRMs = function(crmIndices){
+MercurioCRMManager.prototype.deleteCRMs = function(){
 	var self = this;
-	indices.forEach(function(index){
-		firebase.database().ref('user-crms/' + self.crmManagerOwner + '/' + self.crmList[index].crmId).set(null);
-	});
+	firebase.database().ref('user-crms/' + self.crmManagerOwner + '/' + self.crmList[0].crmId).remove()
+  .then(function() {
+    console.log("Remove succeeded.")
+  })
+  .catch(function(error) {
+    console.log("Remove failed: " + error.message)
+  });
 }

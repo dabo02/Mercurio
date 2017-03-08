@@ -70,6 +70,24 @@
             }
         }
 
+        self.deleteCRMs = function(){
+          var confirm = $mdDialog.confirm()
+              .title('Are you sure you want to delete your crm?')
+              .ariaLabel('delete confirm')
+              .targetEvent(event)
+              .ok('Delete')
+              .cancel('Cancel');
+
+          $mdDialog.show(confirm).then(function() {
+            crmService.crmManager.deleteCRMs();
+            crmService.crmManager.crmList.splice(0,1);
+            self.token='';
+            self.name ='';
+          }, function() {
+
+          });
+        }
+
         self.getCRMInsertCallsSetting = function(){
             if(!crmService.isCRMListEmpty()){
                 return crmService.crmManager.crmList[0].insertCallsAutomatically;

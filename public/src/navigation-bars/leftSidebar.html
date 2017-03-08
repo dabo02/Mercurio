@@ -174,7 +174,9 @@
             </md-dialog-content>
 
             <md-dialog-actions layout="row">
-
+              <md-button ng-show="crmCtrl.crmManager.crmList.length>0" ng-click="crmCtrl.deleteCRMs();">
+                  Delete CRM
+              </md-button>
                 <span flex></span>
                 <md-button ng-click="crmCtrl.closeManageCRMDialog()">
                     Close
