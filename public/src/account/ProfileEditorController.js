@@ -108,7 +108,20 @@
         }
 
         self.deleteProfilePicture = function(){
+          var confirm = $mdDialog.confirm()
+              .title('Are you sure you want to delete your profile picture?')
+              .ariaLabel('delete confirm')
+              .targetEvent(event)
+              .ok('Delete')
+              .cancel('Cancel');
+
+          $mdDialog.show(confirm).then(function() {
             accountService.activeAccount.deletePicture();
+            accountService.activeAccount.picture='';
+          }, function() {
+            self.showProfileEditorDialog();
+          });
+
           }
 
         self.getAvailability = function(){

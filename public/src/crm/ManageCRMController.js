@@ -84,7 +84,7 @@
             self.token='';
             self.name ='';
           }, function() {
-
+            self.showManageCRMDialog();
           });
         }
 

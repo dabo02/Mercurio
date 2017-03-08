@@ -126,6 +126,7 @@ MercurioAccount.prototype.deletePicture = function(){
 	var updates = {};
 	updates['account/' + self.userId + '/picture'] = "";
 	firebase.database().ref().update(updates);
+	firebase.storage().ref().child('user/' + this.userId + '/profile/profile_picture').delete();
 }
 
 /*
