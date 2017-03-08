@@ -180,7 +180,7 @@
         }
 
         self.toggleMute = function(value){
-          self.newMuteSetting = value;
+          console.log(value);
           chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
         }
 

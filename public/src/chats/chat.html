@@ -95,19 +95,73 @@
                         <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
                             <md-toolbar class="mercurioBlueBackground">
                                 <div class="md-toolbar-tools">
-
-                                    <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block" >
-                                        <h2 ng-show="!chatGroupCtrl.canEdit">{{chatGroupCtrl.chatClientService.selectedChat.title}}</h2>
-                                        <h2><input style="color:white; border-color: black;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-show="chatGroupCtrl.canEdit"></h2>
-                                    </md-input-container>
-
-                                    <!--<h2>{{chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].title}}</h2>-->
-                                    <span flex></span>
-                                    <md-icon ng-click = "chatGroupCtrl.editGroupName()" style="margin-bottom: 2%;" class="fa fa-pencil-square-o"></md-icon>
+                                  <h2> Group Info </h2>
                                 </div>
                             </md-toolbar>
-
-                            <md-dialog-content>
+                            <md-dialog-content style="background-color: #b3b3b3">
+                              <div layout="row" class="card card-1">
+                                <div id="wrapper">
+                                <img style="margin-left: 30%; margin-top: 2%"ng-src="images/default_contact_avatar.png" class="md-avatar hover"/>
+                                <md-button style="background-color: grey; opacity: 0.8; position: absolute; margin-left: -42%; width: 45%; height: 72%;" class="test md-fab">
+                                  <input style="z-index: -1; opacity: 0; margin-left: -25%; min-height: 100%; margin-top: -25%;"  onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
+                                  <h4 style="margin-top: -65%"> Change Group Icon <h4>
+                                  </md-button>
+                              </div>
+                                <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block" >
+                                <h4 style="margin-bottom: 5%;"ng-if="!chatGroupCtrl.canEdit">{{chatGroupCtrl.chatClientService.selectedChat.title}}</h4>
+                                <h4><input style="border-color: black;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-if="chatGroupCtrl.canEdit"></h4>
+                                </md-input-container>
+                                <md-icon ng-click = "chatGroupCtrl.editGroupName()" style="color: black; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
+                                <h5 flex-offset="5" style="color: grey; margin-top: -3%"> Created {{chatGroupCtrl.getDateCreated()}} </h5>
+                              </div>
+                              <div layout="row" class="card card-1">
+                                <h4 flex-offset="5">Muted</h4>
+                                <md-checkbox style="position: absolute; margin-top: -5.5%; margin-left:90%;" ng-model="chatGroupCtrl.chatClientService.selectedChat.settings.mute" ng-click="chatGroupCtrl.toggleMute()" aria-label="Checkbox"></md-checkbox>
+                              </div>
+                              <div layout="row" class="card card-1">
+                              <h4 style="color: red; margin-top: 5%; margin-left: 25%;" ng-show="chatGroupCtrl.userIsAParticipant">User is already in the chat</h4>
+                              <h4 style="color: green; margin-top: 5%; margin-left: 35%;" ng-show="chatGroupCtrl.userWasAdded">User was added</h4>
+                                <md-card-title style="padding-top: 0%; margin: 10px;">
+                                    <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
+                                        <md-content class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                            <md-contact-chips
+                                                    ng-model="contactListCtrl.asyncContacts"
+                                                    md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                                    md-contact-name="name"
+                                                    md-contact-image="picture"
+                                                    md-require-match="false"
+                                                    md-highlight-flags="i"
+                                                    filter-selected="contactListCtrl.filterSelected"
+                                                    placeholder="Search Contacts to Add">
+                                            </md-contact-chips>
+                                        </md-content>
+                                    </md-card-title-text>
+                                    <div flex="80" flex-offset="10" layout="row">
+                                        <span flex></span>
+                                        <md-button ng-if="contactListCtrl.asyncContacts.length > 0" ng-click="chatGroupCtrl.addParticipantsToGroup(contactListCtrl.asyncContacts); contactListCtrl.delete()">
+                                            Add
+                                        </md-button>
+                                    </div>
+                                </md-card-title>
+                                <div flex="80" flex-offset="10" layout="row">
+                                    <md-list>
+                                        <md-subheader class="md-no-sticky" style="background-color:white;">Group Members</md-subheader>
+                                        <h6 style="color: #b3b3b3; position: absolute; margin-top: -6%; margin-left: 65%">{{chatGroupCtrl.chatClientService.selectedChat.participantCount}} Participants</h6>
+                                    </md-list>
+                                </div>
+                                <div flex="80" flex-offset="10" layout="row">
+                                    <md-list>
+                                        <md-list-item ng-controller = "ContactController as contactCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
+                                            <img ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
+                                            <div class="md-list-item-text compact">
+                                                <h3 ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
+                                            </div>
+                                        </md-list-item>
+                                    </md-list>
+                                </div>
+                              </div>
+                            </md-dialog-content>
+                            <!-- <md-dialog-content>
                               <h4 style="color: red; margin-top: 5%; margin-left: 25%;" ng-show="chatGroupCtrl.userIsAParticipant">User is already in the chat</h4>
                               <h4 style="color: green; margin-top: 5%; margin-left: 35%;" ng-show="chatGroupCtrl.userWasAdded">User was added</h4>
                                 <md-card-title style="padding-top: 0%; margin: 10px;">
@@ -155,7 +209,7 @@
                                         </md-checkbox>
                                     </md-input-container>
                                 </div> -->
-                            </md-dialog-content>
+                            <!-- </md-dialog-content>  -->
 
                             <md-dialog-actions layout="row">
                                 <!--<md-button ng-click="chatGroupCtrl.exitGroup()">-->
@@ -244,6 +298,7 @@
 
                             <md-list flex="90" flex-offset="5">
                                 <md-list-item class="md-1-line">
+                                    <!-- <img ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" ng-show="selectedChat.title>0" class="md-avatar"><input style="z-index: -1; opacity: 0; margin-left: -50%; min-height: 150px; margin-top: -110%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/> -->
                                     <img ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
                                       <i style="color: green; padding-right: 2%;" ng-if="selectedChat.title.length === 0  && chatCtrl.getChatParticipantAvailability()== 0" class="fa fa-circle"></i>
                                       <i style="color: yellow; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 1" class="fa fa-circle"></i>

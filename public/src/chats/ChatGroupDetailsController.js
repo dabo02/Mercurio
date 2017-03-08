@@ -50,6 +50,16 @@
             $mdDialog.hide()
         };
 
+        self.toggleMute = function(){
+          if(chatClientService.selectedChat.settings.mute){
+            chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, false);
+          }
+          else{
+            chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, true);
+          }
+
+        }
+
         self.exitGroup = function(){
           var listener = setInterval(function(){
             if(chatClientService.chatClient.chatList.length > 0){
@@ -90,6 +100,27 @@
 
         self.chatTitleChanged = function(){
             self.saveGroupDetailsButtonIsAvailable = true;
+        }
+
+        $scope.groupPictureSelected = function(element) {
+
+            self.pictureChosen = true;
+
+            $scope.$apply(function(scope) {
+
+                self.picture = element.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // handle onload
+                    angular.element('#profilePicturePreview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(self.picture);
+            });
+        };
+
+        self.getDateCreated = function(){
+          var date = new Date(chatClientService.selectedChat.timeStamp);
+          return date.toDateString();
         }
 
         self.muteSettingChanged = function(){

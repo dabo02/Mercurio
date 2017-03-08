@@ -194,6 +194,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 				lastMessage: {},
 				timeStamp: new Date().getTime(),
 				title: title || '',
+				groupPicture: '',
 				participantCount: participants.length,
 				settings: {mute: false}
 			};
