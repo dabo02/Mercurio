@@ -5,7 +5,7 @@
 */
 
 function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
-	lastMessage, settings, timeStamp, title, chatClientOwner){
+	lastMessage, settings, timeStamp, title, chatClientOwner, groupPicture){
 
 	var self = this;
 	self.chatId = chatId;
@@ -17,6 +17,7 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	self.messageList = [];
 	self.participantCount = participantCount;
 	self.unreadMessage = 0;
+	self.groupPicture = groupPicture;
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 

@@ -6,7 +6,7 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ChatGroupDetailsController', ['$scope', '$stateParams', 'chatClientService', 'accountService', '$mdDialog', '$rootScope', function($scope, $stateParams, chatClientService, accountService, $mdDialog, $rootScope){
+    angular.module('mercurio').controller('ChatGroupDetailsController', ['$scope', '$stateParams', 'chatClientService', 'accountService', '$mdDialog', '$rootScope', '$timeout', function($scope, $stateParams, chatClientService, accountService, $mdDialog, $rootScope, $timeout){
 
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
@@ -16,6 +16,7 @@
         self.canEdit = false;
         self.userIsAParticipant = false;
         self.userWasAdded = false;
+        self.pictrue ='';
         // self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
         // self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
 
@@ -41,6 +42,24 @@
                 });
             }
         }
+
+        $scope.groupPictureSelected = function(element) {
+
+            self.pictureChosen = true;
+
+            //self.profileChanged();
+
+            $scope.$apply(function(scope) {
+
+                self.picture = element.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // handle onload
+                    angular.element('#groupPicturePreview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(self.picture);
+            });
+        };
 
         self.editGroupName = function(){
               self.canEdit = true;
@@ -98,21 +117,22 @@
         }, 3000);
         }
 
-        self.chatTitleChanged = function(){
+        self.chatGroupDetailsChanged = function(){
             self.saveGroupDetailsButtonIsAvailable = true;
         }
 
         $scope.groupPictureSelected = function(element) {
 
             self.pictureChosen = true;
-
+            self.chatGroupDetailsChanged();
+            console.log(chatClientService.selectedChat);
             $scope.$apply(function(scope) {
 
                 self.picture = element.files[0];
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     // handle onload
-                    angular.element('#profilePicturePreview').attr('src', e.target.result);
+                    angular.element('#groupPicturePreview').attr('src', e.target.result);
                 };
                 reader.readAsDataURL(self.picture);
             });
@@ -128,15 +148,31 @@
         }
 
         self.saveGroupDetails = function(){
-            if(self.newChatTitle != chatClientService.selectedChat.title){
+            if(self.newChatTitle != chatClientService.selectedChat.title && self.newChatTitle){
                 chatClientService.selectedChat.saveChatTitle(self.newChatTitle);
             }
+            if(self.picture){
+                chatClientService.chatClient.saveGroupPicture(self.picture, chatClientService.selectedChat, function(progress, uploadingImage){
+                    chatClientService.uploadingImage = uploadingImage;
+                    chatClientService.progress = progress;
+                    chatClientService.opacity = progress/100+0.1;
+                    $rootScope.$digest();
+                    if(!uploadingImage){
+                        //self.msg = "Profile info and picture saved successfully";
+                        //self.saved = true;
+                        $timeout(function(){
+                            $scope.$apply();
+                        });
+                        setTimeout(function(){
+                            //self.saved = null;
+                            $timeout(function(){
+                                $scope.$apply();
+                            });
+                        }, 3000);
+                    }
+                });
 
-            // if(self.newMuteSetting != chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute){
-            //     chatClientService.chatClient.chatList[$stateParams.chatIndex]
-            //         .toggleNotifications(chatClientService.chatClient.chatClientOwner, self.newMuteSetting);
-            //         console.log(self.newMuteSetting);
-            // }
+            }
 
             self.closeChatGroupDetailsDialog();
         }

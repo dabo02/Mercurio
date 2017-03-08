@@ -48,7 +48,7 @@
 
         self.instantiateSelectedChat = function(chat){
           var newChat = new MercurioChat (chat.chatId, chat.participantCount, null,
-    					chat.lastMessage, chat.settings, null, chat.title, self.chatClientOwner);
+    					chat.lastMessage, chat.settings, null, chat.title, self.chatClientOwner, chat.groupPicture);
               newChat.participantList = chat.participantList;
               newChat.messageList = chat.messageList;
               return newChat;

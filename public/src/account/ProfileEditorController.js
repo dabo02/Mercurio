@@ -83,18 +83,18 @@
                     }
 
                     else{
-                        self.msg = "Profile info saved successfully";
-                        self.saveButtonIsAvailable=false;
-                        self.saved = true;
-                        $timeout(function(){
-                            $scope.$apply()});
-                        setTimeout(function(){
-                            self.saved = null;
-                            $timeout(function(){
-                                $scope.$apply()
-                            });
-
-                        }, 3000);
+                        // self.msg = "Profile info saved successfully";
+                        // self.saveButtonIsAvailable=false;
+                        // self.saved = true;
+                        // $timeout(function(){
+                        //     $scope.$apply()});
+                        // setTimeout(function(){
+                        //     self.saved = null;
+                        //     $timeout(function(){
+                        //         $scope.$apply()
+                        //     });
+                        //
+                        // }, 3000);
                     }
                 }
 
@@ -208,7 +208,6 @@
             self.pictureChosen = true;
 
             self.profileChanged();
-
             $scope.$apply(function(scope) {
 
                 self.picture = element.files[0];

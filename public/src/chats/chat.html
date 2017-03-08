@@ -101,15 +101,15 @@
                             <md-dialog-content style="background-color: #b3b3b3">
                               <div layout="row" class="card card-1">
                                 <div id="wrapper">
-                                <img style="margin-left: 30%; margin-top: 2%"ng-src="images/default_contact_avatar.png" class="md-avatar hover"/>
-                                <md-button style="background-color: grey; opacity: 0.8; position: absolute; margin-left: -42%; width: 45%; height: 72%;" class="test md-fab">
-                                  <input style="z-index: -1; opacity: 0; margin-left: -25%; min-height: 100%; margin-top: -25%;"  onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
+                                <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 40%; margin-left: 30%; margin-top: 2%" ng-src="https://www.w3schools.com/css/img_forest.jpg" class="md-avatar hover"/>
+                                <md-button style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -40%; width: 40%; height: 180px;" class="test md-fab">
+                                  <input style="z-index: -1; opacity: 0; margin-left: -25%; min-height: 100%; margin-top: -25%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/>
                                   <h4 style="margin-top: -65%"> Change Group Icon <h4>
                                   </md-button>
                               </div>
                                 <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block" >
                                 <h4 style="margin-bottom: 5%;"ng-if="!chatGroupCtrl.canEdit">{{chatGroupCtrl.chatClientService.selectedChat.title}}</h4>
-                                <h4><input style="border-color: black;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-if="chatGroupCtrl.canEdit"></h4>
+                                <h4><input style="border-color: black;" ng-change="chatGroupCtrl.chatGroupDetailsChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-if="chatGroupCtrl.canEdit"></h4>
                                 </md-input-container>
                                 <md-icon ng-click = "chatGroupCtrl.editGroupName()" style="color: black; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
                                 <h5 flex-offset="5" style="color: grey; margin-top: -3%"> Created {{chatGroupCtrl.getDateCreated()}} </h5>
@@ -219,7 +219,7 @@
                                 <md-button ng-click="chatGroupCtrl.closeChatGroupDetailsDialog()">
                                     Close
                                 </md-button>
-                                <md-button ng-show="chatGroupCtrl.saveGroupDetailsButtonIsAvailable && chatGroupCtrl.newChatTitle" ng-click="chatGroupCtrl.saveGroupDetails()">
+                                <md-button ng-show="chatGroupCtrl.saveGroupDetailsButtonIsAvailable" ng-click="chatGroupCtrl.saveGroupDetails()">
                                     Save
                                 </md-button>
                                 <!--<md-button ng-click="chatGroupCtrl.saveChatGroupDetails()">
@@ -298,8 +298,8 @@
 
                             <md-list flex="90" flex-offset="5">
                                 <md-list-item class="md-1-line">
-                                    <!-- <img ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" ng-show="selectedChat.title>0" class="md-avatar"><input style="z-index: -1; opacity: 0; margin-left: -50%; min-height: 150px; margin-top: -110%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/> -->
-                                    <img ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
+                                    <img ng-src="{{selectedChat | groupChatAvatarFilter}}" ng-show="selectedChat.title>0" class="md-avatar"/>
+                                    <img ng-show="selectedChat.title==0" ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
                                       <i style="color: green; padding-right: 2%;" ng-if="selectedChat.title.length === 0  && chatCtrl.getChatParticipantAvailability()== 0" class="fa fa-circle"></i>
                                       <i style="color: yellow; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 1" class="fa fa-circle"></i>
                                       <i style="color: red; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 2" class="fa fa-circle"></i>

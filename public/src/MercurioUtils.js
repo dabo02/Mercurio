@@ -31,6 +31,23 @@
         };
     })
 
+
+
+    .filter('groupChatAvatarFilter', function () {
+      return function (chat) {
+        console.log(chat);
+          var avatarUrl = '';
+          if(chat.groupPicture){
+              avatarUrl = chat.groupPicture;
+
+          }
+          else{
+            avatarUrl = 'images/default_group_avatar.png';
+          }
+          return avatarUrl;
+      };
+    })
+
     .filter('countUnreadMessageFilter', function () {
         return function (chatClient) {
           var unreadMessage = 0;
@@ -80,6 +97,7 @@
     .filter('chatListAvatarFilter', function () {
         return function (chat, chatClientOwner) {
           if(chat){
+            console.log(chat);
             var avatarUrl = '';
             if(chat.title.length > 0){
 
