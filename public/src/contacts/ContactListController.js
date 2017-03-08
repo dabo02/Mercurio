@@ -157,44 +157,9 @@ angular.module('users')
         }
     }
 
-    self.showProfileEditorDialog = function(event) {
-
-        $mdDialog.show({
-            templateUrl: 'profileEditorForm',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            escapeToClose: true,
-            clickOutsideToClose:true
-            //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-        });
-    }
-
     self.closeProfileEditorDialog = function(){
         $mdDialog.hide()
     };
-
-    self.showContactProfileDialog = function(event) {
-
-        $mdDialog.show({
-            templateUrl: 'contactProfile',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            escapeToClose: true,
-            clickOutsideToClose:true
-            //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-        });
-    }
-
-    self.closeContactProfileDialog = function(){
-        $mdDialog.hide()
-    };
-
-
-
-    self.viewContact = function(contact, event){
-      accountService.selectedContact = contact;
-      self.showContactProfileDialog(event);
-    }
 
     self.getContactByNumber = function(number){
         contacts.forEach(function(contact){
@@ -208,24 +173,9 @@ angular.module('users')
 
     };
 
-    self.selectedItemChange = function(contact){
-        if(contact){
-        self.viewContact(contact);
+    self.clearSearchText = function(){
         self.searchText = '';
-      }
     };
-
-    self.viewContactById = function(id){
-      if(id == accountService.activeAccount.userId){
-        self.showProfileEditorDialog();
-      }
-      self.contactList.forEach(function (contact, index) {
-          if (id == contact.userId) {
-             self.viewContact(contact);
-          }
-
-    });
-  };
 
 
   accountService.activeAccount.contactManager.setContactObserver(function(){

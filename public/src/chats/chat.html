@@ -4,11 +4,11 @@
         <left-sidebar></left-sidebar>
 
         <script type="text/ng-template" id="contactProfile">
-          <md-dialog flex="40" aria-label="Contact Profile" ng-controller="ContactListController as contactListCtrl">
+          <md-dialog flex="40" aria-label="Contact Profile" ng-controller="ContactController as contactCtrl">
 
               <md-toolbar class="mercurioBlueBackground">
                   <div class="md-toolbar-tools">
-                      <h2>{{contactListCtrl.selectedContact.firstName}} {{contactListCtrl.selectedContact.lastName}}</h2>
+                      <h2>{{contactCtrl.selectedContact.firstName}} {{contactCtrl.selectedContact.lastName}}</h2>
                   </div>
               </md-toolbar>
 
@@ -16,53 +16,53 @@
 
                   <div layout="row" class="flex-80 flex-offset-10" style="margin-top:3%">
                       <md-card flex="100">
-                          <img class="md-card-image" alt="Washed Out" style="height:282px; position:relative;" ng-src="{{contactListCtrl.selectedContact.picture | contactListAvatarFilter}}" fix-image-orientation="contactListCtrl.selectedContact.pictrue" />
+                          <img class="md-card-image" alt="Washed Out" style="height:282px; position:relative;" ng-src="{{contactCtrl.selectedContact.picture | contactListAvatarFilter}}" fix-image-orientation="contactCtrl.selectedContact.pictrue" />
                       </md-card>
 
                       <div flex="100" flex-offset="10">
                           <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                               <i style = "" class="fa fa-user"></i>
                               <label style="font-size: 11px">Name</label>
-                              <p>{{contactListCtrl.selectedContact.firstName}} {{contactListCtrl.selectedContact.lastName}}</p>
+                              <p>{{contactCtrl.selectedContact.firstName}} {{contactCtrl.selectedContact.lastName}}</p>
                           </md-content>
 
                           <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                               <i style = "" class="fa fa-phone"></i>
                               <label style="font-size: 11px">Phone</label>
-                              <p>{{contactListCtrl.selectedContact.phone}}</p>
+                              <p>{{contactCtrl.selectedContact.phone}}</p>
                           </md-content>
 
                           <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                               <i style = "" class="fa fa-envelope"></i>
                               <label style="font-size: 11px">Email</label>
-                              <p>{{contactListCtrl.selectedContact.email}}</p>
+                              <p>{{contactCtrl.selectedContact.email}}</p>
                           </md-content>
 
                           <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                               <i style = "" class="fa fa-comment-o"></i>
                               <label style="font-size: 11px">Status</label>
-                              <p style="word-break: break-all">{{contactListCtrl.selectedContact.status}}</p>
+                              <p style="word-break: break-all">{{contactCtrl.selectedContact.status}}</p>
                           </md-content>
 
                           <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                               <i style = "" class="fa fa-circle-o"></i>
                               <label style="font-size: 11px">Availability</label>
-                              <p  ng-if= "contactListCtrl.selectedContact.availability == 0"> <i style="color: green;" ng-if="contactListCtrl.selectedContact.availability == 0" class="fa fa-circle"></i> Online</p>
-                              <p  ng-if= "contactListCtrl.selectedContact.availability == 1"> <i style="color: yellow;" ng-if="contactListCtrl.selectedContact.availability == 1" class="fa fa-circle"></i> Away</p>
-                              <p  ng-if= "contactListCtrl.selectedContact.availability == 2"> <i style="color: red;" ng-if="contactListCtrl.selectedContact.availability == 2" class="fa fa-circle"></i> Busy</p>
-                              <p  ng-if= "contactListCtrl.selectedContact.availability == 3"> <i style="color: blue;" ng-if="contactListCtrl.selectedContact.availability == 3" class="fa fa-circle"></i> On a Call</p>
-                              <p  ng-if= "contactListCtrl.selectedContact.availability == 4"> <i style="color: grey;" ng-if="contactListCtrl.selectedContact.availability == 4" class="fa fa-circle"></i> Offline</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 0"> <i style="color: green;" ng-if="contactCtrl.selectedContact.availability == 0" class="fa fa-circle"></i> Online</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 1"> <i style="color: yellow;" ng-if="contactCtrl.selectedContact.availability == 1" class="fa fa-circle"></i> Away</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 2"> <i style="color: red;" ng-if="contactCtrl.selectedContact.availability == 2" class="fa fa-circle"></i> Busy</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 3"> <i style="color: blue;" ng-if="contactCtrl.selectedContact.availability == 3" class="fa fa-circle"></i> On a Call</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 4"> <i style="color: grey;" ng-if="contactCtrl.selectedContact.availability == 4" class="fa fa-circle"></i> Offline</p>
                           </md-content>
 
                       </div>
                   </div>
                   <div layout="row" flex="60" flex-offset="20" style="margin-top:8%;">
                       <div style="margin:auto">
-                          <md-button style="font-size: 20px" class="md-icon-button fa fa-phone mercurioBlueColor" ng-controller="DialerController as dialer"  ng-click="dialer.redial(contactListCtrl.selectedContact.phone); contactListCtrl.closeProfileContactDialog()"/>
-                          <md-button style="font-size:19px;" class="md-icon-button" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([contactListCtrl.selectedContact])">
+                          <md-button style="font-size: 20px" class="md-icon-button fa fa-phone mercurioBlueColor" ng-controller="DialerController as dialer"  ng-click="dialer.redial(contactCtrl.selectedContact.phone); contactCtrl.closeProfileContactDialog()"/>
+                          <md-button style="font-size:19px;" class="md-icon-button" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([contactCtrl.selectedContact])">
                               <img style= "height: 20px;" ng-src= "images/add_chat_mercurio.png">
                           </md-button>
-                          <md-button href="mailto:{{contactListCtrl.selectedContact.email}}" style="font-size: 20px" class="md-icon-button fa fa-envelope mercurioBlueColor"/>
+                          <md-button href="mailto:{{contactCtrl.selectedContact.email}}" style="font-size: 20px" class="md-icon-button fa fa-envelope mercurioBlueColor"/>
                       </div>
                   </div>
               </md-dialog-content>
@@ -70,7 +70,7 @@
               <md-dialog-actions layout="row">
 
                   <span flex></span>
-                  <md-button ng-click="contactListCtrl.closeContactProfileDialog()">
+                  <md-button ng-click="contactCtrl.closeContactProfileDialog()">
                       Close
                   </md-button>
 
@@ -78,7 +78,7 @@
 
           </md-dialog>
         </script>
-        
+
         <md-content flex="70" id="main-content" style="position:relative;background-color: transparent;overflow:hidden;">
             <call-status-toolbar></call-status-toolbar>
             <div style="padding-top:3%" layout="row">
@@ -139,10 +139,10 @@
                                 </div>
                                 <div flex="80" flex-offset="10" layout="row" class="scrollableList fixedRows" >
                                     <md-list>
-                                        <md-list-item ng-controller = "ContactListController as contactListCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
-                                            <img ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
+                                        <md-list-item ng-controller = "ContactController as contactCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
+                                            <img ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
                                             <div class="md-list-item-text compact">
-                                                <h3 ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
+                                                <h3 ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
                                             </div>
                                         </md-list-item>
                                     </md-list>
@@ -238,15 +238,6 @@
                     </md-dialog>
                 </script>
 
-
-                <p  ng-if= "contactListCtrl.selectedContact.availability == 0" style="color: white;" >Online</p>
-                <p  ng-if= "contactListCtrl.selectedContact.availability == 1" style="color: white;" >Away</p>
-                <p  ng-if= "contactListCtrl.selectedContact.availability == 2" style="color: white;" >Busy</p>
-                <p  ng-if= "contactListCtrl.selectedContact.availability == 3" style="color: white;" >On a Call</p>
-                <p  ng-if= "contactListCtrl.selectedContact.availability == 4" style="color: white;" >Offline</p>
-
-
-
                 <md-content style="margin-bottom:10%;overflow-x:hidden;height:100%; background:rgba(0,0,0,0.55);" flex="80" flex-offset="10">
                     <div ng-controller ="OptionController as options">
                         <div class="row">
@@ -264,7 +255,7 @@
                                             ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
                                                 {{selectedChat.title}}
                                         </h4>
-                                        <h4 style= "color: white;" ng-controller = "ContactListController as contactListCtrl" ng-click = "contactListCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
+                                        <h4 style= "color: white;" ng-controller = "ContactController as contactCtrl" ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
                                             {{selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
                                     </a>
@@ -311,8 +302,8 @@
                                         </md-menu-item>
                                         </div>
                                         <div ng-if="chatList[chatCtrl.chatIndex].title.length == 0">
-                                          <md-menu-item ng-controller = "ContactListController as contactListCtrl">
-                                              <md-button ng-click = "contactListCtrl.viewContactById(chatCtrl.getChatParticipantUserId())">
+                                          <md-menu-item ng-controller = "ContactController as contactCtrl">
+                                              <md-button ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())">
                                                   Contact Profile
                                               </md-button>
                                           </md-menu-item>
