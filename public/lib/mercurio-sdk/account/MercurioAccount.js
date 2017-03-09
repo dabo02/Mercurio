@@ -38,6 +38,7 @@ function MercurioAccount(user, accountReadyCallback){
 				self.email = snapshot.val().email;
 				self.status = snapshot.val().status;
 				self.availability = snapshot.val().availability;
+				self.companyId = snapshot.val().companyId;
 
 				if(self.profileObserver()){
 					self.profileObserver()

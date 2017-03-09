@@ -57,6 +57,9 @@
             if(accountService.isAccountAvailable()) {
 
                 if(self.firstName != '' && self.lastName != ''){
+                  if(self.availability == ''){
+                    self.availability = accountService.activeAccount.availability;
+                  }
                     accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
                         self.statusMessage, parseInt(self.availability));
                     if(self.picture){
@@ -83,18 +86,18 @@
                     }
 
                     else{
-                        // self.msg = "Profile info saved successfully";
-                        // self.saveButtonIsAvailable=false;
-                        // self.saved = true;
-                        // $timeout(function(){
-                        //     $scope.$apply()});
-                        // setTimeout(function(){
-                        //     self.saved = null;
-                        //     $timeout(function(){
-                        //         $scope.$apply()
-                        //     });
-                        //
-                        // }, 3000);
+                        self.msg = "Profile info saved successfully";
+                        self.saveButtonIsAvailable=false;
+                        self.saved = true;
+                        $timeout(function(){
+                            $scope.$apply()});
+                        setTimeout(function(){
+                            self.saved = null;
+                            $timeout(function(){
+                                $scope.$apply()
+                            });
+
+                        }, 3000);
                     }
                 }
 

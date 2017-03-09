@@ -15,9 +15,7 @@
                 <md-dialog-content style= "overflow-y: hidden; overflow-x: hidden;" >
 
                     <div layout="row" class="flex-80 flex-offset-10" style="margin-top:3%">
-                        <md-card flex="100">
-                            <img class="md-card-image" alt="Washed Out" style="height:282px; position:relative;" ng-src="{{contactCtrl.selectedContact.picture | contactListAvatarFilter}}" fix-image-orientation="contactCtrl.selectedContact.pictrue" />
-                        </md-card>
+                            <img fix-image-orientation="contactCtrl.selectedContact.picture" style="height:282px; width: 45%; position:relative;" ng-src="{{contactCtrl.selectedContact.picture | contactListAvatarFilter}}"/>
 
                         <div flex="100" flex-offset="10">
                             <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
