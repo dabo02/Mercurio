@@ -70,6 +70,7 @@
                             $rootScope.$digest();
                             if(!uploadingImage){
                                 self.msg = "Profile info and picture saved successfully";
+                                self.saveButtonIsAvailable=false;
                                 self.saved = true;
                                 $timeout(function(){
                                     $scope.$apply();
