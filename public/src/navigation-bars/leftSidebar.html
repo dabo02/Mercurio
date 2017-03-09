@@ -259,11 +259,21 @@
         <md-card ng-click="profileCtrl.showProfileEditorDialog()" ng-controller="ProfileEditorController as profileCtrl" style="margin:0px; margin-bottom:4%; background-image:url(images/md-backround-profile.jpg);" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
             <md-card-title>
                 <md-card-title-media flex="40">
-                    <div class="md-media-sm card-media"><md-icon class="avatar"><img style="border-radius:70px;" ng-src="{{profileCtrl.getProfilePicture()}}"></md-icon></div>
+                    <div class="md-media-sm card-media">
+                      <md-icon class="avatar">
+                        <img style="border-radius:50px; width: 100%; height: 100%" ng-src="{{profileCtrl.getProfilePicture()}}" fix-image-orientation="profileCtrl.getProfilePicture()">
+                      </md-icon>
+                    </div>
                 </md-card-title-media>
-                <md-card-title-text style="padding-top:5%" flex="60">
+                <md-card-title-text style="padding-top:5%; margin-top: 25%; margin-left: -35%" flex="60">
                     <span class="md-headline">{{profileCtrl.getFirstName() + ' ' + profileCtrl.getLastName()}}</span>
-                    <span class="md-subhead">{{profileCtrl.getAvailability()}}</span>
+                    <span class="md-subhead">
+                      <i style="color: green;" ng-if="profileCtrl.availability == 'Online' " class="fa fa-circle"></i>
+                      <i style="color: yellow;" ng-if="profileCtrl.availability == 'Away' " class="fa fa-circle"></i>
+                      <i style="color: red;" ng-if="profileCtrl.availability == 'Busy' " class="fa fa-circle"></i>
+                      <i style="color: blue;" ng-if="profileCtrl.availability == 'onACall' " class="fa fa-circle"></i>
+                      <i style="color: grey;" ng-if="profileCtrl.availability == 'Offline' " class="fa fa-circle"></i>
+                      {{profileCtrl.getAvailability()}}</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-actions style="padding-left:4%;" layout="row">
@@ -326,7 +336,7 @@
         <md-list-item layout="row" ng-controller="AuthenticationController as authCtrl">
             <md-button ng-click="authCtrl.logoutButtonClicked()" layout="row">
                 <p style = "color: white;font-size:20px;"flex="20"><md-button style="margin:0%;" class="md-icon-button fa fa-power-off"></md-button></p>
-                <p style = "color: white;" flex="80">Sign Out</p>
+                <p style = "color: white;" flex="80">Log Out</p>
             </md-button>
         </md-list-item>
         <!--<md-list-item layout ="row" style="background-image:url(images/background.jpg)"-->
