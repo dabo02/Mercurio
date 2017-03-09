@@ -23,6 +23,11 @@
                 authenticationService.feedback = '';
                 $rootScope.$apply();
               },3000);
+            }, function(spinner){
+              $rootScope.spinnerActivated = spinner;
+              $timeout(function(){
+                $rootScope.$apply();
+              })
             });
 
         }
@@ -89,7 +94,19 @@
         }
 
         self.registerAccount = function(){
-          authenticationService.register(self.registerData);
+          authenticationService.register(self.registerData, function(spinner){
+            $rootScope.spinnerActivated = spinner;
+            $timeout(function(){
+              $rootScope.$apply();
+            })
+          }, function(error){
+            authenticationService.feedback = error;
+            $rootScope.$apply();
+            setTimeout(function(){
+              authenticationService.feedback = '';
+              $rootScope.$apply();
+            },3000);
+          });
         }
     }]);
 }());

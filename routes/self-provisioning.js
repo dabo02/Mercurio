@@ -204,7 +204,7 @@ exports.updateEmail = function(req, res){
       }
       else{
         console.log("connecting with: "+oldAccount.email+" and "+oldAccount.commPortalPassword);
-        firebase.auth().signInWithEmailAndPassword(oldAccount.email, oldAccount.commPortalPassword).then(function(user){
+        firebase.auth().signInWithEmailAndPassword(oldAccount.email, decrypt(oldAccount.commPortalPassword)).then(function(user){
           user.updateEmail(newEmail).then(function() {
             //Update changes
             var updates = {};
