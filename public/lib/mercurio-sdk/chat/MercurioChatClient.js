@@ -35,6 +35,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 				chat.timeStamp = snapshot.val().timeStamp;
 				chat.title = snapshot.val().title;
 				chat.participantCount = snapshot.val().participantCount;
+				chat.groupPicture = snapshot.val().groupPicture;
 
 				if(self.chatObserver){
 							self.chatObserver();
@@ -196,7 +197,8 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 				title: title || '',
 				groupPicture: '',
 				participantCount: participants.length,
-				settings: {mute: false}
+				settings: {mute: false},
+				groupPicture: ''
 			};
 
 			var updates = {};
@@ -233,7 +235,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 				var chat;
 
 				chat = new MercurioChat(existingChat.key, existingChat.val().participantCount, self.participantsAreReadyObserver,
-					existingChat.val().lastMessage, existingChat.val().settings, existingChat.val().timeStamp, existingChat.val().title, self.chatClientOwner);
+					existingChat.val().lastMessage, existingChat.val().settings, existingChat.val().timeStamp, existingChat.val().title, self.chatClientOwner, existingChat.val().groupPicture);
 
 				self.chatList.unshift(chat);
 				newChat = chat;

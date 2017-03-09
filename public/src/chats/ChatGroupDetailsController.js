@@ -160,13 +160,14 @@
                     if(!uploadingImage){
                         //self.msg = "Profile info and picture saved successfully";
                         //self.saved = true;
+                        //console.log("Entro");
                         $timeout(function(){
-                            $scope.$apply();
+                            $rootScope.$apply();
                         });
                         setTimeout(function(){
                             //self.saved = null;
                             $timeout(function(){
-                                $scope.$apply();
+                                $rootScope.$apply();
                             });
                         }, 3000);
                     }
@@ -177,6 +178,18 @@
             self.closeChatGroupDetailsDialog();
         }
         //
+
+        chatClientService.chatClient.setChatObserver(function () {
+          console.log("entro");
+          setTimeout(function(){
+          $scope.$apply();
+          }, 100);
+
+         });
+
+
+
+
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){
             chatClientService.selectedChat.participantList.forEach(function(participant){

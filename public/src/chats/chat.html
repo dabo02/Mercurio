@@ -101,7 +101,7 @@
                             <md-dialog-content style="background-color: #b3b3b3">
                               <div layout="row" class="card card-1">
                                 <div id="wrapper">
-                                <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 40%; margin-left: 30%; margin-top: 2%" ng-src="https://www.w3schools.com/css/img_forest.jpg" class="md-avatar hover"/>
+                                <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 40%; margin-left: 30%; margin-top: 2%" ng-src="{{chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar hover"/>
                                 <md-button style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -40%; width: 40%; height: 180px;" class="test md-fab">
                                   <input style="z-index: -1; opacity: 0; margin-left: -25%; min-height: 100%; margin-top: -25%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/>
                                   <h4 style="margin-top: -65%"> Change Group Icon <h4>
@@ -298,8 +298,7 @@
 
                             <md-list flex="90" flex-offset="5">
                                 <md-list-item class="md-1-line">
-                                    <img ng-src="{{selectedChat | groupChatAvatarFilter}}" ng-show="selectedChat.title>0" class="md-avatar"/>
-                                    <img ng-show="selectedChat.title==0" ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
+                                    <img ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
                                       <i style="color: green; padding-right: 2%;" ng-if="selectedChat.title.length === 0  && chatCtrl.getChatParticipantAvailability()== 0" class="fa fa-circle"></i>
                                       <i style="color: yellow; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 1" class="fa fa-circle"></i>
                                       <i style="color: red; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 2" class="fa fa-circle"></i>

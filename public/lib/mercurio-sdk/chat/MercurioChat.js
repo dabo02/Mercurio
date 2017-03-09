@@ -193,7 +193,8 @@ MercurioChat.prototype.addParticipants = function(contacts){
 			timeStamp: new Date().getTime(),
 			title: self.title || '',
 			participantCount: newParticipantCount,
-			settings: {mute:false}
+			settings: {mute:false},
+			groupPicture: self.groupPicture || ''
 		};
 
 
