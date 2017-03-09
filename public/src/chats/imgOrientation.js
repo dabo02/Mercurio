@@ -85,7 +85,9 @@
                     element.css({
                         'transform': 'rotate(90deg)'
                     });
-                    break;
+                      $("#child").width($("#parent").height());
+                      $("#child").height($("#parent").height());
+                     break;
                 case 7:
                     element.css({
                         '-moz-transform': 'scaleX(-1)',
