@@ -28,33 +28,71 @@ exports.authenticate = function(req, res){
   // 7873042704
   // @Snowman19
   var options = {
-      url: 'https://selfcarepr.optivon.com/sip-ps/accession/login?DirectoryNumber='+req.body.phone+'&computerID=1eb3ee6fb5dfb557&platform=Accession&device=Android&deviceOS=7.1.1&ApplicationVersion=2.23.00&ApplicationID=MS_Android_Acc&Password='+req.body.password,
+      url: 'https://selfcarepr.optivon.com/sip-ps/mercurio/config?DirectoryNumber='+req.body.phone+'&Password='+req.body.password,
       headers: {
-      'User-Agent': 'AM_MS_Android_Acc/2.23.00/Huawei/Nexus 6P/7.1.1/Accession Android CommPortal'
+      'User-Agent': 'Mercurio'
     }
   };
   function callback(error, data) {
-    // console.log(err)
       var parseString = require('xml2js').parseString;
-      var xml = data.buffer.toString();
-      parseString(xml, function (err, result) {
-        if(result.phoneConfig.network && !err){
-          // Testing purpose, while endpoint pack is not available
+      var stringArray = (data.buffer.toString().split('\n'));
+
+
+        if(data.buffer){
+
+        //Parsing data
+        var result={
+          "phoneConfig":{
+            "network":[
+              {
+                "sipPassword" :[],
+                "firstName" :[],
+                "lastName" :[],
+                "companyName" :[],
+                "extension": []
+              }
+            ]
+          }
+        }
+        stringArray.map(function(string){
+          if(string.search("DISPLAY_NAME")>-1){
+            var startIndex = string.search("=")+2;
+            var fullName = string.substring(startIndex)
+            result.phoneConfig.network[0].firstName.push(fullName.substring(0,fullName.indexOf(' ')));
+            result.phoneConfig.network[0].lastName.push(fullName.substring(fullName.indexOf(' ')+1, fullName.indexOf('"')));
+          }
+          else if(string.search("BG_NAME")>-1){
+            var startIndex = string.search("=")+2;
+            var company = string.substring(startIndex)
+            result.phoneConfig.network[0].companyName.push(company.substring(0, company.indexOf('"')));
+          }
+          else if(string.search("SIP_PASS")>-1){
+            var startIndex = string.search("=")+2;
+            var password = string.substring(startIndex)
+            result.phoneConfig.network[0].sipPassword.push(password.substring(0, password.indexOf('"')));
+          }
+          else if(string.search("EXTENSION")>-1){
+            var startIndex = string.search("=")+2;
+            var ext = string.substring(startIndex)
+            result.phoneConfig.network[0].extension.push(ext.substring(0, ext.indexOf('"')));
+          }
+        });
+
           var configs = {
             // "availability" : 0, DB
             // "companyId" : "-Kbkv5yVzzlBJV5Bz-8K",  DB
             "commPortalPassword" : req.body.password,
             "email" : req.body.email,
-            "extension" : "2704", //NOC
+            "extension" : result.phoneConfig.network[0].extension[0], //NOC
             "firstName" : "Wilfredo",//junto con lastname NOC
             "lastName" : "Nieves", //Junto con firstname NOC
             "phone" : req.body.phone,
             // "picture" : "", DB
             "sipPassword" : result.phoneConfig.network[0].sipPassword[0], //NOC
-            "sipUsername" : result.phoneConfig.network[0].username[0], //NOC
+            "sipUsername" : req.body.phone,
             // "status" : "Wop" DB
           }
-          console.log(configs)
+          // console.log(configs)
           firebase.database().ref().child('account').once('value', function(snapshot){
             //Convert Not Iterable JSON to an array
 	          var keysArray = Object.keys(snapshot.val());
@@ -133,7 +171,7 @@ exports.authenticate = function(req, res){
           }
           res.send(responseObject);
         }
-      });
+
   }
   // request(options, callback);
   http.get(options, callback);
