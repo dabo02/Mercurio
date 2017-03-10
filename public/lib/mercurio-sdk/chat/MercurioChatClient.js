@@ -235,28 +235,6 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 			self.chatIsReadyToSendObserver(newChat);
 		}
 	}
-
-	/* buggy code for avoiding duplicate non-group chats
-	var existingParticipants = [];
-	if(participants.length === 2){
-		firebase.database().ref('user-chats/' + self.chatClientOwner).once('child_added', function(outerSnapshot){
-			if(outerSnapshot.val().participantCount == 2){
-				firebase.database().ref('chat-members/' + outerSnapshot.key).once('child_added', function(innerSnapshot){
-					existingParticipants.push(innerSnapshot.key);
-				}).then(function(){
-					var matchedParticipantCount = 0;
-					existingParticipants.forEach(function(existingParticipant){
-						if(participants.indexOf(existingParticipant) > -1){
-							matchedParticpantCount++;
-						}
-					});
-					if(matchedParticipantCount === 2){
-						return; //chat already exists
-					}
-				});
-			}
-		});
-	}*/
 }
 
 /*

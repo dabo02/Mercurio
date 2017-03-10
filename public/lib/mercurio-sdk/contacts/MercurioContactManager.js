@@ -18,7 +18,7 @@ function MercurioContactManager(userId){
 			var contact;
 			contact = new MercurioContact(snapshot.val().firstName, snapshot.val().lastName,
 			snapshot.val().email, snapshot.val().picture, snapshot.val().phone, snapshot.val().extension,
-			snapshot.val().userId, snapshot.val().status, snapshot.val().availability, snapshot.key);
+			snapshot.key, snapshot.val().userId, snapshot.val().status, snapshot.val().availability);
 
 			self.contactList.push(contact);
 		}
