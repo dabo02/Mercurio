@@ -84,8 +84,8 @@ exports.authenticate = function(req, res){
             "commPortalPassword" : req.body.password,
             "email" : req.body.email,
             "extension" : result.phoneConfig.network[0].extension[0], //NOC
-            "firstName" : "Wilfredo",//junto con lastname NOC
-            "lastName" : "Nieves", //Junto con firstname NOC
+            "firstName" : result.phoneConfig.network[0].firstName[0],//junto con lastname NOC
+            "lastName" : result.phoneConfig.network[0].lastName[0], //Junto con firstname NOC
             "phone" : req.body.phone,
             // "picture" : "", DB
             "sipPassword" : result.phoneConfig.network[0].sipPassword[0], //NOC
@@ -135,7 +135,22 @@ exports.authenticate = function(req, res){
                   "route" : "replaceAccount",
                   "newEmail" : configs.email,
                   "newPassword": encrypt(configs.commPortalPassword),
-                  "previousAccount": previousAccount
+                  "previousAccount": previousAccount,
+                  "newAccount" : {
+                    "availability" : 0,
+                    "companyId" : '',
+                    "commPortalPassword" : encrypt(configs.commPortalPassword),
+                    "email" : configs.email,
+                    "extension" : configs.extension, //NOC
+                    "firstName" : configs.firstName,//junto con lastname NOC
+                    "lastName" : configs.lastName, //Junto con firstname NOC
+                    "phone" : configs.phone,
+                    "picture" : "",
+                    "sipPassword" : configs.sipPassword, //NOC
+                    "sipUsername" : configs.sipUsername, //NOC
+                    "status" : "Hey I'm using Mercury"
+                  },
+                  "companyName":result.phoneConfig.network[0].companyName[0]
                  }
                  res.send(responseObject);
               }
@@ -150,15 +165,16 @@ exports.authenticate = function(req, res){
                   "companyId" : '',
                   "commPortalPassword" : encrypt(configs.commPortalPassword),
                   "email" : configs.email,
-                  "extension" : "2704", //NOC
-                  "firstName" : "Wilfredo",//junto con lastname NOC
-                  "lastName" : "Nieves", //Junto con firstname NOC
+                  "extension" : configs.extension, //NOC
+                  "firstName" : configs.firstName,//junto con lastname NOC
+                  "lastName" : configs.lastName, //Junto con firstname NOC
                   "phone" : configs.phone,
                   "picture" : "",
                   "sipPassword" : configs.sipPassword, //NOC
                   "sipUsername" : configs.sipUsername, //NOC
                   "status" : "Hey I'm using Mercury"
-                }
+                },
+                "companyName":result.phoneConfig.network[0].companyName[0]
                }
                res.send(responseObject);
             }
@@ -533,7 +549,7 @@ exports.replaceAccount = function(req, res){
 
       //Set comany ID
       var companyId='';
-      var companyName = "Optivon, Inc."; //Replace with NOC credentials
+      var companyName = req.body.newAccount.companyName; //Replace with NOC credentials
       firebase.database().ref().child('companies').once('value', function(companiesSnapshot){
         var keysArray = Object.keys(companiesSnapshot.val());
         var valuesArray = [];
@@ -810,7 +826,7 @@ exports.createNewAccount = function(req, res){
     console.log("Enter create new account")
     //Set comany ID
     var companyId='';
-    var companyName = "Optivon, Inc."; //Replace with NOC credentials
+    var companyName = req.body.newAccount.companyName; //Replace with NOC credentials
     firebase.database().ref().child('companies').once('value', function(companiesSnapshot){
       console.log("in db")
       var keysArray = Object.keys(companiesSnapshot.val());
