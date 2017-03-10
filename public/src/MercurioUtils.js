@@ -21,7 +21,7 @@
             var participantName = '';
 
             chat.participantList.forEach(function (participant) {
-                if (chat.lastMessage.from === participant.userId) {
+                if (chat.lastMessage.from === participant.participantId) {
                     participantName = participant.firstName + ' ' + participant.lastName;
                 }
             });
@@ -54,7 +54,7 @@
             if(participantList.length > 2){
 
                 participantList.forEach(function (participant) {
-                    if (from === participant.userId) {
+                    if (from === participant.participantId) {
                         participantName = participant.firstName + ' ' + participant.lastName;
                     }
                 });
@@ -75,7 +75,7 @@
             }
             else{
                 chat.participantList.forEach(function (participant) {
-                    if (chatClientOwner !== participant.userId) {
+                    if (chatClientOwner !== participant.participantId) {
                         if(participant.picture === ""){
                             avatarUrl = 'images/default_contact_avatar.png';
                         }
@@ -200,7 +200,7 @@
             }
             else{
                 chat.participantList.forEach(function (participant) {
-                    if (chatClientOwner !== participant.userId) {
+                    if (chatClientOwner !== participant.participantId) {
                        title = participant.firstName + ' ' + participant.lastName;
                     }
                 });
@@ -226,6 +226,33 @@
         };
     })
 
+    .filter('createChatTextFilter', function(){
+        return function(groupChatCheckbox){
+
+            if(groupChatCheckbox){
+                return 'Group';
+            }
+            else{
+                return 'Chat';
+            }
+        }
+    })
+
+    .filter('chatClientOwnerGroupMemberFilter', function(){
+        return function(chat, chatClientOwner){
+
+            var isChatClientOwnerGroupMember = false;
+
+            chat.participantList.forEach(function(participant){
+                if(participant.participantId == chatClientOwner){
+                    isChatClientOwnerGroupMember = true;
+                }
+            });
+
+            return isChatClientOwnerGroupMember;
+        }
+    })
+        
     .filter('callListDirectionFilter', function () {
         return function (incoming, answered) {
 
@@ -304,33 +331,6 @@
                         break;
                 }
             }
-        }
-    })
-
-    .filter('createChatTextFilter', function(){
-        return function(groupChatCheckbox){
-
-            if(groupChatCheckbox){
-                return 'Group';
-            }
-            else{
-                return 'Chat';
-            }
-        }
-    })
-
-    .filter('chatClientOwnerGroupMemberFilter', function(){
-        return function(chat, chatClientOwner){
-
-            var isChatClientOwnerGroupMember = false;
-
-            chat.participantList.forEach(function(participant){
-                if(participant.userId == chatClientOwner){
-                    isChatClientOwnerGroupMember = true;
-                }
-            });
-
-            return isChatClientOwnerGroupMember;
         }
     })
 

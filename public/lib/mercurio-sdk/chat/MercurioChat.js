@@ -21,7 +21,7 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	
 		if(snapshot.exists() && snapshot.val()){
 			// if participant has true value instantiate participnat and add to list
-			var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
+			var participant = new MercurioChatParticipant(chatClientOwner, snapshot.key, function(newParticipant){
 			
 				self.participantList.push(newParticipant);
 				
@@ -38,22 +38,31 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
 	
 		if(snapshot.exists()){
-			
+
+			var participantIndex = null;
+
+			self.participantList.forEach(function(participant, index){
+				if(participant.participantId === snapshot.key){
+					participantIndex = index;
+				}
+			});
+
 			if(snapshot.val()){
 				// if value changed to true instantiate new participant and add to list
-				var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
-				
-					self.participantList.push(newParticipant);
-				
+				new MercurioChatParticipant(chatClientOwner, snapshot.key, function(newParticipant){
+					if(participantIndex == null){
+						self.participantList.push(newParticipant);
+					}
+					else{
+						self.participantList[participantIndex] = newParticipant;
+					}
 				});
 			}
 			else{
 				// if value changed to false remove participant from list
-				self.participantList.forEach(function(participant, index){
-					if(participant.participantId === snapshot.key){
-						self.participantList.splice(index, 1);
-					}
-				});
+				if(participantIndex != null){
+					self.participantList.splice(participantIndex, 1);
+				}
 			}	
 		}
 	});
@@ -170,7 +179,7 @@ MercurioChat.prototype.addParticipants = function(contacts){
 			
 			var isNewParticipant = true; // innocent until proven guilty
 			self.participantList.forEach(function(participant){
-				if(participant.userId === contact.userId){
+				if(participant.participantId === contact.userId){
 					// contact is already a group member (guilty)
 					isNewParticipant = false;
 				}
@@ -193,7 +202,7 @@ MercurioChat.prototype.addParticipants = function(contacts){
 		// update participant count for existing chat members
 		self.participantList.forEach(function(participant){
 			updates = {};
-			updates['/user-chats/' + participant.userId + "/" + self.chatId + '/participantCount'] = newParticipantCount;
+			updates['/user-chats/' + participant.participantId + "/" + self.chatId + '/participantCount'] = newParticipantCount;
 			firebase.database().ref().update(updates);
 		});
 	
@@ -272,7 +281,7 @@ MercurioChat.prototype.saveChatTitle = function(newChatTitle){
 	// update chat title for existing chat members
 	self.participantList.forEach(function(participant){
 		updates = {};
-		updates['/user-chats/' + participant.userId + "/" + self.chatId + '/title'] = newChatTitle;
+		updates['/user-chats/' + participant.participantId + "/" + self.chatId + '/title'] = newChatTitle;
 		firebase.database().ref().update(updates);
 	});
 }
@@ -283,10 +292,10 @@ MercurioChat.prototype.exitChatGroup = function(userId){
 	
 	self.participantList.forEach(function(participant){
 		updates = {};
-		updates['/user-chats/' + participant.userId + "/" + self.chatId + '/participantCount'] = self.participantCount - 1;
+		updates['/user-chats/' + participant.participantId + "/" + self.chatId + '/participantCount'] = self.participantCount - 1;
 		
-		if(participant.userId === userId){
-			updates['/chat-members/' + self.chatId + "/" + participant.userId] = false;
+		if(participant.participantId === userId){
+			updates['/chat-members/' + self.chatId + "/" + participant.participantId] = false;
 		}
 		
 		firebase.database().ref().update(updates);

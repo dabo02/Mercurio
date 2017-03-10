@@ -207,7 +207,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 			});
 		}
 		else {
-			// chat already existe
+			// chat already exists
 			// try and find chat in local chatList. if found move that chat to the top
 			// if its not in the local list add  new instance to chatList using the MercurioChat constructor
 			// and add it to the top of the list. call observer at the end
@@ -400,13 +400,13 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 
 	chat.participantList.forEach(function(participant){
 
-		if(participant.userId !== self.chatClientOwner){
-			firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + participant.userId).set(0);
+		if(participant.participantId !== self.chatClientOwner){
+			firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + participant.participantId).set(0);
 		}
 
-		firebase.database().ref().child('user-tokens/'+participant.userId).once('value', function(snapshot){
+		firebase.database().ref().child('user-tokens/'+participant.participantId).once('value', function(snapshot){
 
-			firebase.database().ref().child("user-chats").child(participant.userId).child(chat.chatId)
+			firebase.database().ref().child("user-chats").child(participant.participantId).child(chat.chatId)
 			.once('value', function(actualChat){
 				if(!actualChat.val().settings.mute){
 					sendPushNotification(snapshot.val(), participant);
@@ -414,12 +414,12 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 			});
 		});
 
-		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
+		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.participantId).set(true);
 
 		var updates = {};
 		message.messageId = newMessageKey;
 
-		updates['/user-chats/' + participant.userId + "/" + chat.chatId + "/lastMessage"] = message;
+		updates['/user-chats/' + participant.participantId + "/" + chat.chatId + "/lastMessage"] = message;
 
 		firebase.database().ref().update(updates);
 	});
