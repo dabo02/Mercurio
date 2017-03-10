@@ -804,3 +804,8 @@ div:focus {
 #wrapper:hover .test {
  visibility:visible;
  }
+
+ md-checkbox.deleteCheckBox .md-icon {
+border-color: white;
+border-width: 1px;
+ }

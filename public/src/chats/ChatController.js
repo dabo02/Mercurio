@@ -10,6 +10,8 @@
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
         self.chatClientService = chatClientService;
+        self.deleteMessages = false;
+        self.messageToDelete = [];
 
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){
@@ -182,6 +184,30 @@
         self.toggleMute = function(value){
           console.log(value);
           chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
+        }
+
+        self.deleteMessagesClicked =function(){
+          self.deleteMessages = true;
+          //console.log(self.deleteMessages);
+        }
+
+        self.closeSelectMessage = function(){
+          self.deleteMessages = false;
+        }
+
+        self.deleteMessages = function(){
+          console.log("delete");
+        }
+
+        self.toggle = function(message) {
+          var idx = self.messageToDelete.indexOf(message);
+          if (idx > -1) {
+            self.messageToDelete.splice(idx, 1);
+          }
+          else {
+            self.messageToDelete.push(message);
+          }
+          console.log(self.messageToDelete);
         }
 
         $scope.multimediaSelected = function(element) {
