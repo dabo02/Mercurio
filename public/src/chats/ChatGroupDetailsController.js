@@ -131,7 +131,6 @@
               EXIF.getData(self.picture, function() {
                 self.allMetaData = EXIF.getAllTags(this);
               });
-                self.picture = element.files[0];
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     // handle onload

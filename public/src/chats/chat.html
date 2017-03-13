@@ -236,9 +236,6 @@
                                 <div class="md-toolbar-tools">
                                     <h2>Multimedia Preview</h2>
                                     <span flex></span>
-                                    <md-button ng-disabled="multimediaChatCtrl.chatClientService.uploadingImage" class="md-icon-button" ng-click="multimediaChatCtrl.closeMultimediaSelectionPreviewDialog()">
-                                        &times;
-                                    </md-button>
                                 </div>
                             </md-toolbar>
 
@@ -262,6 +259,11 @@
                                     <p ng-click="multimediaChatCtrl.sendMessage()" style="margin-top: 3%; color:#1565c0; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                                 </div>
                             </md-dialog-content>
+                            <md-dialog-actions layout="row">
+                            <md-button ng-disabled="multimediaChatCtrl.chatClientService.uploadingImage" ng-click="multimediaChatCtrl.closeMultimediaSelectionPreviewDialog()">
+                                Close
+                            </md-button>
+                          </md-dialog-actions>
                         </form>
                     </md-dialog>
                 </script>
@@ -272,9 +274,6 @@
                                 <div class="md-toolbar-tools">
                                     <h2>Multimedia Preview</h2>
                                     <span flex></span>
-                                    <md-button class="md-icon-button" ng-click="multimediaChatCtrl.closeMultimediaSelectionTextDialog()">
-                                        &times;
-                                    </md-button>
                                 </div>
                             </md-toolbar>
 
@@ -287,6 +286,11 @@
                                     <p flex = "40" flex-offset="40"> {{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].textContent}} </p>
                                 </div>
                             </md-dialog-content>
+                            <md-dialog-actions layout="row">
+                            <md-button  ng-click="multimediaChatCtrl.closeMultimediaSelectionPreviewDialog()">
+                                Close
+                            </md-button>
+                          </md-dialog-actions>
 
                     </md-dialog>
                 </script>

@@ -12,6 +12,7 @@
         self.chatClientService = chatClientService;
         self.isDeleteMessagesClicked = false;
         self.messagesToDelete = [];
+        self.allMetaData = null;
 
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){
@@ -229,10 +230,23 @@
             $scope.$apply(function(scope) {
 
                 $rootScope.multimedia = element.files[0];
+                EXIF.getData($rootScope.multimedia, function() {
+                  self.allMetaData = EXIF.getAllTags(this);
+                });
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     // handle onload
                     angular.element('#multimediaPreview').attr('src', e.target.result);
+                    if(self.allMetaData.Orientation == 6 && self.allMetaData){
+                      angular.element('#multimediaPreview').css({
+                              'transform': 'rotate(90deg)'
+                        });
+                    }
+                    else{
+                      angular.element('#multimediaPreview').css({
+                        'transform': ''
+                      });
+                    }
                     $scope.multimediaURL = e.target.result;
                 };
 
