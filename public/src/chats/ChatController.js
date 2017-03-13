@@ -10,8 +10,8 @@
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
         self.chatClientService = chatClientService;
-        self.selectedDeleteMessages = false;
-        self.messageToDelete = [];
+        self.isDeleteMessagesClicked = false;
+        self.messagesToDelete = [];
 
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){
@@ -176,48 +176,49 @@
 
         self.showUploadForm = function(){
             angular.element('.fa-paperclip > input[type=file]').trigger('click');
-            //angular.element('.hiddenFileInput').trigger('click');
         }
 
         self.toggleMute = function(value){
-          console.log(value);
           chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
         }
 
+        //Delete messages was click
         self.deleteMessagesClicked =function(){
-          self.selectedDeleteMessages = true;
-          //console.log(self.deleteMessages);
+          self.isDeleteMessagesClicked = true;
         }
 
+        //Close delete messages option
         self.closeSelectMessage = function(){
-          self.selectedDeleteMessages = false;
+          self.isDeleteMessagesClicked = false;
         }
 
+        //Delete messages from the array
         self.deleteMessages = function(){
-          if(self.messageToDelete.length>0){
+          if(self.messagesToDelete.length>0){
           console.log("llego?");
-          chatClientService.selectedChat.deleteMessages(self.messageToDelete);
-          self.messageToDelete =[];
-          self.selectedDeleteMessages =false;
+          chatClientService.selectedChat.deleteMessages(self.messagesToDelete);
+          self.messagesToDelete =[];
+          self.isDeleteMessagesClicked =false;
           setTimeout(function(){
           $rootScope.$apply();
         }, 100);
           }
         };
 
-          self.exists = function(message){
-            return self.messageToDelete.indexOf(message.messageId) > -1;
+        //Check if message is already in the array of messages to delete
+        self.messageExists = function(message){
+            return self.messagesToDelete.indexOf(message.messageId) > -1;
           }
 
-        self.toggle = function(message) {
-          var idx = self.messageToDelete.indexOf(message.messageId);
+        //Select/toggle message to delete and add it to array to delete
+        self.toggleMessage = function(message) {
+          var idx = self.messagesToDelete.indexOf(message.messageId);
           if (idx > -1) {
-            self.messageToDelete.splice(idx, 1);
+            self.messagesToDelete.splice(idx, 1);
           }
           else {
-            self.messageToDelete.push(message.messageId);
+            self.messagesToDelete.push(message.messageId);
           }
-          console.log(self.messageToDelete);
         }
 
         $scope.multimediaSelected = function(element) {
