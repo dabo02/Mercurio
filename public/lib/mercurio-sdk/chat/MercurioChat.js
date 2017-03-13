@@ -19,7 +19,6 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	self.unreadMessage = 0;
 	self.groupPicture = groupPicture;
 	self.chatClientOwner = chatClientOwner;
-	self.newMessage = null;
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 
@@ -168,9 +167,9 @@ MercurioChat.prototype.initMessageInfoChildChanged = function(messageId, chatCli
 		if(messageInfoSnapshot.exists()){
 			self.messageList.forEach(function(message, index){
 				if(message.messageId == messageId){
-					if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'number'){
+					if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'number' && messageInfoSnapshot.val()[chatClientOwner] != message.read){
 						message.read = messageInfoSnapshot.val()[chatClientOwner];
-						//self.unreadMessage -=1;
+						self.unreadMessage -=1;
 					}
 					else if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'boolean' && !messageInfoSnapshot.val()[chatClientOwner]){
 						self.messageList.splice(index, 1);

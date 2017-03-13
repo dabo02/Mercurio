@@ -271,7 +271,6 @@
         $location.hash('bottom');
         $anchorScroll();
 
-
         if(!chatClientService.selectedChat){
           chatClientService.chatClient.setChatListObserver(function () {
 

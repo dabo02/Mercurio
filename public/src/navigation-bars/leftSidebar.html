@@ -19,7 +19,7 @@
                         <div ng-if="profileCtrl.accountService.uploadingImage" style="left: 0; position:absolute; text-align:center; margin-top: -250px; width: 100%" layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="determinate" value="{{profileCtrl.accountService.progress}}" md-diameter="200"></md-progress-circular>
                         </div>
-                        <div style="position:absolute;top:30%;left:38%;">
+                        <div style="position:relative;top:-50%;left:40%;">
                         <md-fab-speed-dial md-open="profileCtrl.isOpen" md-direction="{{profileCtrl.selectedDirection}}" ng-class="profileCtrl.selectedMode">
                               <md-fab-trigger>
                                 <md-button aria-label="menu" class="md-fab md-warn">
