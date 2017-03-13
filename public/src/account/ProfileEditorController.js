@@ -213,12 +213,24 @@
 
             self.profileChanged();
             $scope.$apply(function(scope) {
-
+                var allMetaData = null;
                 self.picture = element.files[0];
+                EXIF.getData(self.picture, function() {
+                  allMetaData = EXIF.getAllTags(this);
+                  console.log(allMetaData.Orientation);
+                });
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     // handle onload
+
                     angular.element('#profilePicturePreview').attr('src', e.target.result);
+                    if(allMetaData.Orientation == 6){
+                      angular.element('#profilePicturePreview').css({
+                            'transform': 'rotate(90deg)'
+                                    });
+                          $("#child").width($("#parent").height());
+                          $("#child").height($("#parent").height());
+                                      }
                 };
                 reader.readAsDataURL(self.picture);
             });
