@@ -141,6 +141,11 @@
                               'transform': 'rotate(90deg)'
                         });
                     }
+                    else{
+                      angular.element('#groupPicturePreview').css({
+                        'transform': ''
+                      });
+                    }
                 };
                 reader.readAsDataURL(self.picture);
             });

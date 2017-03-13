@@ -229,6 +229,11 @@
                      $("#child").width($("#parent").height());
                      $("#child").height($("#parent").height());
                   }
+                  else{
+                    angular.element('#profilePicturePreview').css({
+                      'transform': ''
+                    });
+                  }
                 };
                 reader.readAsDataURL(self.picture);
             });
