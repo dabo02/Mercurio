@@ -17,6 +17,7 @@
         self.userIsAParticipant = false;
         self.userWasAdded = false;
         self.pictrue ='';
+        self.allMetaData = null;
         // self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
         // self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
 
@@ -125,14 +126,21 @@
 
             self.pictureChosen = true;
             self.chatGroupDetailsChanged();
-            console.log(chatClientService.selectedChat);
             $scope.$apply(function(scope) {
-
+              self.picture = element.files[0];
+              EXIF.getData(self.picture, function() {
+                self.allMetaData = EXIF.getAllTags(this);
+              });
                 self.picture = element.files[0];
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     // handle onload
                     angular.element('#groupPicturePreview').attr('src', e.target.result);
+                    if(self.allMetaData.Orientation == 6 && self.allMetaData){
+                      angular.element('#groupPicturePreview').css({
+                              'transform': 'rotate(90deg)'
+                        });
+                    }
                 };
                 reader.readAsDataURL(self.picture);
             });

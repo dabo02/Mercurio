@@ -22,6 +22,7 @@
         self.saved = null;
         self.msg = "";
         self.saveButtonIsAvailable = false;
+        self.allMetaData = null;
 
         self.topDirections = ['left', 'up'];
         self.bottomDirections = ['down', 'right'];
@@ -213,17 +214,15 @@
 
             self.profileChanged();
             $scope.$apply(function(scope) {
-                var allMetaData = null;
                 self.picture = element.files[0];
                 EXIF.getData(self.picture, function() {
-                  allMetaData = EXIF.getAllTags(this);
-                  console.log(allMetaData.Orientation);
+                  self.allMetaData = EXIF.getAllTags(this);
                 });
                 var reader = new FileReader();
                 reader.onload = function(e) {
                   // handle onload
                   angular.element('#profilePicturePreview').attr('src', e.target.result);
-                  if(allMetaData.Orientation == 6){
+                  if(self.allMetaData.Orientation == 6 && self.allMetaData){
                     angular.element('#profilePicturePreview').css({
                             'transform': 'rotate(90deg)'
                       });
