@@ -221,16 +221,15 @@
                 });
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    // handle onload
-
-                    angular.element('#profilePicturePreview').attr('src', e.target.result);
-                    if(allMetaData.Orientation == 6){
-                      angular.element('#profilePicturePreview').css({
+                  // handle onload
+                  angular.element('#profilePicturePreview').attr('src', e.target.result);
+                  if(allMetaData.Orientation == 6){
+                    angular.element('#profilePicturePreview').css({
                             'transform': 'rotate(90deg)'
-                                    });
-                          $("#child").width($("#parent").height());
-                          $("#child").height($("#parent").height());
-                                      }
+                      });
+                     $("#child").width($("#parent").height());
+                     $("#child").height($("#parent").height());
+                  }
                 };
                 reader.readAsDataURL(self.picture);
             });
