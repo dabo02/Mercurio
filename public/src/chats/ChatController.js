@@ -10,7 +10,7 @@
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
         self.chatClientService = chatClientService;
-        self.deleteMessages = false;
+        self.selectedDeleteMessages = false;
         self.messageToDelete = [];
 
         var listener = setInterval(function(){
@@ -160,11 +160,9 @@
                 if(!$rootScope.multimedia){
                     self.textContentToSend = '';
                 }
-                //document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
-                //document.getElementById("chatMessageInput").className = "md-icon-float md-block flex-offset-5 flex-85 md-input-focused";
                 setTimeout(function(){
                 $rootScope.$apply();
-              }, 100);
+              }, 1000);
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
             // $state.reload();
@@ -187,25 +185,37 @@
         }
 
         self.deleteMessagesClicked =function(){
-          self.deleteMessages = true;
+          self.selectedDeleteMessages = true;
           //console.log(self.deleteMessages);
         }
 
         self.closeSelectMessage = function(){
-          self.deleteMessages = false;
+          self.selectedDeleteMessages = false;
         }
 
         self.deleteMessages = function(){
-          console.log("delete");
-        }
+          if(self.messageToDelete.length>0){
+          console.log("llego?");
+          chatClientService.selectedChat.deleteMessages(self.messageToDelete);
+          self.messageToDelete =[];
+          self.selectedDeleteMessages =false;
+          setTimeout(function(){
+          $rootScope.$apply();
+        }, 100);
+          }
+        };
+
+          self.exists = function(message){
+            return self.messageToDelete.indexOf(message.messageId) > -1;
+          }
 
         self.toggle = function(message) {
-          var idx = self.messageToDelete.indexOf(message);
+          var idx = self.messageToDelete.indexOf(message.messageId);
           if (idx > -1) {
             self.messageToDelete.splice(idx, 1);
           }
           else {
-            self.messageToDelete.push(message);
+            self.messageToDelete.push(message.messageId);
           }
           console.log(self.messageToDelete);
         }

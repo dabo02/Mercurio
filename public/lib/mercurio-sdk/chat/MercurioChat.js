@@ -18,6 +18,8 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	self.participantCount = participantCount;
 	self.unreadMessage = 0;
 	self.groupPicture = groupPicture;
+	self.chatClientOwner = chatClientOwner;
+	self.newMessage = null;
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 
@@ -83,6 +85,28 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 	var newMessageKey = null;
 
 	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToLast(1 * pageNumber * limit).on("child_added", function(messageSnapshot) {
+		// firebase.database().ref('message-info/' + messageSnapshot.key).on("value", function(messageInfoSnapshot){
+		// 	self.newMessage = new Message(messageSnapshot.key, messageSnapshot.val().from, messageSnapshot.val().multimediaUrl, messageSnapshot.val().textContent, messageSnapshot.val().timeStamp, messageInfoSnapshot.val().read[chatClientOwner]);
+		// 	if(self.newMessage != null){
+		// 		if(messageInfoSnapshot.val()['has-message'][chatClientOwner]){
+		// 			self.messageList.push(self.newMessage);
+		// 			if(messageInfoSnapshot.val()['read'][chatClientOwner]==0){
+		// 					self.unreadMessage +=1;
+		// 							}
+		// 		}
+		// 	}
+		// 	else{
+		// 		self.messageList.forEach(function(message, index){
+		// 			if(message.messageId == messageInfoSnapshot.key){
+		// 				message.read = messageInfoSnapshot.val()['read'][chatClientOwner];
+		// 				if(!messageInfoSnapshot.val()['has-message'][chatClientOwner]){
+		// 					self.messageList.splice(index, 1);
+		// 				}
+		// 			}
+		// 		});
+		// 	}
+		// 	self.newMessage =null;
+		// })
 
 		if(messageSnapshot.exists()){
 
@@ -97,10 +121,11 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 						message = new Message(messageSnapshot.key, messageSnapshot.val().from, messageSnapshot.val().multimediaUrl, messageSnapshot.val().textContent, messageSnapshot.val().timeStamp, messageInfoSnapshot.val().read[chatClientOwner]);
 						self.messageList.push(message);
 						if(messageInfoSnapshot.val()['read'][chatClientOwner]==0){
-						self.unreadMessage +=1;
-						console.log(self.unreadMessage);
+								self.unreadMessage +=1;
+							}
 					}
-					}
+
+					self.initMessageInfoChildChanged(messageSnapshot.key, chatClientOwner);
 				}
 
 			});
@@ -133,6 +158,28 @@ MercurioChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 		});
 	});
 	*/
+}
+
+
+MercurioChat.prototype.initMessageInfoChildChanged = function(messageId, chatClientOwner){
+	var self = this;
+
+	firebase.database().ref('message-info/' + messageId).on("child_changed", function(messageInfoSnapshot) {
+		if(messageInfoSnapshot.exists()){
+			self.messageList.forEach(function(message, index){
+				if(message.messageId == messageId){
+					if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'number'){
+						message.read = messageInfoSnapshot.val()[chatClientOwner];
+						//self.unreadMessage -=1;
+					}
+					else if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'boolean' && !messageInfoSnapshot.val()[chatClientOwner]){
+						self.messageList.splice(index, 1);
+					}
+				}
+			});
+		}
+
+	});
 }
 
 MercurioChat.prototype.addMessage = function(message){
@@ -212,11 +259,11 @@ MercurioChat.prototype.addParticipants = function(contacts){
 	}
 }
 
-MercurioChat.prototype.deleteMessages = function(indices){
+MercurioChat.prototype.deleteMessages = function(messages){
 
 	var self = this;
-	indices.forEach(function(index){
-		firebase.database().ref('chat-messages/' + self.chatId + '/' + self.messageList[index].messageId).set(null);
+	messages.forEach(function(message){
+		firebase.database().ref('message-info/' + message + '/has-message/' + self.chatClientOwner).set(false);
 	});
 }
 
@@ -254,7 +301,6 @@ MercurioChat.prototype.markUnreadMessagesAsRead = function(userId){
 
 			firebase.database().ref().child('message-info/' + oldMessage.messageId + "/read/" + userId).set(new Date().getTime());
 			self.unreadMessage -=1;
-			console.log(self.unreadMessage);
 		}
 	});
 }
