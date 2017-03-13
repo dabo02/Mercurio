@@ -457,7 +457,7 @@
                             <div ng-show="chatCtrl.isDeleteMessagesClicked">
                             <h4 style = "color: white; margin-left: 10%" ng-if="!chatGroupCtrl.isChatClientOwnerGroupMember" layout="row" layout-align="start center">
 
-                                {{chatCtrl.messageToDelete.length}} Selected
+                                {{chatCtrl.messagesToDelete.length}} Selected
                                 <md-button style="margin-left: 65%;" class="md-icon-button fa fa-trash" ng-click="chatCtrl.deleteMessages()"></md-button>
                                 <md-button style="font-size: 25px"class="md-icon-button" ng-click="chatCtrl.closeSelectMessage()">
                                     &times;

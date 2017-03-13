@@ -190,6 +190,7 @@
         //Close delete messages option
         self.closeSelectMessage = function(){
           self.isDeleteMessagesClicked = false;
+          self.messagesToDelete = [];
         }
 
         //Delete messages from the array
