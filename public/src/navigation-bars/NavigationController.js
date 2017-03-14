@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('NavigationController', ['$scope', 'authenticationService', 'accountService', '$mdSidenav', '$location', function($scope, authenticationService, accountService, $mdSidenav, $location){
+    angular.module('mercurio').controller('NavigationController', ['$scope', 'authenticationService', 'accountService', '$mdSidenav', '$location', 'phoneService', function($scope, authenticationService, accountService, $mdSidenav, $location, phoneService){
 
         var self = this;
         self.profileImage = "images/contact0Dressed.jpg";
@@ -48,6 +48,7 @@
         };
 
         self.viewRecentChatsButtonClicked = function(){
+            phoneService.missedCallsCounter= 0;
             self.viewingRecentCalls = false;
             self.viewingRecentChats = true;
         };
