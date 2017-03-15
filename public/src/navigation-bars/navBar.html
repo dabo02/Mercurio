@@ -9,7 +9,7 @@
         <p ng-click='navCtrl.viewRecentCallsButtonClicked()' ng-class="{rightSidebarSelection:navCtrl.viewingRecentCalls, rightSidebarRejection:navCtrl.viewingRecentChats}" style="padding-left: 1%; font-size: 10px;">Calls</p>
     </md-container>
     <md-container flex="10">
-        <span ng-show="(chatListCtrl.chatClient |countUnreadMessageFilter) !=0 " style="background-color: red; position: absolute; margin-left: 1.5%; margin-top: 1%; z-index: 20" ng-controller="ChatListController as chatListCtrl" class="badge">{{chatListCtrl.chatClient |countUnreadMessageFilter}} </span>
+        <span ng-show="(chatListCtrl.chatClient |countUnreadMessageFilter) > 0" style="background-color: red; position: absolute; margin-left: 1.5%; margin-top: 1%; z-index: 20" ng-controller="ChatListController as chatListCtrl" class="badge">{{chatListCtrl.chatClient |countUnreadMessageFilter}} </span>
         <div ng-click='navCtrl.viewRecentChatsButtonClicked()' ng-class="{rightSidebarSelection:navCtrl.viewingRecentChats, rightSidebarRejection:navCtrl.viewingRecentCalls}" style="font-size:30px; line-height:42px;" class="fa fa-comments"></div>
         <p ng-click='navCtrl.viewRecentChatsButtonClicked()' ng-class="{rightSidebarSelection:navCtrl.viewingRecentChats, rightSidebarRejection:navCtrl.viewingRecentCalls}" style="padding-left: 1%; font-size: 10px;">Chats</p>
     </md-container>
