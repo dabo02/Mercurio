@@ -44,7 +44,7 @@
                 </div>
                 <div style="padding-bottom: 5%;">
                     <p md-truncate style= "color: white;"ng-style="chatListCtrl.getTextPreviewClass(chat, $index)">
-                        {{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.lastMessage | chatListTextContentPreviewFilter}}
+                        {{chat | chatListParticipantNameFilter : chatListCtrl.chatClient.chatClientOwner}}: {{chat.messageList[chat.messageList.length-1] | chatListTextContentPreviewFilter}}
                     </p>
                     <img flex-offset= "70" ng-show = "chat.settings.mute" style="position: absolute; top: 51%; width: 4%; left: 3%" ng-src="images/ic_volume_off_black_24dp.png"/>
                     <md-icon style= "position: absolute; color: white; top: 51%; left: 2%;" aria-label="Delete Chat" flex-offset= "90" class="md-raised fa fa-trash-o" ng-click="chatListCtrl.showDeleteConfirm($event, $index)"></md-icon>
