@@ -19,7 +19,7 @@
                         <div ng-if="profileCtrl.accountService.uploadingImage" style="left: 0; position:absolute; text-align:center; margin-top: -250px; width: 100%" layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="determinate" value="{{profileCtrl.accountService.progress}}" md-diameter="200"></md-progress-circular>
                         </div>
-                        <div style="position:relative;top:-50%;left:40%;">
+                        <div style="position:relative;top:-50%;left:38%;">
                         <md-fab-speed-dial md-open="profileCtrl.isOpen" md-direction="{{profileCtrl.selectedDirection}}" ng-class="profileCtrl.selectedMode">
                               <md-fab-trigger>
                                 <md-button aria-label="menu" class="md-fab md-warn">
@@ -33,7 +33,7 @@
                                         <input style="z-index: -1; opacity: 0; margin-left: -50%; min-height: 150px; margin-top: -110%;"  onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
                                     </md-icon>
                                 </md-button>
-                                <md-button class="md-fab md-raised md-mini" ng-click = "profileCtrl.deleteProfilePicture()">
+                                <md-button class="md-fab md-raised md-mini" ng-show="profileCtrl.accountService.activeAccount.picture" ng-click = "profileCtrl.deleteProfilePicture()">
                                   <md-icon style="font-size:22px;" class="fa fa-trash">
                                   </md-icon>
                                 </md-button>
