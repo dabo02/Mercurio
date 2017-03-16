@@ -457,12 +457,14 @@
                                 </md-input-container>
                                 <p ng-click="chatCtrl.sendMessage()"  style="margin-top: 3%; color: white; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                             </form>
-                          <div ng-show="chatCtrl.isDeleteMessagesClicked" style="height: 20%;">
+                          <div layout="row"ng-show="chatCtrl.isDeleteMessagesClicked" style="width: 100%; background-color: rgba(0,0,0,0.60)">
                             <h4 style = "position: absolute; color: white; margin-left: 10%" ng-if="!chatGroupCtrl.isChatClientOwnerGroupMember">
                                 {{chatCtrl.messagesToDelete.length}} Selected
                               </h4>
-                              <md-button style="font-size: 15px;  color: white;" class="pull-right" ng-show="chatCtrl.messagesToDelete.length>0"   ng-click="chatCtrl.deleteMessages()">Delete</md-button>
-                              <md-button style="font-size: 15px; color: white;" class="pull-right" ng-click="chatCtrl.closeSelectMessage()">Cancel</md-button>
+                            <div ng-style="chatCtrl.messagesToDelete.length>0 ? {'margin-left': '70%'} : {'margin-left': '85%'}">
+                              <md-button  style="font-size: 15px; color: white;" ng-click="chatCtrl.closeSelectMessage()">Cancel</md-button>
+                              <md-button style="font-size: 15px;  color: white;" ng-show="chatCtrl.messagesToDelete.length>0"   ng-click="chatCtrl.deleteMessages()">Delete</md-button>
+                            </div>
                             </div>
                         </div>
                     </div>
