@@ -317,9 +317,7 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 								if (event === 'incomingcall') {
 									self.rtpType = "";
 									self.srtp = result["srtp"];
-									var indexOfNumber = result.username.search(":");
-									var indexOfDomain = result.username.search("@");
-									self.callerId = result.username.slice(indexOfNumber+1, indexOfDomain);
+									self.callerId = result.username;
 									if(self.srtp === "sdes_optional")
 										self.rtpType = " (SDES-SRTP offered)";
 									else if(self.srtp === "sdes_mandatory")
