@@ -5,10 +5,6 @@
             <md-toolbar class="mercurioBlueBackground">
                 <div class="md-toolbar-tools">
                     <h2>Profile Editor</h2>
-                    <span flex></span>
-                    <md-button ng-disabled = "profileCtrl.accountService.uploadingImage" class="md-icon-button" ng-click="profileCtrl.closeProfileEditorDialog()">
-                        &times;
-                    </md-button>
                 </div>
             </md-toolbar>
             <div ng-show="profileCtrl.saved" class="md-block">
@@ -17,77 +13,82 @@
             <md-dialog-content style= "overflow-y: hidden">
 
                 <div layout="row" class="flex-80 flex-offset-10" style="margin-top:3%">
-                    <md-input-container class="md-icon-float md-block">
-                        <label>Status Message</label>
-                        <md-icon class="fa fa-comment-o"></md-icon>
-                        <input id="statusMessage" type="text" maxlength="200" ng-change = "profileCtrl.profileChanged()" ng-model="profileCtrl.statusMessage">
-                    </md-input-container>
-                    <md-input-container class="md-icon-float md-block">
-                        <label>Availability</label>
-                        <md-icon class="fa fa-circle-o"></md-icon>
-                        <md-select style="min-width: 100px;" id="availability" ng-change="onChange()" ng-model="profileCtrl.newAvailability">
-                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Online' ? 'true' : 'false' }}" value="0">Online</md-option>
-                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Away' ? 'true' : 'false' }}" value="1">Away</md-option>
-                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Busy' ? 'true' : 'false' }}" value="2">Busy</md-option>
-                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'onACall' ? 'true' : 'false' }}" value="3">On a call</md-option>
-                            <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Offline' ? 'true' : 'false'}}" value="4">Offline</md-option>
+                    <md-card flex="100">
 
+                        <img id="profilePicturePreview" class="md-card-image" alt="Washed Out" style="opacity:{{profileCtrl.accountService.opacity}}; height:282px; position:relative;" ng-src="{{profileCtrl.getProfilePicture()}}"/>
+                        <div ng-if="profileCtrl.accountService.uploadingImage" style="left: 0; position:absolute; text-align:center; margin-top: -250px; width: 100%" layout="row" layout-sm="column" layout-align="space-around">
+                            <md-progress-circular md-mode="determinate" value="{{profileCtrl.accountService.progress}}" md-diameter="200"></md-progress-circular>
+                        </div>
+                        <md-button class="md-fab md-warn"  style="position:absolute;top:58%;left:35%;">
+                            <md-icon style="font-size:22px;" class="fa fa-camera">
+                                <!--<input ng-model="chatCtrl.multimedia" ng-change="chatCtrl.showImagePreview()" class="fa fa-paperclip" style="opacity:0;" type="file" accept="image/*"/>-->
+                                <!--<input style="opacity:0;" onchange="angular.element(this).scope().multimediaSelected(this)" type="file" ng-model="multimedia" name="multimedia" id="multimedia" accept="image/*"/>-->
+                                <input style="z-index: -1; opacity: 0; margin-left: -50%; min-height: 150px; margin-top: -110%;"  onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
+                            </md-icon>
+                        </md-button>
 
-                        </md-select>
-                    <!--<input id="availablity" type="text" ng-model="profileCtrl.availability" placeholder="{{profileCtrl.getAvailability()}}">-->
-                    </md-input-container>
-                </div>
-
-                <div layout="row" class="flex-80 flex-offset-10">
-                    <md-input-container class=" md-icon-float md-block">
-                        <label>First Name</label>
-                        <md-icon style="left:7%;" class="fa fa-user"></md-icon>
-                        <input id="firstName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.firstName" required>
-                    </md-input-container>
-                    <md-input-container class=" md-icon-float md-block">
-                        <label>Last Name</label>
-                        <md-icon style="left:7%;" class="fa fa-user"></md-icon>
-                        <input id="lastName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.lastName" required>
-                    </md-input-container>
-
-                </div>
-
-                <div layout="row" class="flex-80 flex-offset-5">
-                    <md-content style="overflow-x: hidden; background-color: white; padding-right: 100px; padding-left: 40px; padding-bottom: 30px " class="md-icon-float">
-                        <label style="font-size: 11px">Email</label>
-                        <i style = "margin-top: 1%; padding-right: 10px" class="fa fa-envelope">{{profileCtrl.getEmail()}}</i>
-                    </md-content>
-                    <md-content style= "overflow-x: hidden; background-color: white; margin-left: -10%;" class="md-icon-float">
-                        <label style="font-size: 11px">Phone</label>
-                        <i style = "margin-top: 1%;" class="fa fa-phone">{{profileCtrl.getPhone()}}</i>
-                    </md-content>
-                    <md-content style= "overflow-x: hidden; background-color: white; margin-left: 10%;"class="md-icon-float">
-                        <label style="font-size: 11px">Ext.</label>
-                        <i style = "margin-top: 1%;" class="fa fa-hashtag">{{profileCtrl.getExtension()}} </i>
-                    </md-content>
-                </div>
-
-                <md-card>
-
-                    <img id="profilePicturePreview" class="md-card-image" alt="Washed Out" style="opacity:{{profileCtrl.accountService.opacity}}; height:300px; position:relative;" ng-src="{{profileCtrl.getProfilePicture()}}"/>
-                    <div ng-if="profileCtrl.accountService.uploadingImage" style="left: 0; position:absolute; text-align:center; margin-top: -250px; width: 100%" layout="row" layout-sm="column" layout-align="space-around">
-                      <md-progress-circular md-mode="determinate" value="{{profileCtrl.accountService.progress}}" md-diameter="200"></md-progress-circular>
-                    </div>
-                    <md-button class="md-fab md-warn"  style="position:absolute;top:80%;left:80%;">
-                        <md-icon style="font-size:22px;" class="fa fa-camera">
-                            <!--<input ng-model="chatCtrl.multimedia" ng-change="chatCtrl.showImagePreview()" class="fa fa-paperclip" style="opacity:0;" type="file" accept="image/*"/>-->
-                            <!--<input style="opacity:0;" onchange="angular.element(this).scope().multimediaSelected(this)" type="file" ng-model="multimedia" name="multimedia" id="multimedia" accept="image/*"/>-->
-                            <input style="z-index: -1; opacity: 0; margin-left: -50%; min-height: 150px; margin-top: -110%;"  onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
-                        </md-icon>
-                    </md-button>
-
-                    <!--<md-card-actions layout="row" layout-align="end end">-->
+                        <!--<md-card-actions layout="row" layout-align="end end">-->
 
                         <!--<input style="visibility:hidden;" onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>-->
                         <!--<label style="margin-top: -1%;" class="btn btn-info" for="profileImage">Choose an Image</label>-->
 
-                    <!--</md-card-actions>-->
-                </md-card>
+                        <!--</md-card-actions>-->
+                    </md-card>
+
+                    <div flex="100">
+                        <md-input-container class=" md-icon-float md-block">
+                            <label>First Name</label>
+                            <md-icon style="left:7%;" class="fa fa-user"></md-icon>
+                            <input id="firstName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.firstName" required>
+                        </md-input-container>
+                        <md-input-container class=" md-icon-float md-block">
+                            <label>Last Name</label>
+                            <md-icon style="left:7%;" class="fa fa-user"></md-icon>
+                            <input id="lastName" type="text" ng-change="profileCtrl.profileChanged()" ng-model="profileCtrl.lastName" required>
+                        </md-input-container>
+                        <md-input-container class="md-icon-float md-block">
+                            <label>Status Message</label>
+                            <md-icon class="fa fa-comment-o"></md-icon>
+                            <input id="statusMessage" type="text" maxlength="200" ng-change = "profileCtrl.profileChanged()" ng-model="profileCtrl.statusMessage">
+                        </md-input-container>
+                        <md-input-container class="md-icon-float md-block">
+                            <label>Availability</label>
+                            <md-icon class="fa fa-circle-o"></md-icon>
+                            <md-select style="min-width: 100px;" id="availability" ng-change="onChange()" ng-model="profileCtrl.newAvailability">
+                                <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Online' ? 'true' : 'false' }}" value="0">Online</md-option>
+                                <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Away' ? 'true' : 'false' }}" value="1">Away</md-option>
+                                <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Busy' ? 'true' : 'false' }}" value="2">Busy</md-option>
+                                <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'onACall' ? 'true' : 'false' }}" value="3">On a call</md-option>
+                                <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Offline' ? 'true' : 'false'}}" value="4">Offline</md-option>
+                            </md-select>
+                            <!--<input id="availablity" type="text" ng-model="profileCtrl.availability" placeholder="{{profileCtrl.getAvailability()}}">-->
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row" flex="60" flex-offset="20" style="margin-top:8%">
+                    <md-content style="overflow-x: hidden; background-color: white;" class="md-icon-float" flex="70">
+                        <i style = "" class="fa fa-envelope"></i>
+                        <label style="font-size: 11px">Email</label>
+                        <p>{{profileCtrl.getEmail()}}</p>
+                    </md-content>
+                    <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float" flex="30">
+                        <i style = "" class="fa fa-phone"></i>
+                        <label style="font-size: 11px">Phone</label>
+                        <p>{{profileCtrl.getPhone()}}</p>
+                    </md-content>
+                </div>
+                <div layout="row" flex="60" flex-offset="20" layout="row">
+                    <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float" flex="70">
+                        <i style = "" class="fa fa-building-o"></i>
+                        <label style="font-size: 11px">Company</label>
+                        <p>{{profileCtrl.getCompanyName()}}</p>
+                    </md-content>
+                    <md-content style= "overflow-x: hidden; background-color: white;"class="md-icon-float" flex="30">
+                        <i style = "" class="fa fa-phone"></i>
+                        <label style="font-size: 11px">Ext.</label>
+                        <p>{{profileCtrl.getExtension()}}</p>
+                    </md-content>
+                </div>
             </md-dialog-content>
 
             <md-dialog-actions layout="row">

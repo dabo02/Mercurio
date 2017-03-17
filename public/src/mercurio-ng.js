@@ -5,7 +5,7 @@
 
     'use_strict';
 
-    angular.module('mercurio', ['ngMaterial', 'users', 'oc.lazyLoad', 'ui.router', 'luegg.directives', 'firebase'])
+    angular.module('mercurio', ['ngMaterial', 'users', 'oc.lazyLoad', 'ui.router', 'luegg.directives', 'firebase', 'fixImageOrientation'])
         .config(function($mdThemingProvider, $mdIconProvider){
 
             $mdIconProvider

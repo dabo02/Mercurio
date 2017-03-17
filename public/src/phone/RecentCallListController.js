@@ -50,20 +50,23 @@
         self.incomingCalls = [];
 
         function filterCalls(calls){
-          calls.forEach(function(call){
+          calls.forEach(function(call, index){
             if(!call.answered){
+                call.realIndex = index;
               self.missedCalls.push(call);
             }
           });
 
-          calls.forEach(function(call){
+          calls.forEach(function(call, index){
             if(call.incoming && call.answered){
+                call.realIndex = index;
               self.incomingCalls.push(call);
             }
           });
 
-          calls.forEach(function(call){
+          calls.forEach(function(call, index){
             if(!call.incoming && call.answered){
+                call.realIndex = index;
               self.outgoingCalls.push(call);
             }
           });

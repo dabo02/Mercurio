@@ -49,8 +49,9 @@
                 phoneService.instantiatePhone(account);
                 crmService.instantiateCRMManager(account.userId);
 
-                if($state.current.name == 'login'){
-                    $state.go('dialer');
+                if($state.current.name == 'login' || $state.current.name == 'register'){
+                  // console.log("stop spinner");
+                  $state.go('dialer');
                 }
 
             }
