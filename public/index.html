@@ -28,21 +28,21 @@
     <script>
       // Initialize Firebase
      // production db
-      //  var config = {
-      //    apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
-      //    authDomain: "mercurio-39a44.firebaseapp.com",
-      //    databaseURL: "https://mercurio-39a44.firebaseio.com",
-      //    storageBucket: "mercurio-39a44.appspot.com"
-      //  };
+        var config = {
+          apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
+          authDomain: "mercurio-39a44.firebaseapp.com",
+          databaseURL: "https://mercurio-39a44.firebaseio.com",
+          storageBucket: "mercurio-39a44.appspot.com"
+        };
 
      // Development DB
-     var config = {
-       apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
-       authDomain: "mercurio-development.firebaseapp.com",
-       databaseURL: "https://mercurio-development.firebaseio.com",
-       storageBucket: "mercurio-development.appspot.com",
-       messagingSenderId: "203647142462"
-     };
+//     var config = {
+//       apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
+//       authDomain: "mercurio-development.firebaseapp.com",
+//       databaseURL: "https://mercurio-development.firebaseio.com",
+//       storageBucket: "mercurio-development.appspot.com",
+//       messagingSenderId: "203647142462"
+//     };
 
       firebase.initializeApp(config);
     </script>
@@ -72,12 +72,10 @@
     </style>
   </head>
 
-  <body ng-app="mercurio" ng-controller="NavigationController as navCtrl" ng-cloak onload="checkUrl()" style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');>
-
-    <video style="position: absolute;" id='localStream' autoplay></video>
-    <video style="position: absolute;" id='remoteStream' autoplay></video>
-    <video style="position: absolute;" id='localStream' autoplay></video>
-
+  <body ng-app="mercurio" ng-controller="NavigationController as navCtrl" ng-cloak onload="checkUrl()" style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');">
+   <!--<video-call></video-call>-->
+   <!--<video  style="position: absolute; width:100%; height:100%" id='remoteStream' autoplay></video>-->
+   <!--<video style="position: absolute; width:25%; height:25%" id='localStream' autoplay></video>-->
     <div ng-if="!isAccountReady" class="row" style="padding-top:25%" ng-cloak>
       <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="isAccountReady" md-diameter="125"></md-progress-circular>
     </div>
@@ -309,7 +307,7 @@
   <script src="/src/phone/PhoneService.js"></script>
   <script src="/src/phone/RecentCallListController.js"></script>
   <script src="/src/phone/CallDetailsController.js"></script>
-
+  <script src="/src/phone/videoCallDirective.js"></script>
   <script src="/src/crm/directives.js"></script>
   <script src="/src/crm/CRMService.js"></script>
   <script src="/src/crm/CRMListController.js"></script>
@@ -319,7 +317,6 @@
   <script src="/src/account/AccountService.js"></script>
   <script src="/src/account/ProfileEditorDirective.js"></script>
   <script src="/src/account/ProfileEditorController.js"></script>
-
   <script src="/src/users/UserController.js"></script>
 
   <script>

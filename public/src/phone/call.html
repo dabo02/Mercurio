@@ -139,8 +139,11 @@
                 </md-card-title>
                 <md-card-title>
                     <md-card-title-media flex-offset="20" flex="60">
-                        <div class="md-media-lg card-media" style="width:100%;">
+                        <div class="md-media-lg card-media" style="width:100%;" ng-if="!callCtrl.phoneService.phone.doVideo" >
                             <img ng-src="{{callCtrl.phoneService.phone.currentCalls[0] | currentCallAvatarFilter : contactListCtrl.contactList}}" style="width: 100%; height: 250px; border-radius: 3px;">
+                        </div>
+                        <div ng-if="callCtrl.phoneService.phone.doVideo" >
+                            <video-call></video-call>
                         </div>
                     </md-card-title-media>
                 </md-card-title>
