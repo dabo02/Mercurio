@@ -31,6 +31,7 @@
         // },10);
 
         self.showChatGroupDetailsDialog = function(event) {
+          console.log(chatClientService.selectedChat.participantList);
             if(self.isChatClientOwnerGroupMember){
                 $mdDialog.show({
                     templateUrl: 'chatGroupDetails',

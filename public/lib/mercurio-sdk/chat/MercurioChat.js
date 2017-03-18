@@ -27,6 +27,7 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 			// if participant has true value instantiate participnat and add to list
 			var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + snapshot.key + "/isMember").set(true);
+			newParticipant.isAdmin = snapshot.val()['isAdmin'];
 				self.participantList.push(newParticipant);
 
 				// if(self.participantList.length === participantCount){
@@ -42,9 +43,9 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
 
 		if(snapshot.exists()){
-				self.participantList.forEach(function(particpant){
-					if(particpant.userId == snapshot.key){
-						particpant.isTyping = snapshot.val()['isTyping'];
+				self.participantList.forEach(function(participant){
+					if(participant.userId == snapshot.key){
+						participant.isTyping = snapshot.val()['isTyping'];
 						if(self.isTypingObserver){
 							self.isTypingObserver();
 						}
