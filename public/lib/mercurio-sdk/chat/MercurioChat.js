@@ -19,13 +19,14 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	self.unreadMessage = 0;
 	self.groupPicture = groupPicture;
 	self.chatClientOwner = chatClientOwner;
+	self.isTypingObserver = null;
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 
 		if(snapshot.exists() && snapshot.val()){
 			// if participant has true value instantiate participnat and add to list
 			var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
-
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + snapshot.key + "/isMember").set(true);
 				self.participantList.push(newParticipant);
 
 				// if(self.participantList.length === participantCount){
@@ -41,23 +42,14 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
 
 		if(snapshot.exists()){
-
-			if(snapshot.val()){
-				// if value changed to true instantiate new participant and add to list
-				var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
-
-					self.participantList.push(newParticipant);
-
-				});
-			}
-			else{
-				// if value changed to false remove participant from list
-				self.participantList.forEach(function(participant, index){
-					if(participant.participantId === snapshot.key){
-						self.participantList.splice(index, 1);
+				self.participantList.forEach(function(particpant){
+					if(particpant.userId == snapshot.key){
+						particpant.isTyping = snapshot.val()['isTyping'];
+						if(self.isTypingObserver){
+							self.isTypingObserver();
+						}
 					}
-				});
-			}
+				})
 		}
 	});
 
@@ -246,7 +238,8 @@ MercurioChat.prototype.addParticipants = function(contacts){
 
 		newParticipants.forEach(function(participant){
 			// add participant to chat-members
-			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant).set(true).then(function(){
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isAdmin").set(false);
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isMember").set(true).then(function(){
 				updates = {};
 				// add user-chat entry for participant
 				updates['/user-chats/' + participant + "/" + self.chatId] = chatInfo;
@@ -256,6 +249,13 @@ MercurioChat.prototype.addParticipants = function(contacts){
 
 
 	}
+}
+
+MercurioChat.prototype.toggleIsTyping = function(value){
+	var self = this;
+	var updates = {};
+	updates['/chat-members/' + self.chatId +'/' + self.chatClientOwner + '/isTyping' ] = value;
+	firebase.database().ref().update(updates);
 }
 
 MercurioChat.prototype.deleteMessages = function(messages){
@@ -314,6 +314,10 @@ MercurioChat.prototype.saveChatTitle = function(newChatTitle){
 		updates['/user-chats/' + participant.userId + "/" + self.chatId + '/title'] = newChatTitle;
 		firebase.database().ref().update(updates);
 	});
+}
+
+MercurioChat.prototype.setIsTypingObserver = function(observer){
+	this.isTypingObserver = observer;
 }
 
 MercurioChat.prototype.exitChatGroup = function(userId){

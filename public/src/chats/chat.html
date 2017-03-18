@@ -315,6 +315,7 @@
                                         <h4 style= "color: white;" ng-controller = "ContactController as contactCtrl" ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
                                             {{selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
+                                        <h5 style="margin-top: -10%">{{selectedChat | isTypingFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}</h5>
                                     </a>
 
                                       <img ng-click="chatCtrl.toggleMute(false)" ng-show = "selectedChat.settings.mute" style="position: absolute; width: 3%; margin-left: 83%" ng-src="images/ic_volume_off_black_24dp.png"/>
@@ -453,7 +454,7 @@
                                 <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" class="md-icon-float md-block flex-85 flex-offset-5">
                                     <label style="color: white;">Type Message</label>
                                     <!--<input ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.changeMicToSend()" type="text">-->
-                                    <input style = "color: white; border-color: white;" ng-model="chatCtrl.textContentToSend" type="text">
+                                    <input style = "color: white; border-color: white;" ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.typingAMessage()" type="text">
                                 </md-input-container>
                                 <p ng-click="chatCtrl.sendMessage()"  style="margin-top: 3%; color: white; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                             </form>

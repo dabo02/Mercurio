@@ -13,6 +13,7 @@
         self.isDeleteMessagesClicked = false;
         self.messagesToDelete = [];
         self.allMetaData = null;
+        self.textContentToSend;
 
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){
@@ -111,6 +112,20 @@
             $rootScope.multimedia = null;
         };
 
+        self.typingAMessage = function(){
+          var textContentLenght = self.textContentToSend.length;
+          var timeout;
+          chatClientService.selectedChat.toggleIsTyping(true);
+          if(typeof(timeout) === 'undefined'){
+            timeout = setTimeout(function(){
+              if(textContentLenght == self.textContentToSend.length){
+                chatClientService.selectedChat.toggleIsTyping(false);
+              }
+              clearTimeout(timeout);
+            }, 5000)
+          }
+        }
+
 
         self.isMessageListAvailable = function() {
             return chatClientService.isMessageListAvailable();
@@ -197,7 +212,6 @@
         //Delete messages from the array
         self.deleteMessages = function(){
           if(self.messagesToDelete.length>0){
-          console.log("llego?");
           chatClientService.selectedChat.deleteMessages(self.messagesToDelete);
           self.messagesToDelete =[];
           self.isDeleteMessagesClicked =false;
@@ -287,6 +301,7 @@
         $location.hash('bottom');
         $anchorScroll();
 
+
         if(!chatClientService.selectedChat){
           chatClientService.chatClient.setChatListObserver(function () {
 
@@ -323,6 +338,12 @@
                   }, true
               );
           chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+          chatClientService.selectedChat.setIsTypingObserver(function () {
+            setTimeout(function(){
+            $scope.$apply();
+            }, 100);
+
+           });
         }
     }]);
 })();

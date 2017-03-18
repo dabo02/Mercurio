@@ -203,8 +203,15 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 			var updates = {};
 
 			participants.forEach(function (participant) {
+				if(participant == self.chatClientOwner){
+					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(true);
+				}
+				else{
+					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(false);
+				}
+				firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isTyping").set(false);
 				// add participant to chat-members
-				firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function () {
+				firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isMember").set(true).then(function () {
 					updates = {};
 					// add user-chat entry for participant
 					updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;

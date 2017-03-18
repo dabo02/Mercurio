@@ -31,7 +31,6 @@
         // },10);
 
         self.showChatGroupDetailsDialog = function(event) {
-
             if(self.isChatClientOwnerGroupMember){
                 $mdDialog.show({
                     templateUrl: 'chatGroupDetails',
@@ -192,7 +191,6 @@
         //
 
         chatClientService.chatClient.setChatObserver(function () {
-          console.log("entro");
           setTimeout(function(){
           $scope.$apply();
           }, 100);

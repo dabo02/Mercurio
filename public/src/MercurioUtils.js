@@ -226,6 +226,22 @@
         };
     })
 
+    .filter('isTypingFilter', function () {
+        return function (chat, chatClientOwner) {
+          var isTyping = '';
+          if(chat){
+          chat.participantList.forEach(function(participant){
+            if(participant.userId != chatClientOwner && participant.isTyping) {
+              isTyping = participant.firstName + ' is typing...'
+
+            }
+          })
+        }
+          return isTyping;
+        };
+    })
+
+
     .filter('chatListTextContentPreviewFilter', function () {
         return function (message) {
 
