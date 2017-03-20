@@ -182,7 +182,7 @@
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
             // $state.reload();
-
+            chatClientService.selectedChat.toggleIsTyping(false);
 
         }
 

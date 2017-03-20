@@ -101,7 +101,7 @@
                               <div layout="row" class="card card-1">
                                 <div id="wrapper">
                                 <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 180px; margin-left: 30%; margin-top: 2%" ng-src="{{chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar hover" fix-image-orientation="chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner"/>
-                                <md-button style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -35%; width: 180px; height: 180px;" class="test md-fab">
+                                <md-button style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -37.5%; width: 180px; height: 180px;" class="test md-fab">
                                   <input style="z-index: -1; opacity: 0; margin-left: -5%; width: 109%; min-height: 100%; margin-top: -50%; border-radius: 50%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/>
                                   <h4 style="margin-top: -65%"> Change Group Icon <h4>
                                   </md-button>
@@ -153,7 +153,7 @@
                                         <md-list-item ng-controller = "ContactController as contactCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
                                             <img ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
                                             <div class="md-list-item-text compact">
-                                                <h3 ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}} <h4 ng-show="participant.isAdmin"> Admin </h4></h3>
+                                                <h3 ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}} <h4 ng-show="participant.isAdmin"> Group Admin </h4></h3>
                                             </div>
                                         </md-list-item>
                                     </md-list>
@@ -307,7 +307,8 @@
                                       <i style="color: red; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 2" class="fa fa-circle"></i>
                                       <i style="color: blue; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 3" class="fa fa-circle"></i>
                                       <i style="color: grey; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 4" class="fa fa-circle"></i>
-                                    <a class="md-list-item-text" layout="column">
+                                    <div class="md-list-item-text" layout="column">
+                                      <a>
                                         <h4 style= "color: white;" ng-if="selectedChat.title.length > 0"
                                             ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
                                                 {{selectedChat.title}}
@@ -315,9 +316,9 @@
                                         <h4 style= "color: white;" ng-controller = "ContactController as contactCtrl" ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
                                             {{selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
-                                        <h5 style="margin-top: -10%">{{selectedChat | isTypingFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}</h5>
-                                    </a>
-
+                                      </a>
+                                      <h5 style="color: white; position: absolute; margin-top: 4%;">{{selectedChat | isTypingFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}</h5>
+                                    </div>
                                       <img ng-click="chatCtrl.toggleMute(false)" ng-show = "selectedChat.settings.mute" style="position: absolute; width: 3%; margin-left: 83%" ng-src="images/ic_volume_off_black_24dp.png"/>
 
                                     <md-fab-speed-dial class="md-secondary" md-open="options.isOpen" md-direction="{{options.selectedDirection}}"

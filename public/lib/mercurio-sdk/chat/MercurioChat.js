@@ -28,7 +28,8 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 			var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + snapshot.key + "/isMember").set(true);
 			newParticipant.isAdmin = snapshot.val()['isAdmin'];
-				self.participantList.push(newParticipant);
+			newParticipant.isTyping = snapshot.val()['isTyping'];
+			self.participantList.push(newParticipant);
 
 				// if(self.participantList.length === participantCount){
 // 					if(participantsAreReadyObserver){
@@ -240,6 +241,7 @@ MercurioChat.prototype.addParticipants = function(contacts){
 		newParticipants.forEach(function(participant){
 			// add participant to chat-members
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isAdmin").set(false);
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isTyping").set(false);
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isMember").set(true).then(function(){
 				updates = {};
 				// add user-chat entry for participant
