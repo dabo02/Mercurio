@@ -26,17 +26,9 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 		if(snapshot.exists() && snapshot.val()){
 			// if participant has true value instantiate participnat and add to list
 			var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
-			firebase.database().ref().child('chat-members/' + self.chatId + "/" + snapshot.key + "/isMember").set(true);
 			newParticipant.isAdmin = snapshot.val()['isAdmin'];
 			newParticipant.isTyping = snapshot.val()['isTyping'];
 			self.participantList.push(newParticipant);
-
-				// if(self.participantList.length === participantCount){
-// 					if(participantsAreReadyObserver){
-// 						//participantsAreReadyObserver(self);
-// 						//participantsAreReadyObserver = undefined;
-// 					}
-// 				}
 			});
 		}
 	});
@@ -47,6 +39,7 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 				self.participantList.forEach(function(participant){
 					if(participant.userId == snapshot.key){
 						participant.isTyping = snapshot.val()['isTyping'];
+						participant.isAdmin = snapshot.val()['isAdmin']
 						if(self.isTypingObserver){
 							self.isTypingObserver();
 						}
@@ -321,6 +314,13 @@ MercurioChat.prototype.saveChatTitle = function(newChatTitle){
 
 MercurioChat.prototype.setIsTypingObserver = function(observer){
 	this.isTypingObserver = observer;
+}
+
+MercurioChat.prototype.assignAdmin = function(participantId){
+	var self = this;
+	updates = {};
+	updates['/chat-members/' + self.chatId + "/" + participantId + '/isAdmin'] = true;
+	firebase.database().ref().update(updates);
 }
 
 MercurioChat.prototype.exitChatGroup = function(userId){

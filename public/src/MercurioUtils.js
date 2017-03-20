@@ -241,6 +241,21 @@
         };
     })
 
+    .filter('isAdminFilter', function () {
+        return function (chat, chatClientOwner) {
+          var isAdmin = false;
+          if(chat){
+          chat.participantList.forEach(function(participant){
+            if(participant.userId == chatClientOwner && participant.isAdmin) {
+                isAdmin = true;
+
+            }
+          })
+        }
+          return isAdmin;
+        };
+    })
+
 
     .filter('chatListTextContentPreviewFilter', function () {
         return function (message) {

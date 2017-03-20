@@ -101,7 +101,7 @@
                               <div layout="row" class="card card-1">
                                 <div id="wrapper">
                                 <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 180px; margin-left: 30%; margin-top: 2%" ng-src="{{chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar hover" fix-image-orientation="chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner"/>
-                                <md-button style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -37.5%; width: 180px; height: 180px;" class="test md-fab">
+                                <md-button ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}}" style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -37.5%; width: 180px; height: 180px;" class="test md-fab">
                                   <input style="z-index: -1; opacity: 0; margin-left: -5%; width: 109%; min-height: 100%; margin-top: -50%; border-radius: 50%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/>
                                   <h4 style="margin-top: -65%"> Change Group Icon <h4>
                                   </md-button>
@@ -110,7 +110,7 @@
                                 <h4 style="margin-bottom: 5%;"ng-if="!chatGroupCtrl.canEdit">{{chatGroupCtrl.chatClientService.selectedChat.title}}</h4>
                                 <h4><input style="border-color: black;" ng-change="chatGroupCtrl.chatGroupDetailsChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-if="chatGroupCtrl.canEdit"></h4>
                                 </md-input-container>
-                                <md-icon ng-click = "chatGroupCtrl.editGroupName()" style="color: black; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
+                                <md-icon ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}}" ng-click = "chatGroupCtrl.editGroupName()" style="color: black; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
                                 <h5 flex-offset="5" style="color: grey; margin-top: -3%"> Created {{chatGroupCtrl.getDateCreated()}} </h5>
                               </div>
                               <div layout="row" class="card card-1">
@@ -120,7 +120,7 @@
                               <div layout="row" class="card card-1">
                               <h4 style="color: red; margin-top: 5%; margin-left: 25%;" ng-show="chatGroupCtrl.userIsAParticipant">User is already in the chat</h4>
                               <h4 style="color: green; margin-top: 5%; margin-left: 35%;" ng-show="chatGroupCtrl.userWasAdded">User was added</h4>
-                                <md-card-title style="padding-top: 0%; margin: 10px;">
+                                <md-card-title ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}}"  style="padding-top: 0%; margin: 10px;">
                                     <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
                                         <md-content class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
                                             <md-contact-chips
@@ -149,13 +149,40 @@
                                     </md-list>
                                 </div>
                                 <div flex="80" flex-offset="10" layout="row">
-                                    <md-list>
-                                        <md-list-item ng-controller = "ContactController as contactCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
-                                            <img ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
+                                    <md-list ng-controller = "ContactController as contactCtrl" flex>
+                                        <md-list-item ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
+                                          <img ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
                                             <div class="md-list-item-text compact">
-                                                <h3 ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}} <h4 ng-show="participant.isAdmin"> Group Admin </h4></h3>
+                                                <h3>{{participant.firstName}} {{participant.lastName}} <h4 ng-show="participant.isAdmin"> Group Admin </h4></h3>
                                             </div>
-                                        </md-list-item>
+                                            <md-menu ng-show="participant.userId != chatGroupCtrl.chatClient.chatClientOwner" class="md-secondary" aria-label="menu">
+                                                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                                    <md-icon  class"md-menu-origin" style="color: black; font-size:22px;" class="fa fa-sort-desc"></md-icon>
+                                                </md-button>
+                                                <md-menu-content width="4">
+                                                    <md-menu-item ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}} && !{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : participant.userId}}" >
+                                                        <md-button ng-click="chatGroupCtrl.assignAdmin(participant.userId)">
+                                                          Make group Admin
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item >
+                                                        <md-button ng-controller="DialerController as dialer"  ng-click="dialer.redial(participant.phone); chatGroupCtrl.closeChatGroupDetailsDialog()">
+                                                          Call
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item >
+                                                        <md-button ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([participant])">
+                                                          Send Message
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}}">
+                                                        <md-button >
+                                                          Remove
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                </md-menu-content>
+                                              </md-menu>
+                                          </md-list-item>
                                     </md-list>
                                 </div>
                               </div>

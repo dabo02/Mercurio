@@ -31,7 +31,6 @@
         // },10);
 
         self.showChatGroupDetailsDialog = function(event) {
-          console.log(chatClientService.selectedChat.participantList);
             if(self.isChatClientOwnerGroupMember){
                 $mdDialog.show({
                     templateUrl: 'chatGroupDetails',
@@ -65,6 +64,10 @@
         self.editGroupName = function(){
               self.canEdit = true;
             };
+
+        self.assignAdmin = function(participantId){
+          chatClientService.selectedChat.assignAdmin(participantId);
+        }
 
         self.closeChatGroupDetailsDialog = function(){
             $mdDialog.hide()
