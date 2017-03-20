@@ -177,32 +177,31 @@
 
 <!--start incoming call dialog-->
 <script type="text/ng-template" id="incomingCallDialog">
-    <md-dialog style="background:rgba(0,0,0,0.55); height:" aria-label="Incoming Call Dialog" ng-controller="IncomingCallDialogController as incomingCallCtrl">
+    <md-dialog flex="40" style="background:rgba(0,0,0,0.55); height:" aria-label="Incoming Call Dialog" ng-controller="IncomingCallDialogController as incomingCallCtrl">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>Incoming Call</h2>
+                <h2 ng-controller="ContactListController as contactListCtrl">{{incomingCallCtrl.incomingPhoneNumber | callerIdToNameFilter : contactListCtrl.contactList}}</h2>
                 <span flex></span>
             </div>
         </md-toolbar>
         <md-dialog-content>
 
-            <div class="md-dialog-content" layout="row">
-                <p class="center" ng-controller="ContactListController as contactListCtrl">{{incomingCallCtrl.callerId | incomingCallNameFilter : contactListCtrl.contactList}}</p>
-            </div>
-            <div class="md-dialog-content" layout="row">
-                <p class="center" >{{incomingCallCtrl.callerId}}</p>
-            </div>
-            <md-card>
+            <!-- <div class="md-dialog-content" layout="row">
+                <p class="center" ng-controller="ContactListController as contactListCtrl">{{incomingCallCtrl.incomingPhoneNumber | callerIdToNameFilter : contactListCtrl.contactList}}</p>
+            </div> -->
+            <md-card style="background-color:transparent; margin-bottom:15%; margin-top:5%;">
               <md-card-title>
                   <md-card-title-media flex-offset="20" flex="60">
                       <div class="md-media-lg card-media" style="width:100%;">
-                          <!-- JANUS HTML -->
-                          <img ng-src="{{}}" style="width: 100%; height: 250px; border-radius: 3px;">
+                          <img ng-controller="ContactListController as contactListCtrl" ng-src="{{incomingCallCtrl.incomingPhoneNumber | callerIdToPictureFilter : contactListCtrl.contactList}}" style="width: 100%; height: 250px; border-radius: 3px;">
                       </div>
                   </md-card-title-media>
               </md-card-title>
             </md-card>
+            <div class="md-dialog-content" layout="row">
+                <h3 class="center text-center" style="width:100%; color:white;" >{{incomingCallCtrl.incomingPhoneNumber}}</h3>
+            </div>
             <div class="md-dialog-content" layout="row">
                 <span class="dialer-icons" style="margin:auto;">
                     <a href="" ng-click="incomingCallCtrl.ignoreCall()" style="width:50px; height:50px; background-color:red;">

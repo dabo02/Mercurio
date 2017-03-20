@@ -11,6 +11,7 @@
         var self = this;
         self.phoneService = phoneService;
         self.callerId = phoneService.phone.callerId.substring(1, phoneService.phone.callerId.length);
+        self.incomingPhoneNumber = phoneService.phone.incomingPhoneNumber;
         self.receiveCall = function() {
             phoneService.stopRingTone();
             $mdDialog.hide();
