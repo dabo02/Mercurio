@@ -69,6 +69,10 @@
           chatClientService.selectedChat.assignAdmin(participantId);
         }
 
+        self.removeParticipant = function(participantId){
+          chatClientService.selectedChat.removeParticipantChatGroup(participantId);
+        }
+
         self.closeChatGroupDetailsDialog = function(){
             $mdDialog.hide()
         };

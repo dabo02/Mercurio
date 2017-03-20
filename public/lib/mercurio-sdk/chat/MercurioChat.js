@@ -28,7 +28,10 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 			var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
 			newParticipant.isAdmin = snapshot.val()['isAdmin'];
 			newParticipant.isTyping = snapshot.val()['isTyping'];
+			newParticipant.isMember = snapshot.val()['isMember'];
+			if(newParticipant.isMember){
 			self.participantList.push(newParticipant);
+			}
 			});
 		}
 	});
@@ -36,12 +39,16 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
 
 		if(snapshot.exists()){
-				self.participantList.forEach(function(participant){
+				self.participantList.forEach(function(participant, index){
 					if(participant.userId == snapshot.key){
 						participant.isTyping = snapshot.val()['isTyping'];
-						participant.isAdmin = snapshot.val()['isAdmin']
+						participant.isAdmin = snapshot.val()['isAdmin'];
+						participant.isMember = snapshot.val()['isMember'];
 						if(self.isTypingObserver){
 							self.isTypingObserver();
+						}
+						if(!participant.isMember){
+							self.participantList.splice(index, 1);
 						}
 					}
 				})
@@ -323,7 +330,7 @@ MercurioChat.prototype.assignAdmin = function(participantId){
 	firebase.database().ref().update(updates);
 }
 
-MercurioChat.prototype.exitChatGroup = function(userId){
+MercurioChat.prototype.removeParticipantChatGroup = function(participantId){
 
 	var self = this;
 
@@ -331,8 +338,8 @@ MercurioChat.prototype.exitChatGroup = function(userId){
 		updates = {};
 		updates['/user-chats/' + participant.userId + "/" + self.chatId + '/participantCount'] = self.participantCount - 1;
 
-		if(participant.userId === userId){
-			updates['/chat-members/' + self.chatId + "/" + participant.userId] = false;
+		if(participant.userId === participantId){
+			updates['/chat-members/' + self.chatId + "/" + participantId + '/isMember'] = false;
 		}
 
 		firebase.database().ref().update(updates);

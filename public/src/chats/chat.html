@@ -176,7 +176,7 @@
                                                         </md-button>
                                                     </md-menu-item>
                                                     <md-menu-item ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}}">
-                                                        <md-button >
+                                                        <md-button ng-click="chatGroupCtrl.removeParticipant(participant.userId)">
                                                           Remove
                                                         </md-button>
                                                     </md-menu-item>
