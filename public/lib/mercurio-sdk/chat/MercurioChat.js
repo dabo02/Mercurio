@@ -30,7 +30,7 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 			newParticipant.isTyping = snapshot.val()['isTyping'];
 			newParticipant.isMember = snapshot.val()['isMember'];
 			if(newParticipant.isMember){
-			self.participantList.push(newParticipant);
+				self.participantList.push(newParticipant);
 			}
 			});
 		}
@@ -39,11 +39,14 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
 
 		if(snapshot.exists()){
+			var participantExist = false;
 				self.participantList.forEach(function(participant, index){
 					if(participant.userId == snapshot.key){
+						participantExist = true;
 						participant.isTyping = snapshot.val()['isTyping'];
 						participant.isAdmin = snapshot.val()['isAdmin'];
 						participant.isMember = snapshot.val()['isMember'];
+						//change name here
 						if(self.isTypingObserver){
 							self.isTypingObserver();
 						}
@@ -52,6 +55,12 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 						}
 					}
 				})
+				if(!participantExist && snapshot.val()['isMember']){
+						var participant = new MercurioChatParticipant(snapshot.key, function(newParticipant){
+						newParticipant.isMember = snapshot.val()['isMember'];
+						self.participantList.push(newParticipant);
+					});
+				}
 		}
 	});
 
@@ -240,14 +249,13 @@ MercurioChat.prototype.addParticipants = function(contacts){
 
 		newParticipants.forEach(function(participant){
 			// add participant to chat-members
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isMember").set(true);
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isAdmin").set(false);
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isTyping").set(false);
-			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isMember").set(true).then(function(){
-				updates = {};
-				// add user-chat entry for participant
-				updates['/user-chats/' + participant + "/" + self.chatId] = chatInfo;
-				firebase.database().ref().update(updates);
-			});
+			updates = {};
+			// add user-chat entry for participant
+			updates['/user-chats/' + participant + "/" + self.chatId] = chatInfo;
+			firebase.database().ref().update(updates);
 		});
 
 

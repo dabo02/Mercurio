@@ -116,7 +116,7 @@
             }
             setTimeout(function(){
             $rootScope.$apply();
-          }, 100);
+          }, 500);
 
           setTimeout(function(){
               self.userIsAParticipant = false;
