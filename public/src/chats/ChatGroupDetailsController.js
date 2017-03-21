@@ -186,6 +186,15 @@
           return date.toDateString();
         }
 
+        self.changeConfirmed = function(){
+          self.canEdit = false;
+        }
+
+        self.cancelChange = function(){
+          self.newChatTitle = chatClientService.selectedChat.title;
+          self.canEdit = false;
+        }
+
         self.muteSettingChanged = function(){
             self.saveGroupDetailsButtonIsAvailable = true;
         }
