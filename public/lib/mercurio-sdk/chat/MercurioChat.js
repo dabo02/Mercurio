@@ -37,9 +37,8 @@ function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
 	});
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
-
+		var participantExist = false;
 		if(snapshot.exists()){
-			var participantExist = false;
 				self.participantList.forEach(function(participant, index){
 					if(participant.userId == snapshot.key){
 						participantExist = true;
@@ -338,7 +337,7 @@ MercurioChat.prototype.assignAdmin = function(participantId){
 	firebase.database().ref().update(updates);
 }
 
-MercurioChat.prototype.removeParticipantChatGroup = function(participantId){
+MercurioChat.prototype.removeParticipantFromChatGroup = function(participantId){
 
 	var self = this;
 

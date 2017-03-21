@@ -256,7 +256,6 @@
         };
     })
 
-
     .filter('chatListTextContentPreviewFilter', function () {
         return function (message) {
 

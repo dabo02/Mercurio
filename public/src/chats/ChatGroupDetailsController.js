@@ -70,7 +70,27 @@
         }
 
         self.removeParticipant = function(participantId){
-          chatClientService.selectedChat.removeParticipantChatGroup(participantId);
+          chatClientService.selectedChat.removeParticipantFromChatGroup(participantId);
+        }
+
+        self.exitChatGroup = function(){
+          var adminCounter = 0;
+          var chatClientOwnerIsAdmin = false;
+          chatClientService.selectedChat.participantList.forEach(function(participant){
+            if(participant.isAdmin){
+              adminCounter++;
+              if(participant.userId == chatClientService.chatClient.chatClientOwner){
+                chatClientOwnerIsAdmin = true;
+              }
+            }
+          });
+          if(adminCounter == 1 && chatClientOwnerIsAdmin){
+            console.log("nope");
+          }
+          else{
+          console.log("yep");
+          chatClientService.selectedChat.removeParticipantFromChatGroup(chatClientService.chatClient.chatClientOwner);
+          }
         }
 
         self.closeChatGroupDetailsDialog = function(){
@@ -86,20 +106,6 @@
           }
 
         }
-
-        self.exitGroup = function(){
-          var listener = setInterval(function(){
-            if(chatClientService.chatClient.chatList.length > 0){
-              chatClientService.selectedChat
-                  .exitChatGroup(chatClientService.chatClient.chatClientOwner);
-              self.closeChatGroupDetailsDialog();
-              clearInterval(listener);
-            }
-          },10);
-            // chatClientService.chatClient.chatList[$stateParams.chatIndex]
-            //     .exitChatGroup(chatClientService.chatClient.chatClientOwner);
-            // self.closeChatGroupDetailsDialog();
-        };
 
         self.addParticipantsToGroup = function(contacts){
             // if selected contacts array contains at least one contacts
@@ -164,6 +170,18 @@
 
         self.muteSettingChanged = function(){
             self.saveGroupDetailsButtonIsAvailable = true;
+        }
+
+        self.checkIfChatClientOwnerIsMember = function(){
+          if(chatClientService.selectedChat){
+            self.isChatClientOwnerGroupMember = false;
+          chatClientService.selectedChat.participantList.forEach(function(participant){
+            if(participant.userId == chatClientService.chatClient.chatClientOwner) {
+                  self.isChatClientOwnerGroupMember = true;
+              }
+          })
+        }
+          return self.isChatClientOwnerGroupMember;
         }
 
         self.saveGroupDetails = function(){

@@ -380,14 +380,14 @@
                                         <md-icon  style="color: white; font-size:22px;" class="fa fa-ellipsis-v"></md-icon>
                                     </md-button>
                                     <md-menu-content width="4">
-                                      <div ng-if="chatList[chatCtrl.chatIndex].title.length > 0" >
+                                      <div ng-if="selectedChat.title.length > 0" >
                                         <md-menu-item ng-controller="ChatGroupDetailsController as chatGroupCtrl">
                                             <md-button ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)" >
                                                 Group Details
                                             </md-button>
                                         </md-menu-item>
                                         </div>
-                                        <div ng-if="chatList[chatCtrl.chatIndex].title.length == 0">
+                                        <div ng-if="selectedChat.title.length == 0">
                                           <md-menu-item ng-controller = "ContactController as contactCtrl">
                                               <md-button ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())">
                                                   Contact Profile
@@ -411,7 +411,12 @@
                                                Delete Messages
                                           </md-button>
                                       </md-menu-item>
-
+                                      <md-menu-divider></md-menu-divider>
+                                      <md-menu-item ng-show="chatGroupCtrl.checkIfChatClientOwnerIsMember()" ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-if="selectedChat.title.length>0">
+                                          <md-button ng-click="chatGroupCtrl.exitChatGroup()">
+                                               Exit Group
+                                          </md-button>
+                                      </md-menu-item>
 
                                         <!--<md-menu-divider></md-menu-divider>-->
                                         <!--<md-menu-item>-->
@@ -474,10 +479,8 @@
                            </div>
 
                         </div>
-
-                        <div>
-                        <!-- <div ng-controller="ChatGroupDetailsController as chatGroupCtrl"> -->
-                            <form ng-show="!chatCtrl.isDeleteMessagesClicked" layout="row" ng-submit="chatCtrl.sendMessage()">
+                        <div ng-controller="ChatGroupDetailsController as chatGroupCtrl">
+                            <form ng-show="!chatCtrl.isDeleteMessagesClicked && chatGroupCtrl.checkIfChatClientOwnerIsMember()" layout="row" ng-submit="chatCtrl.sendMessage()">
                                 <!--<p id="smile" style="margin-top: 3%; font-size: 22px;" class="fa fa-smile-o text-center" flex="10"></p>-->
                                 <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" class="md-icon-float md-block flex-85 flex-offset-5">
                                     <label style="color: white;">Type Message</label>
@@ -494,8 +497,13 @@
                               <md-button  style="font-size: 15px; color: white;" ng-click="chatCtrl.closeSelectMessage()">Cancel</md-button>
                               <md-button style="font-size: 15px;  color: white;" ng-show="chatCtrl.messagesToDelete.length>0"   ng-click="chatCtrl.deleteMessages()">Delete</md-button>
                             </div>
-                            </div>
+                          </div>
+                        <div ng-show="!chatGroupCtrl.checkIfChatClientOwnerIsMember() && !chatCtrl.isDeleteMessagesClicked">
+                          <h4 style = "color: white;" layout="row" layout-align="center center">
+                                You have left or been removed from this group
+                            </h4>
                         </div>
+                      </div>
                     </div>
                 </md-content>
             </div>
