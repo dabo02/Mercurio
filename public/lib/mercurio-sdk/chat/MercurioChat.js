@@ -251,10 +251,16 @@ MercurioChat.prototype.addParticipants = function(contacts){
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isMember").set(true);
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isAdmin").set(false);
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isTyping").set(false);
-			updates = {};
-			// add user-chat entry for participant
-			updates['/user-chats/' + participant + "/" + self.chatId] = chatInfo;
-			firebase.database().ref().update(updates);
+			firebase.database().ref('user-chats/' + participant + "/" + self.chatId).once("value", function(snapshot){
+				if(snapshot.exists()){
+					chatInfo = snapshot.val();
+				}
+				updates = {};
+				// add user-chat entry for participant
+				updates['/user-chats/' + participant + "/" + self.chatId] = chatInfo;
+				firebase.database().ref().update(updates);
+			})
+
 		});
 
 

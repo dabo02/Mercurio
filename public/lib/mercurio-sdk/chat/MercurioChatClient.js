@@ -480,8 +480,10 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 
 			firebase.database().ref().child("user-chats").child(participant.userId).child(chat.chatId)
 			.once('value', function(actualChat){
-				if(!actualChat.val().settings.mute){
-					sendPushNotification(snapshot.val(), participant);
+				if(actualChat.val().settings){
+					if(!actualChat.val().settings.mute){
+						sendPushNotification(snapshot.val(), participant);
+					}
 				}
 			});
 		});
