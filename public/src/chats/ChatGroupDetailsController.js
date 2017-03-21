@@ -85,11 +85,29 @@
             }
           });
           if(adminCounter == 1 && chatClientOwnerIsAdmin){
-            console.log("nope");
+            var confirm = $mdDialog.confirm()
+                .title('You can not exit the group because you are the only admin, assign a admin and try again.')
+                .ariaLabel('delete confirm')
+                .targetEvent(event)
+                .ok('Close');
+
+            $mdDialog.show(confirm).then(function() {
+            }, function() {});
           }
           else{
-          console.log("yep");
-          chatClientService.selectedChat.removeParticipantFromChatGroup(chatClientService.chatClient.chatClientOwner);
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to exit the group?')
+                .ariaLabel('delete confirm')
+                .targetEvent(event)
+                .ok('Exit')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function() {
+              chatClientService.selectedChat.removeParticipantFromChatGroup(chatClientService.chatClient.chatClientOwner);
+            }, function() {
+
+            });
+
           }
         }
 
