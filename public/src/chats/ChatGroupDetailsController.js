@@ -31,7 +31,7 @@
         // },10);
 
         self.showChatGroupDetailsDialog = function(event) {
-            if(self.isChatClientOwnerGroupMember){
+            if(self.checkIfChatClientOwnerIsMember()){
                 $mdDialog.show({
                     templateUrl: 'chatGroupDetails',
                     parent: angular.element(document.body),
@@ -72,6 +72,17 @@
         self.removeParticipant = function(participantId){
           chatClientService.selectedChat.removeParticipantFromChatGroup(participantId);
         }
+
+      self.checkIfChatClientOwnerIsAdmin = function(){
+        var isAdmin = false;
+        chatClientService.selectedChat.participantList.forEach(function(participant){
+          if(participant.userId == chatClientService.chatClient.chatClientOwner && participant.isAdmin) {
+              isAdmin = true;
+            }
+        })
+        return isAdmin;
+      }
+
 
         self.exitChatGroup = function(){
           var adminCounter = 0;
@@ -249,9 +260,6 @@
           }, 100);
 
          });
-
-
-
 
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){

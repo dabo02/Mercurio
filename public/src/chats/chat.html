@@ -101,7 +101,7 @@
                               <div layout="row" class="card card-1">
                                 <div id="wrapper">
                                 <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 180px; margin-left: 30%; margin-top: 2%" ng-src="{{chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar hover" fix-image-orientation="chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner"/>
-                                <md-button ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}}" style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -37.5%; width: 180px; height: 180px;" class="test md-fab">
+                                <md-button ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin()" style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -37.5%; width: 180px; height: 180px;" class="test md-fab">
                                   <input style="z-index: -1; opacity: 0; margin-left: -5%; width: 109%; min-height: 100%; margin-top: -50%; border-radius: 50%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/>
                                   <h4 style="margin-top: -65%"> Change Group Icon <h4>
                                   </md-button>
@@ -110,7 +110,7 @@
                                 <h4 style="margin-bottom: 5%;"ng-if="!chatGroupCtrl.canEdit">{{chatGroupCtrl.chatClientService.selectedChat.title}}</h4>
                                 <h4><input style="border-color: black;" ng-change="chatGroupCtrl.chatGroupDetailsChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-if="chatGroupCtrl.canEdit"></h4>
                                 </md-input-container>
-                                <md-icon ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}} && !chatGroupCtrl.canEdit" ng-click = "chatGroupCtrl.editGroupName()" style="color: black; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
+                                <md-icon ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin() && !chatGroupCtrl.canEdit" ng-click = "chatGroupCtrl.editGroupName()" style="color: black; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
                                 <md-icon ng-click="chatGroupCtrl.changeConfirmed()" ng-if="chatGroupCtrl.canEdit" style="color: green; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 94%" class="fa fa-check"></md-icon>
                                 <md-icon ng-click="chatGroupCtrl.cancelChange()" ng-if="chatGroupCtrl.canEdit" style="color: red; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-times"></md-icon>
                                 <h5 flex-offset="5" style="color: grey; margin-top: -3%"> Created {{chatGroupCtrl.getDateCreated()}} </h5>
@@ -122,7 +122,7 @@
                               <div layout="row" class="card card-1">
                               <h4 style="color: red; margin-top: 5%; margin-left: 25%;" ng-show="chatGroupCtrl.userIsAParticipant">User is already in the chat</h4>
                               <h4 style="color: green; margin-top: 5%; margin-left: 35%;" ng-show="chatGroupCtrl.userWasAdded">User was added</h4>
-                                <md-card-title ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}}"  style="padding-top: 0%; margin: 10px;">
+                                <md-card-title ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin()"  style="padding-top: 0%; margin: 10px;">
                                     <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
                                         <md-content class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
                                             <md-contact-chips
@@ -147,7 +147,7 @@
                                 <div flex="80" flex-offset="10" layout="row">
                                     <md-list>
                                         <md-subheader class="md-no-sticky" style="background-color:white;">Group Members</md-subheader>
-                                        <h6 style="color: #b3b3b3; position: absolute; margin-top: -6%; margin-left: 65%">{{chatGroupCtrl.chatClientService.selectedChat.participantCount}} Participants</h6>
+                                        <h6 style="color: #b3b3b3; position: absolute; margin-top: -6%; margin-left: 65%">{{chatGroupCtrl.chatClientService.selectedChat.participantList.length}} Participants</h6>
                                     </md-list>
                                 </div>
                                 <div flex="80" flex-offset="10" layout="row">
@@ -162,7 +162,7 @@
                                                     <md-icon  class"md-menu-origin" style="color: black; font-size:22px;" class="fa fa-sort-desc"></md-icon>
                                                 </md-button>
                                                 <md-menu-content width="4">
-                                                    <md-menu-item ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}} && !{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : participant.userId}}" >
+                                                    <md-menu-item ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin() && !participant.isAdmin" >
                                                         <md-button ng-click="chatGroupCtrl.assignAdmin(participant.userId)">
                                                           Make group Admin
                                                         </md-button>
@@ -177,7 +177,7 @@
                                                           Send Message
                                                         </md-button>
                                                     </md-menu-item>
-                                                    <md-menu-item ng-show="{{chatGroupCtrl.chatClientService.selectedChat | isAdminFilter : chatGroupCtrl.chatClient.chatClientOwner}}">
+                                                    <md-menu-item ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin()">
                                                         <md-button ng-click="chatGroupCtrl.removeParticipant(participant.userId)">
                                                           Remove
                                                         </md-button>
@@ -339,14 +339,14 @@
                                     <div class="md-list-item-text" layout="column">
                                       <a>
                                         <h4 style= "color: white;" ng-if="selectedChat.title.length > 0"
-                                            ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
+                                            ng-controller="ChatGroupDetailsController as chatGroupCtrl"  ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
                                                 {{selectedChat.title}}
                                         </h4>
                                         <h4 style= "color: white;" ng-controller = "ContactController as contactCtrl" ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
                                             {{selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
                                       </a>
-                                      <h5 style="color: white; position: absolute; margin-top: 4%;">{{selectedChat | isTypingFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}</h5>
+                                      <h6 ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-hide="chatGroupCtrl.chatClientService.selectedChat.title.length > 0 && !chatGroupCtrl.checkIfChatClientOwnerIsMember()" style="color: white; position: absolute; margin-top: 4%;">{{selectedChat | isTypingFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}</h6>
                                     </div>
                                       <img ng-click="chatCtrl.toggleMute(false)" ng-show = "selectedChat.settings.mute" style="position: absolute; width: 3%; margin-left: 83%" ng-src="images/ic_volume_off_black_24dp.png"/>
 

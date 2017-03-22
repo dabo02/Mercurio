@@ -253,7 +253,7 @@ MercurioChat.prototype.addParticipants = function(contacts){
 			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isTyping").set(false);
 			firebase.database().ref('user-chats/' + participant + "/" + self.chatId).once("value", function(snapshot){
 				if(snapshot.exists()){
-					chatInfo = snapshot.val();
+					chatInfo.lastMessage = snapshot.val()['lastMessage'];
 				}
 				updates = {};
 				// add user-chat entry for participant
@@ -353,6 +353,7 @@ MercurioChat.prototype.removeParticipantFromChatGroup = function(participantId){
 
 		if(participant.userId === participantId){
 			updates['/chat-members/' + self.chatId + "/" + participantId + '/isMember'] = false;
+			updates['/chat-members/' + self.chatId + "/" + participantId + '/isAdmin'] = false;
 		}
 
 		firebase.database().ref().update(updates);

@@ -63,7 +63,7 @@
 
             //don't show names on 1-to-1 chat, show them in group chats instead
 
-            if(participantList.length > 2){
+            if(participantList.length > 1){
 
                 participantList.forEach(function (participant) {
                     if (from === participant.userId) {
@@ -238,21 +238,6 @@
           })
         }
           return isTyping;
-        };
-    })
-
-    .filter('isAdminFilter', function () {
-        return function (chat, chatClientOwner) {
-          var isAdmin = false;
-          if(chat){
-          chat.participantList.forEach(function(participant){
-            if(participant.userId == chatClientOwner && participant.isAdmin) {
-                isAdmin = true;
-
-            }
-          })
-        }
-          return isAdmin;
         };
     })
 
