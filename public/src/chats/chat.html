@@ -432,7 +432,7 @@
                             </md-list>
 
                         </div>
-                        <div id="conversation" class= "scrollable-content" style="width: 100%;height:350px" class="col-lg-12 col-md-12" scroll-glue>
+                        <div id="conversation" class= "scrollable-content" style="width: 100%;height:350px" class="col-lg-12 col-md-12" scroll-glue ng-controller="ContactListController as contactListCtrl">
                             <div ng-repeat="message in selectedChat.messageList track by $index" class="row">
                               <div ng-mouseover="hoverActive=true" ng-mouseleave="hoverActive=false" ng-style="hoverActive && chatCtrl.isDeleteMessagesClicked ? {'background': 'rgba(0,0,0,0.60)'} : {}">
                                 <div ng-if="!chatCtrl.isMessageFromMe(message)" flex-offset="10" flex= "55" ng-class="{ 'flex-70': chatCtrl.isDeleteMessagesClicked && !message.multimediaUrl}">
@@ -440,7 +440,7 @@
                                     </md-checkbox>
                                     <md-card class="receivedMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row" style="padding-bottom:4px;">
                                         <p style="font-weight: bold;">
-                                            {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}
+                                            {{message.from | messageListParticipantNameFilter : selectedChat.participantList : contactListCtrl.contactList}}
                                         </p>
                                         <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;" fix-image-orientation="message.multimediaUrl">
                                         <p ng-if="message.textContent.length > 0" style="margin-top: 5px; margin-bottom: 0px;">
@@ -451,7 +451,7 @@
                                       </p>
                                     </md-card>
                                     <div style= "padding-top: 2%;" ng-if="!message.multimediaUrl" class="receivedMessage">
-                                      <p style="font-weight: bold; margin-bottom: -1%;" > {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}} </p>
+                                      <p style="font-weight: bold; margin-bottom: -1%;" > {{message.from | messageListParticipantNameFilter : selectedChat.participantList : contactListCtrl.contactList}} </p>
                                         <p style="padding-right: 40px; margin-bottom: -1%;">{{message.textContent}} </p>
                                           <p style = "font-size: 10px; text-align: right;"> {{message.timeStamp | timeStampFilter}} </p>
                                     </div>

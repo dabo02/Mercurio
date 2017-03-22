@@ -55,7 +55,7 @@
     })
 
     .filter('messageListParticipantNameFilter', function () {
-        return function (from, participantList) {
+        return function (from, participantList, contacts) {
 
 
 
@@ -70,6 +70,13 @@
                         participantName = participant.firstName + ' ' + participant.lastName;
                     }
                 });
+                if(!participantName){
+                  contacts.forEach(function(contact){
+                    if(contact.userId == from){
+                      participantName = contact.firstName + ' ' + contact.lastName;
+                    }
+                  })
+                }
             }
 
             return participantName;
