@@ -142,7 +142,7 @@
                     type: type
                 }
 
-                chatClientService.chatClient.sendMultimediaMessage(chatClientService.selectedChat, message, function(progress, uploadingImage, message){
+                chatClientService.chatClient.sendMessage(chatClientService.selectedChat, message, function(progress, uploadingImage, message){
                   chatClientService.uploadingImage = uploadingImage;
                   chatClientService.progress = progress;
                   chatClientService.opacity = progress/100+0.1;
@@ -236,18 +236,18 @@
                      chatClientService.selectedChat = chat;
                    }
                  });
-                 instantiateSelectedChat();
+              addSelectedChatToScope();
            });
 
         }
         else if(chatClientService.selectedChat){
-            instantiateSelectedChat();
+            addSelectedChatToScope();
         }
         else{
           $state.go('dialer');
         }
 
-        function instantiateSelectedChat(){
+        function addSelectedChatToScope(){
           $scope.selectedChat = chatClientService.selectedChat;
           $scope.$watch(
                   'selectedChat',
