@@ -38,7 +38,8 @@
         };
 
         self.toggleLeftSidebar = function(){
-            $mdSidenav('left').toggle();
+            if(!$mdSidenav('left').isOpen())
+              $mdSidenav('left').toggle();
         };
 
         self.viewRecentCallsButtonClicked = function(){

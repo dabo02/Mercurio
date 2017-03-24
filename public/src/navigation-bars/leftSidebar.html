@@ -256,7 +256,8 @@
 <md-sidenav id="sidenav" style = "background:rgba(0,0,0,0.65);" ng-click="navCtrl.toggleLeftSidebar()" md-component-id="left" class="md-whiteframe-z2" >
     <md-list>
 
-        <md-card ng-click="profileCtrl.showProfileEditorDialog()" ng-controller="ProfileEditorController as profileCtrl" style="margin:0px; margin-bottom:4%; background-image:url(images/md-backround-profile.jpg);" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card ng-controller="ProfileEditorController as profileCtrl" style="z-index: 60; margin:0px; margin-bottom:4%; background-image:url(images/md-backround-profile.jpg);" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+          <div ng-click="profileCtrl.showProfileEditorDialog()">
             <md-card-title>
                 <md-card-title-media flex="40">
                     <div class="md-media-sm card-media">
@@ -276,10 +277,15 @@
                       {{profileCtrl.getAvailability()}}</span>
                 </md-card-title-text>
             </md-card-title>
-            <md-card-actions style="padding-left:4%;" layout="row">
-                <md-truncate style="font-size: 15px; word-break: break-all" flex="85"> {{profileCtrl.getStatusMessage()}}</md-truncate>
-            </md-card-actions>
-        </md-card>
+            </div>
+              <md-input-container style="margin-top: -2%" flex="80" flex-offset="5" class="md-icon-float md-block" >
+              <h4 ng-if="!profileCtrl.canEdit" style="font-size: 15px; word-break: break-all">{{profileCtrl.getStatusMessage()}}</h4>
+              <h4 style="font-size: 15px; word-break: break-all"><input ng-if="profileCtrl.canEdit" style="border-color: black;" ng-model="profileCtrl.newStatus" ng-value="profileCtrl.getStatusMessage()" type="text"></h4>
+              </md-input-container>
+              <md-icon ng-show="!profileCtrl.canEdit" ng-click="profileCtrl.editStatus()" style="color: black; font-size: 18px; position: absolute; margin-top: 59%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
+              <md-icon ng-show="profileCtrl.canEdit" ng-click="profileCtrl.confirmStatusChange()" style="color: green; font-size: 18px; position: absolute; margin-top: 60%; margin-left: 92%" class="fa fa-check"></md-icon>
+              <md-icon ng-show="profileCtrl.canEdit" ng-click="profileCtrl.cancelEdit()" style="color: red; font-size: 18px; position: absolute; margin-top: 60%; margin-left: 85%" class="fa fa-times"></md-icon>
+          </md-card>
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.homeLinkClicked()" layout="row">

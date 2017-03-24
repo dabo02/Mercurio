@@ -24,6 +24,9 @@
         self.saveButtonIsAvailable = false;
         self.allMetaData = null;
 
+        self.canEdit = false;
+        self.newStatus;
+
         self.topDirections = ['left', 'up'];
         self.bottomDirections = ['down', 'right'];
 
@@ -207,6 +210,20 @@
 
         self.profilePictureChosen = function(){
         }
+
+        self.editStatus = function(){
+              self.canEdit = true;
+            };
+
+        self.confirmStatusChange = function(){
+          accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email, self.newStatus, parseInt(accountService.activeAccount.availability));
+            self.canEdit = false;
+        }
+
+        self.cancelEdit = function(){
+            self.canEdit = false;
+            self.newStatus='';
+          };
 
         $scope.profilePictureSelected = function(element) {
 
