@@ -283,8 +283,8 @@
               <h4 style="font-size: 15px; word-break: break-all"><input ng-if="profileCtrl.canEdit" style="border-color: black;" ng-model="profileCtrl.newStatus" ng-value="profileCtrl.getStatusMessage()" type="text"></h4>
               </md-input-container>
               <md-icon ng-show="!profileCtrl.canEdit" ng-click="profileCtrl.editStatus()" style="color: black; font-size: 18px; position: absolute; margin-top: 59%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
-              <md-icon ng-show="profileCtrl.canEdit" ng-click="profileCtrl.confirmStatusChange()" style="color: green; font-size: 18px; position: absolute; margin-top: 60%; margin-left: 92%" class="fa fa-check"></md-icon>
-              <md-icon ng-show="profileCtrl.canEdit" ng-click="profileCtrl.cancelEdit()" style="color: red; font-size: 18px; position: absolute; margin-top: 60%; margin-left: 85%" class="fa fa-times"></md-icon>
+              <md-icon ng-show="profileCtrl.canEdit && profileCtrl.newStatus != profileCtrl.getStatusMessage()" ng-click="profileCtrl.confirmStatusChange()" style="color: green; font-size: 18px; position: absolute; margin-top: 60%; margin-left: 92%" class="fa fa-check"></md-icon>
+              <md-icon ng-show="profileCtrl.canEdit" ng-click="profileCtrl.cancelEdit()" ng-style="profileCtrl.newStatus != profileCtrl.getStatusMessage() ? {'margin-left': '85%'} : {'margin-left': '92%'}" style="color: red; font-size: 18px; position: absolute; margin-top: 60%;" class="fa fa-times"></md-icon>
           </md-card>
 
         <md-list-item layout="row">

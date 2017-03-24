@@ -25,7 +25,7 @@
         self.allMetaData = null;
 
         self.canEdit = false;
-        self.newStatus;
+        self.newStatus = angular.copy(accountService.activeAccount.status);
 
         self.topDirections = ['left', 'up'];
         self.bottomDirections = ['down', 'right'];
@@ -222,7 +222,7 @@
 
         self.cancelEdit = function(){
             self.canEdit = false;
-            self.newStatus='';
+            self.newStatus= accountService.activeAccount.status;
           };
 
         $scope.profilePictureSelected = function(element) {
