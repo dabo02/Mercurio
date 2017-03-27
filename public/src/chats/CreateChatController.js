@@ -49,7 +49,7 @@
                 return;
             }
             else{
-                chatClientService.chatClient.createChat(self.title, contacts, chatClientService.chatIsReadyToSendObserver);
+                chatClientService.chatClient.createChat(self.title, chatClientService.chatIsReadyToSendObserver, ['r1wlH02xaegLtvMEtbhTC1wOY9x2'], [7872216854]);
                 self.closeCreateChatDialog();
             }
 

@@ -50,7 +50,9 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 
 	var chat = self.instantiateChat(snapshot);
 
-	self.chatList.unshift(chat);
+	binaryInsert(chat, self.chatList);
+
+	//self.chatList.unshift(chat);
 
 	//if(chat.lastMessage) {
 	//
@@ -81,6 +83,45 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 		});
 
 		self.chatListIsReadyObserver = null;
+	}
+
+	function binaryInsert(value, array, startVal, endVal){
+
+		var length = array.length;
+		var start = typeof(startVal) != 'undefined' ? startVal : 0;
+		var end = typeof(endVal) != 'undefined' ? endVal : length - 1;//!! endVal could be 0 don't use || syntax
+		var m = start + Math.floor((end - start)/2);
+
+		if(length == 0){
+			array.push(value);
+			return;
+		}
+
+		if(value.lastMessage.timeStamp > array[end].lastMessage.timeStamp){
+			array.splice(end + 1, 0, value);
+			return;
+		}
+
+		if(value.lastMessage.timeStamp < array[start].lastMessage.timeStamp){//!!
+			array.splice(start, 0, value);
+			return;
+		}
+
+		if(start >= end){
+			return;
+		}
+
+		if(value.lastMessage.timeStamp < array[m].lastMessage.timeStamp){
+			binaryInsert(value, array, start, m - 1);
+			return;
+		}
+
+		if(value.lastMessage.timeStamp > array[m].lastMessage.timeStamp){
+			binaryInsert(value, array, m + 1, end);
+			return;
+		}
+
+		//we don't insert duplicates
 	}
 }
 
@@ -146,118 +187,124 @@ Requests server to add a chat to the database
 @params: chat - Chat object
 */
 
-AbstractChatClient.prototype.createChat = function(title, contacts, observer, phoneNumberParticipants){
-
-	// inspect particpant lists to prevent sdk users from using wrong concrete chat client to create a chat
-	// for mercurio chat clients use this:
-	// if(phoneNumberParticipants.length > 0) return;
+AbstractChatClient.prototype.createChat = function(title, observer, userIds, phoneNumbers){
 
 	var self = this;
-	var participants = [];
-	var existingChat = null;
-	self.chatIsReadyToSendObserver = observer;
 
-	contacts.forEach(function(contact){
-		if(contact.userId != '' || contact.userId !== undefined){
-			// contact is a mercurio user
-			participants.push(contact.userId);
-		}
-	});
+	if(self.canCreateChatFromParticipants(userIds, phoneNumbers)){
 
-	participants.push(self.chatClientOwner);
+		//var participants = [];
+		var existingChat = null;
+		self.chatIsReadyToSendObserver = observer;
 
-	//check for duplicates and if a duplicate is found save it in existingChat
-	if(!title){
-		firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('title').equalTo('').once('value', function(chats){
-			var userChats = chats; //Get every user with empty title
-			userChats.forEach(function (chat){
-				firebase.database().ref('chat-members/' + chat.key).once('value', function(chatMembers){
-					var members = Object.keys(chatMembers.val()); //get memebers in every in memebers-chat
-					var counter = 0;
+		//contacts.forEach(function(contact){
+		//	if(contact.userId != '' || contact.userId !== undefined){
+		//		// contact is a mercurio user
+		//		participants.push(contact.userId);
+		//	}
+		//});
+        //
+		//participants.push(self.chatClientOwner);
 
-					members.forEach(function (member){
-						for(var i=0; i<participants.length; i++){
-							if(member == participants[i]){
-								counter++;
+		//check for duplicates and if a duplicate is found save it in existingChat
+		if(!title){
+			firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('title').equalTo('').once('value', function(chats){
+				var userChats = chats; //Get every user with empty title
+				userChats.forEach(function (chat){
+					firebase.database().ref('chat-members/' + chat.key).once('value', function(chatMembers){
+						var members = Object.keys(chatMembers.val()); //get memebers in every in memebers-chat
+						var counter = 0;
+
+						members.forEach(function (chatMember){
+							for(var i=0; i < userIds.length; i++){
+								if(chatMember == userIds[i]){
+									counter++;
+								}
 							}
+
+							counter = self.countChatDuplicatesWithParticipantPhoneNumbers(counter, phoneNumbers, chatMember);
+
+						});
+
+						if(counter==2){
+							existingChat=chat;
 						}
-
-						counter = self.countChatDuplicatesWithParticipantPhoneNumbers(counter, phoneNumberParticipants, member);
-
-					});
-
-					if(counter==2){
-						existingChat=chat;
-					}
-				})
-			});
-		});
-	}
-
-	if(participants.length > 1) {
-		// chat client owner is not the only participant in the list
-		// receive observer call back in addChat parameters and register the callback to this
-		//self.participantsAreReadyObserver = observer;
-		if (existingChat == null) {
-			var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
-			var newChatKey = newChatRef.key;
-
-			var chatInfo = {
-				lastMessage: {},
-				timeStamp: new Date().getTime(),
-				title: title || '',
-				participantCount: participants.length,
-				settings: {mute: false}
-			};
-
-			var updates = {};
-
-
-			participants.forEach(function (participant) {
-				// add participant to chat-members
-				firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function () {
-					updates = {};
-					// add user-chat entry for participant
-					updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
-					firebase.database().ref().update(updates).then(function () {
-						//observer();
-					});
+					})
 				});
 			});
-
-			self.addParticipantsToChatWithPhoneNumbers(newChatKey, phoneNumberParticipants);
-
 		}
-		else {
-			// chat already exists
-			// try and find chat in local chatList. if found move that chat to the top
-			// if its not in the local list add  new instance to chatList using the MercurioChat constructor
-			// and add it to the top of the list. call observer at the end
-			var chatFound = false;
-			var newChat = null;
 
-			self.chatList.forEach(function (chat, index) {
-				if (chat.chatId === existingChat.key && !chatFound) {
-					chatFound = true;
-					self.chatList.splice(index, 1);
+		//if(phoneNumbers.length > 0 || userIds.length > 1) {
+			// chat client owner is not the only participant in the list
+			// receive observer call back in addChat parameters and register the callback to this
+			//self.participantsAreReadyObserver = observer;
+			if (existingChat == null) {
+				var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
+				var newChatKey = newChatRef.key;
+
+				var chatInfo = {
+					lastMessage: {},
+					timeStamp: new Date().getTime(),
+					title: title || '',
+					participantCount: userIds.length + phoneNumbers.length,
+					settings: {mute: false}
+				};
+
+				var updates = {};
+
+
+				userIds.forEach(function (participant) {
+					// add participant to chat-members
+					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function () {
+						updates = {};
+						// add user-chat entry for participant
+						updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
+						firebase.database().ref().update(updates).then(function () {
+							//observer();
+						});
+					});
+				});
+
+				self.addParticipantsToChatWithPhoneNumbers(newChatKey, phoneNumbers);
+
+			}
+			else {
+				// chat already exists
+				// try and find chat in local chatList. if found move that chat to the top
+				// if its not in the local list add  new instance to chatList using the MercurioChat constructor
+				// and add it to the top of the list. call observer at the end
+				var chatFound = false;
+				var newChat = null;
+
+				self.chatList.forEach(function (chat, index) {
+					if (chat.chatId === existingChat.key && !chatFound) {
+						chatFound = true;
+						self.chatList.splice(index, 1);
+						self.chatList.unshift(chat);
+						newChat = chat;
+					}
+				});
+
+				if (!chatFound) {
+					var chat;
+
+					chat = self.instantiateChat(existingChat);
+
 					self.chatList.unshift(chat);
 					newChat = chat;
 				}
-			});
 
-			if (!chatFound) {
-				var chat;
-
-				chat = self.instantiateChat(existingChat);
-
-				self.chatList.unshift(chat);
-				newChat = chat;
+				// check if front end is correctly managing a null newChat
+				self.chatIsReadyToSendObserver(newChat);
 			}
-
-			// check if front end is correctly managing a null newChat
-			self.chatIsReadyToSendObserver(newChat);
-		}
+		//}
 	}
+	else{
+		//add error message handling here
+	}
+
+	return;
+
 }
 
 

@@ -145,7 +145,7 @@ AbstractChat.prototype.addParticipants = function(contacts, phoneNumbers){
 
 	var newParticipants = [];
 
-	addMercurioParticipantsToList(contacts, newParticipants);
+	self.addMercurioParticipantsToList(contacts, newParticipants);
 
 	// TODO function to loop through phone number participants implemented in concrete chat classes
 	self.addParticipantsWithPhoneNumbersToList(phoneNumbers, newParticipants);
@@ -172,16 +172,17 @@ AbstractChat.prototype.addParticipants = function(contacts, phoneNumbers){
 		});
 	}
 
-	function addMercurioParticipantsToList(contacts, newParticipants){
-		var self = this;
-		contacts.forEach(function(contact){
-			if(contact.userId != '' || contact.userId !== undefined){
-				// contact is a mercurio user
+}
 
-				self.addParticipantToList(contact.userId, newParticipants)
-			}
-		});
-	}
+AbstractChat.prototype.addMercurioParticipantsToList = function(contacts, newParticipants){
+	var self = this;
+	contacts.forEach(function(contact){
+		if(contact.userId != '' || contact.userId !== undefined){
+			// contact is a mercurio user
+
+			self.addParticipantToList(contact.userId, newParticipants)
+		}
+	});
 }
 
 AbstractChat.prototype.addParticipantToList = function(participantId, newParticipants){

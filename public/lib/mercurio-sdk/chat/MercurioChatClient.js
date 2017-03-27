@@ -15,7 +15,7 @@ MercurioChatClient.prototype.constructor = MercurioChatClient;
 
 MercurioChatClient.prototype.fetchChatListChildChangedSnapshot = function(childChangedSnapshotCallback){
 
-	firebase.database().ref('user-chats/' + this.chatClientOwner).orderByChild('type').equalTo('im').on('child_changed', function(snapshot) {
+	firebase.database().ref('user-chats/' + this.chatClientOwner).on('child_changed', function(snapshot) {
 
 		childChangedSnapshotCallback(snapshot);
 
@@ -35,46 +35,6 @@ MercurioChatClient.prototype.fetchChatListChildAddedSnapshot = function(pageNumb
 		childAddedSnapshotCallback(snapshot);
 
 	});
-
-
-	function binaryInsert(value, array, startVal, endVal){
-
-		var length = array.length;
-		var start = typeof(startVal) != 'undefined' ? startVal : 0;
-		var end = typeof(endVal) != 'undefined' ? endVal : length - 1;//!! endVal could be 0 don't use || syntax
-		var m = start + Math.floor((end - start)/2);
-
-		if(length == 0){
-			array.push(value);
-			return;
-		}
-
-		if(value > array[end].lastMessage.timeStamp){
-			array.splice(end + 1, 0, value);
-			return;
-		}
-
-		if(value < array[start].lastMessage.timeStamp){//!!
-			array.splice(start, 0, value);
-			return;
-		}
-
-		if(start >= end){
-			return;
-		}
-
-		if(value < array[m].lastMessage.timeStamp){
-			binaryInsert(value, array, start, m - 1);
-			return;
-		}
-
-		if(value > array[m].lastMessage.timeStamp){
-			binaryInsert(value, array, m + 1, end);
-			return;
-		}
-
-		//we don't insert duplicates
-	}
 }
 
 MercurioChatClient.prototype.fetchChatListChildRemovedSnapshot = function(childRemovedSnapshotCallback){
@@ -89,6 +49,16 @@ MercurioChatClient.prototype.fetchChatListChildRemovedSnapshot = function(childR
 
 MercurioChatClient.prototype.getChatList = function(){
 	return this.chatList;
+}
+
+MercurioChatClient.prototype.canCreateChatFromParticipants = function(userIds, phoneNumbers){
+
+	if(phoneNumbers.length > 0 || userIds.length < 2){
+		return false;
+	}
+	else{
+		return true;
+	}
 }
 
 MercurioChatClient.prototype.countChatDuplicatesWithParticipantPhoneNumbers = function(currentCount, phoneNumberParticipants, existingChatMember){

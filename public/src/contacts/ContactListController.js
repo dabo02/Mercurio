@@ -89,34 +89,6 @@ angular.module('users')
         var lowercaseQuery = angular.lowercase(query);
         phoneService.contactSearchString = lowercaseQuery;
 
-        var tempContactIndex = -1;
-
-        contacts.forEach(function(contact, index){
-            if(contact.temp){
-                tempContactIndex = index;
-            }
-        });
-
-        if(lowercaseQuery.length >= 3){
-            //add special contact chip with query
-            if(tempContactIndex == -1){
-                contacts.unshift(
-                    new MercurioContact('Send to ' + lowercaseQuery,'','email','./images/',lowercaseQuery,
-                    'extension','id','status','availability')
-                );
-
-                contacts[0].temp = true;
-
-                loadContacts();
-            }
-        }
-        else{
-            //try and remove contact chip with query
-            if(tempContactIndex >=0){
-                contacts.splice(index, 1);
-            }
-        }
-
         return function filterFn(contact) {
             return (contact._lowername.indexOf(lowercaseQuery) != -1) || (contact.phone.indexOf(lowercaseQuery) != -1);;
         };

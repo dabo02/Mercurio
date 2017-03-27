@@ -4,57 +4,60 @@
 @params: participants - array containing a collection of particpants
 */
 
-function MercurioChat(chatId, participantCount, participantsAreReadyObserver,
+function SMSChat(chatId, participantCount, participantsAreReadyObserver,
 	lastMessage, settings, timeStamp, title, chatClientOwner){
 
 	AbstractChat.apply(this,arguments);
 }
 
-MercurioChat.prototype = Object.create(AbstractChat.prototype);
+SMSChat.prototype = Object.create(AbstractChat.prototype);
 
-MercurioChat.prototype.constructor = MercurioChat;
+SMSChat.prototype.constructor = SMSChat;
 
-MercurioChat.prototype.instantiateParticipant = function(chatClientOwner, participantId, participantIsReadyCallback){
+SMSChat.prototype.instantiateParticipant = function(chatClientOwner, participantId, participantIsReadyCallback){
 
-	new MercurioChatParticipant(participantId, participantIsReadyCallback);
+	if(isNaN(participantId)){
+		new MercurioChatParticipant(participantId, participantIsReadyCallback);
+	}
+	else{
+		new SMSChatParticipant(chatClientOwner, participantId, participantIsReadyCallback);
+	}
 }
 
-MercurioChat.prototype.getMessageList = function(){
+SMSChat.prototype.getMessageList = function(){
 	return this.messageList;
 }
 
-MercurioChat.prototype.saveChatTitleWithParticipant = function(chatId, participantId, newChatTitle){
+SMSChat.prototype.saveChatTitleWithParticipant = function(chatId, participantId, newChatTitle){
 
 	self.updateChatTitleInFirebase(chatId, participantId, newChatTitle);
 }
 
-MercurioChat.prototype.addParticipantsWithPhoneNumbersToList = function(phoneNumbers, newParticipants){
+SMSChat.prototype.addParticipantsWithPhoneNumbersToList = function(phoneNumbers, newParticipants){
 
-	//var self = this;
-	//phoneNumbers.forEach(function(participant){
-	//	self.addParticipantToList(participant.participantId, newParticipants);
-	//});
+	var self = this;
+	phoneNumbers.forEach(function(participant){
+		self.addParticipantToList(participant.participantId, newParticipants);
+	});
 
 	return;
 }
 
-MercurioChat.prototype.updateParticipantCount = function(participantId, count){
+SMSChat.prototype.updateParticipantCount = function(participantId, count){
 
-	//if(parseInt(participantId) == undefined){
-	//	var updates = {};
-	//	updates['/user-chats/' + participantId + "/" + chatId + '/participantCount'] = count;
-	//	firebase.database().ref().update(updates);
-	//}
-	//else{
-	//	//do something with sms chat participant id (return maybe..)
-	//}
+	if(isNaN(participantId)){
+		var updates = {};
+		updates['/user-chats/' + participantId + "/" + chatId + '/participantCount'] = count;
+		firebase.database().ref().update(updates);
+		return;
+	}
+	else{
+		return;
+	}
 
-	var updates = {};
-	updates['/user-chats/' + participantId + "/" + self.chatId + '/participantCount'] = count;
-	firebase.database().ref().update(updates);
 }
 
-MercurioChat.prototype.addUserChatEntryToNewParticipant = function(participantId, newParticipantCount){
+SMSChat.prototype.addUserChatEntryToNewParticipant = function(participantId, newParticipantCount){
 
 	//if(parseInt(participantId) == undefined){
 	//	var chatInfo = {
@@ -89,7 +92,7 @@ MercurioChat.prototype.addUserChatEntryToNewParticipant = function(participantId
 }
 
 //falta
-MercurioChat.prototype.exitChatGroup = function(userId){
+SMSChat.prototype.exitChatGroup = function(userId){
 
 	var self = this;
 	

@@ -5,41 +5,27 @@
 */
 
 
-function MercurioChatParticipant(chatClientOwner, userId, participantReadyCallback){
+function MercurioChatParticipant(participantId, participantReadyCallback){
 	
 	var self = this;
 
-	self.firstName = 'Unknown';
+	self.firstName = '';
 	self.lastName = '';
 	self.email = '';
 	self.picture = '';
 	self.phone = '';
 	self.availability = '';
-	self.participantId = userId;
+	self.participantId = '';
 
-	if(chatClientOwner == userId){
-		firebase.database().ref('account/' + userId).on('value', function(snapshot) {
 
-			if(snapshot.exists()){
-				self.initializeParticipant(snapshot);
-			}
+	firebase.database().ref('account/' + participantId).on('value', function(snapshot) {
 
-			participantReadyCallback(self);
-		});
-	}
-	else{
-		//firebase.database().ref('user-contacts/' + chatClientOwner).orderByChild('userId').equalTo(userId).on('value', function(snapshot) {
-		firebase.database().ref('account/' + userId).on('value', function(snapshot) {
+		if(snapshot.exists()){
+			self.initializeParticipant(snapshot);
+		}
 
-			if(snapshot.exists()){
-				//snapshot.forEach(function(childSnapshot) {
-					self.initializeParticipant(snapshot);
-				//})
-			}
-
-			participantReadyCallback(self);
-		});
-	}
+		participantReadyCallback(self);
+	});
 }
 
 MercurioChatParticipant.prototype.initializeParticipant = function(snapshot){

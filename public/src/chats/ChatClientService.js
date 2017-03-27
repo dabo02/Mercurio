@@ -28,7 +28,7 @@
         };
 
         self.instantiateChatClient = function(userId){
-            self.chatClient = new MercurioChatClient(userId, self.onMessageReceived);
+            self.chatClient = new SMSChatClient(userId, self.onMessageReceived);
             //TODO repeat this for:
            // accountService.activeAccount.contactManager.contactList
            // phoneService.phone.recentCallList
@@ -46,6 +46,7 @@
           //  });
         }
 
+        // TODO replace with call to instantiateChat()
         self.instantiateSelectedChat = function(chat){
           var newChat = new MercurioChat (chat.chatId, chat.participantCount, null,
     					chat.lastMessage, chat.settings, null, chat.title, self.chatClientOwner);

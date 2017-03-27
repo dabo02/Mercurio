@@ -5,15 +5,15 @@ uses MissingImplementationError
 
 */
 
-function SMSChatCLient(userId, messageReceivedObserver){
+function SMSChatClient(userId, messageReceivedObserver){
 	AbstractChatClient.apply(this, arguments);
 }
 
-SMSChatCLient.prototype = Object.create(AbstractChatClient.prototype);
+SMSChatClient.prototype = Object.create(AbstractChatClient.prototype);
 
-SMSChatCLient.prototype.constructor = SMSChatCLient;
+SMSChatClient.prototype.constructor = SMSChatClient;
 
-SMSChatCLient.prototype.fetchChatListChildChangedSnapshot = function(childChangedSnapshotCallback){
+SMSChatClient.prototype.fetchChatListChildChangedSnapshot = function(childChangedSnapshotCallback){
 	firebase.database().ref('user-chats/' + this.chatClientOwner).orderByChild('type').equalTo('sms').on('child_changed', function(snapshot) {
 
 		childChangedSnapshotCallback(snapshot);
@@ -21,7 +21,7 @@ SMSChatCLient.prototype.fetchChatListChildChangedSnapshot = function(childChange
 	});
 }
 
-SMSChatCLient.prototype.fetchChatListChildAddedSnapshot = function(pageNumber, limit, childAddedSnapshotCallback){
+SMSChatClient.prototype.fetchChatListChildAddedSnapshot = function(pageNumber, limit, childAddedSnapshotCallback){
 
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
@@ -29,7 +29,7 @@ SMSChatCLient.prototype.fetchChatListChildAddedSnapshot = function(pageNumber, l
 	//empty out chatList to make room for it's updated copy
 	//this.chatList = [];
 
-	firebase.database().ref('user-chats/' + this.chatClientOwner).orderByChild('type').equalTo('sms').on('child_added', function(snapshot) {
+	firebase.database().ref('user-chats/' + this.chatClientOwner).on('child_added', function(snapshot) {
 
 		childAddedSnapshotCallback(snapshot);
 
@@ -76,7 +76,7 @@ SMSChatCLient.prototype.fetchChatListChildAddedSnapshot = function(pageNumber, l
 	}
 }
 
-SMSChatCLient.prototype.fetchChatListChildRemovedSnapshot = function(childRemovedSnapshotCallback){
+SMSChatClient.prototype.fetchChatListChildRemovedSnapshot = function(childRemovedSnapshotCallback){
 
 	firebase.database().ref('user-chats/' + this.chatClientOwner).orderByChild('type').equalTo('sms').on('child_removed', function(snapshot) {
 
@@ -86,11 +86,21 @@ SMSChatCLient.prototype.fetchChatListChildRemovedSnapshot = function(childRemove
 
 }
 
-SMSChatCLient.prototype.getChatList = function(){
+SMSChatClient.prototype.getChatList = function(){
 	return this.chatList;
 }
 
-SMSChatCLient.prototype.countChatParticipantDuplicatesWithPhoneNumbers = function(currentCount, phoneNumberParticipants, existingChatMember){
+SMSChatClient.prototype.canCreateChatFromParticipants = function(userIds, phoneNumbers){
+
+	if(phoneNumbers.length != 1 || userIds.length != 1){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
+SMSChatClient.prototype.countChatDuplicatesWithParticipantPhoneNumbers = function(currentCount, phoneNumberParticipants, existingChatMember){
 
 	for(var i = 0; i < phoneNumberParticipants.length; i++){
 		if(existingChatMember == phoneNumberParticipants[i]){
@@ -101,32 +111,30 @@ SMSChatCLient.prototype.countChatParticipantDuplicatesWithPhoneNumbers = functio
 	return currentCount;
 }
 
-SMSChatCLient.prototype.addParticipantsToChatWithPhoneNumbers = function(newChatKey, phoneNumberParticipants){
+SMSChatClient.prototype.addParticipantsToChatWithPhoneNumbers = function(newChatKey, phoneNumber){
 
-	phoneNumberParticipants.forEach(function(participant){
-		firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true);
-	});
+	firebase.database().ref().child('chat-members/' + newChatKey + "/" + phoneNumber).set(true);
 
 	return;
 }
 
-SMSChatCLient.prototype.instantiateChat = function(chatSnapshot){
-	return new MercurioChat(chatSnapshot.key, chatSnapshot.val().participantCount, self.participantsAreReadyObserver,
-		chatSnapshot.val().lastMessage, chatSnapshot.val().settings, chatSnapshot.val().timeStamp, chatSnapshot.val().title, self.chatClientOwner);
+SMSChatClient.prototype.instantiateChat = function(chatSnapshot){
+	return new SMSChat(chatSnapshot.key, chatSnapshot.val().participantCount, self.participantsAreReadyObserver,
+		chatSnapshot.val().lastMessage, chatSnapshot.val().settings, chatSnapshot.val().timeStamp, chatSnapshot.val().title, this.chatClientOwner);
 }
 
 
-SMSChatCLient.prototype.setChatListObserver = function(observer){
+SMSChatClient.prototype.setChatListObserver = function(observer){
 	this.chatListIsReadyObserver = observer;
 }
 
-SMSChatCLient.prototype.sendTextContentToParticipant = function(participant, newMessageKey, message){
+SMSChatClient.prototype.sendTextContentToParticipant = function(chat, participant, newMessageKey, message){
 
 	if(participant.constructor.name == 'SMSChatParticipant'){
 		//propagate message in sms network
 	}
 	else{
-		this.propagateMessageInFirebase(participant, newMessageKey, message);
+		this.propagateMessageInFirebase(chat, participant, newMessageKey, message);
 	}
 
 }
