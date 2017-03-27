@@ -49,7 +49,7 @@
         // TODO replace with call to instantiateChat()
         self.instantiateSelectedChat = function(chat){
           var newChat = new MercurioChat (chat.chatId, chat.participantCount, null,
-    					chat.lastMessage, chat.settings, null, chat.title, self.chatClientOwner);
+    					chat.lastMessage, chat.settings, null, chat.title, self.chatClientOwner, chat.groupPicture);
               newChat.participantList = chat.participantList;
               newChat.messageList = chat.messageList;
               return newChat;
@@ -59,15 +59,19 @@
 
             $location.hash('bottom'); //identify that this bottom means the message list bottom of current chat - use index
             $anchorScroll();
-
+            var notify;
+            var sender;
             if(receivedChat.lastMessage.from !== self.chatClient.chatClientOwner){
-
+                receivedChat.participantList.forEach(function(participant){
+                  if(participant.userId == receivedChat.lastMessage.from){
+                    sender= participant;
+                  }
+                })
                 if(!receivedChat.settings.mute){
                     var sound = new Audio("audio/pickup_coin.wav");
                     sound.play();
                     sound.currentTime=0;
                 }
-
 
                 var receivedChatIndex = index;
 
@@ -93,6 +97,22 @@
                         }
                     }
                 }
+
+                Notification.requestPermission(function(permission){
+                  if(permission === "granted"){
+                    var options = {
+                      body: receivedChat.lastMessage.textContent,
+                      icon: sender.picture
+                      }
+                  notify = new Notification('New Message Received from ' + sender.firstName + ' ' + sender.lastName, options);
+                  notify.onclick = function(event){
+                    var chatURL =  "http://localhost:3000/#/dialer"
+                    window.open(chatURL);
+                  }
+                   setTimeout(notify.close.bind(notify), 4000);
+                 }
+                });
+
             }
             setTimeout(function(){
             $rootScope.$apply();

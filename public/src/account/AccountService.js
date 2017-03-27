@@ -50,7 +50,8 @@
                 crmService.instantiateCRMManager(account.userId);
 
                 if($state.current.name == 'login' || $state.current.name == 'register'){
-                    $state.go('dialer');
+                  // console.log("stop spinner");
+                  $state.go('dialer');
                 }
 
             }

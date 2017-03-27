@@ -58,7 +58,7 @@ function JanusPhone(userId, phoneInitializationObserver) {
 	self.localHasVideo = false;
 	self.recentCallList = [];
 	self.phoneOwner = userId;
-	self.doVideo = false;
+	self.doVideo = true;
 	self.currentCalls = [];
 	var pageNumber = 1;
 	var limit = 50;
@@ -131,11 +131,10 @@ JanusPhone.prototype.fetchRecentCallListPage = function(pageNumber, limit){
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
 
-	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').limitToFirst(1 * pageNumber * limit).on("child_added", function(snapshot) {
-
+	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').on("child_added", function(snapshot) {
 		if(snapshot.exists()){
 
-			var chat;
+			var call;
 			// send observer callback registered in addChat to MercurioChat constructor
 			//if(snapshot.val().lastMessage){
 			//chat = new MercurioChat(snapshot.key, snapshot.val().participantCount);
@@ -144,11 +143,12 @@ JanusPhone.prototype.fetchRecentCallListPage = function(pageNumber, limit){
 				snapshot.val().from, snapshot.val().incoming, snapshot.val().timeStamp, snapshot.val().to);
 
 			self.recentCallList.unshift(call);
+
 		}
 
 	});
 
-	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
+	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').on('child_removed', function(snapshot) {
 
 		//compare chat ids from local chat list to snapshot keys in order to find local
 		//reference to chat; remove chat from local contacts list
@@ -319,7 +319,8 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 									self.srtp = result["srtp"];
 									var indexOfNumber = result.username.search(":");
 									var indexOfDomain = result.username.search("@");
-									self.callerId = result.username.slice(indexOfNumber+1, indexOfDomain);
+									self.incomingPhoneNumber = result.username.slice(indexOfNumber+1, indexOfDomain);
+									self.callerId = self.incomingPhoneNumber;
 									if(self.srtp === "sdes_optional")
 										self.rtpType = " (SDES-SRTP offered)";
 									else if(self.srtp === "sdes_mandatory")
@@ -427,8 +428,18 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 JanusPhone.prototype.makeCall = function(phoneNumber, myStreamTag, peerStreamTag) {
 	var self = this;
 	self.phoneNumber = "";
-	self.localView = document.getElementById(myStreamTag);
-	self.remoteView = document.getElementById(peerStreamTag);
+	var interval = setInterval(function(){
+		if(document.getElementById(myStreamTag)==null){
+			console.log("Not yet")
+		}
+		else{
+			self.localView = document.getElementById(myStreamTag);
+			self.remoteView = document.getElementById(peerStreamTag);
+			console.log("found it")
+			clearInterval(interval);
+		}
+	},1000);
+
 	if(phoneNumber.length==10){
 		self.phoneNumber = "+1" + phoneNumber;
 	}
@@ -536,7 +547,6 @@ JanusPhone.prototype.answerCall = function(myStreamTag, peerStreamTag) {
  **/
 
 JanusPhone.prototype.dialDTMFTone = function(tone) {
-
 	var self = this;
 	// self.sipCallHandler.dtmf({ dtmf: { tones: tone }}); // this only works in chrome browser
 	self.sipCallHandler.send({"message": {"request": "dtmf_info", "digit": tone}}); // sends DTMF tones over sip_info sip message

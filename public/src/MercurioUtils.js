@@ -31,6 +31,18 @@
         };
     })
 
+    .filter('countUnreadMessageFilter', function () {
+        return function (chatClient) {
+          var unreadMessage = 0;
+          chatClient.chatList.forEach(function(chat){
+              unreadMessage += chat.unreadMessage;
+          })
+
+          return unreadMessage;
+
+        };
+    })
+
     .filter('participantPicture', function () {
         return function (participant) {
 
@@ -51,7 +63,7 @@
 
             //don't show names on 1-to-1 chat, show them in group chats instead
 
-            if(participantList.length > 2){
+            if(participantList.length > 1){
 
                 participantList.forEach(function (participant) {
                     if (from === participant.participantId) {
@@ -70,8 +82,12 @@
           if(chat){
             var avatarUrl = '';
             if(chat.title.length > 0){
-
+                if(chat.groupPicture){
+                    avatarUrl = chat.groupPicture;
+                }
+                else{
                 avatarUrl = 'images/default_group_avatar.png';
+              }
             }
             else{
                 chat.participantList.forEach(function (participant) {
@@ -210,13 +226,32 @@
         };
     })
 
+    .filter('isTypingFilter', function () {
+        return function (chat, chatClientOwner) {
+          var isTyping = '';
+          if(chat){
+          chat.participantList.forEach(function(participant){
+            if(participant.userId != chatClientOwner && participant.isTyping) {
+              isTyping = participant.firstName + ' is typing...'
+
+            }
+          })
+        }
+          return isTyping;
+        };
+    })
+
     .filter('chatListTextContentPreviewFilter', function () {
         return function (message) {
 
             var filteredTextContent = ''
 
             if(message.textContent.length > 16){
-                filteredTextContent = message.textContent.slice(0, 15) + "...";
+                filteredTextContent = message.textContent.slice(0, 13) + "...";
+            }
+            else if(message.type == "image"){
+                filteredTextContent = "Multimedia \uD83D\uDCF7";
+
             }
             else{
                 filteredTextContent = message.textContent;
@@ -373,6 +408,44 @@
             }
             else{
                 return 'Unknown';
+            }
+        };
+    })
+
+    .filter('callerIdToNameFilter', function () {
+        return function (incomingPhoneNumber, contactList) {
+            var callerId = '';
+            var phone = incomingPhoneNumber;
+
+            contactList.forEach(function(contact){
+                if(contact.phone == phone || contact.extension == phone){
+                    callerId = contact.firstName + " " + contact.lastName ;
+                }
+            })
+            if(callerId.length > 0){
+                return callerId;
+            }
+            else{
+                return 'Unknown';
+            }
+        };
+    })
+
+    .filter('callerIdToPictureFilter', function () {
+        return function (incomingPhoneNumber, contactList) {
+            var picture = '';
+            var phone = incomingPhoneNumber;
+
+            contactList.forEach(function(contact){
+                if(contact.phone == phone || contact.extension == phone){
+                    picture = contact.picture ;
+                }
+            })
+            if(picture.length > 0){
+                return picture;
+            }
+            else{
+                return 'images/default_contact_avatar.png';
             }
         };
     })

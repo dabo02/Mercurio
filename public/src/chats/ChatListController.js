@@ -23,7 +23,6 @@
         self.selectedDirection = 'up';
         self.counter=0;
 
-
         self.isChatListAvailable = function() {
             return chatClientService.isChatListAvailable();
         }
@@ -82,5 +81,12 @@
                 //$scope.status = 'You decided to keep your debt.';
             });
         };
+
+        chatClientService.chatClient.setChatObserver(function () {
+          setTimeout(function(){
+          $scope.$apply();
+          }, 100);
+
+         });
     }]);
 })();

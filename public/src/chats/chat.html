@@ -2,6 +2,82 @@
     <nav-bar></nav-bar>
     <div flex layout="row">
         <left-sidebar></left-sidebar>
+
+        <script type="text/ng-template" id="contactProfile">
+          <md-dialog flex="55" aria-label="Contact Profile" ng-controller="ContactController as contactCtrl">
+
+              <md-toolbar class="mercurioBlueBackground">
+                  <div class="md-toolbar-tools">
+                      <h2>{{contactCtrl.selectedContact.firstName}} {{contactCtrl.selectedContact.lastName}}</h2>
+                  </div>
+              </md-toolbar>
+
+              <md-dialog-content style= "overflow-y: hidden; overflow-x: hidden;" >
+
+                  <div layout="row" class="flex-80 flex-offset-10" style="margin-top:3%">
+                       <md-card id="parent" flex="100" style="height:282px;" >
+                          <img id="child" fix-image-orientation="contactCtrl.selectedContact.picture" style="width: 100%; height: 100%; display: inline-block;"ng-src="{{contactCtrl.selectedContact.picture | contactListAvatarFilter}}"/>
+                        </md-card>
+                      <div flex="100" flex-offset="10">
+                          <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
+                              <i style = "" class="fa fa-user"></i>
+                              <label style="font-size: 11px">Name</label>
+                              <p>{{contactCtrl.selectedContact.firstName}} {{contactCtrl.selectedContact.lastName}}</p>
+                          </md-content>
+
+                          <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
+                              <i style = "" class="fa fa-phone"></i>
+                              <label style="font-size: 11px">Phone</label>
+                              <p>{{contactCtrl.selectedContact.phone}}</p>
+                          </md-content>
+
+                          <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
+                              <i style = "" class="fa fa-envelope"></i>
+                              <label style="font-size: 11px">Email</label>
+                              <p>{{contactCtrl.selectedContact.email}}</p>
+                          </md-content>
+
+                          <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
+                              <i style = "" class="fa fa-comment-o"></i>
+                              <label style="font-size: 11px">Status</label>
+                              <p style="word-break: break-all">{{contactCtrl.selectedContact.status}}</p>
+                          </md-content>
+
+                          <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
+                              <i style = "" class="fa fa-circle-o"></i>
+                              <label style="font-size: 11px">Availability</label>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 0"> <i style="color: green;" ng-if="contactCtrl.selectedContact.availability == 0" class="fa fa-circle"></i> Online</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 1"> <i style="color: yellow;" ng-if="contactCtrl.selectedContact.availability == 1" class="fa fa-circle"></i> Away</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 2"> <i style="color: red;" ng-if="contactCtrl.selectedContact.availability == 2" class="fa fa-circle"></i> Busy</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 3"> <i style="color: blue;" ng-if="contactCtrl.selectedContact.availability == 3" class="fa fa-circle"></i> On a Call</p>
+                              <p  ng-if= "contactCtrl.selectedContact.availability == 4"> <i style="color: grey;" ng-if="contactCtrl.selectedContact.availability == 4" class="fa fa-circle"></i> Offline</p>
+                          </md-content>
+
+                      </div>
+                  </div>
+                  <div layout="row" flex="60" flex-offset="20" style="margin-top:8%;">
+                      <div style="margin:auto">
+                          <md-button style="font-size: 20px" class="md-icon-button fa fa-phone mercurioBlueColor" ng-controller="DialerController as dialer"  ng-click="dialer.redial(contactCtrl.selectedContact.phone); contactCtrl.closeProfileContactDialog()"/>
+                          <md-button style="font-size:19px;" class="md-icon-button" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([contactCtrl.selectedContact])">
+                              <img style= "height: 20px;" ng-src= "images/add_chat_mercurio.png">
+                          </md-button>
+                          <md-button href="mailto:{{contactCtrl.selectedContact.email}}" style="font-size: 20px" class="md-icon-button fa fa-envelope mercurioBlueColor"/>
+                      </div>
+                  </div>
+              </md-dialog-content>
+
+              <md-dialog-actions layout="row">
+
+                  <span flex></span>
+                  <md-button ng-click="contactCtrl.closeContactProfileDialog()">
+                      Close
+                  </md-button>
+
+              </md-dialog-actions>
+
+          </md-dialog>
+        </script>
+
         <md-content flex="70" id="main-content" style="position:relative;background-color: transparent;overflow:hidden;">
             <call-status-toolbar></call-status-toolbar>
             <div style="padding-top:3%" layout="row">
@@ -18,25 +94,106 @@
                         <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
                             <md-toolbar class="mercurioBlueBackground">
                                 <div class="md-toolbar-tools">
-
-                                    <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block" >
-                                        <h2 ng-show="!chatGroupCtrl.canEdit">{{chatGroupCtrl.chatClientService.selectedChat.title}}</h2>
-                                        <h2><input style="color:white; border-color: black;" ng-change="chatGroupCtrl.chatTitleChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-show="chatGroupCtrl.canEdit"></h2>
-                                    </md-input-container>
-
-                                    <!--<h2>{{chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].title}}</h2>-->
-                                    <span flex></span>
-                                    <md-icon ng-click = "chatGroupCtrl.editGroupName()" style="margin-bottom: 2%;" class="fa fa-pencil-square-o"></md-icon>
-                                    <md-button class="md-icon-button" ng-click="chatGroupCtrl.closeChatGroupDetailsDialog()">
-                                        &times;
-                                    </md-button>
+                                  <h2> Group Info </h2>
                                 </div>
                             </md-toolbar>
-
-                            <md-dialog-content>
+                            <md-dialog-content style="background-color: #b3b3b3">
+                              <div layout="row" class="card card-1">
+                                <div id="wrapper">
+                                <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 180px; margin-left: 30%; margin-top: 2%" ng-src="{{chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar hover" fix-image-orientation="chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner"/>
+                                <md-button ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin()" style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -37.5%; width: 180px; height: 180px;" class="test md-fab">
+                                  <input style="z-index: -1; opacity: 0; margin-left: -5%; width: 109%; min-height: 100%; margin-top: -50%; border-radius: 50%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/>
+                                  <h4 style="margin-top: -65%"> Change Group Icon <h4>
+                                  </md-button>
+                              </div>
+                                <md-input-container id="chatTitleInput" style="margin-bottom: 0%;" flex="85" flex-offset="5" class="md-icon-float md-block" >
+                                <h4 style="margin-bottom: 5%;"ng-if="!chatGroupCtrl.canEdit">{{chatGroupCtrl.chatClientService.selectedChat.title}}</h4>
+                                <h4><input style="border-color: black;" ng-change="chatGroupCtrl.chatGroupDetailsChanged()" ng-model="chatGroupCtrl.newChatTitle" ng-value="chatGroupCtrl.chatClientService.selectedChat.title" type="text" ng-if="chatGroupCtrl.canEdit"></h4>
+                                </md-input-container>
+                                <md-icon ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin() && !chatGroupCtrl.canEdit" ng-click = "chatGroupCtrl.editGroupName()" style="color: black; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
+                                <md-icon ng-click="chatGroupCtrl.changeConfirmed()" ng-if="chatGroupCtrl.canEdit" style="color: green; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 94%" class="fa fa-check"></md-icon>
+                                <md-icon ng-click="chatGroupCtrl.cancelChange()" ng-if="chatGroupCtrl.canEdit" style="color: red; font-size: 18px; position: absolute; margin-top: -8%; margin-left: 90%" class="fa fa-times"></md-icon>
+                                <h5 flex-offset="5" style="color: grey; margin-top: -3%"> Created {{chatGroupCtrl.getDateCreated()}} </h5>
+                              </div>
+                              <div layout="row" class="card card-1">
+                                <h4 flex-offset="5">Muted</h4>
+                                <md-checkbox style="position: absolute; margin-top: -5.5%; margin-left:90%;" ng-check="chatGroupCtrl.chatClientService.selectedChat.settings.mute" ng-click="chatGroupCtrl.toggleMute()" aria-label="Checkbox"></md-checkbox>
+                              </div>
+                              <div layout="row" class="card card-1">
+                              <h4 style="color: red; margin-top: 5%; margin-left: 25%;" ng-show="chatGroupCtrl.userIsAParticipant">User is already in the chat</h4>
+                              <h4 style="color: green; margin-top: 5%; margin-left: 35%;" ng-show="chatGroupCtrl.userWasAdded">User was added</h4>
+                                <md-card-title ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin()"  style="padding-top: 0%; margin: 10px;">
+                                    <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
+                                        <md-content class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
+                                            <md-contact-chips
+                                                    ng-model="contactListCtrl.asyncContacts"
+                                                    md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                                    md-contact-name="name"
+                                                    md-contact-image="picture"
+                                                    md-require-match="false"
+                                                    md-highlight-flags="i"
+                                                    filter-selected="contactListCtrl.filterSelected"
+                                                    placeholder="Search Contacts to Add">
+                                            </md-contact-chips>
+                                        </md-content>
+                                    </md-card-title-text>
+                                    <div flex="80" flex-offset="10" layout="row">
+                                        <span flex></span>
+                                        <md-button ng-if="contactListCtrl.asyncContacts.length > 0" ng-click="chatGroupCtrl.addParticipantsToGroup(contactListCtrl.asyncContacts); contactListCtrl.delete()">
+                                            Add
+                                        </md-button>
+                                    </div>
+                                </md-card-title>
+                                <div flex="80" flex-offset="10" layout="row">
+                                    <md-list>
+                                        <md-subheader class="md-no-sticky" style="background-color:white;">Group Members</md-subheader>
+                                        <h6 style="color: #b3b3b3; position: absolute; margin-top: -6%; margin-left: 65%">{{chatGroupCtrl.chatClientService.selectedChat.participantList.length}} Participants</h6>
+                                    </md-list>
+                                </div>
+                                <div flex="80" flex-offset="10" layout="row">
+                                    <md-list ng-controller = "ContactController as contactCtrl" flex>
+                                        <md-list-item ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
+                                          <img ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
+                                            <div class="md-list-item-text compact">
+                                                <h3>{{participant.firstName}} {{participant.lastName}} <h4 ng-show="participant.isAdmin"> Group Admin </h4></h3>
+                                            </div>
+                                            <md-menu ng-show="participant.userId != chatGroupCtrl.chatClient.chatClientOwner" class="md-secondary" aria-label="menu">
+                                                <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                                    <md-icon  class"md-menu-origin" style="color: black; font-size:22px;" class="fa fa-sort-desc"></md-icon>
+                                                </md-button>
+                                                <md-menu-content width="4">
+                                                    <md-menu-item ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin() && !participant.isAdmin" >
+                                                        <md-button ng-click="chatGroupCtrl.assignAdmin(participant.userId)">
+                                                          Make group Admin
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item >
+                                                        <md-button ng-controller="DialerController as dialer"  ng-click="dialer.redial(participant.phone); chatGroupCtrl.closeChatGroupDetailsDialog()">
+                                                          Call
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item >
+                                                        <md-button ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([participant])">
+                                                          Send Message
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin()">
+                                                        <md-button ng-click="chatGroupCtrl.removeParticipant(participant.userId)">
+                                                          Remove
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                </md-menu-content>
+                                              </md-menu>
+                                          </md-list-item>
+                                    </md-list>
+                                </div>
+                              </div>
+                            </md-dialog-content>
+                            <!-- <md-dialog-content>
+                              <h4 style="color: red; margin-top: 5%; margin-left: 25%;" ng-show="chatGroupCtrl.userIsAParticipant">User is already in the chat</h4>
+                              <h4 style="color: green; margin-top: 5%; margin-left: 35%;" ng-show="chatGroupCtrl.userWasAdded">User was added</h4>
                                 <md-card-title style="padding-top: 0%; margin: 10px;">
                                     <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
-
                                         <md-content class="chipsdemoContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
                                             <md-contact-chips
                                                     ng-model="contactListCtrl.asyncContacts"
@@ -64,10 +221,10 @@
                                 </div>
                                 <div flex="80" flex-offset="10" layout="row" class="scrollableList fixedRows" >
                                     <md-list>
-                                        <md-list-item ng-controller = "ContactListController as contactListCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
-                                            <img ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
+                                        <md-list-item ng-controller = "ContactController as contactCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
+                                            <img ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
                                             <div class="md-list-item-text compact">
-                                                <h3 ng-click = "contactListCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
+                                                <h3 ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
                                             </div>
                                         </md-list-item>
                                     </md-list>
@@ -80,7 +237,7 @@
                                         </md-checkbox>
                                     </md-input-container>
                                 </div> -->
-                            </md-dialog-content>
+                            <!-- </md-dialog-content>  -->
 
                             <md-dialog-actions layout="row">
                                 <!--<md-button ng-click="chatGroupCtrl.exitGroup()">-->
@@ -90,7 +247,7 @@
                                 <md-button ng-click="chatGroupCtrl.closeChatGroupDetailsDialog()">
                                     Close
                                 </md-button>
-                                <md-button ng-show="chatGroupCtrl.saveGroupDetailsButtonIsAvailable && chatGroupCtrl.newChatTitle" ng-click="chatGroupCtrl.saveGroupDetails()">
+                                <md-button ng-show="chatGroupCtrl.saveGroupDetailsButtonIsAvailable" ng-click="chatGroupCtrl.saveGroupDetails()">
                                     Save
                                 </md-button>
                                 <!--<md-button ng-click="chatGroupCtrl.saveChatGroupDetails()">
@@ -108,9 +265,6 @@
                                 <div class="md-toolbar-tools">
                                     <h2>Multimedia Preview</h2>
                                     <span flex></span>
-                                    <md-button ng-disabled="multimediaChatCtrl.chatClientService.uploadingImage" class="md-icon-button" ng-click="multimediaChatCtrl.closeMultimediaSelectionPreviewDialog()">
-                                        &times;
-                                    </md-button>
                                 </div>
                             </md-toolbar>
 
@@ -134,6 +288,11 @@
                                     <p ng-click="multimediaChatCtrl.sendMessage()" style="margin-top: 3%; color:#1565c0; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                                 </div>
                             </md-dialog-content>
+                            <md-dialog-actions layout="row">
+                            <md-button ng-disabled="multimediaChatCtrl.chatClientService.uploadingImage" ng-click="multimediaChatCtrl.closeMultimediaSelectionPreviewDialog()">
+                                Close
+                            </md-button>
+                          </md-dialog-actions>
                         </form>
                     </md-dialog>
                 </script>
@@ -144,28 +303,26 @@
                                 <div class="md-toolbar-tools">
                                     <h2>Multimedia Preview</h2>
                                     <span flex></span>
-                                    <md-button class="md-icon-button" ng-click="multimediaChatCtrl.closeMultimediaSelectionTextDialog()">
-                                        &times;
-                                    </md-button>
                                 </div>
                             </md-toolbar>
 
                             <md-dialog-content>
 
-                                <md-card flex="60" flex-offset="20" layout="row" style="margin-top:3%">
-                                    <img style="height:300px;" ng-src= "{{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
+                                <md-card id="parent" flex="55" flex-offset="20" layout="row" style="margin-top:3%">
+                                    <img id="child" fix-image-orientation="selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl" style="height:40vh;" ng-src= "{{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].multimediaUrl}}">
                                 </md-card>
                                 <div layout="row">
                                     <p flex = "40" flex-offset="40"> {{selectedChat.messageList[multimediaChatCtrl.chatClientService.selectedMessageIndex].textContent}} </p>
                                 </div>
                             </md-dialog-content>
+                            <md-dialog-actions layout="row">
+                            <md-button  ng-click="multimediaChatCtrl.closeMultimediaSelectionPreviewDialog()">
+                                Close
+                            </md-button>
+                          </md-dialog-actions>
 
                     </md-dialog>
                 </script>
-
-
-
-
 
                 <md-content style="margin-bottom:10%;overflow-x:hidden;height:100%; background:rgba(0,0,0,0.55);" flex="80" flex-offset="10">
                     <div ng-controller ="OptionController as options">
@@ -173,16 +330,25 @@
 
                             <md-list flex="90" flex-offset="5">
                                 <md-list-item class="md-1-line">
-                                    <img ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar"/>
-                                    <a class="md-list-item-text" layout="column">
+                                    <img ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar" fix-image-orientation="selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner"/>
+                                      <i style="color: green; padding-right: 2%;" ng-if="selectedChat.title.length === 0  && chatCtrl.getChatParticipantAvailability()== 0" class="fa fa-circle"></i>
+                                      <i style="color: yellow; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 1" class="fa fa-circle"></i>
+                                      <i style="color: red; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 2" class="fa fa-circle"></i>
+                                      <i style="color: blue; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 3" class="fa fa-circle"></i>
+                                      <i style="color: grey; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 4" class="fa fa-circle"></i>
+                                    <div class="md-list-item-text" layout="column">
+                                      <a>
                                         <h4 style= "color: white;" ng-if="selectedChat.title.length > 0"
-                                            ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
+                                            ng-controller="ChatGroupDetailsController as chatGroupCtrl"  ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)">
                                                 {{selectedChat.title}}
                                         </h4>
-                                        <h4 style= "color: white;" ng-controller = "ContactListController as contactListCtrl" ng-click = "contactListCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
+                                        <h4 style= "color: white;" ng-controller = "ContactController as contactCtrl" ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
                                             {{selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
                                         </h4>
-                                    </a>
+                                      </a>
+                                      <h6 ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-hide="chatGroupCtrl.chatClientService.selectedChat.title.length > 0 && !chatGroupCtrl.checkIfChatClientOwnerIsMember()" style="color: white; position: absolute; margin-top: 4%;">{{selectedChat | isTypingFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}</h6>
+                                    </div>
+                                      <img ng-click="chatCtrl.toggleMute(false)" ng-show = "selectedChat.settings.mute" style="position: absolute; width: 3%; margin-left: 83%" ng-src="images/ic_volume_off_black_24dp.png"/>
 
                                     <md-fab-speed-dial class="md-secondary" md-open="options.isOpen" md-direction="{{options.selectedDirection}}"
                                                        ng-class="options.selectedMode">
@@ -216,16 +382,16 @@
                                         <md-icon  style="color: white; font-size:22px;" class="fa fa-ellipsis-v"></md-icon>
                                     </md-button>
                                     <md-menu-content width="4">
-                                      <div ng-if="chatList[chatCtrl.chatIndex].title.length > 0" >
+                                      <div ng-if="selectedChat.title.length > 0" >
                                         <md-menu-item ng-controller="ChatGroupDetailsController as chatGroupCtrl">
                                             <md-button ng-click="chatGroupCtrl.showChatGroupDetailsDialog($event)" >
                                                 Group Details
                                             </md-button>
                                         </md-menu-item>
                                         </div>
-                                        <div ng-if="chatList[chatCtrl.chatIndex].title.length == 0">
-                                          <md-menu-item ng-controller = "ContactListController as contactListCtrl">
-                                              <md-button ng-click = "contactListCtrl.viewContactById(chatCtrl.getChatParticipantUserId())">
+                                        <div ng-if="selectedChat.title.length == 0">
+                                          <md-menu-item ng-controller = "ContactController as contactCtrl">
+                                              <md-button ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())">
                                                   Contact Profile
                                               </md-button>
                                           </md-menu-item>
@@ -233,15 +399,26 @@
                                         <md-menu-divider></md-menu-divider>
                                         <div>
                                         <md-menu-item>
-                                            <md-button ng-if= "!chatCtrl.newMuteSetting" ng-click="chatCtrl.toggleMute(true)">
+                                            <md-button ng-if= "!selectedChat.settings.mute" ng-click="chatCtrl.toggleMute(true)">
                                                  Mute
                                             </md-button>
-                                            <md-button ng-if= "chatCtrl.newMuteSetting" ng-click="chatCtrl.toggleMute(false)">
+                                            <md-button ng-if= "selectedChat.settings.mute" ng-click="chatCtrl.toggleMute(false)">
                                                  Unmute
                                             </md-button>
                                         </md-menu-item>
                                       </div>
-
+                                      <md-menu-divider></md-menu-divider>
+                                      <md-menu-item>
+                                          <md-button ng-click="chatCtrl.deleteMessagesClicked()">
+                                               Delete Messages
+                                          </md-button>
+                                      </md-menu-item>
+                                      <md-menu-divider></md-menu-divider>
+                                      <md-menu-item ng-show="chatGroupCtrl.checkIfChatClientOwnerIsMember()" ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-if="selectedChat.title.length>0">
+                                          <md-button ng-click="chatGroupCtrl.exitChatGroup()">
+                                               Exit Group
+                                          </md-button>
+                                      </md-menu-item>
 
                                         <!--<md-menu-divider></md-menu-divider>-->
                                         <!--<md-menu-item>-->
@@ -255,61 +432,80 @@
                             </md-list>
 
                         </div>
-                        <div id="conversation" class= "scrollable-content" style="width: 100%;height:350px" class="col-lg-12 col-md-12" scroll-glue>
+                        <div id="conversation" class= "scrollable-content" style="width: 100%;height:350px" class="col-lg-12 col-md-12" scroll-glue ng-controller="ContactListController as contactListCtrl">
                             <div ng-repeat="message in selectedChat.messageList track by $index" class="row">
-                                <div ng-if="!chatCtrl.isMessageFromMe(message)" flex-offset="10" flex="55">
-                                    <md-card class="receivedMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row" style="padding-bottom:10px;">
-                                        <p>
-                                            {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}}{{message.timeStamp | timeStampFilter}}
+                              <div ng-mouseover="hoverActive=true" ng-mouseleave="hoverActive=false" ng-style="hoverActive && chatCtrl.isDeleteMessagesClicked ? {'background': 'rgba(0,0,0,0.60)'} : {}">
+                                <div ng-if="!chatCtrl.isMessageFromMe(message)" flex-offset="10" flex= "55" ng-class="{ 'flex-70': chatCtrl.isDeleteMessagesClicked && !message.multimediaUrl}">
+                                  <md-checkbox  class="deleteCheckBox" ng-checked="chatCtrl.messageExists(message)" ng-show="chatCtrl.isDeleteMessagesClicked" ng-click="chatCtrl.toggleMessage(message)">
+                                    </md-checkbox>
+                                    <md-card class="receivedMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row" style="padding-bottom:4px;">
+                                        <p style="font-weight: bold;">
+                                            {{message.from | messageListParticipantNameFilter : selectedChat.participantList : contactListCtrl.contactList}}
                                         </p>
-                                        <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;">
+                                        <img ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;" fix-image-orientation="message.multimediaUrl">
                                         <p ng-if="message.textContent.length > 0" style="margin-top: 5px; margin-bottom: 0px;">
                                             {{message.textContent}}
                                         </p>
+                                        <p style = "font-size: 10px; text-align: right;">
+                                        {{message.timeStamp | timeStampFilter}}
+                                      </p>
                                     </md-card>
                                     <div style= "padding-top: 2%;" ng-if="!message.multimediaUrl" class="receivedMessage">
-                                      <p style="font-weight: bold; margin-bottom: -1%;" > {{message.from | messageListParticipantNameFilter : selectedChat.participantList : chatCtrl.chatClientService.chatClient.chatClientOwner}} </p>
-                                        <p style="padding-right: 50px; margin-bottom: -1%;">{{message.textContent}} </p>
+                                      <p style="font-weight: bold; margin-bottom: -1%;" > {{message.from | messageListParticipantNameFilter : selectedChat.participantList : contactListCtrl.contactList}} </p>
+                                        <p style="padding-right: 40px; margin-bottom: -1%;">{{message.textContent}} </p>
                                           <p style = "font-size: 10px; text-align: right;"> {{message.timeStamp | timeStampFilter}} </p>
                                     </div>
 
                                 </div>
+                              </div>
+                              <div ng-mouseover="hoverActive=true" ng-mouseleave="hoverActive=false" ng-style="hoverActive && chatCtrl.isDeleteMessagesClicked ? {'background': 'rgba(0,0,0,0.60)'} : {}" >
                                 <div ng-if="chatCtrl.isMessageFromMe(message)"flex-offset="35" flex="55">
-                                    <md-card class="sentMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row" style="padding-bottom:10px;">
-                                        <p>
-                                            {{message.timeStamp | timeStampFilter}}
-                                        </p>
-                                        <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index)" style="height:150px;">
+                                  <md-checkbox class="deleteCheckBox" ng-checked="chatCtrl.messageExists(message)" style="margin-top: 6%; margin-left: -45.7%"ng-show="chatCtrl.isDeleteMessagesClicked" ng-click="chatCtrl.toggleMessage(message)">
+                                    </md-checkbox>
+                                    <md-card class="sentMessage" ng-if="message.multimediaUrl.length > 0" flex="40" layout="row" style="padding-bottom:4px; padding-top:10px;">
+                                      <img class="md-card-image" ng-src="{{message.multimediaUrl}}" ng-click="chatCtrl.multimediaClicked($index);" style="width: 100%; height:20vh;" fix-image-orientation="message.multimediaUrl">
                                         <p ng-if="message.textContent.length > 0" style="margin-top: 5px; margin-bottom: 0px;">
                                             {{message.textContent}}
                                         </p>
+                                        <p style = "font-size: 10px; text-align: right;">
+                                            {{message.timeStamp | timeStampFilter}}
+                                        </p>
                                     </md-card>
                                     <div ng-if="!message.multimediaUrl" class="sentMessage">
-                                      <p style="padding-right: 50px; margin-bottom: -1%;">{{message.textContent}}</p>
+                                      <p style="padding-right: 40px; margin-bottom: -1%;">{{message.textContent}}</p>
                                         <p style = "font-size: 10px; text-align: right;">{{message.timeStamp | timeStampFilter}} </p>
 
                                     </div>
                                 </div>
-
+                              </div>
                            </div>
 
                         </div>
-
-                        <div>
-                        <!-- <div ng-controller="ChatGroupDetailsController as chatGroupCtrl"> -->
-                            <form layout="row" ng-submit="chatCtrl.sendMessage()">
+                        <div ng-controller="ChatGroupDetailsController as chatGroupCtrl">
+                            <form ng-show="!chatCtrl.isDeleteMessagesClicked && chatGroupCtrl.checkIfChatClientOwnerIsMember()" layout="row" ng-submit="chatCtrl.sendMessage()">
                                 <!--<p id="smile" style="margin-top: 3%; font-size: 22px;" class="fa fa-smile-o text-center" flex="10"></p>-->
                                 <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" class="md-icon-float md-block flex-85 flex-offset-5">
                                     <label style="color: white;">Type Message</label>
                                     <!--<input ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.changeMicToSend()" type="text">-->
-                                    <input style = "color: white; border-color: white;" ng-model="chatCtrl.textContentToSend" type="text">
+                                    <input style = "color: white; border-color: white;" ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.typingAMessage()" type="text">
                                 </md-input-container>
                                 <p ng-click="chatCtrl.sendMessage()"  style="margin-top: 3%; color: white; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                             </form>
-                            <!-- <h4 style = "color: white;"ng-if="!chatGroupCtrl.isChatClientOwnerGroupMember" layout="row" layout-align="center center">
-                                You have left this group
-                            </h4> -->
+                          <div layout="row"ng-show="chatCtrl.isDeleteMessagesClicked" style="width: 100%; background-color: rgba(0,0,0,0.60)">
+                            <h4 style = "position: absolute; color: white; margin-left: 10%" ng-if="!chatGroupCtrl.isChatClientOwnerGroupMember">
+                                {{chatCtrl.messagesToDelete.length}} Selected
+                              </h4>
+                            <div ng-style="chatCtrl.messagesToDelete.length>0 ? {'margin-left': '70%'} : {'margin-left': '85%'}">
+                              <md-button  style="font-size: 15px; color: white;" ng-click="chatCtrl.closeSelectMessage()">Cancel</md-button>
+                              <md-button style="font-size: 15px;  color: white;" ng-show="chatCtrl.messagesToDelete.length>0"   ng-click="chatCtrl.deleteMessages()">Delete</md-button>
+                            </div>
+                          </div>
+                        <div ng-show="!chatGroupCtrl.checkIfChatClientOwnerIsMember() && !chatCtrl.isDeleteMessagesClicked">
+                          <h4 style = "color: white;" layout="row" layout-align="center center">
+                                You have left or been removed from this group
+                            </h4>
                         </div>
+                      </div>
                     </div>
                 </md-content>
             </div>

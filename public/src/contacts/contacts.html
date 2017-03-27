@@ -4,64 +4,64 @@
         <left-sidebar></left-sidebar>
 
           <script type="text/ng-template" id="contactProfile">
-            <md-dialog flex="40" aria-label="Contact Profile" ng-controller="ContactListController as contactListCtrl">
+            <md-dialog flex="55" aria-label="Contact Profile" ng-controller="ContactController as contactCtrl">
 
                 <md-toolbar class="mercurioBlueBackground">
                     <div class="md-toolbar-tools">
-                        <h2>{{contactListCtrl.selectedContact.firstName}} {{contactListCtrl.selectedContact.lastName}}</h2>
+                        <h2>{{contactCtrl.selectedContact.firstName}} {{contactCtrl.selectedContact.lastName}}</h2>
                     </div>
                 </md-toolbar>
 
-                <md-dialog-content style= "overflow-y: hidden">
+                <md-dialog-content style= "overflow-y: hidden; overflow-x: hidden;" >
 
                     <div layout="row" class="flex-80 flex-offset-10" style="margin-top:3%">
-                        <md-card flex="100">
-                            <img class="md-card-image" alt="Washed Out" style="height:282px; position:relative;" ng-src="{{contactListCtrl.selectedContact.picture | contactListAvatarFilter}}"/>
-                        </md-card>
-
+                         <md-card id="parent" flex="100" style="height:282px;" >
+                            <img id="child" fix-image-orientation="contactCtrl.selectedContact.picture" style="width: 100%; height: 100%; display: inline-block;"ng-src="{{contactCtrl.selectedContact.picture | contactListAvatarFilter}}"/>
+                          </md-card>
                         <div flex="100" flex-offset="10">
                             <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                                 <i style = "" class="fa fa-user"></i>
                                 <label style="font-size: 11px">Name</label>
-                                <p>{{contactListCtrl.selectedContact.firstName}} {{contactListCtrl.selectedContact.lastName}}</p>
+                                <p>{{contactCtrl.selectedContact.firstName}} {{contactCtrl.selectedContact.lastName}}</p>
                             </md-content>
 
                             <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                                 <i style = "" class="fa fa-phone"></i>
                                 <label style="font-size: 11px">Phone</label>
-                                <p>{{contactListCtrl.selectedContact.phone}}</p>
+                                <p>{{contactCtrl.selectedContact.phone}}</p>
                             </md-content>
 
                             <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                                 <i style = "" class="fa fa-envelope"></i>
                                 <label style="font-size: 11px">Email</label>
-                                <p>{{contactListCtrl.selectedContact.email}}</p>
+                                <p>{{contactCtrl.selectedContact.email}}</p>
                             </md-content>
 
                             <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                                 <i style = "" class="fa fa-comment-o"></i>
                                 <label style="font-size: 11px">Status</label>
-                                <p>{{contactListCtrl.selectedContact.status}}</p>
+                                <p style="word-break: break-all">{{contactCtrl.selectedContact.status}}</p>
                             </md-content>
 
                             <md-content style= "overflow-x: hidden; background-color: white;" class="md-icon-float">
                                 <i style = "" class="fa fa-circle-o"></i>
                                 <label style="font-size: 11px">Availability</label>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 0">Online</p>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 1">Away</p>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 2">Busy</p>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 3">On a Call</p>
-                                <p  ng-if= "contactListCtrl.selectedContact.availability == 4">Offline</p>
+                                <p  ng-if= "contactCtrl.selectedContact.availability == 0"> <i style="color: green;" ng-if="contactCtrl.selectedContact.availability == 0" class="fa fa-circle"></i> Online</p>
+                                <p  ng-if= "contactCtrl.selectedContact.availability == 1"> <i style="color: yellow;" ng-if="contactCtrl.selectedContact.availability == 1" class="fa fa-circle"></i> Away</p>
+                                <p  ng-if= "contactCtrl.selectedContact.availability == 2"> <i style="color: red;" ng-if="contactCtrl.selectedContact.availability == 2" class="fa fa-circle"></i> Busy</p>
+                                <p  ng-if= "contactCtrl.selectedContact.availability == 3"> <i style="color: blue;" ng-if="contactCtrl.selectedContact.availability == 3" class="fa fa-circle"></i> On a Call</p>
+                                <p  ng-if= "contactCtrl.selectedContact.availability == 4"> <i style="color: grey;" ng-if="contactCtrl.selectedContact.availability == 4" class="fa fa-circle"></i> Offline</p>
                             </md-content>
 
                         </div>
                     </div>
                     <div layout="row" flex="60" flex-offset="20" style="margin-top:8%;">
                         <div style="margin:auto">
-                            <md-button class="md-icon-button fa fa-phone" ng-controller="DialerController as dialer"  ng-click="dialer.redial(contactListCtrl.selectedContact.phone); contactListCtrl.closeProfileContactDialog()"/>
-                            <md-button style="font-size:20px;" class="md-icon-button" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([contactListCtrl.selectedContact])">
-                                <img style= "height: 20px;" ng-src= "images/add_chat.png">
+                            <md-button style="font-size: 20px" class="md-icon-button fa fa-phone mercurioBlueColor" ng-controller="DialerController as dialer"  ng-click="dialer.redial(contactCtrl.selectedContact.phone); contactCtrl.closeProfileContactDialog()"/>
+                            <md-button style="font-size:19px;" class="md-icon-button" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([contactCtrl.selectedContact])">
+                                <img style= "height: 20px;" ng-src= "images/add_chat_mercurio.png">
                             </md-button>
+                            <md-button href="mailto:{{contactCtrl.selectedContact.email}}" style="font-size: 20px" class="md-icon-button fa fa-envelope mercurioBlueColor"/>
                         </div>
                     </div>
                 </md-dialog-content>
@@ -69,7 +69,7 @@
                 <md-dialog-actions layout="row">
 
                     <span flex></span>
-                    <md-button ng-click="contactListCtrl.closeContactProfileDialog()">
+                    <md-button ng-click="contactCtrl.closeContactProfileDialog()">
                         Close
                     </md-button>
 
@@ -92,7 +92,7 @@
             </div>
 
             <div layout="row" >
-                <div flex-offset="20" flex="60" style="overflow-x: hidden;">
+                <div ng-controller="ContactController as contactCtrl"flex-offset="20" flex="60" style="overflow-x: hidden;">
                     <md-autocomplete style="padding-top:2%;" class = "scrollable-content" flex
                                      md-input-name="autocompleteField"
                                      md-input-minlength="0"
@@ -101,7 +101,7 @@
                                      md-autoselect="true"
                                      md-selected-item="contactListCtrl.selectedItem"
                                      md-search-text-change="contactListCtrl.searchTextChange(contactListCtrl.searchText)"
-                                     md-selected-item-change="contactListCtrl.selectedItemChange(item)"
+                                     md-selected-item-change="contactCtrl.viewContact(item); contactListCtrl.clearSearchText()"
                                      md-search-text="contactListCtrl.searchText"
                                      md-items="item in contactListCtrl.querySearch(contactListCtrl.searchText)"
                                      md-item-text="item.name"
@@ -122,21 +122,22 @@
                         <div ng-if="contactListCtrl.setContacts(letter)">
                             <a style="color: white;" id=contact-initial> <h2>{{letter}}</h2> </a>
                             <md-content style="background:rgba(0,0,0,0.55); overflow-y:hidden" ng-repeat="contact in contactListCtrl.tempContacts track by $index" id="contacts-content">
-                                <md-button ng-click="contactListCtrl.viewContact(contact, $event)" style="margin-left: 0%; width:100%;">
+                                <md-button ng-controller="ContactController as contactCtrl" ng-click="contactCtrl.viewContact(contact, $event);" style="margin-left: 0%; width:100%;">
                                     <md-list style="background-color: transparent;" id="contacts-card" flex>
                                         <md-list-item class="row">
                                             <div style="margin-left:5%;" class="col-lg-2 col-md-2">
-                                                <img style="width:50px; height:50px; border-radius:35px;" ng-src="{{contact.picture | contactListAvatarFilter}}"/>
+                                                <img style="width:50px; height:50px; border-radius:35px;" ng-src="{{contact.picture | contactListAvatarFilter}}" fix-image-orientation="contact.picture | contactListAvatarFilter"/>
                                             </div>
                                             <div style= "margin-left: 2%; margin-top: 2%;" class="col-lg-7 col-md-7" layout="column">
                                                 <p style="color: white; font-size:20px; word-break: break-all" flex="50">{{contact.firstName}} {{contact.lastName}}</p>
                                                 <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;" > {{contact.status}}</p>
                                             </div>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 0" style="color: white;" >Online</p>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 1" style="color: white;" >Away</p>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 2" style="color: white;" >Busy</p>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 3" style="color: white;" >On a Call</p>
-                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 4" style="color: white;" >Offline</p>
+
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 0" style="color: white;"> <i style="color: green;" ng-if="contact.availability == 0" class="fa fa-circle"></i>  Online</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 1" style="color: white;"> <i style="color: yellow;" ng-if="contact.availability == 1" class="fa fa-circle"></i>  Away</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 2" style="color: white;"> <i style="color: red;" ng-if="contact.availability == 2" class="fa fa-circle"></i>  Busy</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 3" style="color: white;"> <i style="color: blue;" ng-if="contact.availability == 3" class="fa fa-circle"></i>  On a Call</p>
+                                            <p  class="col-lg-3 col-md-3" ng-if= "contact.availability == 4" style="color: white;"> <i style="color: grey;" ng-if="contact.availability == 4" class="fa fa-circle"></i>  Offline</p>
                                         </md-list-item>
                                     </md-list>
                                 </md-button>

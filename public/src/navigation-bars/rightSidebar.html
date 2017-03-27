@@ -33,9 +33,6 @@
                     <div class="md-toolbar-tools">
                         <h2>Create New {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}</h2>
                         <span flex></span>
-                        <md-button class="md-icon-button" ng-click="createChatCtrl.closeCreateChatDialog()">
-                            &times;
-                        </md-button>
                     </div>
                 </md-toolbar>
 
@@ -78,7 +75,7 @@
                     <md-button ng-click="createChatCtrl.closeCreateChatDialog()">
                         Close
                     </md-button>
-                    <md-button ng-click="createChatCtrl.createNewChat(contactListCtrl.asyncContacts)">
+                    <md-button ng-show="contactListCtrl.asyncContacts.length > 0 && !createChatCtrl.groupChatCheckbox || createChatCtrl.title && createChatCtrl.groupChatCheckbox && contactListCtrl.asyncContacts.length > 0" ng-click="createChatCtrl.createNewChat(contactListCtrl.asyncContacts)">
                         Create {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}
                     </md-button>
                 </md-dialog-actions>

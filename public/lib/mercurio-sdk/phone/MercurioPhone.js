@@ -16,43 +16,43 @@ function MercurioPhone(configuration, userId) {
 	var self = this;
 	self.recentCallList = [];
 	self.phoneOwner = userId;
-	
+
 	var pageNumber = 1;
 	var limit = 50;
-	
+
 	self.fetchRecentCallListPage(pageNumber, limit);
 };
 
 MercurioPhone.prototype.fetchRecentCallListPage = function(pageNumber, limit){
 
 	var self = this;
-	
+
 	//empty out chatList to make room for it's updated copy
 	self.recentCallList = [];
-	
+
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
-	
+
 	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').limitToFirst(1 * pageNumber * limit).on("child_added", function(snapshot) {
-	
+
 		if(snapshot.exists()){
-		
-			var chat;
+
+			var call;
 			// send observer callback registered in addChat to MercurioChat constructor
 			//if(snapshot.val().lastMessage){
 				//chat = new MercurioChat(snapshot.key, snapshot.val().participantCount);
 			//}
 			call = new RecentCall(snapshot.key, snapshot.val().answered, snapshot.val().duration,
 					snapshot.val().from, snapshot.val().incoming, snapshot.val().timeStamp, snapshot.val().to);
-			
+
 			self.recentCallList.unshift(call);
 		}
 
 	});
-	
+
 	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
-	
-		//compare chat ids from local chat list to snapshot keys in order to find local 
+
+		//compare chat ids from local chat list to snapshot keys in order to find local
 		//reference to chat; remove chat from local contacts list
 
 		self.recentCallList.forEach(function(call, index){
@@ -67,7 +67,7 @@ MercurioPhone.prototype.deleteCalls = function(indices){
 	var self = this;
 	indices.forEach(function(index){
 		firebase.database().ref('user-calls/' + self.phoneOwner + '/' + self.recentCallList[index].callId).set(null);
-	});	
+	});
 }
 
 MercurioPhone.prototype.registerUA = function(){

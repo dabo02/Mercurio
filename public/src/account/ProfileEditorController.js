@@ -22,8 +22,21 @@
         self.saved = null;
         self.msg = "";
         self.saveButtonIsAvailable = false;
+        self.allMetaData = null;
 
+        self.canEdit = false;
+        self.newStatus = angular.copy(accountService.activeAccount.status);
 
+        self.topDirections = ['left', 'up'];
+        self.bottomDirections = ['down', 'right'];
+
+        self.isOpen = false;
+
+        self.availableModes = ['md-fling', 'md-scale'];
+        self.selectedMode = 'md-fling';
+
+        self.availableDirections = ['up', 'down', 'left', 'right'];
+        self.selectedDirection = 'up';
         self.showProfileEditorDialog = function(event) {
 
             $mdDialog.show({
@@ -48,12 +61,11 @@
             if(accountService.isAccountAvailable()) {
 
                 if(self.firstName != '' && self.lastName != ''){
-                    if(self.newAvailability == ''){
-                        self.newAvailability = accountService.activeAccount.availability;
-                    }
-
+                  if(self.availability == ''){
+                    self.availability = accountService.activeAccount.availability;
+                  }
                     accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email,
-                        self.statusMessage, parseInt(self.newAvailability));
+                        self.statusMessage, parseInt(self.availability));
                     if(self.picture){
                         accountService.activeAccount.savePicture(self.picture, function(progress, uploadingImage){
                             accountService.uploadingImage = uploadingImage;
@@ -62,6 +74,7 @@
                             $rootScope.$digest();
                             if(!uploadingImage){
                                 self.msg = "Profile info and picture saved successfully";
+                                self.saveButtonIsAvailable=false;
                                 self.saved = true;
                                 $timeout(function(){
                                     $scope.$apply();
@@ -101,6 +114,23 @@
                 return accountService.activeAccount.status;
             }
         }
+
+        self.deleteProfilePicture = function(){
+          var confirm = $mdDialog.confirm()
+              .title('Are you sure you want to delete your profile picture?')
+              .ariaLabel('delete confirm')
+              .targetEvent(event)
+              .ok('Delete')
+              .cancel('Cancel');
+
+          $mdDialog.show(confirm).then(function() {
+            accountService.activeAccount.deletePicture();
+            accountService.activeAccount.picture='';
+          }, function() {
+            self.showProfileEditorDialog();
+          });
+
+          }
 
         self.getAvailability = function(){
             if(accountService.isAccountAvailable()) {
@@ -181,19 +211,46 @@
         self.profilePictureChosen = function(){
         }
 
+        self.editStatus = function(){
+              self.canEdit = true;
+            };
+
+        self.confirmStatusChange = function(){
+          accountService.activeAccount.saveProfileInfo(self.firstName, self.lastName, self.email, self.newStatus, parseInt(accountService.activeAccount.availability));
+            self.canEdit = false;
+        }
+
+        self.cancelEdit = function(){
+            self.canEdit = false;
+            self.newStatus= accountService.activeAccount.status;
+          };
+
         $scope.profilePictureSelected = function(element) {
 
             self.pictureChosen = true;
 
             self.profileChanged();
-
             $scope.$apply(function(scope) {
-
                 self.picture = element.files[0];
+                EXIF.getData(self.picture, function() {
+                  self.allMetaData = EXIF.getAllTags(this);
+                });
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    // handle onload
-                    angular.element('#profilePicturePreview').attr('src', e.target.result);
+                  // handle onload
+                  angular.element('#profilePicturePreview').attr('src', e.target.result);
+                  if(self.allMetaData.Orientation == 6 && self.allMetaData){
+                    angular.element('#profilePicturePreview').css({
+                            'transform': 'rotate(90deg)'
+                      });
+                     $("#child").width($("#parent").height());
+                     $("#child").height($("#parent").height());
+                  }
+                  else{
+                    angular.element('#profilePicturePreview').css({
+                      'transform': ''
+                    });
+                  }
                 };
                 reader.readAsDataURL(self.picture);
             });
@@ -207,7 +264,9 @@
             self.email = angular.copy(accountService.activeAccount.email);
             self.statusMessage = angular.copy(accountService.activeAccount.status);
             self.availability = angular.copy(accountService.activeAccount.availability);
+            setTimeout(function(){
             $scope.$apply();
+          }, 100);
         })
 
     }]);

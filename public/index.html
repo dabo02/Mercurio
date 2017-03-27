@@ -72,12 +72,10 @@
     </style>
   </head>
 
-  <body ng-app="mercurio" ng-controller="NavigationController as navCtrl" ng-cloak onload="checkUrl()" style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');>
-
-    <video style="position: absolute;" id='localStream' autoplay></video>
-    <video style="position: absolute;" id='remoteStream' autoplay></video>
-    <video style="position: absolute;" id='localStream' autoplay></video>
-
+  <body ng-app="mercurio" ng-controller="NavigationController as navCtrl" ng-cloak onload="checkUrl()" style="overflow-x: hidden; background-image:url('images/city-wallpaper.jpg');">
+   <!--<video-call></video-call>-->
+   <!--<video  style="position: absolute; width:100%; height:100%" id='remoteStream' autoplay></video>-->
+   <!--<video style="position: absolute; width:25%; height:25%" id='localStream' autoplay></video>-->
     <div ng-if="!isAccountReady" class="row" style="padding-top:25%" ng-cloak>
       <md-progress-circular style="margin: 0 auto 0 auto;" ng-disabled="isAccountReady" md-diameter="125"></md-progress-circular>
     </div>
@@ -264,6 +262,7 @@
   <script src="/node_modules/angularjs-scroll-glue/src/scrollglue.js"></script>
   <script src="/node_modules/angularfire/dist/angularfire.min.js"></script>
 
+  <script src="/bower_components/exif-js/exif.js"></script>
   <script src="/bower_components/janus-gateway/html/janus.js"></script>
   <script src="/bower_components/janus-gateway/html/adapter.js"></script>
   <script src="/bower_components/janus-gateway/html/jquery.blockUI.js"></script>
@@ -304,9 +303,11 @@
   <script src="/src/chats/ChatGroupDetailsDirective.js"></script>
   <script src="/src/chats/ChatGroupDetailsController.js"></script>
   <script src="/src/chats/CreateChatController.js"></script>
+  <script src="/src/chats/imgOrientation.js"></script>
 
   <script src="/src/phone/callDirective.js"></script>
 
+  <script src="/src/phone/rightSidebarListDirective.js"></script>
   <script src="/src/phone/dialerDirective.js"></script>
   <script src="/src/phone/dialerController.js"></script>
   <script src="/src/phone/CallController.js"></script>
@@ -315,7 +316,7 @@
   <script src="/src/phone/PhoneService.js"></script>
   <script src="/src/phone/RecentCallListController.js"></script>
   <script src="/src/phone/CallDetailsController.js"></script>
-
+  <script src="/src/phone/videoCallDirective.js"></script>
   <script src="/src/crm/directives.js"></script>
   <script src="/src/crm/CRMService.js"></script>
   <script src="/src/crm/CRMListController.js"></script>

@@ -26,10 +26,12 @@ Requests firebase to login user
 @params: email - string containing user's email
 @params: password - string containing user's password
 */
-MercurioAuthenticator.prototype.login = function(email, password, feedback){
+MercurioAuthenticator.prototype.login = function(email, password, feedback, spinner){
 	if(typeof(email)!='undefined' && typeof(password)!='undefined'){
+		spinner(true);
 		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
 	  // Handle Errors here.
+		spinner(false);
 	  var errorCode = error.code;
 	  var errorMessage = error.message;
 	  if (errorCode === 'auth/wrong-password') {
@@ -129,7 +131,8 @@ MercurioAuthenticator.prototype.setAccountObserver = function(observer){
 	});
 }
 
-MercurioAuthenticator.prototype.register = function(registerData){
+MercurioAuthenticator.prototype.register = function(registerData, spinner, feedback){
+	spinner(true);
 	$.ajax({
 		type: 'POST',
 		url: '/authenticate',
@@ -146,20 +149,27 @@ MercurioAuthenticator.prototype.register = function(registerData){
 					data: JSON.stringify(data),
 					success: function(data) {
 						//Log in HERE
-						MercurioAuthenticator.prototype.login(registerData.email, registerData.password);
+						MercurioAuthenticator.prototype.login(registerData.email, registerData.password, function(error){
+							feedback(error);
+						}, function(spin){
+							spinner(spin);
+						});
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						console.log("Error");
+						spinner(false);
+						feedback(textStatus);
 					},
 					dataType: "json"
 				});
 			}
 			else{
-				console.log("error");
+				spinner(false);
+				feedback(data.statusMessage);
 			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Error");
+			spinner(false);
+			feedback("Bad Credentials");
 		},
 		dataType: "json"
 	});
