@@ -27,23 +27,22 @@
 
     <script>
       // Initialize Firebase
-
-        production db
-           var config = {
-             apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
-             authDomain: "mercurio-39a44.firebaseapp.com",
-             databaseURL: "https://mercurio-39a44.firebaseio.com",
-             storageBucket: "mercurio-39a44.appspot.com"
-           };
+//      production db
+//        var config = {
+//          apiKey: "AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8",
+//          authDomain: "mercurio-39a44.firebaseapp.com",
+//          databaseURL: "https://mercurio-39a44.firebaseio.com",
+//          storageBucket: "mercurio-39a44.appspot.com"
+//        };
 
      // Development DB
-//    var config = {
-//      apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
-//      authDomain: "mercurio-development.firebaseapp.com",
-//      databaseURL: "https://mercurio-development.firebaseio.com",
-//      storageBucket: "mercurio-development.appspot.com",
-//      messagingSenderId: "203647142462"
-//    };
+     var config = {
+       apiKey: "AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg",
+       authDomain: "mercurio-development.firebaseapp.com",
+       databaseURL: "https://mercurio-development.firebaseio.com",
+       storageBucket: "mercurio-development.appspot.com",
+       messagingSenderId: "203647142462"
+     };
 
       firebase.initializeApp(config);
     </script>
@@ -232,10 +231,16 @@
   <script src="/lib/mercurio-sdk/contacts/MercurioContact.js"></script>
   <script src="/lib/mercurio-sdk/contacts/MercurioContactManager.js"></script>
 
-  <script src="/lib/mercurio-sdk/chat/MercurioChatParticipant.js"></script>
-  <script src="/lib/mercurio-sdk/chat/MercurioChat.js"></script>
+  <script src="/lib/mercurio-sdk/chat/AbstractChatClient.js"></script>
   <script src="/lib/mercurio-sdk/chat/MercurioChatClient.js"></script>
+  <script src="/lib/mercurio-sdk/chat/SMSChatClient.js"></script>
+  <script src="/lib/mercurio-sdk/chat/AbstractChat.js"></script>
+  <script src="/lib/mercurio-sdk/chat/MercurioChat.js"></script>
+  <script src="/lib/mercurio-sdk/chat/SMSChat.js"></script>
   <script src="/lib/mercurio-sdk/chat/Message.js"></script>
+  <script src="/lib/mercurio-sdk/chat/MercurioChatParticipant.js"></script>
+  <script src="/lib/mercurio-sdk/chat/SMSChatParticipant.js"></script>
+
 
   <script src="/lib/mercurio-sdk/phone/JanusPhone.js"></script>
   <script src="/lib/mercurio-sdk/phone/RecentCall.js"></script>
@@ -272,6 +277,7 @@
   <script src="/src/userProvider.js"></script>
 
   <script src="/src/MercurioUtils.js"></script>
+  <script src="/src/imgOrientation.js"></script>
 
   <script src="/src/account/AuthenticationController.js"></script>
   <script src="/src/account/AuthenticationService.js"></script>
@@ -298,7 +304,7 @@
   <script src="/src/chats/ChatGroupDetailsDirective.js"></script>
   <script src="/src/chats/ChatGroupDetailsController.js"></script>
   <script src="/src/chats/CreateChatController.js"></script>
-  <script src="/src/chats/imgOrientation.js"></script>
+  <script src="/src/chats/ChatParticipantSelectionController.js"></script>
 
   <script src="/src/phone/callDirective.js"></script>
 
@@ -321,6 +327,7 @@
   <script src="/src/account/AccountService.js"></script>
   <script src="/src/account/ProfileEditorDirective.js"></script>
   <script src="/src/account/ProfileEditorController.js"></script>
+
   <script src="/src/users/UserController.js"></script>
 
   <script>

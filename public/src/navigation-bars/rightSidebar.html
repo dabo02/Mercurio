@@ -28,7 +28,7 @@
     <chat-list ng-controller="ChatListController as chatListCtrl" ng-if="navCtrl.viewingRecentChats"></chat-list>
     <script type="text/ng-template" id="createChatForm">
         <md-dialog flex="40" aria-label="Create New Chat" ng-controller="CreateChatController as createChatCtrl">
-            <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
+            <form ng-controller="ChatParticipantSelectionController as chatParticipantSelectionCtrl" ng-cloak>
                 <md-toolbar class="mercurioBlueBackground">
                     <div class="md-toolbar-tools">
                         <h2>Create New {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}</h2>
@@ -42,13 +42,13 @@
 
                             <md-content class="chipschatListCtrlContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
                                 <md-contact-chips
-                                        ng-model="contactListCtrl.asyncContacts"
-                                        md-contacts="contactListCtrl.delayedQuerySearch($query)"
+                                        ng-model="chatParticipantSelectionCtrl.asyncContacts"
+                                        md-contacts="chatParticipantSelectionCtrl.delayedQuerySearch($query)"
                                         md-contact-name="name"
                                         md-contact-image="picture"
                                         md-require-match="false"
                                         md-highlight-flags="i"
-                                        filter-selected="contactListCtrl.filterSelected"
+                                        filter-selected="chatParticipantSelectionCtrl.filterSelected"
                                         placeholder="Search for Contacts">
                                 </md-contact-chips>
                             </md-content>
@@ -75,7 +75,7 @@
                     <md-button ng-click="createChatCtrl.closeCreateChatDialog()">
                         Close
                     </md-button>
-                    <md-button ng-show="contactListCtrl.asyncContacts.length > 0 && !createChatCtrl.groupChatCheckbox || createChatCtrl.title && createChatCtrl.groupChatCheckbox && contactListCtrl.asyncContacts.length > 0" ng-click="createChatCtrl.createNewChat(contactListCtrl.asyncContacts)">
+                    <md-button ng-show="chatParticipantSelectionCtrl.asyncContacts.length > 0 && !createChatCtrl.groupChatCheckbox || createChatCtrl.title && createChatCtrl.groupChatCheckbox && chatParticipantSelectionCtrl.asyncContacts.length > 0" ng-click="createChatCtrl.createNewChat(chatParticipantSelectionCtrl.asyncContacts)">
                         Create {{createChatCtrl.groupChatCheckbox | createChatTextFilter}}
                     </md-button>
                 </md-dialog-actions>

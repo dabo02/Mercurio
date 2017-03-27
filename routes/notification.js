@@ -7,10 +7,10 @@ exports.sendPushNotification = function (req, res) {
   var FCM = require('fcm-push');
 
   //Development Key
-  //  var serverkey = 'AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg';
+   var serverkey = 'AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg';
 
   //Production Key
-  var serverkey = 'AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8';
+  //var serverkey = 'AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8';
 
   var fcm = new FCM(serverkey);
   var tokenArray = req.body.tokens;
@@ -40,10 +40,11 @@ exports.sendPushNotification = function (req, res) {
       if(err) {
         console.error(err);
         res.sendStatus(400);
-        if(i==tokenArray.length-1){
-          res.sendStatus(400);
-        }
-      } else {
+      }
+      else if(i==tokenArray.length-1){
+        res.sendStatus(400);
+      }
+       else {
         if(i==tokenArray.length-1){
           res.sendStatus(200);
         }

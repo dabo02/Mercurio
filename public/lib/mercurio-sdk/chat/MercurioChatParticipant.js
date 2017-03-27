@@ -4,39 +4,39 @@
 @params: participants - array containing a collection of particpants
 */
 
-function MercurioChatParticipant(userId, participantReadyCallback){
+
+function MercurioChatParticipant(participantId, participantReadyCallback){
 	
 	var self = this;
-	
-	firebase.database().ref('account/' + userId).on('value', function(snapshot) {
-	
+
+	self.firstName = '';
+	self.lastName = '';
+	self.email = '';
+	self.picture = '';
+	self.phone = '';
+	self.availability = '';
+	self.participantId = '';
+
+
+	firebase.database().ref('account/' + participantId).on('value', function(snapshot) {
+
 		if(snapshot.exists()){
-			if(!self.userId){
-				// var picture = null;
-// 				if(snapshot.val().picture === "" || snapshot.val().picture == null){
-// 					picture = "https://firebasestorage.googleapis.com/v0/b/mercurio-39a44.appspot.com/o/system%2Fic_profile_color_200dp.png?alt=media&token=38e55453-3aa6-48e3-b2eb-f33978fc4a7b";
-// 				}
-// 				else{
-// 					picture = snapshot.val().picture;
-// 				}
-				
-				AbstractAccount.apply(self, [snapshot.key, snapshot.val().firstName, 
-					snapshot.val().lastName, snapshot.val().phone, snapshot.val().picture, 
-					snapshot.val().status, snapshot.val().availability, snapshot.val().email, 
-					snapshot.val().extension]);
-				participantReadyCallback(self);
-			}
-			else{
-				self.firstName = snapshot.val().firstName;
-				self.lastName = snapshot.val().lastName;
-				self.email = snapshot.val().email;
-				self.status = snapshot.val().status;
-				self.availability = snapshot.val().availability;
-			}
+			self.initializeParticipant(snapshot);
 		}
-	});			
+
+		participantReadyCallback(self);
+	});
 }
 
-MercurioChatParticipant.prototype = Object.create(AbstractAccount.prototype);
+MercurioChatParticipant.prototype.initializeParticipant = function(snapshot){
 
-MercurioChatParticipant.prototype.constructor = MercurioChatParticipant;
+	var self = this;
+
+	self.firstName = snapshot.val().firstName;
+	self.lastName = snapshot.val().lastName;
+	self.email = snapshot.val().email;
+	self.picture = snapshot.val().picture;
+	self.phone = snapshot.val().phone;
+	self.availability = snapshot.val().availability;
+	self.participantId = snapshot.key;
+}

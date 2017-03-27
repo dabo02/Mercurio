@@ -17,7 +17,7 @@
         self.chatServiceClient = chatClientService;
         self.groupChatCheckbox = false;
 
-        self.newContactChipSelected = function(contacts){
+        self.newContactChipSelected = function(contactChips){
         }
 
         self.showCreateChatDialog = function(event) {
@@ -36,20 +36,34 @@
             $mdDialog.hide()
         };
 
-        self.createNewChat = function(contacts){
+        self.createNewChat = function(contactChips){
 
-            if(contacts.length > 1 && !self.groupChatCheckbox){
+            if(contactChips.length > 1 && !self.groupChatCheckbox){
                 self.groupChatCheckbox = true;
                 return;
             }
             else if(self.groupChatCheckbox && !self.title){
                 return;
             }
-            else if(contacts.length == 0){
+            else if(contactChips.length == 0){
                 return;
             }
             else{
-                chatClientService.chatClient.createChat(self.title, contacts, chatClientService.chatIsReadyToSendObserver);
+                var userIds = [chatClientService.chatClient.chatClientOwner], phoneNumbers = [];
+
+                contactChips.forEach(function(contact, index){
+                    if(contact.constructor.name != 'MercurioContact') {
+                        contactChips.splice(index, 1);
+                    }
+                    else if(contact.userId){
+                        userIds.push(contact.userId);
+                    }
+                    else{
+                        phoneNumbers.push(contact.phone);
+                    }
+                });
+
+                chatClientService.chatClient.createChat(self.title, chatClientService.chatIsReadyToSendObserver, userIds, phoneNumbers);
                 self.closeCreateChatDialog();
             }
 

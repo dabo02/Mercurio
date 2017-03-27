@@ -46,6 +46,7 @@
           //  });
         }
 
+        // TODO replace with call to instantiateChat()
         self.instantiateSelectedChat = function(chat){
           var newChat = new MercurioChat (chat.chatId, chat.participantCount, null,
     					chat.lastMessage, chat.settings, null, chat.title, self.chatClientOwner, chat.groupPicture);
@@ -62,7 +63,7 @@
             var sender;
             if(receivedChat.lastMessage.from !== self.chatClient.chatClientOwner){
                 receivedChat.participantList.forEach(function(participant){
-                  if(participant.userId == receivedChat.lastMessage.from){
+                  if(participant.participantId == receivedChat.lastMessage.from){
                     sender= participant;
                   }
                 })

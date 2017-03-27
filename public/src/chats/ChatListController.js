@@ -21,14 +21,10 @@
 
         self.availableDirections = ['up', 'down', 'left', 'right'];
         self.selectedDirection = 'up';
-        self.counter=0;
+
 
         self.isChatListAvailable = function() {
             return chatClientService.isChatListAvailable();
-        }
-
-        self.chatListCounter = function(counter){
-          self.counter++;
         }
 
         self.viewChat = function(chatIndex){

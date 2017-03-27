@@ -76,7 +76,7 @@
         //       }
         //       else{
         //           chat.participantList.forEach(function (participant) {
-        //               if (chatClientOwner !== participant.userId) {
+        //               if (chatClientOwner !== participant.participantId) {
         //                   if(participant.picture === ""){
         //                       avatarUrl = 'images/default_contact_avatar.png';
         //                   }
@@ -161,7 +161,7 @@
                     type: type
                 }
 
-                chatClientService.chatClient.sendMultimediaMessage(chatClientService.selectedChat, message, function(progress, uploadingImage, message){
+                chatClientService.chatClient.sendMessage(chatClientService.selectedChat, message, function(progress, uploadingImage, message){
                   chatClientService.uploadingImage = uploadingImage;
                   chatClientService.progress = progress;
                   chatClientService.opacity = progress/100+0.1;
@@ -272,8 +272,8 @@
         self.getChatParticipantUserId = function(){
           var userId = null;
           chatClientService.selectedChat.participantList.forEach(function (participant) {
-              if (chatClientService.chatClient.chatClientOwner != participant.userId) {
-                  userId = participant.userId;
+              if (chatClientService.chatClient.chatClientOwner != participant.participantId) {
+                  userId = participant.participantId;
               }
 
             });
@@ -284,7 +284,7 @@
       self.getChatParticipantAvailability = function(){
         var availability = null;
         chatClientService.selectedChat.participantList.forEach(function (participant) {
-            if (chatClientService.chatClient.chatClientOwner != participant.userId) {
+            if (chatClientService.chatClient.chatClientOwner != participant.participantId) {
                 availability = participant.availability;
             }
           });
@@ -311,18 +311,18 @@
                      chatClientService.selectedChat = chat;
                    }
                  });
-                 instantiateSelectedChat();
+              addSelectedChatToScope();
            });
 
         }
         else if(chatClientService.selectedChat){
-            instantiateSelectedChat();
+            addSelectedChatToScope();
         }
         else{
           $state.go('dialer');
         }
 
-        function instantiateSelectedChat(){
+        function addSelectedChatToScope(){
           $scope.selectedChat = chatClientService.selectedChat;
           $scope.$watch(
                   'selectedChat',

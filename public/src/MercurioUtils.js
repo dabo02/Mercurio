@@ -21,8 +21,8 @@
             var participantName = '';
 
             chat.participantList.forEach(function (participant) {
-                if (chat.lastMessage.from === participant.userId) {
-                    participantName = participant.firstName;
+                if (chat.lastMessage.from === participant.participantId) {
+                    participantName = participant.firstName + ' ' + participant.lastName;
                 }
             });
 
@@ -55,7 +55,7 @@
     })
 
     .filter('messageListParticipantNameFilter', function () {
-        return function (from, participantList, contacts) {
+        return function (from, participantList) {
 
 
 
@@ -66,17 +66,10 @@
             if(participantList.length > 1){
 
                 participantList.forEach(function (participant) {
-                    if (from === participant.userId) {
+                    if (from === participant.participantId) {
                         participantName = participant.firstName + ' ' + participant.lastName;
                     }
                 });
-                if(!participantName){
-                  contacts.forEach(function(contact){
-                    if(contact.userId == from){
-                      participantName = contact.firstName + ' ' + contact.lastName;
-                    }
-                  })
-                }
             }
 
             return participantName;
@@ -98,7 +91,7 @@
             }
             else{
                 chat.participantList.forEach(function (participant) {
-                    if (chatClientOwner !== participant.userId) {
+                    if (chatClientOwner !== participant.participantId) {
                         if(participant.picture === ""){
                             avatarUrl = 'images/default_contact_avatar.png';
                         }
@@ -223,7 +216,7 @@
             }
             else{
                 chat.participantList.forEach(function (participant) {
-                    if (chatClientOwner !== participant.userId) {
+                    if (chatClientOwner !== participant.participantId) {
                        title = participant.firstName + ' ' + participant.lastName;
                     }
                 });
@@ -238,7 +231,7 @@
           var isTyping = '';
           if(chat){
           chat.participantList.forEach(function(participant){
-            if(participant.userId != chatClientOwner && participant.isTyping) {
+            if(participant.participantId != chatClientOwner && participant.isTyping) {
               isTyping = participant.firstName + ' is typing...'
 
             }
@@ -261,13 +254,40 @@
 
             }
             else{
-              filteredTextContent = message.textContent;
+                filteredTextContent = message.textContent;
             }
 
             return filteredTextContent;
         };
     })
 
+    .filter('createChatTextFilter', function(){
+        return function(groupChatCheckbox){
+
+            if(groupChatCheckbox){
+                return 'Group';
+            }
+            else{
+                return 'Chat';
+            }
+        }
+    })
+
+    .filter('chatClientOwnerGroupMemberFilter', function(){
+        return function(chat, chatClientOwner){
+
+            var isChatClientOwnerGroupMember = false;
+
+            chat.participantList.forEach(function(participant){
+                if(participant.participantId == chatClientOwner){
+                    isChatClientOwnerGroupMember = true;
+                }
+            });
+
+            return isChatClientOwnerGroupMember;
+        }
+    })
+        
     .filter('callListDirectionFilter', function () {
         return function (incoming, answered) {
 
@@ -346,33 +366,6 @@
                         break;
                 }
             }
-        }
-    })
-
-    .filter('createChatTextFilter', function(){
-        return function(groupChatCheckbox){
-
-            if(groupChatCheckbox){
-                return 'Group';
-            }
-            else{
-                return 'Chat';
-            }
-        }
-    })
-
-    .filter('chatClientOwnerGroupMemberFilter', function(){
-        return function(chat, chatClientOwner){
-
-            var isChatClientOwnerGroupMember = false;
-
-            chat.participantList.forEach(function(participant){
-                if(participant.userId == chatClientOwner){
-                    isChatClientOwnerGroupMember = true;
-                }
-            });
-
-            return isChatClientOwnerGroupMember;
         }
     })
 

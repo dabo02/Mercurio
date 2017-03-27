@@ -1,5 +1,5 @@
 angular.module('users')
-.controller('ContactListController', ['$rootScope', '$scope', 'accountService', '$q', '$timeout', '$state', 'phoneService', '$mdDialog', function ($rootScope, $scope, accountService, $q, $timeout, $state, phoneService, $mdDialog) {
+.controller('ChatParticipantSelectionController', ['$rootScope', '$scope', 'accountService', '$q', '$timeout', '$state', 'phoneService', '$mdDialog', function ($rootScope, $scope, accountService, $q, $timeout, $state, phoneService, $mdDialog) {
 
     var self = this;
     self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -89,6 +89,41 @@ angular.module('users')
         var lowercaseQuery = angular.lowercase(query);
         phoneService.contactSearchString = lowercaseQuery;
 
+
+        var tempContactIndex = -1;
+
+        contacts.forEach(function(contact, index){
+            if(contact.temp){
+                tempContactIndex = index;
+            }
+        });
+
+
+        if(lowercaseQuery.length >= 3){
+          //try and remove contact chip with query
+            if(tempContactIndex>=0){
+              contacts.splice(tempContactIndex, 1);
+              tempContactIndex = -1;
+            }
+            //add special contact chip with query
+            if(tempContactIndex == -1){
+                contacts.unshift(
+                    new MercurioContact('Send to ' + lowercaseQuery,'','email','./images/default_contact_avatar.png',lowercaseQuery,
+                    'extension',null,null,'status','availability')
+                );
+
+                contacts[0].temp = true;
+
+                loadContacts();
+            }
+        }
+        else{
+          if(tempContactIndex>=0){
+            contacts.splice(tempContactIndex, 1);
+            tempContactIndex = -1;
+          }
+        }
+
         return function filterFn(contact) {
             return (contact._lowername.indexOf(lowercaseQuery) != -1) || (contact.phone.indexOf(lowercaseQuery) != -1);;
         };
@@ -161,9 +196,44 @@ angular.module('users')
         }
     }
 
+    self.showProfileEditorDialog = function(event) {
+
+        $mdDialog.show({
+            templateUrl: 'profileEditorForm',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            escapeToClose: true,
+            clickOutsideToClose:true
+            //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        });
+    }
+
     self.closeProfileEditorDialog = function(){
         $mdDialog.hide()
     };
+
+    self.showContactProfileDialog = function(event) {
+
+        $mdDialog.show({
+            templateUrl: 'contactProfile',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            escapeToClose: true,
+            clickOutsideToClose:true
+            //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        });
+    }
+
+    self.closeContactProfileDialog = function(){
+        $mdDialog.hide()
+    };
+
+
+
+    self.viewContact = function(contact, event){
+      accountService.selectedContact = contact;
+      self.showContactProfileDialog(event);
+    }
 
     self.getContactByNumber = function(number){
         contacts.forEach(function(contact){
@@ -177,9 +247,24 @@ angular.module('users')
 
     };
 
-    self.clearSearchText = function(){
+    self.selectedItemChange = function(contact){
+        if(contact){
+        self.viewContact(contact);
         self.searchText = '';
+      }
     };
+
+    self.viewContactById = function(id){
+      if(id == accountService.activeAccount.userId){
+        self.showProfileEditorDialog();
+      }
+      self.contactList.forEach(function (contact, index) {
+          if (id == contact.userId) {
+             self.viewContact(contact);
+          }
+
+    });
+  };
 
 
   accountService.activeAccount.contactManager.setContactObserver(function(){

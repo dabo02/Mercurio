@@ -76,7 +76,7 @@
       self.checkIfChatClientOwnerIsAdmin = function(){
         var isAdmin = false;
         chatClientService.selectedChat.participantList.forEach(function(participant){
-          if(participant.userId == chatClientService.chatClient.chatClientOwner && participant.isAdmin) {
+          if(participant.participantId == chatClientService.chatClient.chatClientOwner && participant.isAdmin) {
               isAdmin = true;
             }
         })
@@ -90,7 +90,7 @@
           chatClientService.selectedChat.participantList.forEach(function(participant){
             if(participant.isAdmin){
               adminCounter++;
-              if(participant.userId == chatClientService.chatClient.chatClientOwner){
+              if(participant.participantId == chatClientService.chatClient.chatClientOwner){
                 chatClientOwnerIsAdmin = true;
               }
             }
@@ -140,7 +140,7 @@
             // if selected contacts array contains at least one contacts
             if(contacts.length > 0){
                 chatClientService.selectedChat.participantList.forEach(function(participant){
-                    if(contacts[0].userId == participant.userId){
+                    if(contacts[0].userId == participant.participantId){
                         self.userIsAParticipant = true;
                     }
                 })
@@ -214,7 +214,7 @@
           if(chatClientService.selectedChat){
             self.isChatClientOwnerGroupMember = false;
           chatClientService.selectedChat.participantList.forEach(function(participant){
-            if(participant.userId == chatClientService.chatClient.chatClientOwner) {
+            if(participant.participantId == chatClientService.chatClient.chatClientOwner) {
                   self.isChatClientOwnerGroupMember = true;
               }
           })
@@ -264,7 +264,7 @@
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){
             chatClientService.selectedChat.participantList.forEach(function(participant){
-                if(participant.userId == chatClientService.chatClient.chatClientOwner){
+                if(participant.participantId == chatClientService.chatClient.chatClientOwner){
                     self.isChatClientOwnerGroupMember = true;
                 }
             });
@@ -273,7 +273,7 @@
         },10);
         //
         // chatClientService.chatClient.chatList[$stateParams.chatIndex].participantList.forEach(function(participant){
-        //     if(participant.userId == chatClientService.chatClient.chatClientOwner){
+        //     if(participant.participantId == chatClientService.chatClient.chatClientOwner){
         //         self.isChatClientOwnerGroupMember = true;
         //     }
         // });
