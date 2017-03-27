@@ -38,6 +38,8 @@ function MercurioAccount(user, accountReadyCallback){
 				self.email = snapshot.val().email;
 				self.status = snapshot.val().status;
 				self.availability = snapshot.val().availability;
+				self.picture = snapshot.val().picture;
+				self.companyId = snapshot.val().companyId;
 
 				if(self.profileObserver()){
 					self.profileObserver()
@@ -99,6 +101,27 @@ MercurioAccount.prototype.savePicture = function(picture, sendUploadStatus){
 				// Upload completed successfully, now we can get the download URL
 				updates['account/' + self.userId + '/picture'] = uploadTask.snapshot.downloadURL;
 		  	firebase.database().ref().update(updates);
+				firebase.database().ref("account").once("value", function (snap) {
+
+					var myBusinessGroupAccountKeys = [];
+
+					snap.forEach(function (childSnapshot) {
+						//if its not me and the account belongs to my company
+						if (childSnapshot.key != self.userId && self.companyId === childSnapshot.val().companyId) {
+							myBusinessGroupAccountKeys.push(childSnapshot.key);
+						}
+					})
+
+					myBusinessGroupAccountKeys.forEach(function(accountKey, index){
+						firebase.database().ref("user-contacts/"+accountKey)
+							.orderByChild("userId")
+							.equalTo(self.userId)
+							.on("child_added", function(snapshot){
+								updates["user-contacts/"+accountKey+"/"+snapshot.key + '/picture'] = uploadTask.snapshot.downloadURL;
+						  	firebase.database().ref().update(updates);
+							})
+					})
+				})
 				sendUploadStatus(100, false);
 			});
 
@@ -119,6 +142,36 @@ MercurioAccount.prototype.saveUsername = function(username){
 	firebase.database().ref().update(updates);
 
 	// TODO - add error management callback
+}
+
+MercurioAccount.prototype.deletePicture = function(){
+	var self = this;
+	var updates = {};
+	updates['account/' + self.userId + '/picture'] = "";
+	firebase.database().ref().update(updates);
+	firebase.storage().ref().child('user/' + this.userId + '/profile/profile_picture').delete();
+
+	firebase.database().ref("account").once("value", function (snap) {
+
+		var myBusinessGroupAccountKeys = [];
+
+		snap.forEach(function (childSnapshot) {
+			//if its not me and the account belongs to my company
+			if (childSnapshot.key != self.userId && self.companyId === childSnapshot.val().companyId) {
+				myBusinessGroupAccountKeys.push(childSnapshot.key);
+			}
+		})
+
+		myBusinessGroupAccountKeys.forEach(function(accountKey, index){
+			firebase.database().ref("user-contacts/"+accountKey)
+				.orderByChild("userId")
+				.equalTo(self.userId)
+				.on("child_added", function(snapshot){
+					updates["user-contacts/"+accountKey+"/"+snapshot.key + '/picture'] = "";
+					firebase.database().ref().update(updates);
+				})
+		})
+	})
 }
 
 /*

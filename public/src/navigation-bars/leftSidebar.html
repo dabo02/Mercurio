@@ -1,6 +1,6 @@
 <!--start profile editor form dialog-->
 <script type="text/ng-template" id="profileEditorForm">
-    <md-dialog  flex="40" aria-label="Profile Editor Form" ng-controller="ProfileEditorController as profileCtrl">
+    <md-dialog  flex="55" aria-label="Profile Editor Form" ng-controller="ProfileEditorController as profileCtrl">
         <form ng-cloak>
             <md-toolbar class="mercurioBlueBackground">
                 <div class="md-toolbar-tools">
@@ -13,19 +13,34 @@
             <md-dialog-content style= "overflow-y: hidden">
 
                 <div layout="row" class="flex-80 flex-offset-10" style="margin-top:3%">
-                    <md-card flex="100">
+                    <div id="parent" flex="90" style="height:270px;">
 
-                        <img id="profilePicturePreview" class="md-card-image" alt="Washed Out" style="opacity:{{profileCtrl.accountService.opacity}}; height:282px; position:relative;" ng-src="{{profileCtrl.getProfilePicture()}}"/>
+                        <img id="profilePicturePreview" id="child" fix-image-orientation="profileCtrl.getProfilePicture()" style="opacity:{{profileCtrl.accountService.opacity}}; width: 100%; height: 100%; display: inline-block;" ng-src="{{profileCtrl.getProfilePicture()}}" />
                         <div ng-if="profileCtrl.accountService.uploadingImage" style="left: 0; position:absolute; text-align:center; margin-top: -250px; width: 100%" layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="determinate" value="{{profileCtrl.accountService.progress}}" md-diameter="200"></md-progress-circular>
                         </div>
-                        <md-button class="md-fab md-warn"  style="position:absolute;top:58%;left:35%;">
-                            <md-icon style="font-size:22px;" class="fa fa-camera">
-                                <!--<input ng-model="chatCtrl.multimedia" ng-change="chatCtrl.showImagePreview()" class="fa fa-paperclip" style="opacity:0;" type="file" accept="image/*"/>-->
-                                <!--<input style="opacity:0;" onchange="angular.element(this).scope().multimediaSelected(this)" type="file" ng-model="multimedia" name="multimedia" id="multimedia" accept="image/*"/>-->
-                                <input style="z-index: -1; opacity: 0; margin-left: -50%; min-height: 150px; margin-top: -110%;"  onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
-                            </md-icon>
-                        </md-button>
+                        <div style="position:relative;top:-50%;left:38%;">
+                        <md-fab-speed-dial md-open="profileCtrl.isOpen" md-direction="{{profileCtrl.selectedDirection}}" ng-class="profileCtrl.selectedMode">
+                              <md-fab-trigger>
+                                <md-button aria-label="menu" class="md-fab md-warn">
+                                    <md-icon style="font-size:22px;" class="fa fa-camera"></md-icon>
+                                </md-button>
+                              </md-fab-trigger>
+
+                              <md-fab-actions>
+                                <md-button class="md-fab md-raised md-mini">
+                                    <md-icon style="font-size:22px;" class="fa fa-file-image-o">
+                                        <input style="z-index: -1; opacity: 0; margin-left: -50%; min-height: 150px; margin-top: -110%;"  onchange="angular.element(this).scope().profilePictureSelected(this)" type="file" ng-model="profileCtrl.picture" name="profileImage" id="profileImage" accept="image/*"/>
+                                    </md-icon>
+                                </md-button>
+                                <md-button class="md-fab md-raised md-mini" ng-show="profileCtrl.accountService.activeAccount.picture" ng-click = "profileCtrl.deleteProfilePicture()">
+                                  <md-icon style="font-size:22px;" class="fa fa-trash">
+                                  </md-icon>
+                                </md-button>
+                              </md-fab-actions>
+                            </md-fab-speed-dial>
+                          </div>
+
 
                         <!--<md-card-actions layout="row" layout-align="end end">-->
 
@@ -33,7 +48,7 @@
                         <!--<label style="margin-top: -1%;" class="btn btn-info" for="profileImage">Choose an Image</label>-->
 
                         <!--</md-card-actions>-->
-                    </md-card>
+                    </div>
 
                     <div flex="100">
                         <md-input-container class=" md-icon-float md-block">
@@ -48,13 +63,13 @@
                         </md-input-container>
                         <md-input-container class="md-icon-float md-block">
                             <label>Status Message</label>
-                            <md-icon class="fa fa-comment-o"></md-icon>
+                            <md-icon style="left: 6%" class="fa fa-comment-o"></md-icon>
                             <input id="statusMessage" type="text" maxlength="200" ng-change = "profileCtrl.profileChanged()" ng-model="profileCtrl.statusMessage">
                         </md-input-container>
                         <md-input-container class="md-icon-float md-block">
                             <label>Availability</label>
-                            <md-icon class="fa fa-circle-o"></md-icon>
-                            <md-select style="min-width: 100px;" id="availability" ng-change="onChange()" ng-model="profileCtrl.newAvailability">
+                            <md-icon style="left: 6%"class="fa fa-circle-o"></md-icon>
+                            <md-select style="min-width: 100px;" id="availability" ng-change="onChange()" ng-model="profileCtrl.availability">
                                 <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Online' ? 'true' : 'false' }}" value="0">Online</md-option>
                                 <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Away' ? 'true' : 'false' }}" value="1">Away</md-option>
                                 <md-option ng-click= "profileCtrl.profileChanged()" ng-selected="{{profileCtrl.availability === 'Busy' ? 'true' : 'false' }}" value="2">Busy</md-option>
@@ -159,7 +174,9 @@
             </md-dialog-content>
 
             <md-dialog-actions layout="row">
-
+              <md-button ng-show="crmCtrl.crmManager.crmList.length>0" ng-click="crmCtrl.deleteCRMs();">
+                  Delete CRM
+              </md-button>
                 <span flex></span>
                 <md-button ng-click="crmCtrl.closeManageCRMDialog()">
                     Close
@@ -239,20 +256,36 @@
 <md-sidenav id="sidenav" style = "background:rgba(0,0,0,0.65);" ng-click="navCtrl.toggleLeftSidebar()" md-component-id="left" class="md-whiteframe-z2" >
     <md-list>
 
-        <md-card ng-click="profileCtrl.showProfileEditorDialog()" ng-controller="ProfileEditorController as profileCtrl" style="margin:0px; margin-bottom:4%; background-image:url(images/md-backround-profile.jpg);" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card ng-controller="ProfileEditorController as profileCtrl" style="z-index: 60; margin:0px; margin-bottom:4%; background-image:url(images/md-backround-profile.jpg);" md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+          <div ng-click="profileCtrl.showProfileEditorDialog()">
             <md-card-title>
                 <md-card-title-media flex="40">
-                    <div class="md-media-sm card-media"><md-icon class="avatar"><img style="border-radius:70px;" ng-src="{{profileCtrl.getProfilePicture()}}"></md-icon></div>
+                    <div class="md-media-sm card-media">
+                      <md-icon class="avatar">
+                        <img style="border-radius:50px; width: 100%; height: 100%" ng-src="{{profileCtrl.getProfilePicture()}}" fix-image-orientation="profileCtrl.getProfilePicture()">
+                      </md-icon>
+                    </div>
                 </md-card-title-media>
-                <md-card-title-text style="padding-top:5%" flex="60">
+                <md-card-title-text style="padding-top:5%; margin-top: 25%; margin-left: -35%" flex="80">
                     <span class="md-headline">{{profileCtrl.getFirstName() + ' ' + profileCtrl.getLastName()}}</span>
-                    <span class="md-subhead">{{profileCtrl.getAvailability()}}</span>
+                    <span class="md-subhead">
+                      <i style="color: green;" ng-if="profileCtrl.availability == 'Online' " class="fa fa-circle"></i>
+                      <i style="color: yellow;" ng-if="profileCtrl.availability == 'Away' " class="fa fa-circle"></i>
+                      <i style="color: red;" ng-if="profileCtrl.availability == 'Busy' " class="fa fa-circle"></i>
+                      <i style="color: blue;" ng-if="profileCtrl.availability == 'onACall' " class="fa fa-circle"></i>
+                      <i style="color: grey;" ng-if="profileCtrl.availability == 'Offline' " class="fa fa-circle"></i>
+                      {{profileCtrl.getAvailability()}}</span>
                 </md-card-title-text>
             </md-card-title>
-            <md-card-actions style="padding-left:4%;" layout="row">
-                <md-truncate style="font-size: 15px; word-break: break-all" flex="65"> {{profileCtrl.getStatusMessage()}}</md-truncate>
-            </md-card-actions>
-        </md-card>
+            </div>
+              <md-input-container style="margin-top: -2%" flex="80" flex-offset="5" class="md-icon-float md-block" >
+              <h4 ng-if="!profileCtrl.canEdit" style="font-size: 15px; word-break: break-all">{{profileCtrl.getStatusMessage()}}</h4>
+              <h4 style="font-size: 15px; word-break: break-all"><input ng-if="profileCtrl.canEdit" style="border-color: black;" ng-model="profileCtrl.newStatus" ng-value="profileCtrl.getStatusMessage()" type="text"></h4>
+              </md-input-container>
+              <md-icon ng-show="!profileCtrl.canEdit" ng-click="profileCtrl.editStatus()" style="color: black; font-size: 18px; position: absolute; margin-top: 59%; margin-left: 90%" class="fa fa-pencil-square-o"></md-icon>
+              <md-icon ng-show="profileCtrl.canEdit && profileCtrl.newStatus != profileCtrl.getStatusMessage()" ng-click="profileCtrl.confirmStatusChange()" style="color: green; font-size: 18px; position: absolute; margin-top: 60%; margin-left: 92%" class="fa fa-check"></md-icon>
+              <md-icon ng-show="profileCtrl.canEdit" ng-click="profileCtrl.cancelEdit()" ng-style="profileCtrl.newStatus != profileCtrl.getStatusMessage() ? {'margin-left': '85%'} : {'margin-left': '92%'}" style="color: red; font-size: 18px; position: absolute; margin-top: 60%;" class="fa fa-times"></md-icon>
+          </md-card>
 
         <md-list-item layout="row">
             <md-button ng-click="navCtrl.homeLinkClicked()" layout="row">
@@ -309,7 +342,7 @@
         <md-list-item layout="row" ng-controller="AuthenticationController as authCtrl">
             <md-button ng-click="authCtrl.logoutButtonClicked()" layout="row">
                 <p style = "color: white;font-size:20px;"flex="20"><md-button style="margin:0%;" class="md-icon-button fa fa-power-off"></md-button></p>
-                <p style = "color: white;" flex="80">Sign Out</p>
+                <p style = "color: white;" flex="80">Log Out</p>
             </md-button>
         </md-list-item>
         <!--<md-list-item layout ="row" style="background-image:url(images/background.jpg)"-->

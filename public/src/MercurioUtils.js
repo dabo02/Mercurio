@@ -55,7 +55,7 @@
     })
 
     .filter('messageListParticipantNameFilter', function () {
-        return function (from, participantList) {
+        return function (from, participantList, contacts) {
 
 
 
@@ -63,13 +63,20 @@
 
             //don't show names on 1-to-1 chat, show them in group chats instead
 
-            if(participantList.length > 2){
+            if(participantList.length > 1){
 
                 participantList.forEach(function (participant) {
                     if (from === participant.userId) {
                         participantName = participant.firstName + ' ' + participant.lastName;
                     }
                 });
+                if(!participantName){
+                  contacts.forEach(function(contact){
+                    if(contact.userId == from){
+                      participantName = contact.firstName + ' ' + contact.lastName;
+                    }
+                  })
+                }
             }
 
             return participantName;
@@ -82,8 +89,12 @@
           if(chat){
             var avatarUrl = '';
             if(chat.title.length > 0){
-
+                if(chat.groupPicture){
+                    avatarUrl = chat.groupPicture;
+                }
+                else{
                 avatarUrl = 'images/default_group_avatar.png';
+              }
             }
             else{
                 chat.participantList.forEach(function (participant) {
@@ -219,6 +230,21 @@
             }
 
             return title;
+        };
+    })
+
+    .filter('isTypingFilter', function () {
+        return function (chat, chatClientOwner) {
+          var isTyping = '';
+          if(chat){
+          chat.participantList.forEach(function(participant){
+            if(participant.userId != chatClientOwner && participant.isTyping) {
+              isTyping = participant.firstName + ' is typing...'
+
+            }
+          })
+        }
+          return isTyping;
         };
     })
 

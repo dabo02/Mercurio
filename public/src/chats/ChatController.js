@@ -10,6 +10,10 @@
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
         self.chatClientService = chatClientService;
+        self.isDeleteMessagesClicked = false;
+        self.messagesToDelete = [];
+        self.allMetaData = null;
+        self.textContentToSend;
 
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){
@@ -108,6 +112,20 @@
             $rootScope.multimedia = null;
         };
 
+        self.typingAMessage = function(){
+          var textContentLenght = self.textContentToSend.length;
+          var timeout;
+          chatClientService.selectedChat.toggleIsTyping(true);
+          if(typeof(timeout) === 'undefined'){
+            timeout = setTimeout(function(){
+              if(textContentLenght == self.textContentToSend.length){
+                chatClientService.selectedChat.toggleIsTyping(false);
+              }
+              clearTimeout(timeout);
+            }, 5000)
+          }
+        }
+
 
         self.isMessageListAvailable = function() {
             return chatClientService.isMessageListAvailable();
@@ -158,15 +176,13 @@
                 if(!$rootScope.multimedia){
                     self.textContentToSend = '';
                 }
-                //document.getElementById("microphone").className = "fa fa-microphone text-center flex-10";
-                //document.getElementById("chatMessageInput").className = "md-icon-float md-block flex-offset-5 flex-85 md-input-focused";
                 setTimeout(function(){
                 $rootScope.$apply();
-              }, 100);
+              }, 1000);
                 $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
             }
             // $state.reload();
-
+            chatClientService.selectedChat.toggleIsTyping(false);
 
         }
 
@@ -176,12 +192,49 @@
 
         self.showUploadForm = function(){
             angular.element('.fa-paperclip > input[type=file]').trigger('click');
-            //angular.element('.hiddenFileInput').trigger('click');
         }
 
         self.toggleMute = function(value){
-          self.newMuteSetting = value;
           chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
+        }
+
+        //Delete messages was click
+        self.deleteMessagesClicked =function(){
+          self.isDeleteMessagesClicked = true;
+        }
+
+        //Close delete messages option
+        self.closeSelectMessage = function(){
+          self.isDeleteMessagesClicked = false;
+          self.messagesToDelete = [];
+        }
+
+        //Delete messages from the array
+        self.deleteMessages = function(){
+          if(self.messagesToDelete.length>0){
+          chatClientService.selectedChat.deleteMessages(self.messagesToDelete);
+          self.messagesToDelete =[];
+          self.isDeleteMessagesClicked =false;
+          setTimeout(function(){
+          $rootScope.$apply();
+        }, 100);
+          }
+        };
+
+        //Check if message is already in the array of messages to delete
+        self.messageExists = function(message){
+            return self.messagesToDelete.indexOf(message.messageId) > -1;
+          }
+
+        //Select/toggle message to delete and add it to array to delete
+        self.toggleMessage = function(message) {
+          var idx = self.messagesToDelete.indexOf(message.messageId);
+          if (idx > -1) {
+            self.messagesToDelete.splice(idx, 1);
+          }
+          else {
+            self.messagesToDelete.push(message.messageId);
+          }
         }
 
         $scope.multimediaSelected = function(element) {
@@ -191,10 +244,23 @@
             $scope.$apply(function(scope) {
 
                 $rootScope.multimedia = element.files[0];
+                EXIF.getData($rootScope.multimedia, function() {
+                  self.allMetaData = EXIF.getAllTags(this);
+                });
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     // handle onload
                     angular.element('#multimediaPreview').attr('src', e.target.result);
+                    if(self.allMetaData.Orientation == 6 && self.allMetaData){
+                      angular.element('#multimediaPreview').css({
+                              'transform': 'rotate(90deg)'
+                        });
+                    }
+                    else{
+                      angular.element('#multimediaPreview').css({
+                        'transform': ''
+                      });
+                    }
                     $scope.multimediaURL = e.target.result;
                 };
 
@@ -272,6 +338,12 @@
                   }, true
               );
           chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+          chatClientService.selectedChat.setIsTypingObserver(function () {
+            setTimeout(function(){
+            $scope.$apply();
+            }, 100);
+
+           });
         }
     }]);
 })();

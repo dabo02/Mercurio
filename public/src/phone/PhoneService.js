@@ -14,6 +14,7 @@
         self.contactSearchString = '';
         self.ringbackTone = new Audio('audio/ringback.mp3');
         self.ringTone = new Audio('audio/bar.mp3');
+        self.missedCallsCounter =0;
 
         self.instantiatePhone = function(activeAccount){
             self.phone = new JanusPhone(activeAccount.userId, self.phoneInitializationObserver);
@@ -38,7 +39,6 @@
         self.incomingCallObserver = function(){
 
             crmService.fetchCallableRecords(self.phone.callerId, self.activeAccount.phone);
-
             self.ringTone.addEventListener('ended', function() {
                 this.currentTime = 0;
                 this.play();
@@ -64,6 +64,10 @@
 
             if(crmService.crmManager.crmList != undefined && crmService.crmManager.crmList != null && crmService.crmManager.crmList.length > 0 && crmService.crmManager.crmList[0].insertCallsAutomatically && crmService.crmManager.crmList[0].validated){
                 crmService.showAddCallToCRMDialog();//, self.selectedCallDirection, event, crmService.crmManager.crmList[0].insertCallsAutomatically);
+            }
+
+            if(!self.phone.recentCallList[0].answered && self.phone.recentCallList[0].incoming){
+              self.missedCallsCounter +=1;
             }
 
             self.phone.currentCalls = [];

@@ -131,11 +131,10 @@ JanusPhone.prototype.fetchRecentCallListPage = function(pageNumber, limit){
 	// fetch list of 50 most recent chats
 	// TODO missing pagination and filters
 
-	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').limitToFirst(1 * pageNumber * limit).on("child_added", function(snapshot) {
-
+	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').on("child_added", function(snapshot) {
 		if(snapshot.exists()){
 
-			var chat;
+			var call;
 			// send observer callback registered in addChat to MercurioChat constructor
 			//if(snapshot.val().lastMessage){
 			//chat = new MercurioChat(snapshot.key, snapshot.val().participantCount);
@@ -144,11 +143,12 @@ JanusPhone.prototype.fetchRecentCallListPage = function(pageNumber, limit){
 				snapshot.val().from, snapshot.val().incoming, snapshot.val().timeStamp, snapshot.val().to);
 
 			self.recentCallList.unshift(call);
+
 		}
 
 	});
 
-	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_removed', function(snapshot) {
+	firebase.database().ref('user-calls/' + self.phoneOwner).orderByChild('timeStamp').on('child_removed', function(snapshot) {
 
 		//compare chat ids from local chat list to snapshot keys in order to find local
 		//reference to chat; remove chat from local contacts list

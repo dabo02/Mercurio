@@ -35,6 +35,7 @@ function MercurioChatClient(userId, messageReceivedObserver){
 				chat.timeStamp = snapshot.val().timeStamp;
 				chat.title = snapshot.val().title;
 				chat.participantCount = snapshot.val().participantCount;
+				chat.groupPicture = snapshot.val().groupPicture;
 
 				if(self.chatObserver){
 							self.chatObserver();
@@ -101,7 +102,7 @@ MercurioChatClient.prototype.fetchChatListPage = function(pageNumber, limit){
 				//chat = new MercurioChat(snapshot.key, snapshot.val().participantCount);
 			//}
 			chat = new MercurioChat(snapshot.key, snapshot.val().participantCount, self.participantsAreReadyObserver,
-					snapshot.val().lastMessage, snapshot.val().settings, snapshot.val().timeStamp, snapshot.val().title, self.chatClientOwner);
+					snapshot.val().lastMessage, snapshot.val().settings, snapshot.val().timeStamp, snapshot.val().title, self.chatClientOwner, snapshot.val().groupPicture);
 
 			self.chatList.unshift(chat);
 
@@ -195,14 +196,22 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 				timeStamp: new Date().getTime(),
 				title: title || '',
 				participantCount: participants.length,
-				settings: {mute: false}
+				settings: {mute: false},
+				groupPicture: ''
 			};
 
 			var updates = {};
 
 			participants.forEach(function (participant) {
+				if(participant == self.chatClientOwner){
+					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(true);
+				}
+				else{
+					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(false);
+				}
+				firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isTyping").set(false);
 				// add participant to chat-members
-				firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function () {
+				firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isMember").set(true).then(function () {
 					updates = {};
 					// add user-chat entry for participant
 					updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
@@ -232,7 +241,7 @@ MercurioChatClient.prototype.createChat = function(title, contacts, observer){
 				var chat;
 
 				chat = new MercurioChat(existingChat.key, existingChat.val().participantCount, self.participantsAreReadyObserver,
-					existingChat.val().lastMessage, existingChat.val().settings, existingChat.val().timeStamp, existingChat.val().title, self.chatClientOwner);
+					existingChat.val().lastMessage, existingChat.val().settings, existingChat.val().timeStamp, existingChat.val().title, self.chatClientOwner, existingChat.val().groupPicture);
 
 				self.chatList.unshift(chat);
 				newChat = chat;
@@ -367,6 +376,58 @@ MercurioChatClient.prototype.sendMultimediaMessage = function(chat, message, sen
 
 }
 
+MercurioChatClient.prototype.saveGroupPicture = function(picture, chat, sendUploadStatus){
+	// TODO - upload picture to firebase and retrieve url to uploaded file
+
+	var self = this;
+
+	var updates = {};
+	var uploadTask = firebase.storage().ref().child('chatGroup/' + chat.chatId + '/groupPicture/').put(picture);
+
+	// Listen for state changes, errors, and completion of the upload.
+			uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+				function(snapshot) {
+					self.uploadingImage = true;
+					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					if(progress<100){
+						sendUploadStatus(progress, true);
+					}
+					switch (snapshot.state) {
+						case firebase.storage.TaskState.PAUSED: // or 'paused'
+							break;
+						case firebase.storage.TaskState.RUNNING: // or 'running'
+							break;
+					}
+				}, function(error) {
+					self.uploading = false;
+				switch (error.code) {
+					case 'storage/unauthorized':
+						// User doesn't have permission to access the object
+						break;
+
+					case 'storage/canceled':
+						// User canceled the upload
+						break;
+
+					case 'storage/unknown':
+						// Unknown error occurred, inspect error.serverResponse
+						break;
+				}
+			}, function() {
+				// Upload completed successfully, now we can get the download URL
+				var updates = {};
+				chat.participantList.forEach(function(participant){
+					updates['user-chats/' + participant.userId + '/' +chat.chatId +'/groupPicture'] = uploadTask.snapshot.downloadURL;
+			  	firebase.database().ref().update(updates);
+				})
+				sendUploadStatus(100, false);
+			});
+
+	// TODO - add error management callback
+}
+
+
 MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, message){
 
 	var self = this;
@@ -419,8 +480,10 @@ MercurioChatClient.prototype.sendTextMessage = function(chat, newMessageKey, mes
 
 			firebase.database().ref().child("user-chats").child(participant.userId).child(chat.chatId)
 			.once('value', function(actualChat){
-				if(!actualChat.val().settings.mute){
-					sendPushNotification(snapshot.val(), participant);
+				if(actualChat.val().settings){
+					if(!actualChat.val().settings.mute){
+						sendPushNotification(snapshot.val(), participant);
+					}
 				}
 			});
 		});
