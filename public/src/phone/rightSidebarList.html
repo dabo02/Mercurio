@@ -1,0 +1,48 @@
+
+<!-- CALLS LIST -->
+<div ng-show="calls.length>0" class="scrollable-content" style="max-height: 53.1vh;">
+  <md-button ng-repeat="call in calls track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 2%; width:100%; padding:0%;border-radius: 0px;">
+
+      <md-list style="padding:0%;">
+          <md-list-item class="md-2-line" ng-controller="ContactListController as contactListCtrl"  layout="row">
+            <div ng-click="selectCallIndex({{call}}, {{type}})" flex="80" layout="row" class="md-list-item-text">
+                <img ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
+              <h3 md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</h3>
+              <div flex="50" layout="column">
+                  <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
+                  <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
+                  <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
+                  <i ng-if="call.incoming && !call.answered" class="fa fa-long-arrow-up incoming-missed pull-right" style="margin-right:15%;"></i>
+                  <i ng-if="!call.incoming && call.answered" class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
+                  <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
+              </div>
+            </div>
+            <div flex="20">
+              <div style="font-size:22px; margin-top:30%; color:white" flex="100" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div>
+              <!--<md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>-->
+            </div>
+          </md-list-item>
+      </md-list>
+
+      <md-divider layout-fill ng-show="$index == selectedCallIndex"></md-divider>
+      <div style ="color: white;" layout="column" ng-show="$index == selectedCallIndex" layout-fill class="expanded">
+        <span ng-controller="CallDetailsController as callDetailsCtrl" ng-click="recentCallListCtrl.fetchCallDetails({{call}}, {{type}}); callDetailsCtrl.showCallDetailsDialog($event, $index);">Call Details</span>
+        <div>
+          <md-button style="font-size:20px;" class="md-icon-button" ng-if="recentCallListCtrl.phoneService.callDetailsContact.firstName != 'Unknown'" ng-controller="CreateChatController as createChatCtrl" ng-click="createChatCtrl.createNewChat([recentCallListCtrl.phoneService.callDetailsContact])">
+              <img style= "height: 20px; background-color: transparent;" ng-src= "images/add_chat.png"></img>
+          </md-button>
+          <md-button  class="md-icon-button" ng-controller="AddCallToCRMController as crmCtrl" ng-click="crmCtrl.addCallToCRMButtonClicked(call, $event)" ng-show="crmCtrl.crmService.crmManager.crmList.length > 0 && crmCtrl.crmService.crmManager.crmList[0].validated">
+              <img style= "height: 25px; background-color: transparent;" ng-src= "images/ic_crm_gray_24dp.png"></img>
+          </md-button>
+          <md-button style="font-size:20px;" class="md-icon-button fa fa-trash" ng-click="recentCallListCtrl.showDeleteConfirm($event, call.realIndex)">
+          </md-button>
+        </div>
+      </div>
+  </md-button>
+  <div ng-show="calls.length==0">
+    <h3 class="text-center"> There are no {{type}} calls.</h3>
+  </div>
+</div>
+
+<!-- CHATS LIST -->
+<!-- Paste chat list code here -->
