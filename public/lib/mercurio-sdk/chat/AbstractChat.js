@@ -6,7 +6,7 @@ uses ConstructorError, AbstractFunctionError
 */
 
 function AbstractChat(chatId, participantCount, participantsAreReadyObserver,
-					  lastMessage, settings, timeStamp, title, chatClientOwner){
+					  lastMessage, settings, timeStamp, title, chatClientOwner, groupPicture){
 
 	if(this.constructor === AbstractChat){
 		throw new ConstructorError("Cannot instantiate AbstractChat class!");
@@ -21,53 +21,47 @@ function AbstractChat(chatId, participantCount, participantsAreReadyObserver,
 	self.participantList =[]; //array of participants
 	self.messageList = [];
 	self.participantCount = participantCount;
+	self.groupPicture = groupPicture;
+	self.isTypingObserver = null;
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 
 		if(snapshot.exists() && snapshot.val()){
-			// if participant has true value instantiate participant and add to list
+			// if participant has true value instantiate participnat and add to list
 			self.instantiateParticipant(chatClientOwner, snapshot.key, function(newParticipant){
-
-				self.participantList.push(newParticipant);
-
-				// if(self.participantList.length === participantCount){
-// 					if(participantsAreReadyObserver){
-// 						//participantsAreReadyObserver(self);
-// 						//participantsAreReadyObserver = undefined;
-// 					}
-// 				}
+				newParticipant.isAdmin = snapshot.val()['isAdmin'];
+				newParticipant.isTyping = snapshot.val()['isTyping'];
+				newParticipant.isMember = snapshot.val()['isMember'];
+				if(newParticipant.isMember){
+					self.participantList.push(newParticipant);
+				}
 			});
 		}
 	});
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_changed', function(snapshot) {
-
+		var participantExist = false;
 		if(snapshot.exists()){
-
-			var participantIndex = null;
-
 			self.participantList.forEach(function(participant, index){
-				if(participant.participantId === snapshot.key){
-					participantIndex = index;
+				if(participant.participantId == snapshot.key){
+					participantExist = true;
+					participant.isTyping = snapshot.val()['isTyping'];
+					participant.isAdmin = snapshot.val()['isAdmin'];
+					participant.isMember = snapshot.val()['isMember'];
+					//change name here
+					if(self.isTypingObserver){
+						self.isTypingObserver();
+					}
+					if(!participant.isMember){
+						self.participantList.splice(index, 1);
+					}
 				}
-			});
-
-			if(snapshot.val()){
-				// if value changed to true instantiate new participant and add to list
+			})
+			if(!participantExist && snapshot.val()['isMember']){
 				self.instantiateParticipant(chatClientOwner, snapshot.key, function(newParticipant){
-					if(participantIndex == null){
-						self.participantList.push(newParticipant);
-					}
-					else{
-						self.participantList[participantIndex] = newParticipant;
-					}
+					newParticipant.isMember = snapshot.val()['isMember'];
+					self.participantList.push(newParticipant);
 				});
-			}
-			else{
-				// if value changed to false remove participant from list
-				if(participantIndex != null){
-					self.participantList.splice(participantIndex, 1);
-				}
 			}
 		}
 	});
@@ -92,24 +86,37 @@ AbstractChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 
 	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToLast(1 * pageNumber * limit).on("child_added", function(messageSnapshot) {
 
-		if(messageSnapshot.exists()){
+		if (messageSnapshot.exists()) {
 
 			newMessageKey = messageSnapshot.key;
 
-			firebase.database().ref('message-info/' + messageSnapshot.key).once("value", function(messageInfoSnapshot) {
+			firebase.database().ref('message-info/' + messageSnapshot.key).once("value", function (messageInfoSnapshot) {
 
-				if(messageInfoSnapshot.exists()){
+				if (messageInfoSnapshot.exists()) {
 
-					if(messageInfoSnapshot.val()['has-message'][chatClientOwner]){
+					if (messageInfoSnapshot.val()['has-message'][chatClientOwner]) {
 						var message;
 						message = new Message(messageSnapshot.key, messageSnapshot.val().from, messageSnapshot.val().multimediaUrl, messageSnapshot.val().textContent, messageSnapshot.val().timeStamp, messageInfoSnapshot.val().read[chatClientOwner]);
 						self.messageList.push(message);
+						if (messageInfoSnapshot.val()['read'][chatClientOwner] == 0) {
+							self.unreadMessage += 1;
+						}
 					}
+
+					self.initMessageInfoChildChanged(messageSnapshot.key, chatClientOwner);
 				}
 
 			});
 		}
+	});
 
+	firebase.database().ref('chat-messages/' + self.chatId).orderByChild('timeStamp').limitToFirst(pageNumber * limit).on('child_changed', function(snapshot) {
+		//When the multimediaUrl is assign from firebase, assign it locally.
+		self.messageList.forEach(function(message, index){
+			if(message.messageId === snapshot.key){
+				self.messageList[index].multimediaUrl = snapshot.val().multimediaUrl;
+			}
+		});
 	});
 }
 
@@ -165,13 +172,15 @@ AbstractChat.prototype.addParticipants = function(contacts, phoneNumbers){
 		newParticipants.forEach(function(participantId){
 			// TODO function to process sms/merc chat participants
 			// add participant to chat-members
-			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participantId).set(true).then(function(){
+			// add participant to chat-members
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participantId + "/isMember").set(true);
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isAdmin").set(false);
+			firebase.database().ref().child('chat-members/' + self.chatId + "/" + participant + "/isTyping").set(false).then(function(){
 
 				self.addUserChatEntryToNewParticipant(participantId, newParticipantCount);
 			});
 		});
 	}
-
 }
 
 AbstractChat.prototype.addMercurioParticipantsToList = function(contacts, newParticipants){
@@ -191,7 +200,7 @@ AbstractChat.prototype.addParticipantToList = function(participantId, newPartici
 
 	var isNewParticipant = true; // innocent until proven guilty
 	self.participantList.forEach(function(participant){
-		if(participant.userId === participantId){
+		if(participant.participantId === participantId){
 			// contact is already a group member (guilty)
 			isNewParticipant = false;
 		}
@@ -266,6 +275,7 @@ AbstractChat.prototype.markUnreadMessagesAsRead = function(userId){
 			});
 
 			firebase.database().ref().child('message-info/' + oldMessage.messageId + "/read/" + userId).set(new Date().getTime());
+			self.unreadMessage -=1;
 		}
 	});
 }

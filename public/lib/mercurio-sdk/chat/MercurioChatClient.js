@@ -7,10 +7,7 @@ uses MissingImplementationError
 
 function MercurioChatClient(userId, messageReceivedObserver){
 	AbstractChatClient.apply(this, arguments);
-	
-	var self = this;
-	self.chatListIsReadyObserver = null;
-	self.chatObserver = undefined;
+
 }
 
 MercurioChatClient.prototype = Object.create(AbstractChatClient.prototype);
@@ -85,10 +82,6 @@ MercurioChatClient.prototype.setChatListObserver = function(observer){
 	this.chatListIsReadyObserver = observer;
 }
 
-MercurioChatClient.prototype.setChatObserver = function(chatObserver){
-	this.chatObserver = chatObserver;
-}
-
 MercurioChatClient.prototype.sendTextContentToParticipant = function(chat, participant, newMessageKey, message){
 
 	this.propagateMessageInFirebase(chat, participant, newMessageKey, message);
@@ -136,7 +129,7 @@ MercurioChatClient.prototype.saveGroupPicture = function(picture, chat, sendUplo
 			// Upload completed successfully, now we can get the download URL
 			var updates = {};
 			chat.participantList.forEach(function(participant){
-				updates['user-chats/' + participant.userId + '/' +chat.chatId +'/groupPicture'] = uploadTask.snapshot.downloadURL;
+				updates['user-chats/' + participant.participantId + '/' +chat.chatId +'/groupPicture'] = uploadTask.snapshot.downloadURL;
 				firebase.database().ref().update(updates);
 			})
 			sendUploadStatus(100, false);

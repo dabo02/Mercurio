@@ -9,6 +9,6 @@ angular.module('users')
          calls : "=",
 				 chats : "="
        },
-       replace: false,
+       replace: false
    	}
-	});
+});

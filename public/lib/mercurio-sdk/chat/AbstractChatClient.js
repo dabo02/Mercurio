@@ -22,6 +22,7 @@ function AbstractChatClient(userId, messageReceivedObserver){
 	self.uploadingImage = false;
 	self.uploadingProgress = 0;
 	self.chatListIsReadyObserver = null;
+	self.chatObserver = undefined;
 
 	self.pageNumber = 1;
 	self.limit = 50;
@@ -46,27 +47,9 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 
 	var self = this;
 
-	//firebase.database().ref('user-chats/' + self.chatClientOwner).orderByChild('lastMessage/timeStamp').limitToFirst(1 * pageNumber * limit).on("child_added", function(snapshot) {
-
 	var chat = self.instantiateChat(snapshot);
 
 	binaryInsert(chat, self.chatList);
-
-	//self.chatList.unshift(chat);
-
-	//if(chat.lastMessage) {
-	//
-	//	binaryInsert(chat.lastMessage.timeStamp, self.chatList);
-	//}
-
-	//self.chatList.sort(function(a, b){
-	//						if(!b.lastMessage || !a.lastMessage){
-	//							return 0;
-	//						}
-	//						else{
-	//							return b.lastMessage.timeStamp - a.lastMessage.timeStamp;
-	//						}
-	//					});
 
 	if(self.chatIsReadyToSendObserver){
 		self.chatIsReadyToSendObserver(chat);
@@ -92,17 +75,21 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 		var end = typeof(endVal) != 'undefined' ? endVal : length - 1;//!! endVal could be 0 don't use || syntax
 		var m = start + Math.floor((end - start)/2);
 
+		if(!value.lastMessage){
+			return;
+		}
+
 		if(length == 0){
 			array.push(value);
 			return;
 		}
 
-		if(value.lastMessage.timeStamp > array[end].lastMessage.timeStamp){
+		if(value.lastMessage.timeStamp < array[end].lastMessage.timeStamp){
 			array.splice(end + 1, 0, value);
 			return;
 		}
 
-		if(value.lastMessage.timeStamp < array[start].lastMessage.timeStamp){//!!
+		if(value.lastMessage.timeStamp > array[start].lastMessage.timeStamp){//!!
 			array.splice(start, 0, value);
 			return;
 		}
@@ -111,12 +98,12 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 			return;
 		}
 
-		if(value.lastMessage.timeStamp < array[m].lastMessage.timeStamp){
+		if(value.lastMessage.timeStamp > array[m].lastMessage.timeStamp){
 			binaryInsert(value, array, start, m - 1);
 			return;
 		}
 
-		if(value.lastMessage.timeStamp > array[m].lastMessage.timeStamp){
+		if(value.lastMessage.timeStamp < array[m].lastMessage.timeStamp){
 			binaryInsert(value, array, m + 1, end);
 			return;
 		}
@@ -143,7 +130,7 @@ AbstractChatClient.prototype.processChatListChildChangedSnapshot = function(snap
 			chat.participantCount = snapshot.val().participantCount;
 
 			if(!snapshot.val().lastMessage){
-				self.chatList.splice(index, 1);
+				self.chatList[index].lastMessage = undefined;
 			}
 			else{
 
@@ -255,7 +242,16 @@ AbstractChatClient.prototype.createChat = function(title, observer, userIds, pho
 
 				userIds.forEach(function (participant) {
 					// add participant to chat-members
-					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant).set(true).then(function () {
+					if(participant == self.chatClientOwner){
+						firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(true);
+					}
+					else{
+						firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(false);
+					}
+
+					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isTyping").set(false);
+					// add participant to chat-members
+					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isMember").set(true).then(function () {
 						updates = {};
 						// add user-chat entry for participant
 						updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
@@ -318,8 +314,8 @@ Requests server to delete a list of chats from the database
 AbstractChatClient.prototype.deleteChats = function(indices){
 	var self = this;
 	indices.forEach(function(index){
-		firebase.database().ref('user-chats/' + self.chatClientOwner + '/' + self.chatList[index].chatId + '/lastMessage').set(null);
 		firebase.database().ref('user-chats/' + self.chatClientOwner + '/' + self.chatList[index].chatId + '/timeStamp').set(0);
+		firebase.database().ref('user-chats/' + self.chatClientOwner + '/' + self.chatList[index].chatId + '/lastMessage').set(null);
 	});
 }
 
@@ -496,4 +492,8 @@ AbstractChatClient.prototype.propagateMessageInFirebase = function(chat, partici
 
 AbstractChatClient.prototype.searchChats = function(searchString){
 	throw new AbstractFunctionError("Cannot call abstract function searchChats!");
+}
+
+AbstractChatClient.prototype.setChatObserver = function(chatObserver){
+	this.chatObserver = chatObserver;
 }

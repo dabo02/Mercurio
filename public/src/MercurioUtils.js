@@ -231,7 +231,7 @@
           var isTyping = '';
           if(chat){
           chat.participantList.forEach(function(participant){
-            if(participant.userId != chatClientOwner && participant.isTyping) {
+            if(participant.participantId != chatClientOwner && participant.isTyping) {
               isTyping = participant.firstName + ' is typing...'
 
             }

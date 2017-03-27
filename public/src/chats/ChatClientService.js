@@ -28,7 +28,7 @@
         };
 
         self.instantiateChatClient = function(userId){
-            self.chatClient = new SMSChatClient(userId, self.onMessageReceived);
+            self.chatClient = new MercurioChatClient(userId, self.onMessageReceived);
             //TODO repeat this for:
            // accountService.activeAccount.contactManager.contactList
            // phoneService.phone.recentCallList
@@ -63,7 +63,7 @@
             var sender;
             if(receivedChat.lastMessage.from !== self.chatClient.chatClientOwner){
                 receivedChat.participantList.forEach(function(participant){
-                  if(participant.userId == receivedChat.lastMessage.from){
+                  if(participant.participantId == receivedChat.lastMessage.from){
                     sender= participant;
                   }
                 })

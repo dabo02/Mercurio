@@ -76,7 +76,7 @@
         //       }
         //       else{
         //           chat.participantList.forEach(function (participant) {
-        //               if (chatClientOwner !== participant.userId) {
+        //               if (chatClientOwner !== participant.participantId) {
         //                   if(participant.picture === ""){
         //                       avatarUrl = 'images/default_contact_avatar.png';
         //                   }
@@ -272,8 +272,8 @@
         self.getChatParticipantUserId = function(){
           var userId = null;
           chatClientService.selectedChat.participantList.forEach(function (participant) {
-              if (chatClientService.chatClient.chatClientOwner != participant.userId) {
-                  userId = participant.userId;
+              if (chatClientService.chatClient.chatClientOwner != participant.participantId) {
+                  userId = participant.participantId;
               }
 
             });
@@ -284,7 +284,7 @@
       self.getChatParticipantAvailability = function(){
         var availability = null;
         chatClientService.selectedChat.participantList.forEach(function (participant) {
-            if (chatClientService.chatClient.chatClientOwner != participant.userId) {
+            if (chatClientService.chatClient.chatClientOwner != participant.participantId) {
                 availability = participant.availability;
             }
           });

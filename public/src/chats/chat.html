@@ -152,18 +152,18 @@
                                 </div>
                                 <div flex="80" flex-offset="10" layout="row">
                                     <md-list ng-controller = "ContactController as contactCtrl" flex>
-                                        <md-list-item ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
+                                        <md-list-item ng-click = "contactCtrl.viewContactById(participant.participantId); chatGroupCtrl.closeChatGroupDetailsDialog()" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
                                           <img ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
                                             <div class="md-list-item-text compact">
                                                 <h3>{{participant.firstName}} {{participant.lastName}} <h4 ng-show="participant.isAdmin"> Group Admin </h4></h3>
                                             </div>
-                                            <md-menu ng-show="participant.userId != chatGroupCtrl.chatClient.chatClientOwner" class="md-secondary" aria-label="menu">
+                                            <md-menu ng-show="participant.participantId != chatGroupCtrl.chatClient.chatClientOwner" class="md-secondary" aria-label="menu">
                                                 <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
                                                     <md-icon  class"md-menu-origin" style="color: black; font-size:22px;" class="fa fa-sort-desc"></md-icon>
                                                 </md-button>
                                                 <md-menu-content width="4">
                                                     <md-menu-item ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin() && !participant.isAdmin" >
-                                                        <md-button ng-click="chatGroupCtrl.assignAdmin(participant.userId)">
+                                                        <md-button ng-click="chatGroupCtrl.assignAdmin(participant.participantId)">
                                                           Make group Admin
                                                         </md-button>
                                                     </md-menu-item>
@@ -178,7 +178,7 @@
                                                         </md-button>
                                                     </md-menu-item>
                                                     <md-menu-item ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin()">
-                                                        <md-button ng-click="chatGroupCtrl.removeParticipant(participant.userId)">
+                                                        <md-button ng-click="chatGroupCtrl.removeParticipant(participant.participantId)">
                                                           Remove
                                                         </md-button>
                                                     </md-menu-item>
@@ -222,9 +222,9 @@
                                 <div flex="80" flex-offset="10" layout="row" class="scrollableList fixedRows" >
                                     <md-list>
                                         <md-list-item ng-controller = "ContactController as contactCtrl" class="md-2-line contact-item" ng-repeat="(index, participant) in chatGroupCtrl.chatClientService.selectedChat.participantList">
-                                            <img ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
+                                            <img ng-click = "contactCtrl.viewContactById(participant.participantId); chatGroupCtrl.closeChatGroupDetailsDialog()" ng-src="  {{participant | participantPicture}}" class="md-avatar" alt={{participant.name}} />
                                             <div class="md-list-item-text compact">
-                                                <h3 ng-click = "contactCtrl.viewContactById(participant.userId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
+                                                <h3 ng-click = "contactCtrl.viewContactById(participant.participantId); chatGroupCtrl.closeChatGroupDetailsDialog()">{{participant.firstName}} {{participant.lastName}}</h3>
                                             </div>
                                         </md-list-item>
                                     </md-list>
