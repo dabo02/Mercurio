@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var notification = require('./routes/notification');
 var selfProvisioning = require('./routes/self-provisioning');
+var smsWebhook = require('./routes/sms');
 
 var app = express();
 
@@ -486,6 +487,8 @@ app.post('/authenticate', selfProvisioning.authenticate);
 app.post('/updateEmail', selfProvisioning.updateEmail);
 app.post('/replaceAccount', selfProvisioning.replaceAccount);
 app.post('/register', selfProvisioning.createNewAccount);
+app.post('/sendSMS', smsWebhook.send);
+app.post('/receive', smsWebhook.receive);
 
 app.all('/*', function(req, res) {
   // Just send the index.html for other files to support HTML5Mode

@@ -43,7 +43,6 @@
 
 
     <form style="padding-top: 5%;" ng-submit="authCtrl.loginButtonClicked(authCtrl.email, authCtrl.password)">
-
         <md-card flex="45" flex-offset="30" style="margin: 10% auto; background:rgba(0,0,0,0.50);">
               <div layout="column" style="height: 5%; background:rgba(0,0,0,0); ">
                   <h2 class="text-center" style="font-size: 22px;color: white;"> Welcome to Mercury </h2>
@@ -52,11 +51,11 @@
             <div layout="column">
               <h3 class="text-center" style="color:#FFFF00">{{authCtrl.authenticationService.feedback}}</h3>
             </div>
-
-            <div layout= "row">
-              <div flex="0" flex-offset="5"  style="padding-top: 5%;">
-                <i class="fa fa-envelope" style="font-size:20px; color: white;"></i>
-              </div>
+            <div>
+              <div layout= "row">
+                <div flex="0" flex-offset="5"  style="padding-top: 5%;">
+                  <i class="fa fa-envelope" style="font-size:20px; color: white;"></i>
+                </div>
 
                 <div flex="75" flex-offset = "5" >
                     <md-input-container class="md-icon-float md-block" >
@@ -64,21 +63,24 @@
                         <label style= "color: white">Email</label>
                           <input style= "color: white; border-color: yellow;" ng-model="authCtrl.email" name="email">
                     </md-input-container>
-                  </div>
                 </div>
+              </div>
 
-            <div layout="row">
-                <div flex="0" flex-offset="5"  style="padding-top: 5%;">
-                    <i class="fa fa-unlock-alt" style="font-size:22px; color: white;"></i>
-                </div>
-                <div flex="75" flex-offset = "5">
-                    <md-input-container class="md-icon-float md-block">
-                        <!-- Use floating label instead of placeholder -->
-                        <label style= "color: white">Password</label>
-                        <input style= "color: white; border-color: yellow;" ng-model="authCtrl.password" type="password">
-                    </md-input-container>
-                </div>
+              <div layout="row">
+                  <div flex="0" flex-offset="5"  style="padding-top: 5%;">
+                      <i class="fa fa-unlock-alt" style="font-size:22px; color: white;"></i>
+                  </div>
+                  <div flex="75" flex-offset = "5">
+                      <md-input-container class="md-icon-float md-block">
+                          <!-- Use floating label instead of placeholder -->
+                          <label style= "color: white">Password</label>
+                          <input style= "color: white; border-color: yellow;" ng-model="authCtrl.password" type="password">
+                      </md-input-container>
+                  </div>
+              </div>
+              <md-progress-circular ng-if="spinnerActivated" md-diameter=100 md-mode="indeterminate" style="margin-left:40%; display:initial; top:-150px;"></md-progress-circular>
             </div>
+
             <div layout="row">
                 <!-- <div class="col-lg-11 col-md-11 col-lg-push-1 col-md-push-1">
                     <p style="color:red; font-weight:bold;" id="feedback" href=""></p>

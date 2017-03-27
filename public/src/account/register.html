@@ -6,6 +6,9 @@
             <div layout="column" style="height: 5%; background:rgba(0,0,0,0); ">
                 <h2 class="text-center" style="font-size: 22px;color: white;"> Register </h2>
             </div>
+            <div layout="column">
+              <h3 class="text-center" style="color:#FFFF00">{{authCtrl.authenticationService.feedback}}</h3>
+            </div>
               <md-input-container style="margin-top:40px;" class="md-icon-float md-block flex-80 flex-offset-10">
                   <label style= "color: white;">Email</label>
                   <md-icon style= "color: white;" class="fa fa-envelope"></md-icon>
@@ -23,6 +26,7 @@
                     <input  style= "color: white; border-color: yellow;" id="phone" type="phone" ng-model="authCtrl.registerData.phone">
                 </md-input-container>
               </div>
+              <md-progress-circular ng-if="spinnerActivated" md-diameter=100 md-mode="indeterminate" style="margin-left:40%; display:initial; top:-150px;"></md-progress-circular>
                 <span flex></span>
               <md-button class="md-raised md-primary" flex="50" flex-offset="25" style="width:100%; margin-bottom:4%;" ng-click="authCtrl.registerAccount();">
                   Register

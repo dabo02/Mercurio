@@ -58,7 +58,7 @@ function JanusPhone(userId, phoneInitializationObserver) {
 	self.localHasVideo = false;
 	self.recentCallList = [];
 	self.phoneOwner = userId;
-	self.doVideo = false;
+	self.doVideo = true;
 	self.currentCalls = [];
 	var pageNumber = 1;
 	var limit = 50;
@@ -427,8 +427,18 @@ JanusPhone.prototype.initialize = function(phoneInitializationObserver) {
 JanusPhone.prototype.makeCall = function(phoneNumber, myStreamTag, peerStreamTag) {
 	var self = this;
 	self.phoneNumber = "";
-	self.localView = document.getElementById(myStreamTag);
-	self.remoteView = document.getElementById(peerStreamTag);
+	var interval = setInterval(function(){
+		if(document.getElementById(myStreamTag)==null){
+			console.log("Not yet")
+		}
+		else{
+			self.localView = document.getElementById(myStreamTag);
+			self.remoteView = document.getElementById(peerStreamTag);
+			console.log("found it")
+			clearInterval(interval);
+		}
+	},1000);
+
 	if(phoneNumber.length==10){
 		self.phoneNumber = "+1" + phoneNumber;
 	}
@@ -536,7 +546,6 @@ JanusPhone.prototype.answerCall = function(myStreamTag, peerStreamTag) {
  **/
 
 JanusPhone.prototype.dialDTMFTone = function(tone) {
-
 	var self = this;
 	// self.sipCallHandler.dtmf({ dtmf: { tones: tone }}); // this only works in chrome browser
 	self.sipCallHandler.send({"message": {"request": "dtmf_info", "digit": tone}}); // sends DTMF tones over sip_info sip message
