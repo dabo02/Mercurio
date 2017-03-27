@@ -127,7 +127,7 @@
                 </md-dialog>
             </script>
 
-            <md-card flex-offset="30" flex="40" style="background:rgba(0,0,0,0.55);" ng-controller="ContactListController as contactListCtrl">
+            <md-card flex-offset="20" flex="60" style="background:rgba(0,0,0,0.55);" ng-controller="ContactListController as contactListCtrl">
                 <md-card-title layout="column" flex-offset="20" flex>
                     <md-card-title-text>
                         <span style = "color: white;"class="md-headline">{{callCtrl.phoneService.phone.currentCalls[0] | currentCallParticipantNameFilter : contactListCtrl.contactList}}</span>
@@ -148,7 +148,7 @@
                     </md-card-title-media>
                 </md-card-title>
 
-                <md-content style="margin-top:25%; background-color: transparent;" layout="row" flex="65" flex-offset="25">
+                <md-content style="margin-top:25%; background-color: transparent;" layout="row" flex="65" flex-offset="30">
                     <md-button  style= "margin-bottom: 10%;" ng-click="callCtrl.showDTMFDialog()" class="md-fab md-primary mercurioBlueBackground">
                       <md-icon style="font-size: 25px;"class="fa fa-th"></md-icon>
                     </md-button>

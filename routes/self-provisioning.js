@@ -35,11 +35,10 @@ exports.authenticate = function(req, res){
   };
   function callback(error, data) {
       var parseString = require('xml2js').parseString;
-      var stringArray = (data.buffer.toString().split('\n'));
 
-
-        if(data.buffer){
-
+      console.log(error)
+      if(error==null){
+        var stringArray = (data.buffer.toString().split('\n'));
         //Parsing data
         var result={
           "phoneConfig":{

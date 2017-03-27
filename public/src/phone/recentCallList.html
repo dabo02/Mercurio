@@ -343,8 +343,11 @@
     </md-nav-bar>
 
     <!-- All calls -->
-
-  <div class="scrollable-content" style="max-height: 53.1vh;">
+    <right-sidebar-list ng-show="sidebarNavItem=='all'" type="'recent'" calls=recentCallListCtrl.phoneService.phone.recentCallList></right-sidebar-list>
+    <!-- <right-sidebar-list ng-show="sidebarNavItem=='missed'" type="'missed'" calls=sidebarMissedCalls></right-sidebar-list> -->
+    <!-- <right-sidebar-list callType="recent" calls=recentCallListCtrl.phoneService.phone.recentCallList></right-sidebar-list>
+    <right-sidebar-list callType="recent" calls=recentCallListCtrl.phoneService.phone.recentCallList></right-sidebar-list> -->
+  <!-- <div class="scrollable-content" style="max-height: 53.1vh;">
     <md-button ng-show="sidebarNavItem=='all'" ng-repeat="call in recentCallListCtrl.phoneService.phone.recentCallList track by $index" style="background:rgba(0,0,0,0.60); margin-left:0%; margin-bottom: 2%; width:100%; padding:0%;border-radius: 0px;">
 
         <md-list style="padding:0%;">
@@ -353,18 +356,18 @@
                   <img ng-src="{{call.from | callListAvatarFilter:call.to:call.incoming:contactListCtrl.contactList}}" class="md-avatar"/>
                 <h3 md-truncate md-ellipsis style=" color:white; margin-top:5%;" flex="30">{{call.from | callListNameFilter:call.to:call.incoming:contactListCtrl.contactList}}</h3>
                 <div flex="50" layout="column">
-                    <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p>
+                    <p style= "color: white;" class="recentCallListTimeStamp">{{call.timeStamp |  timeStampFilter}}</p> -->
                     <!-- <img style="display:block; margin:auto; width:11px; height:14px;" ng-src="{{call.incoming | callListDirectionFilter}}"> -->
-                    <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
+                    <!-- <i ng-if="call.incoming && call.answered" class="fa fa-long-arrow-up incoming pull-right" style="margin-right:15%;"></i>
                     <i ng-if="call.incoming && !call.answered" class="fa fa-long-arrow-up incoming-missed pull-right" style="margin-right:15%;"></i>
                     <i ng-if="!call.incoming && call.answered" class="fa fa-long-arrow-up outgoing pull-right" style="margin-right:15%;"></i>
                     <i ng-if="!call.incoming && !call.answered" class="fa fa-long-arrow-up outgoing-missed pull-right" style="margin-right:15%;"></i>
                 </div>
               </div>
               <div flex="20">
-                <div style="font-size:22px; margin-top:30%; color:white" flex="100" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div>
+                <div style="font-size:22px; margin-top:30%; color:white" flex="100" class="fa fa-phone" ng-click="recentCallListCtrl.redial(call);"></div> -->
                 <!--<md-icon style= "color: white;"aria-label="Delete Call" class="md-secondary md-raised fa fa-trash-o" ng-click="recentCallListCtrl.showDeleteConfirm($event, $index)"></md-icon>-->
-              </div>
+              <!-- </div>
             </md-list-item>
         </md-list>
 
@@ -386,7 +389,7 @@
     <div ng-show="sidebarNavItem=='all' && recentCallListCtrl.phoneService.phone.recentCallList.length==0">
       <h3 class="text-center"> There are no recent calls.</h3>
     </div>
-  </div>
+  </div> -->
 
     <!-- Missed calls -->
     <div class="scrollable-content" style="max-height: 53.1vh;">

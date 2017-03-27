@@ -419,6 +419,44 @@
         };
     })
 
+    .filter('callerIdToNameFilter', function () {
+        return function (incomingPhoneNumber, contactList) {
+            var callerId = '';
+            var phone = incomingPhoneNumber;
+
+            contactList.forEach(function(contact){
+                if(contact.phone == phone || contact.extension == phone){
+                    callerId = contact.firstName + " " + contact.lastName ;
+                }
+            })
+            if(callerId.length > 0){
+                return callerId;
+            }
+            else{
+                return 'Unknown';
+            }
+        };
+    })
+
+    .filter('callerIdToPictureFilter', function () {
+        return function (incomingPhoneNumber, contactList) {
+            var picture = '';
+            var phone = incomingPhoneNumber;
+
+            contactList.forEach(function(contact){
+                if(contact.phone == phone || contact.extension == phone){
+                    picture = contact.picture ;
+                }
+            })
+            if(picture.length > 0){
+                return picture;
+            }
+            else{
+                return 'images/default_contact_avatar.png';
+            }
+        };
+    })
+
     .filter('currentCallPhoneNumberFilter', function () {
         return function (call) {
 
