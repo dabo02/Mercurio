@@ -77,11 +77,6 @@ MercurioChatClient.prototype.instantiateChat = function(chatSnapshot){
 		chatSnapshot.val().lastMessage, chatSnapshot.val().settings, chatSnapshot.val().timeStamp, chatSnapshot.val().title, this.chatClientOwner);
 }
 
-
-MercurioChatClient.prototype.setChatListObserver = function(observer){
-	this.chatListIsReadyObserver = observer;
-}
-
 MercurioChatClient.prototype.sendTextContentToParticipant = function(chat, participant, newMessageKey, message){
 
 	this.propagateMessageInFirebase(chat, participant, newMessageKey, message);

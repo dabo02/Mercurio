@@ -59,13 +59,12 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 		// 	query fb once for complete chat list and find its length
 		var fbChatListLength = 0;
 		firebase.database().ref('user-chats/' + self.chatClientOwner).once("value", function(snapshot) {
-			fbChatListLength = snapshot.numChildren();
+			var fbChatListLength = snapshot.numChildren();
 			if(fbChatListLength == self.chatList.length){
 				self.chatListIsReadyObserver();
 			}
+            self.chatListIsReadyObserver = null;
 		});
-
-		self.chatListIsReadyObserver = null;
 	}
 
 	function binaryInsert(value, array, startVal, endVal){
@@ -498,4 +497,8 @@ AbstractChatClient.prototype.searchChats = function(searchString){
 
 AbstractChatClient.prototype.setChatObserver = function(chatObserver){
 	this.chatObserver = chatObserver;
+}
+
+AbstractChatClient.prototype.setChatListObserver = function(observer){
+    this.chatListIsReadyObserver = observer;
 }
