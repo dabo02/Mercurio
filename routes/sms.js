@@ -71,26 +71,16 @@ exports.receive = function(req,res){
         chatExists = true;
       }
     });
-    if(chatExists){
-      var message = {
-        "from" : from,
-        "multimediaUrl" : "",
-        "textContent" : textMessage,
-        "timeStamp" : Date.now(),
-        "type" : "im"
-      }
-      var feedback = "Guardar "+JSON.stringify(message)+"en este chat --> "+JSON.stringify(chat);
-      res.send(feedback);
-    }
-    else{
-      var recipient='';
-      firebase.database().ref().child('account').once('value', function(accountSnapshot){
-        var keysArray = Object.keys(accountSnapshot.val());
-        keysArray.map(function(key){
-          if(accountSnapshot.val()[key].phone==to){
-            recipient = accountSnapshot.val()[key].firstName;
-          }
-        });
+    var mercurioUser={};
+    firebase.database().ref().child('account').once('value', function(accountSnapshot){
+      var keysArray = Object.keys(accountSnapshot.val());
+      keysArray.map(function(key){
+        if(accountSnapshot.val()[key].phone==to){
+          mercurioUser.userId = key;
+          mercurioUser.firstName = accountSnapshot.val()[key].firstName;
+        }
+      });
+      if(chatExists){
         var message = {
           "from" : from,
           "multimediaUrl" : "",
@@ -98,100 +88,115 @@ exports.receive = function(req,res){
           "timeStamp" : Date.now(),
           "type" : "im"
         }
-        var feedback = "Crear chat con "+recipient+",con este mensaje "+JSON.stringify(message);
+        var feedback = "Guardar "+JSON.stringify(message)+"en este chat --> "+JSON.stringify(chat);
+        // res.send(feedback);
+        sendMultimediaMessage(chat,message, mercurioUser)
+      }
+      else{
+        var message = {
+          "from" : from,
+          "multimediaUrl" : "",
+          "textContent" : textMessage,
+          "timeStamp" : Date.now(),
+          "type" : "im"
+        }
+        var feedback = "Crear chat con "+mercurioUser.firstName+",con este mensaje "+JSON.stringify(message);
         res.send(feedback);
-      })
-
-    }
+      }
+    })
   });
 
-  function sendMultimediaMessage(chat, message){
+  function addMessage(message){
+    var newMessageKey = firebase.database().ref().child('chat-messages/' + referenceId).push().key;
 
-  	var self = this;
+  	//determine if contact number belongs to a mercurio user and if so find that user's id
+  	//before updating the new contact's attributes in firebase
 
-  	if(!message.multimediaUrl){
-  		message.multimediaUrl = "";
-  	}
+  	var updates = {};
+  	updates['/chat-messages/' + referenceId + "/" + newMessageKey] = message;
+  	firebase.database().ref().update(updates);
 
-  	var newMessageKey = chat.addMessage(message);
-  	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + self.chatClientOwner).set(message.timeStamp);
-  	firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + self.chatClientOwner).set(true);
-  	chat.participantList.forEach(function(participant){
-  		if(participant.userId !== self.chatClientOwner){
-  			firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
-  	}
-  	});
-
-  	if(message.multimediaUrl){
-  		var uploadTask = firebase.storage().ref().child('chats/' + chat.chatId + '/images/' + newMessageKey).put(message.multimediaUrl);
-
-  		//
-  		// Listen for state changes, errors, and completion of the upload.
-          uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-            function(snapshot) {
-  						self.uploadingImage = true;
-              // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-              var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED: // or 'paused'
-                  break;
-                case firebase.storage.TaskState.RUNNING: // or 'running'
-                  break;
-              }
-            }, function(error) {
-  						self.uploading = false;
-            switch (error.code) {
-              case 'storage/unauthorized':
-                // User doesn't have permission to access the object
-                break;
-
-              case 'storage/canceled':
-                // User canceled the upload
-                break;
-
-              case 'storage/unknown':
-                // Unknown error occurred, inspect error.serverResponse
-                break;
-            }
-          }, function() {
-            // Upload completed successfully, now we can get the download URL
-  					message.multimediaUrl = uploadTask.snapshot.downloadURL;
-
-  					var updates = {};
-  					updates['/chat-messages/' + chat.chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
-
-  					firebase.database().ref().update(updates);
-
-  					sendTextMessage(chat, newMessageKey, message);
-
-          });
-  	}
-  	else{
-
-  		sendTextMessage(chat, newMessageKey, message);
-  	}
-
+  	return newMessageKey;
   }
 
-  function sendTextMessage(chat, newMessageKey, message){
+  function sendMultimediaMessage(chat, message, mercurioUser){
 
   	var self = this;
-  	var user = {"firstName":""};
-  	function sendPushNotification(pushToken, participant){
+
+  	// if(!message.multimediaUrl){
+  	// 	message.multimediaUrl = "";
+  	// }
+    console.log(JSON.stringify(mercurioUser));
+  	var newMessageKey = addMessage(message);
+  	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + mercurioUser.userId).set(0);
+    firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + mercurioUser.userId).set(true);
+  	// if(message.multimediaUrl){
+  	// 	var uploadTask = firebase.storage().ref().child('chats/' + chat.chatId + '/images/' + newMessageKey).put(message.multimediaUrl);
+    //
+  	// 	//
+  	// 	// Listen for state changes, errors, and completion of the upload.
+    //       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+    //         function(snapshot) {
+  	// 					self.uploadingImage = true;
+    //           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    //           var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //           switch (snapshot.state) {
+    //             case firebase.storage.TaskState.PAUSED: // or 'paused'
+    //               break;
+    //             case firebase.storage.TaskState.RUNNING: // or 'running'
+    //               break;
+    //           }
+    //         }, function(error) {
+  	// 					self.uploading = false;
+    //         switch (error.code) {
+    //           case 'storage/unauthorized':
+    //             // User doesn't have permission to access the object
+    //             break;
+    //
+    //           case 'storage/canceled':
+    //             // User canceled the upload
+    //             break;
+    //
+    //           case 'storage/unknown':
+    //             // Unknown error occurred, inspect error.serverResponse
+    //             break;
+    //         }
+    //       }, function() {
+    //         // Upload completed successfully, now we can get the download URL
+  	// 				message.multimediaUrl = uploadTask.snapshot.downloadURL;
+    //
+  	// 				var updates = {};
+  	// 				updates['/chat-messages/' + chat.chatId + "/" + newMessageKey + "/multimediaUrl"] = message.multimediaUrl;
+    //
+  	// 				firebase.database().ref().update(updates);
+    //
+  	// 				sendTextMessage(chat, newMessageKey, message);
+    //
+    //       });
+  	// }
+  	// else{
+    //
+  	// 	sendTextMessage(chat, newMessageKey, message);
+  	// }
+    sendTextMessage(chat, newMessageKey, message, mercurioUser);
+  }
+
+  function sendTextMessage(chat, newMessageKey, message, mercurioUser){
+
+  	var self = this;
+  	function sendPushNotification(pushToken){
   		var tokenArray = [];
-  		if(pushToken == null){
-  			user = participant;
-  		}
-  		else{
-  			//Convert Not Iterable JSON to an array
-  			var array = Object.keys(pushToken);
+
+			//Convert Not Iterable JSON to an array
+      if(pushToken==null){
+        console.log("No tokens")
+      }
+      else{
+        var array = Object.keys(pushToken);
   			tokenArray = angular.copy(array);
-  		}
+      }
+
   		if(tokenArray.length>0){
-  			var containsMultimedia = false;
-  			if(message.multimediaUrl.length>0){
-  				containsMultimedia = true;
-  			}
   			$.ajax({
   		    url: "/sendNotification",
   		    type: "post",
@@ -199,9 +204,9 @@ exports.receive = function(req,res){
   		    data: JSON.stringify(
   					{
   						"tokens" : tokenArray,
-  						"messageTitle" :  user.firstName,
-  						"messageBody" : message.textContent,
-  						"hasMultimedia" : containsMultimedia
+  						"messageTitle" :  from,
+  						"messageBody" : textMessage,
+  						"hasMultimedia" : false
   					}
   				),
   				success: function() {
@@ -215,32 +220,26 @@ exports.receive = function(req,res){
 
   	}
 
-  	chat.participantList.forEach(function(participant){
-
-  		if(participant.userId !== self.chatClientOwner){
-  			firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + participant.userId).set(0);
-  		}
+      var participant = mercurioUser;
 
   		firebase.database().ref().child('user-tokens/'+participant.userId).once('value', function(snapshot){
 
-  			firebase.database().ref().child("user-chats").child(participant.userId).child(chat.chatId)
+  			firebase.database().ref().child("user-chats").child(participant.userId).child(referenceId)
   			.once('value', function(actualChat){
   				if(!actualChat.val().settings.mute){
-  					sendPushNotification(snapshot.val(), participant);
+  					sendPushNotification(snapshot.val());
   				}
   			});
   		});
 
-  		firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + participant.userId).set(true);
-
   		var updates = {};
   		message.messageId = newMessageKey;
 
-  		updates['/user-chats/' + participant.userId + "/" + chat.chatId + "/lastMessage"] = message;
+  		updates['/user-chats/' + participant.userId + "/" + referenceId + "/lastMessage"] = message;
 
   		firebase.database().ref().update(updates);
-  	});
-
+      console.log("done");
+      res.sendStatus(200);
   	// var chat = self.chatList[chatIndex];
   // 	self.chatList.splice(chatIndex, 1);
   // 	self.chatList.unshift(chat);
