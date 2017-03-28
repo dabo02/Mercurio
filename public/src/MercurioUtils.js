@@ -8,7 +8,7 @@
     angular.module('mercurio')
 
     .filter('chatListParticipantNameFilter', function () {
-        return function (chat, chatClientOwner) {
+        return function (chat, chatClientOwner, contacts) {
 
             if(chat.lastMessage.from === 'undefined'){
                 return '';
@@ -23,6 +23,18 @@
             chat.participantList.forEach(function (participant) {
                 if (chat.lastMessage.from === participant.participantId) {
                     participantName = participant.firstName + ' ' + participant.lastName;
+                }
+
+                if(participantName === ''){
+                    contacts.forEach(function(contact) {
+                        if (contact.userId == from) {
+                            participantName = contact.firstName + ' ' + contact.lastName;
+                        }
+                    });
+                }
+
+                if(participantName === ''){
+                    participantName = from;
                 }
             });
 
@@ -55,7 +67,7 @@
     })
 
     .filter('messageListParticipantNameFilter', function () {
-        return function (from, participantList) {
+        return function (from, participantList, contacts) {
 
 
 
@@ -70,6 +82,18 @@
                         participantName = participant.firstName + ' ' + participant.lastName;
                     }
                 });
+
+                if(participantName === ''){
+                    contacts.forEach(function(contact) {
+                        if (contact.userId == from) {
+                            participantName = contact.firstName + ' ' + contact.lastName;
+                        }
+                    });
+                }
+
+                if(participantName === ''){
+                    participantName = from;
+                }
             }
 
             return participantName;
