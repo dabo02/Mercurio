@@ -809,3 +809,21 @@ div:focus {
 border-color: white;
 border-width: 1px;
  }
+
+.md-chips .md-chip-input-container {
+    width: 100%;
+}
+
+.md-chips .md-chip-input-container md-autocomplete md-autocomplete-wrap {
+    width: 100%;
+}
+
+.md-autocomplete-suggestions-container {
+    width:30%;
+}
+
+.md-contact-suggestion img{
+    margin-top:-30px;
+    border-radius: 50%;
+    width: 12%;
+}

@@ -16,6 +16,7 @@
         self.chatClient = chatClientService.chatClient;
         self.chatServiceClient = chatClientService;
         self.groupChatCheckbox = false;
+        self.isItAGroup = false;
 
         self.newContactChipSelected = function(contactChips){
         }
@@ -40,6 +41,11 @@
 
             if(contactChips.length > 1 && !self.groupChatCheckbox){
                 self.groupChatCheckbox = true;
+                self.isItAGroup= true;
+                setTimeout(function(){
+                    self.isItAGroup= false;
+                    $scope.$apply();
+                }, 2000);
                 return;
             }
             else if(self.groupChatCheckbox && !self.title){
