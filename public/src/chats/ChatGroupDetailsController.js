@@ -198,7 +198,11 @@
         }
 
         self.changeConfirmed = function(){
+            if(self.newChatTitle != chatClientService.selectedChat.title && self.newChatTitle){
+                chatClientService.selectedChat.saveChatTitle(self.newChatTitle);
+            }
           self.canEdit = false;
+            self.saveButtonIsAvailable = false;
         }
 
         self.cancelChange = function(){
