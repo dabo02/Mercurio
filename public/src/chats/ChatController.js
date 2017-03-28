@@ -115,11 +115,11 @@
         self.typingAMessage = function(){
           var textContentLenght = self.textContentToSend.length;
           var timeout;
-          chatClientService.selectedChat.toggleIsTyping(true);
+          chatClientService.selectedChat.toggleIsTyping(true, chatClientService.chatClient.chatClientOwner);
           if(typeof(timeout) === 'undefined'){
             timeout = setTimeout(function(){
               if(textContentLenght == self.textContentToSend.length){
-                chatClientService.selectedChat.toggleIsTyping(false);
+                chatClientService.selectedChat.toggleIsTyping(false, chatClientService.chatClient.chatClientOwner);
               }
               clearTimeout(timeout);
             }, 5000)
@@ -203,6 +203,11 @@
           self.isDeleteMessagesClicked = true;
         }
 
+        //Focus
+        self.focusOnInput = function(){
+            document.getElementById("typeMessage").focus();
+        }
+
         //Close delete messages option
         self.closeSelectMessage = function(){
           self.isDeleteMessagesClicked = false;
@@ -212,7 +217,7 @@
         //Delete messages from the array
         self.deleteMessages = function(){
           if(self.messagesToDelete.length>0){
-          chatClientService.selectedChat.deleteMessages(self.messagesToDelete);
+          chatClientService.selectedChat.deleteMessages(self.messagesToDelete, chatClientService.chatClient.chatClientOwner);
           self.messagesToDelete =[];
           self.isDeleteMessagesClicked =false;
           setTimeout(function(){

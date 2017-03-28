@@ -101,18 +101,18 @@ MercurioChat.prototype.addUserChatEntryToNewParticipant = function(participantId
 	});
 }
 
-MercurioChat.prototype.toggleIsTyping = function(value){
+MercurioChat.prototype.toggleIsTyping = function(value, chatClientOwner){
 	var self = this;
 	var updates = {};
-	updates['/chat-members/' + self.chatId +'/' + self.chatClientOwner + '/isTyping' ] = value;
+	updates['/chat-members/' + self.chatId +'/' + chatClientOwner + '/isTyping' ] = value;
 	firebase.database().ref().update(updates);
 }
 
-MercurioChat.prototype.deleteMessages = function(messages){
+MercurioChat.prototype.deleteMessages = function(messages, chatClientOwner){
 
 	var self = this;
 	messages.forEach(function(message){
-		firebase.database().ref('message-info/' + message + '/has-message/' + self.chatClientOwner).set(false);
+		firebase.database().ref('message-info/' + message + '/has-message/' + chatClientOwner).set(false);
 	});
 }
 

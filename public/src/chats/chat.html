@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-            <div style="margin-top:3%" ng-controller="ChatController as chatCtrl" class="row">
+            <div style="margin-top:3%" ng-controller="ChatController as chatCtrl" class="row"  ng-init="chatCtrl.focusOnInput()">
                 <script type="text/ng-template" id="chatGroupDetails">
                     <md-dialog flex="40" aria-label="Chat Group Details" ng-controller="ChatGroupDetailsController as chatGroupCtrl">
                         <form ng-controller="ContactListController as contactListCtrl" ng-cloak>
@@ -486,8 +486,7 @@
                                 <!--<p id="smile" style="margin-top: 3%; font-size: 22px;" class="fa fa-smile-o text-center" flex="10"></p>-->
                                 <md-input-container id="chatMessageInput" style="margin-bottom: 0%;" class="md-icon-float md-block flex-85 flex-offset-5">
                                     <label style="color: white;">Type Message</label>
-                                    <!--<input ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.changeMicToSend()" type="text">-->
-                                    <input style = "color: white; border-color: white;" ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.typingAMessage()" type="text">
+                                    <input id="typeMessage" style = "color: white; border-color: white;" ng-model="chatCtrl.textContentToSend" ng-change="chatCtrl.typingAMessage()" type="text" md-autofocus/>
                                 </md-input-container>
                                 <p ng-click="chatCtrl.sendMessage()"  style="margin-top: 3%; color: white; font-size: 22px;" class="fa fa-send text-center flex-10"></p>
                             </form>
