@@ -29,7 +29,7 @@ SMSChatClient.prototype.fetchChatListChildAddedSnapshot = function(pageNumber, l
 	//empty out chatList to make room for it's updated copy
 	//this.chatList = [];
 
-	firebase.database().ref('user-chats/' + this.chatClientOwner).on('child_added', function(snapshot) {
+	firebase.database().ref('user-chats/' + this.chatClientOwner).orderByChild('type').equalTo('sms').on('child_added', function(snapshot) {
 
 		childAddedSnapshotCallback(snapshot);
 
@@ -139,3 +139,8 @@ SMSChatClient.prototype.sendTextContentToParticipant = function(chat, participan
 
 }
 
+SMSChatClient.prototype.setChatType= function(chatInfo){
+	chatInfo.type = 'sms';
+
+	return;
+}

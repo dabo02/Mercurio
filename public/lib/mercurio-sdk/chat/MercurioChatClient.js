@@ -16,7 +16,7 @@ MercurioChatClient.prototype.constructor = MercurioChatClient;
 
 MercurioChatClient.prototype.fetchChatListChildChangedSnapshot = function(childChangedSnapshotCallback){
 
-	firebase.database().ref('user-chats/' + this.chatClientOwner).on('child_changed', function(snapshot) {
+	firebase.database().ref('user-chats/' + this.chatClientOwner).orderByChild('type').equalTo('im').on('child_changed', function(snapshot) {
 
 		childChangedSnapshotCallback(snapshot);
 
@@ -31,7 +31,7 @@ MercurioChatClient.prototype.fetchChatListChildAddedSnapshot = function(pageNumb
 	//empty out chatList to make room for it's updated copy
 	this.chatList = [];
 
-	firebase.database().ref('user-chats/' + this.chatClientOwner).on('child_added', function(snapshot) {
+	firebase.database().ref('user-chats/' + this.chatClientOwner).orderByChild('type').equalTo('im').on('child_added', function(snapshot) {
 
 		childAddedSnapshotCallback(snapshot);
 
@@ -136,4 +136,10 @@ MercurioChatClient.prototype.saveGroupPicture = function(picture, chat, sendUplo
 		});
 
 	// TODO - add error management callback
+}
+
+MercurioChatClient.prototype.setChatType= function(chatInfo){
+	chatInfo.type = 'im';
+
+	return;
 }
