@@ -234,8 +234,10 @@ AbstractChatClient.prototype.createChat = function(title, observer, userIds, pho
 					timeStamp: new Date().getTime(),
 					title: title || '',
 					participantCount: userIds.length + phoneNumbers.length,
-					settings: {mute: false}
+					settings: {mute: false},
 				};
+
+				self.setChatType(chatInfo);
 
 				var updates = {};
 
