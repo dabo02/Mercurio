@@ -10,10 +10,6 @@
     .filter('chatListParticipantNameFilter', function () {
         return function (chat, chatClientOwner, contacts) {
 
-            if(chat.lastMessage.from === 'undefined'){
-                return '';
-            }
-
             if(chat.lastMessage.from === chatClientOwner){
                 return 'You';
             }
@@ -22,19 +18,19 @@
 
             chat.participantList.forEach(function (participant) {
                 if (chat.lastMessage.from === participant.participantId) {
-                    participantName = participant.firstName + ' ' + participant.lastName;
+                    participantName = participant.firstName;
                 }
 
-                if(participantName === ''){
+                if(participantName === '' && contacts){
                     contacts.forEach(function(contact) {
-                        if (contact.userId == from) {
-                            participantName = contact.firstName + ' ' + contact.lastName;
+                        if (contact.userId == chat.lastMessage.from) {
+                            participantName = contact.firstName;
                         }
                     });
                 }
 
                 if(participantName === ''){
-                    participantName = from;
+                    participantName = chat.lastMessage.from;
                 }
             });
 
