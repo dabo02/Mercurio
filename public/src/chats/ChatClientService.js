@@ -106,8 +106,8 @@
                       }
                   notify = new Notification('New Message Received from ' + sender.firstName + ' ' + sender.lastName, options);
                   notify.onclick = function(event){
-                    var chatURL =  "http://localhost:3000/#/dialer"
-                    window.open(chatURL);
+                      var chatUrl = $state.href('chat', {chatClientOwner: self.chatClientOwner});
+                      window.open(chatUrl,'_blank');
                   }
                    setTimeout(notify.close.bind(notify), 4000);
                  }
