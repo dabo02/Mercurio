@@ -106,8 +106,10 @@
                       }
                   notify = new Notification('New Message Received from ' + sender.firstName + ' ' + sender.lastName, options);
                   notify.onclick = function(event){
-                      var chatUrl = $state.href('chat', {chatClientOwner: self.chatClientOwner});
-                      window.open(chatUrl,'_blank');
+                      self.selectedChat = receivedChat;
+                      localStorage.setItem('chatSaved', JSON.stringify(receivedChat));
+                      var chatUrl = $state.href('chat', {'chatIndex' : receivedChat.chatId, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                      location.replace(chatUrl);
                   }
                    setTimeout(notify.close.bind(notify), 4000);
                  }
