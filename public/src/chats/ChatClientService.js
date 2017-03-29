@@ -73,7 +73,9 @@
                     sound.currentTime=0;
                 }
                 if($state.params.chatId == receivedChat.chatId){
-                    self.selectedChat.markUnreadMessagesAsRead(self.chatClient.chatClientOwner);
+                    self.selectedChat.setMessageAdded( function() {
+                        self.selectedChat.markUnreadMessagesAsRead(self.chatClient.chatClientOwner);
+                    })
                 }
 
                 // if($state.params.chatIndex != undefined && receivedChatIndex >= 0){
