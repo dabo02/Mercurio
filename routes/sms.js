@@ -55,42 +55,42 @@ exports.receive = function(req,res){
   var from = req.body.from;
   var to = req.body.to;
   var textMessage = req.body.text;
-  var referenceId = req.body.referenceId;
   var chat;
   var chatExists = false;
+  var chatKey;
 
-  firebase.database().ref().child('user-chats').once('value', function(chatSnapshot){
-    var keysArray = Object.keys(chatSnapshot.val());
-    keysArray.map(function(key){
-      // if(key==referenceId){
-      //   chatExists = true;
-      //   chatId = key;
-      // }
-      if(typeof(chatSnapshot.val()[key][referenceId])!='undefined'){
-        chat = chatSnapshot.val()[key][referenceId];
-        chatExists = true;
-      }
-    });
-    var mercurioUser={};
+  firebase.database().ref().child('chat-members').once('value', function(membersSnapshot){
     firebase.database().ref().child('account').once('value', function(accountSnapshot){
       var keysArray = Object.keys(accountSnapshot.val());
+      var mercurioUser={};
       keysArray.map(function(key){
         if(accountSnapshot.val()[key].phone==to){
           mercurioUser.userId = key;
           mercurioUser.firstName = accountSnapshot.val()[key].firstName;
         }
       });
-      if(chatExists){
-        var message = {
-          "from" : from,
-          "multimediaUrl" : "",
-          "textContent" : textMessage,
-          "timeStamp" : Date.now(),
-          "type" : "im"
+      var keysArray = Object.keys(membersSnapshot.val());
+      keysArray.map(function(key){
+        var members = Object.keys(membersSnapshot.val()[key])
+        if(members.indexOf(from)>-1 && members.indexOf(mercurioUser.userId)>-1){
+          chatKey = key;
+          chatExists = true;
         }
-        var feedback = "Guardar "+JSON.stringify(message)+"en este chat --> "+JSON.stringify(chat);
-        // res.send(feedback);
-        sendMultimediaMessage(chat,message, mercurioUser)
+      });
+      if(chatExists){
+        firebase.database().ref().child('user-chats').once('value', function(chatSnapshot){
+          chat = chatSnapshot.val()[mercurioUser.userId][chatKey];
+          var message = {
+            "from" : from,
+            "multimediaUrl" : "",
+            "textContent" : textMessage,
+            "timeStamp" : Date.now(),
+            "type" : "im"
+          }
+          var feedback = "Guardar "+JSON.stringify(message)+"en este chat --> "+JSON.stringify(chat);
+          // res.send(feedback);
+          sendMultimediaMessage(chat,message, mercurioUser)
+        })
       }
       else{
         var message = {
@@ -101,19 +101,21 @@ exports.receive = function(req,res){
           "type" : "im"
         }
         var feedback = "Crear chat con "+mercurioUser.firstName+",con este mensaje "+JSON.stringify(message);
-        res.send(feedback);
+        // res.send(feedback);
+        createChat(message, mercurioUser);
       }
-    })
+    });
   });
 
-  function addMessage(message){
-    var newMessageKey = firebase.database().ref().child('chat-messages/' + referenceId).push().key;
+  function addMessage(message, key){
+    var newMessageKey = firebase.database().ref().child('chat-messages/' + key).push().key;
 
   	//determine if contact number belongs to a mercurio user and if so find that user's id
   	//before updating the new contact's attributes in firebase
 
   	var updates = {};
-  	updates['/chat-messages/' + referenceId + "/" + newMessageKey] = message;
+    message.messageId = newMessageKey;
+  	updates['/chat-messages/' + key + "/" + newMessageKey] = message;
   	firebase.database().ref().update(updates);
 
   	return newMessageKey;
@@ -127,7 +129,7 @@ exports.receive = function(req,res){
   	// 	message.multimediaUrl = "";
   	// }
     console.log(JSON.stringify(mercurioUser));
-  	var newMessageKey = addMessage(message);
+  	var newMessageKey = addMessage(message, chatKey);
   	firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + mercurioUser.userId).set(0);
     firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + mercurioUser.userId).set(true);
   	// if(message.multimediaUrl){
@@ -193,38 +195,49 @@ exports.receive = function(req,res){
       }
       else{
         var array = Object.keys(pushToken);
-  			tokenArray = angular.copy(array);
+  			tokenArray = array.slice();
       }
 
   		if(tokenArray.length>0){
-  			$.ajax({
-  		    url: "/sendNotification",
-  		    type: "post",
-  		    contentType: "application/json; charset=utf-8",
-  		    data: JSON.stringify(
-  					{
-  						"tokens" : tokenArray,
-  						"messageTitle" :  from,
-  						"messageBody" : textMessage,
-  						"hasMultimedia" : false
-  					}
-  				),
-  				success: function() {
-  					tokenArray.length = 0;
-  				},
-  				error: function(XMLHttpRequest, textStatus, errorThrown) {
-  					tokenArray.length = 0;
-  				}
-  		  });
-  		}
+        //
+        //send push notification
+        var FCM = require('fcm-push');
 
+        //Development Key
+         var serverkey = 'AIzaSyAlTNQ0rX_z49-EL71e8le0vPew16g8WDg';
+
+        //Production Key
+        //var serverkey = 'AIzaSyBYty0ff3hxlmwmBjy7paWCEalIrJxDpZ8';
+
+        var fcm = new FCM(serverkey);
+
+        for(var i = 0; i < tokenArray.length; i++){
+          var token = tokenArray[i];
+          var bodyMessage = textMessage;
+          var message =  {
+                to : token,
+                priority:'high',
+                notification : {
+                  title : from,
+                  body : bodyMessage,
+                  sound : true
+                }
+          };
+
+          fcm.send(message, function(err,response){
+            if(err) {
+              console.error(err);
+            }
+          });
+        }
+      }
   	}
 
       var participant = mercurioUser;
 
   		firebase.database().ref().child('user-tokens/'+participant.userId).once('value', function(snapshot){
 
-  			firebase.database().ref().child("user-chats").child(participant.userId).child(referenceId)
+  			firebase.database().ref().child("user-chats").child(participant.userId).child(chatKey)
   			.once('value', function(actualChat){
   				if(!actualChat.val().settings.mute){
   					sendPushNotification(snapshot.val());
@@ -235,7 +248,7 @@ exports.receive = function(req,res){
   		var updates = {};
   		message.messageId = newMessageKey;
 
-  		updates['/user-chats/' + participant.userId + "/" + referenceId + "/lastMessage"] = message;
+  		updates['/user-chats/' + participant.userId + "/" + chatKey + "/lastMessage"] = message;
 
   		firebase.database().ref().update(updates);
       console.log("done");
@@ -244,5 +257,40 @@ exports.receive = function(req,res){
   // 	self.chatList.splice(chatIndex, 1);
   // 	self.chatList.unshift(chat);
   }
-  //
+
+  function createChat(message, mercurioUser){
+    var key = firebase.database().ref().child('chat-members/' + mercurioUser.userId).push().key;
+
+  	//determine if contact number belongs to a mercurio user and if so find that user's id
+  	//before updating the new contact's attributes in firebase
+    var memberProperties={
+      "isAdmin":false,
+      "isMember":true,
+      "isTyping":false
+    }
+  	var updates = {};
+  	updates['/chat-members/' + key + "/" + mercurioUser.userId] = memberProperties;
+    updates['/chat-members/' + key + "/" + from] = memberProperties;
+  	firebase.database().ref().update(updates).then(function(){
+      var newMessageKey = addMessage(message, key);
+      message.messageId=newMessageKey;
+      var updates = {};
+    	firebase.database().ref().child('message-info/' + newMessageKey + "/has-message/" + mercurioUser.userId).set(true);
+      firebase.database().ref().child('message-info/' + newMessageKey + "/read/" + mercurioUser.userId).set(0);
+      firebase.database().ref().update(updates).then(function(){
+        var updates={}
+        updates['/user-chats/' + mercurioUser.userId + "/" + key+"/"+"lastMessage"] = message;
+        firebase.database().ref().child('user-chats/' + mercurioUser.userId + "/" + key+"/settings/mute").set(false);
+        firebase.database().ref().child('user-chats/' + mercurioUser.userId + "/" + key+"/timeStamp").set(Date.now());
+        firebase.database().ref().child('user-chats/' + mercurioUser.userId + "/" + key+"/title").set("");
+        firebase.database().ref().child('user-chats/' + mercurioUser.userId + "/" + key+"/type").set('sms');
+        firebase.database().ref().child('user-chats/' + mercurioUser.userId + "/" + key+"/participantCount").set(2);
+
+        firebase.database().ref().update(updates).then(function(){
+          res.sendStatus(200)
+        })
+      });
+    });
+  }
+
 }
