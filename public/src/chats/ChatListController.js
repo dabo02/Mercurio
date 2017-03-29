@@ -33,7 +33,7 @@
             $state.go('chat', {'chatIndex' : chatClientService.selectedChat.chatId, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
         }
 
-        self.getTextPreviewClass = function(chat, index){
+        self.getTextPreviewClass = function(chat){
             //if($state.params.chatIndex == index){
             //    chatClientService.chatClient.chatList[index].markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
             //    return;
