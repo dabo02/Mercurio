@@ -59,7 +59,7 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 		// 	query fb once for complete chat list and find its length
 		firebase.database().ref('user-chats/' + self.chatClientOwner).once("value", function(snapshot) {
 			var fbChatListLength = snapshot.numChildren();
-			if(fbChatListLength == self.chatList.length){
+			if(fbChatListLength == self.chatList.length && self.chatListIsReadyObserver){
 				self.chatListIsReadyObserver();
 			}
             self.chatListIsReadyObserver = null;

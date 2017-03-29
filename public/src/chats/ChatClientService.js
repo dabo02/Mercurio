@@ -72,7 +72,7 @@
                     sound.play();
                     sound.currentTime=0;
                 }
-                if($state.params.chatIndex == receivedChat.chatId){
+                if($state.params.chatId == receivedChat.chatId){
                     self.selectedChat.markUnreadMessagesAsRead(self.chatClient.chatClientOwner);
                 }
 
@@ -111,7 +111,7 @@
                   notify.onclick = function(event){
                       self.selectedChat = receivedChat;
                       localStorage.setItem('chatSaved', JSON.stringify(receivedChat));
-                      var chatUrl = $state.href('chat', {'chatIndex' : receivedChat.chatId, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                      var chatUrl = $state.href('chat', {'chatId' : receivedChat.chatId, 'chatClientOwner' : self.chatClient.chatClientOwner});
                       location.replace(chatUrl);
                   }
                    setTimeout(notify.close.bind(notify), 4000);
