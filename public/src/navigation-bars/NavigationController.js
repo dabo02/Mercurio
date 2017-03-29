@@ -8,6 +8,20 @@
     angular.module('mercurio').controller('NavigationController', ['$scope', 'authenticationService', 'accountService', '$mdSidenav', '$location', 'phoneService', function($scope, authenticationService, accountService, $mdSidenav, $location, phoneService){
 
         var self = this;
+        self.accountService = accountService;
+        //Set greetings message
+        var date = new Date;
+        var hour = date.getHours()
+        if(hour>5 && hour<12){
+          $scope.greetingMessage="Good morning, ";
+        }
+        else if(hour>=12 && hour<6){
+          $scope.greetingMessage="Good afternoon, ";
+        }
+        else{
+          $scope.greetingMessage="Good night, ";
+        }
+
         self.profileImage = "images/contact0Dressed.jpg";
         self.viewingRecentCalls = true;
         self.viewingRecentChats = false;

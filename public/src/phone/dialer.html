@@ -1,5 +1,8 @@
 <div style="height:100%;" ng-show="navCtrl.isAccountAvailable()" layout="column" ng-controller="UserController as user">
     <nav-bar></nav-bar>
+    <div class="row">
+      <p style="position:absolute; margin-left:10%; margin-top:40px; font-family:initial; color:white; font-size:18px; font-weight:bold;">{{greetingMessage}}{{navCtrl.accountService.activeAccount.firstName}}</p>
+    </div>
     <div flex layout="row">
         <left-sidebar></left-sidebar>
 
