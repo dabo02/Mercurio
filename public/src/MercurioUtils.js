@@ -30,6 +30,7 @@
                 }
 
                 if(participantName === ''){
+                    participantName = chat.lastMessage.from;
                     if(chat.lastMessage.from.length > 10){
                         participantName = chat.lastMessage.from.substring(chat.lastMessage.from.length-10, chat.lastMessage.from.length);
                     }
@@ -92,6 +93,10 @@
 
                 if(participantName === ''){
                     participantName = from;
+                    if(participantName.length > 10){
+                        participantName = participantName.substring(from.length-10, from.length);
+                    }
+                    participantName= participantName.slice(0,3)+"-"+participantName.slice(3,6)+"-"+participantName.slice(6);
                 }
             }
 
