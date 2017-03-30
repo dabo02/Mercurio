@@ -38,8 +38,8 @@
 
                 <md-dialog-content>
                     <md-card-title style="padding-top: 0%; margin: 10px;">
+                        <h4 ng-show="createChatCtrl.isItAGroup" style="margin-left: 35%;"> Chat needs a title :) </h4>
                         <md-card-title-text flex="80" flex-offset="10" style="padding-top:5%" layout="row" ng-cloak>
-
                             <md-content class="chipschatListCtrlContactChips" style="background-color:white;" flex="100" class="md-padding md-autocomplete" layout="column" ng-cloak>
                                 <md-contact-chips
                                         ng-model="chatParticipantSelectionCtrl.asyncContacts"

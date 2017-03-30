@@ -18,6 +18,8 @@
         self.userWasAdded = false;
         self.pictrue ='';
         self.allMetaData = null;
+        self.newChatTitle;
+        self.infoSaved = false;
         // self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
         // self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
 
@@ -198,7 +200,18 @@
         }
 
         self.changeConfirmed = function(){
-          self.canEdit = false;
+            if(self.newChatTitle != chatClientService.selectedChat.title && self.newChatTitle){
+                chatClientService.selectedChat.saveChatTitle(self.newChatTitle);
+                self.newChatTitle = chatClientService.selectedChat.title;
+            }
+            self.canEdit = false;
+            self.saveGroupDetailsButtonIsAvailable = false;
+            self.infoSaved = true;
+            setTimeout(function(){
+                self.infoSaved = false;
+                $scope.$apply();
+            }, 3000);
+
         }
 
         self.cancelChange = function(){
@@ -249,8 +262,14 @@
                 });
 
             }
+            self.infoSaved = true;
+            setTimeout(function(){
+                self.infoSaved = false;
+                $scope.$apply();
+            }, 3000);
 
-            self.closeChatGroupDetailsDialog();
+            self.saveGroupDetailsButtonIsAvailable = false;
+            self.canEdit = false;
         }
         //
 
@@ -260,6 +279,10 @@
           }, 100);
 
          });
+
+        if(chatClientService.selectedChat){
+            self.newChatTitle = angular.copy(chatClientService.selectedChat.title);
+        }
 
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){

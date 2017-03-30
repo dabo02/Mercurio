@@ -72,31 +72,36 @@
                     sound.play();
                     sound.currentTime=0;
                 }
-
-                var receivedChatIndex = index;
-
-                if($state.params.chatIndex != undefined && receivedChatIndex >= 0){
-                    if($state.params.chatIndex < receivedChatIndex){
-                        // received chat is listed after the chat i am currently viewing
-                        // move the chat i'm viewing one spot down the list and update the route to continue viewing it
-                        var newIndex = parseInt($state.params.chatIndex, 10) + 1;
-                        $state.go('chat');//, {'chatIndex' : newIndex, 'chatClientOwner' : self.chatClient.chatClientOwner});
-                    }
-                    else if($state.params.chatIndex == receivedChatIndex){
-
-                        //mark message as read
-                        //self.chatClient.chatList[$state.params.chatIndex].markAllMessagesAsRead(self.chatClient.chatClientOwner);
-
-                        // I am currently viewing the received chat and it is now positioned at index 0 so the route
-                        // is updated to continue viewing it
-                        if(receivedChatIndex == 0){
-                            $state.go('chat');//$state.reload();
-                        }
-                        else{
-                            $state.go('chat');//$state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
-                        }
-                    }
+                if($state.params.chatId == receivedChat.chatId){
+                    self.selectedChat.setMessageAdded( function() {
+                        self.selectedChat.markUnreadMessagesAsRead(self.chatClient.chatClientOwner);
+                    })
                 }
+
+                // if($state.params.chatIndex != undefined && receivedChatIndex >= 0){
+                //     if($state.params.chatIndex < receivedChatIndex){
+                //         // received chat is listed after the chat i am currently viewing
+                //         // move the chat i'm viewing one spot down the list and update the route to continue viewing it
+                //         var newIndex = parseInt($state.params.chatIndex, 10) + 1;
+                //         $state.go('chat');//, {'chatIndex' : newIndex, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                //     }
+                //     else if($state.params.chatIndex == receivedChat.chatId){
+                //
+                //         //mark message as read
+                //         self.selectedChat.markUnreadMessagesAsRead(self.chatClient.chatClientOwner);
+                //         console.log(self.selectedChat)
+                //         $rootScope.$apply();
+                //
+                //         // I am currently viewing the received chat and it is now positioned at index 0 so the route
+                //         // is updated to continue viewing it
+                //         if(receivedChatIndex == 0){
+                //             $state.go('chat');//$state.reload();
+                //         }
+                //         else{
+                //             $state.go('chat');//$state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                //         }
+                //     }
+                // }
 
                 Notification.requestPermission(function(permission){
                   if(permission === "granted"){
@@ -106,8 +111,10 @@
                       }
                   notify = new Notification('New Message Received from ' + sender.firstName + ' ' + sender.lastName, options);
                   notify.onclick = function(event){
-                    var chatURL =  "http://localhost:3000/#/dialer"
-                    window.open(chatURL);
+                      self.selectedChat = receivedChat;
+                      localStorage.setItem('chatSaved', JSON.stringify(receivedChat));
+                      var chatUrl = $state.href('chat', {'chatId' : receivedChat.chatId, 'chatClientOwner' : self.chatClient.chatClientOwner});
+                      location.replace(chatUrl);
                   }
                    setTimeout(notify.close.bind(notify), 4000);
                  }

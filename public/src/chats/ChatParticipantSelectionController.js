@@ -99,34 +99,37 @@ angular.module('users')
         });
 
 
-        if(lowercaseQuery.length >= 3){
-          //try and remove contact chip with query
-            if(tempContactIndex>=0){
-              contacts.splice(tempContactIndex, 1);
-              tempContactIndex = -1;
+        if(lowercaseQuery.length >= 3) {
+            //try and remove contact chip with query
+            if (!isNaN(lowercaseQuery)) {
+                if (tempContactIndex >= 0) {
+                    contacts.splice(tempContactIndex, 1);
+                    tempContactIndex = -1;
+                }
+                //add special contact chip with query
+                if (tempContactIndex == -1) {
+                    contacts.unshift(
+                        new MercurioContact('Send to ' + lowercaseQuery, '', 'email', './images/default_contact_avatar.png', lowercaseQuery,
+                            'extension', null, null, 'status', 'availability')
+                    );
+
+                    contacts[0].temp = true;
+
+                    loadContacts();
+                }
             }
-            //add special contact chip with query
-            if(tempContactIndex == -1){
-                contacts.unshift(
-                    new MercurioContact('Send to ' + lowercaseQuery,'','email','./images/default_contact_avatar.png',lowercaseQuery,
-                    'extension',null,null,'status','availability')
-                );
-
-                contacts[0].temp = true;
-
-                loadContacts();
+            else {
+                if (tempContactIndex >= 0) {
+                    contacts.splice(tempContactIndex, 1);
+                    tempContactIndex = -1;
+                }
             }
         }
-        else{
-          if(tempContactIndex>=0){
-            contacts.splice(tempContactIndex, 1);
-            tempContactIndex = -1;
-          }
-        }
+            return function filterFn(contact) {
+                return (contact._lowername.indexOf(lowercaseQuery) != -1) || (contact.phone.indexOf(lowercaseQuery) != -1);
+                ;
+            };
 
-        return function filterFn(contact) {
-            return (contact._lowername.indexOf(lowercaseQuery) != -1) || (contact.phone.indexOf(lowercaseQuery) != -1);;
-        };
     }
 
     function createFilterForPhone(query) {

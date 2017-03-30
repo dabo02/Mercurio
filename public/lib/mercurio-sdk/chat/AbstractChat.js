@@ -23,6 +23,8 @@ function AbstractChat(chatId, participantCount, participantsAreReadyObserver,
 	self.participantCount = participantCount;
 	self.groupPicture = groupPicture;
 	self.isTypingObserver = null;
+	self.unreadMessage = 0;
+	self.messageAdded = null;
 
 	firebase.database().ref('chat-members/' + self.chatId).on('child_added', function(snapshot) {
 
@@ -101,6 +103,10 @@ AbstractChat.prototype.fetchMessageListPage = function(pageNumber, limit, chatCl
 						if (messageInfoSnapshot.val()['read'][chatClientOwner] == 0) {
 							self.unreadMessage += 1;
 						}
+						if(self.messageAdded){
+							self.messageAdded();
+						}
+						self.messageAdded = null;
 					}
 
 					self.initMessageInfoChildChanged(messageSnapshot.key, chatClientOwner);
@@ -278,4 +284,8 @@ AbstractChat.prototype.markUnreadMessagesAsRead = function(userId){
 			self.unreadMessage -=1;
 		}
 	});
+}
+
+AbstractChat.prototype.setMessageAdded = function(observer){
+	this.messageAdded = observer;
 }

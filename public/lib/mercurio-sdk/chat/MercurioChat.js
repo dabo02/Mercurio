@@ -26,6 +26,8 @@ MercurioChat.prototype.getMessageList = function(){
 
 MercurioChat.prototype.saveChatTitleWithParticipant = function(chatId, participantId, newChatTitle){
 
+	var self = this;
+
 	self.updateChatTitleInFirebase(chatId, participantId, newChatTitle);
 }
 

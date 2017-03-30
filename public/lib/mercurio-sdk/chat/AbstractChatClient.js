@@ -57,15 +57,13 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 
 	if(self.chatListIsReadyObserver){
 		// 	query fb once for complete chat list and find its length
-		var fbChatListLength = 0;
 		firebase.database().ref('user-chats/' + self.chatClientOwner).once("value", function(snapshot) {
-			fbChatListLength = snapshot.numChildren();
-			if(fbChatListLength == self.chatList.length){
+			var fbChatListLength = snapshot.numChildren();
+			if(fbChatListLength == self.chatList.length && self.chatListIsReadyObserver){
 				self.chatListIsReadyObserver();
 			}
+            self.chatListIsReadyObserver = null;
 		});
-
-		self.chatListIsReadyObserver = null;
 	}
 
 	function binaryInsert(value, array, startVal, endVal){
@@ -218,90 +216,90 @@ AbstractChatClient.prototype.createChat = function(title, observer, userIds, pho
 						}
 					})
 				});
-			});
+			}).then(function () {
+                if (existingChat == null) {
+                    var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
+                    var newChatKey = newChatRef.key;
+
+                    var chatInfo = {
+                        lastMessage: {},
+                        timeStamp: new Date().getTime(),
+                        title: title || '',
+                        participantCount: userIds.length + phoneNumbers.length,
+                        settings: {mute: false},
+                    };
+
+                    self.setChatType(chatInfo);
+
+                    var updates = {};
+
+
+                    userIds.forEach(function (participant) {
+                        // add participant to chat-members
+                        if(participant == self.chatClientOwner){
+                            firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(true);
+                        }
+                        else{
+                            firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(false);
+                        }
+
+                        firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isTyping").set(false);
+                        // add participant to chat-members
+                        firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isMember").set(true).then(function () {
+                            updates = {};
+                            // add user-chat entry for participant
+                            updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
+                            firebase.database().ref().update(updates).then(function () {
+                                //observer();
+                            });
+                        });
+                    });
+
+                    self.addParticipantsToChatWithPhoneNumbers(newChatKey, phoneNumbers);
+
+                }
+
+
+                else {
+                    // chat already exists
+                    // try and find chat in local chatList. if found move that chat to the top
+                    // if its not in the local list add  new instance to chatList using the MercurioChat constructor
+                    // and add it to the top of the list. call observer at the end
+                    var chatFound = false;
+                    var newChat = null;
+
+                    self.chatList.forEach(function (chat, index) {
+                        if (chat.chatId === existingChat.key && !chatFound) {
+                            chatFound = true;
+                            self.chatList.splice(index, 1);
+                            self.chatList.unshift(chat);
+                            newChat = chat;
+                        }
+                    });
+
+                    if (!chatFound) {
+                        var chat;
+
+                        chat = self.instantiateChat(existingChat);
+
+                        self.chatList.unshift(chat);
+                        newChat = chat;
+                    }
+
+                    // check if front end is correctly managing a null newChat
+                    self.chatIsReadyToSendObserver(newChat);
+                }
+            });
 		}
 
 		//if(phoneNumbers.length > 0 || userIds.length > 1) {
 			// chat client owner is not the only participant in the list
 			// receive observer call back in addChat parameters and register the callback to this
 			//self.participantsAreReadyObserver = observer;
-			if (existingChat == null) {
-				var newChatRef = firebase.database().ref().child('user-chats/' + self.chatClientOwner).push();
-				var newChatKey = newChatRef.key;
 
-				var chatInfo = {
-					lastMessage: {},
-					timeStamp: new Date().getTime(),
-					title: title || '',
-					participantCount: userIds.length + phoneNumbers.length,
-					settings: {mute: false},
-				};
-
-				self.setChatType(chatInfo);
-
-				var updates = {};
-
-
-				userIds.forEach(function (participant) {
-					// add participant to chat-members
-					if(participant == self.chatClientOwner){
-						firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(true);
-					}
-					else{
-						firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isAdmin").set(false);
-					}
-
-					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isTyping").set(false);
-					// add participant to chat-members
-					firebase.database().ref().child('chat-members/' + newChatKey + "/" + participant + "/isMember").set(true).then(function () {
-						updates = {};
-						// add user-chat entry for participant
-						updates['/user-chats/' + participant + "/" + newChatKey] = chatInfo;
-						firebase.database().ref().update(updates).then(function () {
-							//observer();
-						});
-					});
-				});
-
-				self.addParticipantsToChatWithPhoneNumbers(newChatKey, phoneNumbers);
-
-			}
-			else {
-				// chat already exists
-				// try and find chat in local chatList. if found move that chat to the top
-				// if its not in the local list add  new instance to chatList using the MercurioChat constructor
-				// and add it to the top of the list. call observer at the end
-				var chatFound = false;
-				var newChat = null;
-
-				self.chatList.forEach(function (chat, index) {
-					if (chat.chatId === existingChat.key && !chatFound) {
-						chatFound = true;
-						self.chatList.splice(index, 1);
-						self.chatList.unshift(chat);
-						newChat = chat;
-					}
-				});
-
-				if (!chatFound) {
-					var chat;
-
-					chat = self.instantiateChat(existingChat);
-
-					self.chatList.unshift(chat);
-					newChat = chat;
-				}
-
-				// check if front end is correctly managing a null newChat
-				self.chatIsReadyToSendObserver(newChat);
-			}
 		//}
 	}
-	else{
-		//add error message handling here
-	}
 
-	return;
 
 }
 
@@ -498,4 +496,8 @@ AbstractChatClient.prototype.searchChats = function(searchString){
 
 AbstractChatClient.prototype.setChatObserver = function(chatObserver){
 	this.chatObserver = chatObserver;
+}
+
+AbstractChatClient.prototype.setChatListObserver = function(observer){
+    this.chatListIsReadyObserver = observer;
 }

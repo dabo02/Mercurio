@@ -71,7 +71,7 @@
                     resolve:{}
                 })
                 .state('chat', {
-                    url: '/chat/:chatIndex/:chatClientOwner',
+                    url: '/chat/:chatId/:chatClientOwner',
                     templateUrl: '/src/chats/chat.html',
                     authenticate: true,
                     resolve:{}
