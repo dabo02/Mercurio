@@ -86,6 +86,12 @@
                     url: '/register',
                     templateUrl: '/src/account/register.html'
                 })
+                .state('videocall', {
+                    url: '/videocall/:callIndex',
+                    templateUrl: '/src/phone/videoCall.html',
+                    authenticate: true,
+                    resolve:{}
+                })
                 .state('login', {
                     url: '/login',
                     templateUrl: '/src/account/loginForm.html'

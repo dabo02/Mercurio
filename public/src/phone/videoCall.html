@@ -1,2 +1,31 @@
-<video style="width:100%; height:250px visibility: visible" id='remoteStream' autoplay></video>
-<video style="width:25%; height:62.5px" id='localStream' autoplay></video>
+<nav-bar></nav-bar>
+<left-sidebar></left-sidebar>
+<div class="row">
+  <div style="padding-top:50px; padding-left:100px; float:left; width:70%;">
+    <div style="    height: 500px;
+    width: 47%;
+    position: absolute;
+    padding-top: 1%;
+    background: rgba(0,0,0,0.55);">
+      <h3 class="text-center" style="color:white;">Unknown</h3>
+      <p class="text-center" style="color:white;">787-518-1788</p>
+      <div style="position:absolute;">
+        <video src="http://techslides.com/demos/sample-videos/small.webm" type="video/webm" style="width:600px; height:300px; visibility: visible;" id='remoteStream' autoplay></video>
+      </div>
+      <div style="position: absolute;">
+        <video src="http://techslides.com/demos/sample-videos/small.webm" style="width: 175px; height: 100px; margin-left: 388px;" id='localStream' autoplay></video>
+      </div>
+      <div style="margin-top:275px;" class="row">
+          <md-button style="left:40%;" ng-click="callCtrl.showDTMFDialog()" class="md-fab md-primary mercurioBlueBackground col-xs-6">
+            <md-icon style="font-size: 25px;"class="fa fa-th"></md-icon>
+          </md-button>
+
+          <md-button style="left:40%;" ng-click="callCtrl.muteCall();" class="md-fab md-primary mercurioBlueBackground col-xs-6">
+              <md-icon ng-show="callCtrl.phoneService.phone.callOnMute" style="text-align: center; font-size:25px; margin-top:10%;" class="fa fa-microphone-slash"></md-icon>
+              <md-icon ng-show="!callCtrl.phoneService.phone.callOnMute" style="text-align: center; font-size:25px; margin-top:10%;" class="fa fa-microphone"></md-icon>
+          </md-button>
+      </div>
+    </div>
+  </div>
+  <right-sidebar style="float:right; width:30%;"></right-sidebar>
+</div>

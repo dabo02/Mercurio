@@ -15,7 +15,7 @@
         if(hour>5 && hour<12){
           $scope.greetingMessage="Good morning, ";
         }
-        else if(hour>=12 && hour<6){
+        else if(hour>=12 && hour<18){
           $scope.greetingMessage="Good afternoon, ";
         }
         else{
