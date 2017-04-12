@@ -40,7 +40,7 @@
         //   console.log("interval")
         // },10);
 
-        /*self.chat = chatClientService.chatClient.chatList[self.chatIndex];
+        /*self.chat = chatClientService.chatClient().chatList[self.chatIndex];
         self.messageList = self.chat.messageList;
         self.participantList = self.chat.participantList;
         self.chatClientOwner = $stateParams.chatClientOwner*/;
@@ -68,8 +68,8 @@
         //   pictureListener = setInterval(function(chatList){
         //     if(typeof(chatClientService) != 'undefined' || !null){
         //       var avatarUrl = '';
-        //       var chat = chatClientService.chatClient.chatList[self.chatIndex];
-        //       var chatClientOwner = chatClientService.chatClient.chatClientOwner;
+        //       var chat = chatClientService.chatClient().chatList[self.chatIndex];
+        //       var chatClientOwner = chatClientService.chatClient().chatClientOwner;
         //       if(chat.title.length > 0){
         //
         //           avatarUrl = 'images/default_group_avatar.png';
@@ -161,7 +161,7 @@
                     type: type
                 }
 
-                chatClientService.chatClient.sendMessage(chatClientService.selectedChat, message, function(progress, uploadingImage, message){
+                chatClientService.chatClient().sendMessage(chatClientService.selectedChat, message, function(progress, uploadingImage, message){
                   chatClientService.uploadingImage = uploadingImage;
                   chatClientService.progress = progress;
                   chatClientService.opacity = progress/100+0.1;
@@ -179,7 +179,7 @@
                 setTimeout(function(){
                 $rootScope.$apply();
               }, 1000);
-                $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
+                $state.go('chat', {'chatIndex' : 0, 'chatClientOwner' : chatClientService.chatClient().chatClientOwner});
             }
             // $state.reload();
             chatClientService.selectedChat.toggleIsTyping(false);
@@ -187,7 +187,7 @@
         }
 
         self.isMessageFromMe = function(message){
-            return message.from == chatClientService.chatClient.chatClientOwner;
+            return message.from == chatClientService.chatClient().chatClientOwner;
         }
 
         self.showUploadForm = function(){
@@ -195,7 +195,7 @@
         }
 
         self.toggleMute = function(value){
-          chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, value);
+          chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient().chatClientOwner, value);
         }
 
         //Delete messages was click
@@ -272,7 +272,7 @@
         self.getChatParticipantUserId = function(){
           var userId = null;
           chatClientService.selectedChat.participantList.forEach(function (participant) {
-              if (chatClientService.chatClient.chatClientOwner != participant.participantId) {
+              if (chatClientService.chatClient().chatClientOwner != participant.participantId) {
                   userId = participant.participantId;
               }
 
@@ -284,7 +284,7 @@
       self.getChatParticipantAvailability = function(){
         var availability = null;
         chatClientService.selectedChat.participantList.forEach(function (participant) {
-            if (chatClientService.chatClient.chatClientOwner != participant.participantId) {
+            if (chatClientService.chatClient().chatClientOwner != participant.participantId) {
                 availability = participant.availability;
             }
           });
@@ -303,10 +303,10 @@
 
 
         if(!chatClientService.selectedChat){
-          chatClientService.chatClient.setChatListObserver(function () {
+          chatClientService.chatClient().setChatListObserver(function () {
 
                  var savedChat = JSON.parse(localStorage.getItem('chatSaved'));
-                 chatClientService.chatClient.chatList.forEach(function (chat){
+                 chatClientService.chatClient().chatList.forEach(function (chat){
                    if(savedChat.chatId == chat.chatId){
                      chatClientService.selectedChat = chat;
                    }
@@ -337,7 +337,7 @@
                       }
                   }, true
               );
-          chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+          chatClientService.selectedChat.markUnreadMessagesAsRead(chatClientService.chatClient().chatClientOwner);
           chatClientService.selectedChat.setIsTypingObserver(function () {
             setTimeout(function(){
             $scope.$apply();

@@ -91,6 +91,10 @@ SMSChat.prototype.addUserChatEntryToNewParticipant = function(participantId, new
 	firebase.database().ref().update(updates);
 }
 
+SMSChat.prototype.toggleIsTyping = function(value, chatClientOwner){
+	return;
+}
+
 //falta
 SMSChat.prototype.exitChatGroup = function(userId){
 

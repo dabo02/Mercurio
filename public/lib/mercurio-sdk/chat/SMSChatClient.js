@@ -5,7 +5,7 @@ uses MissingImplementationError
 
 */
 
-function SMSChatClient(userId, messageReceivedObserver){
+function SMSChatClient(userId, messageReceivedObserver, chatAddedToListObserver){
 	AbstractChatClient.apply(this, arguments);
 }
 

@@ -26,6 +26,8 @@ MercurioChat.prototype.getMessageList = function(){
 
 MercurioChat.prototype.saveChatTitleWithParticipant = function(chatId, participantId, newChatTitle){
 
+	var self = this;
+
 	self.updateChatTitleInFirebase(chatId, participantId, newChatTitle);
 }
 
@@ -54,28 +56,6 @@ MercurioChat.prototype.updateParticipantCount = function(participantId, count){
 	updates['/user-chats/' + participantId + "/" + self.chatId + '/participantCount'] = count;
 	firebase.database().ref().update(updates);
 }
-
-MercurioChat.prototype.initMessageInfoChildChanged = function(messageId, chatClientOwner){
-	var self = this;
-
-	firebase.database().ref('message-info/' + messageId).on("child_changed", function(messageInfoSnapshot) {
-		if(messageInfoSnapshot.exists()){
-			self.messageList.forEach(function(message, index){
-				if(message.messageId == messageId){
-					if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'number' && messageInfoSnapshot.val()[chatClientOwner] != message.read){
-						message.read = messageInfoSnapshot.val()[chatClientOwner];
-						self.unreadMessage -=1;
-					}
-					else if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'boolean' && !messageInfoSnapshot.val()[chatClientOwner]){
-						self.messageList.splice(index, 1);
-					}
-				}
-			});
-		}
-
-	});
-}
-
 
 MercurioChat.prototype.addUserChatEntryToNewParticipant = function(participantId, newParticipantCount){
 
@@ -117,16 +97,6 @@ MercurioChat.prototype.deleteMessages = function(messages, chatClientOwner){
 }
 
 //falta
-MercurioChat.prototype.setIsTypingObserver = function(observer){
-	this.isTypingObserver = observer;
-}
-
-MercurioChat.prototype.assignAdmin = function(participantId){
-	var self = this;
-	updates = {};
-	updates['/chat-members/' + self.chatId + "/" + participantId + '/isAdmin'] = true;
-	firebase.database().ref().update(updates);
-}
 
 MercurioChat.prototype.removeParticipantFromChatGroup = function(participantId){
 

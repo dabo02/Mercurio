@@ -12,6 +12,73 @@
         self.selectedMessageIndex = null;
         self.selectedChat = null;
 
+        $rootScope.chatList = [];
+
+        self.chatAddedToListObserver = function(chat){
+            console.log(chat);
+            binaryInsert(chat, $rootScope.chatList);
+        }
+
+        function binaryInsert(value, array, startVal, endVal){
+
+            var length = array.length;
+            var start = typeof(startVal) != 'undefined' ? startVal : 0;
+            var end = typeof(endVal) != 'undefined' ? endVal : length - 1;//!! endVal could be 0 don't use || syntax
+            var m = start + Math.floor((end - start)/2);
+
+            if(!value.lastMessage){
+                return;
+            }
+
+            if(length == 0){
+                array.push(value);
+                return;
+            }
+
+            if(value.lastMessage.timeStamp < array[end].lastMessage.timeStamp){
+                array.splice(end + 1, 0, value);
+                return;
+            }
+
+            if(value.lastMessage.timeStamp > array[start].lastMessage.timeStamp){//!!
+                array.splice(start, 0, value);
+                return;
+            }
+
+            if(start >= end){
+                return;
+            }
+
+            if(value.lastMessage.timeStamp > array[m].lastMessage.timeStamp){
+                binaryInsert(value, array, start, m - 1);
+                return;
+            }
+
+            if(value.lastMessage.timeStamp < array[m].lastMessage.timeStamp){
+                binaryInsert(value, array, m + 1, end);
+                return;
+            }
+
+            //we don't insert duplicates
+        }
+
+        self.chatClient = function(){
+            if(self.selectedChat){
+                if(self.selectedChat.constructor.name == 'SMSChat'){
+                    return self.smsChatClient;
+                }
+                else if(self.selectedChat.constructor.name == 'MercurioChat'){
+                    return self.mercurioChatClient;
+                }
+                else{
+                    return self.mercurioChatClient;
+                }
+            }
+            else{
+                return self.mercurioChatClient;
+            }
+        };
+
         self.chatIsReadyToSendObserver = function(newChat){
             self.selectedChat = newChat;
             localStorage.setItem('chatSaved', JSON.stringify(self.selectedChat));
@@ -28,15 +95,15 @@
         };
 
         self.instantiateChatClient = function(userId){
-            self.chatClient = new MercurioChatClient(userId, self.onMessageReceived);
-            //TODO repeat this for:
-           // accountService.activeAccount.contactManager.contactList
-           // phoneService.phone.recentCallList
-           // crmService.crmManager.crmList
+            self.mercurioChatClient = new MercurioChatClient(userId, self.onMessageReceived, self.chatAddedToListObserver);
+            self.smsChatClient = new SMSChatClient(userId, self.onMessageReceived, self.chatAddedToListObserver);
+
+            //self.chatClient = self.smsChatClient;
+
            // Spinner Variable
 
            $rootScope.chatListIsReady = false;
-           $rootScope.chatList = self.chatClient.chatList;
+           //$rootScope.chatList = self.chatClient().chatList;
 
           //  $rootScope.$watch('chatList', function () {
           //      if($rootScope.chatList.length > 0){

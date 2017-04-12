@@ -7,7 +7,7 @@ uses ConstructorError, AbstractFunctionError
 @params: notificationManager - NotificationManager object singleton
 */
 
-function AbstractChatClient(userId, messageReceivedObserver){
+function AbstractChatClient(userId, messageReceivedObserver, chatAddedToListObserver){
 	
 	if(this.constructor === AbstractChatClient){
 		throw new ConstructorError("Cannot instantiate AbstractChatClient class!");
@@ -26,6 +26,8 @@ function AbstractChatClient(userId, messageReceivedObserver){
 
 	self.pageNumber = 1;
 	self.limit = 50;
+
+	self.chatAddedToListObserver = chatAddedToListObserver;
 
 	self.fetchChatListChildChangedSnapshot(function(snapshot){
 
@@ -54,6 +56,8 @@ AbstractChatClient.prototype.processChatListChildAddedSnapshot = function(snapsh
 	if(self.chatIsReadyToSendObserver){
 		self.chatIsReadyToSendObserver(chat);
 	}
+
+	self.chatAddedToListObserver(chat);
 
 	if(self.chatListIsReadyObserver){
 		// 	query fb once for complete chat list and find its length
@@ -498,4 +502,8 @@ AbstractChatClient.prototype.searchChats = function(searchString){
 
 AbstractChatClient.prototype.setChatObserver = function(chatObserver){
 	this.chatObserver = chatObserver;
+}
+
+AbstractChatClient.prototype.setChatListObserver = function(observer){
+	this.chatListIsReadyObserver = observer;
 }

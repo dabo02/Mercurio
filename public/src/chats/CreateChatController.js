@@ -13,7 +13,7 @@
     angular.module('mercurio').controller('CreateChatController', ['$rootScope', '$scope', 'chatClientService', '$mdDialog', 'accountService', function($rootScope, $scope, chatClientService, $mdDialog, accountService){
 
         var self = this;
-        self.chatClient = chatClientService.chatClient;
+        self.chatClient = chatClientService.chatClient();
         self.chatServiceClient = chatClientService;
         self.groupChatCheckbox = false;
 
@@ -49,7 +49,7 @@
                 return;
             }
             else{
-                var userIds = [chatClientService.chatClient.chatClientOwner], phoneNumbers = [];
+                var userIds = [chatClientService.chatClient().chatClientOwner], phoneNumbers = [];
 
                 contactChips.forEach(function(contact, index){
                     if(contact.constructor.name != 'MercurioContact') {
@@ -63,7 +63,7 @@
                     }
                 });
 
-                chatClientService.chatClient.createChat(self.title, chatClientService.chatIsReadyToSendObserver, userIds, phoneNumbers);
+                chatClientService.chatClient().createChat(self.title, chatClientService.chatIsReadyToSendObserver, userIds, phoneNumbers);
                 self.closeCreateChatDialog();
             }
 

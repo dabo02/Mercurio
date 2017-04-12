@@ -200,7 +200,7 @@ AbstractChat.prototype.addParticipantToList = function(participantId, newPartici
 
 	var isNewParticipant = true; // innocent until proven guilty
 	self.participantList.forEach(function(participant){
-		if(participant.participantId === participantId){
+		if(participantparticipantrId === participantId){
 			// contact is already a group member (guilty)
 			isNewParticipant = false;
 		}
@@ -278,4 +278,38 @@ AbstractChat.prototype.markUnreadMessagesAsRead = function(userId){
 			self.unreadMessage -=1;
 		}
 	});
+}
+
+AbstractChat.prototype.initMessageInfoChildChanged = function(messageId, chatClientOwner){
+	var self = this;
+
+	firebase.database().ref('message-info/' + messageId).on("child_changed", function(messageInfoSnapshot) {
+		if(messageInfoSnapshot.exists()){
+			self.messageList.forEach(function(message, index){
+				if(message.messageId == messageId){
+					if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'number' && messageInfoSnapshot.val()[chatClientOwner] != message.read){
+						message.read = messageInfoSnapshot.val()[chatClientOwner];
+						self.unreadMessage -=1;
+					}
+					else if(typeof(messageInfoSnapshot.val()[chatClientOwner]) === 'boolean' && !messageInfoSnapshot.val()[chatClientOwner]){
+						self.messageList.splice(index, 1);
+					}
+				}
+			});
+		}
+
+	});
+}
+
+AbstractChat.prototype.setIsTypingObserver = function(observer){
+	this.isTypingObserver = observer;
+}
+
+AbstractChat.prototype.assignAdmin = function(participantId){
+
+	// checkif participantId actually belongs to a real participant
+	var self = this;
+	updates = {};
+	updates['/chat-members/' + self.chatId + "/" + participantId + '/isAdmin'] = true;
+	firebase.database().ref().update(updates);
 }

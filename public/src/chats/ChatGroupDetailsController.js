@@ -11,21 +11,21 @@
         var self = this;
         self.chatIndex = $stateParams.chatIndex;
         self.chatClientService = chatClientService;
-        self.chatClient = chatClientService.chatClient;
+        self.chatClient = chatClientService.chatClient();
         self.saveGroupDetailsButtonIsAvailable = false;
         self.canEdit = false;
         self.userIsAParticipant = false;
         self.userWasAdded = false;
         self.pictrue ='';
         self.allMetaData = null;
-        // self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
-        // self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
+        // self.newChatTitle = chatClientService.chatClient().chatList[$stateParams.chatIndex].title;
+        // self.newMuteSetting = chatClientService.chatClient().chatList[$stateParams.chatIndex].settings.mute;
 
         self.isChatClientOwnerGroupMember = true;
         // var listener = setInterval(function(){
-        //   if(chatClientService.chatClient.chatList.length > 0){
-        //     self.newMuteSetting = chatClientService.chatClient.chatList[$stateParams.chatIndex].settings.mute;
-        //     self.newChatTitle = chatClientService.chatClient.chatList[$stateParams.chatIndex].title;
+        //   if(chatClientService.chatClient().chatList.length > 0){
+        //     self.newMuteSetting = chatClientService.chatClient().chatList[$stateParams.chatIndex].settings.mute;
+        //     self.newChatTitle = chatClientService.chatClient().chatList[$stateParams.chatIndex].title;
         //     clearInterval(listener);
         //   }
         // },10);
@@ -76,7 +76,7 @@
       self.checkIfChatClientOwnerIsAdmin = function(){
         var isAdmin = false;
         chatClientService.selectedChat.participantList.forEach(function(participant){
-          if(participant.participantId == chatClientService.chatClient.chatClientOwner && participant.isAdmin) {
+          if(participant.participantId == chatClientService.chatClient().chatClientOwner && participant.isAdmin) {
               isAdmin = true;
             }
         })
@@ -90,7 +90,7 @@
           chatClientService.selectedChat.participantList.forEach(function(participant){
             if(participant.isAdmin){
               adminCounter++;
-              if(participant.participantId == chatClientService.chatClient.chatClientOwner){
+              if(participant.participantId == chatClientService.chatClient().chatClientOwner){
                 chatClientOwnerIsAdmin = true;
               }
             }
@@ -114,7 +114,7 @@
                 .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function() {
-              chatClientService.selectedChat.removeParticipantFromChatGroup(chatClientService.chatClient.chatClientOwner);
+              chatClientService.selectedChat.removeParticipantFromChatGroup(chatClientService.chatClient().chatClientOwner);
             }, function() {
 
             });
@@ -128,10 +128,10 @@
 
         self.toggleMute = function(){
           if(chatClientService.selectedChat.settings.mute){
-            chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, false);
+            chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient().chatClientOwner, false);
           }
           else{
-            chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient.chatClientOwner, true);
+            chatClientService.selectedChat.toggleNotifications(chatClientService.chatClient().chatClientOwner, true);
           }
 
         }
@@ -214,7 +214,7 @@
           if(chatClientService.selectedChat){
             self.isChatClientOwnerGroupMember = false;
           chatClientService.selectedChat.participantList.forEach(function(participant){
-            if(participant.participantId == chatClientService.chatClient.chatClientOwner) {
+            if(participant.participantId == chatClientService.chatClient().chatClientOwner) {
                   self.isChatClientOwnerGroupMember = true;
               }
           })
@@ -227,7 +227,7 @@
                 chatClientService.selectedChat.saveChatTitle(self.newChatTitle);
             }
             if(self.picture){
-                chatClientService.chatClient.saveGroupPicture(self.picture, chatClientService.selectedChat, function(progress, uploadingImage){
+                chatClientService.chatClient().saveGroupPicture(self.picture, chatClientService.selectedChat, function(progress, uploadingImage){
                     chatClientService.uploadingImage = uploadingImage;
                     chatClientService.progress = progress;
                     chatClientService.opacity = progress/100+0.1;
@@ -254,7 +254,7 @@
         }
         //
 
-        chatClientService.chatClient.setChatObserver(function () {
+        chatClientService.chatClient().setChatObserver(function () {
           setTimeout(function(){
           $scope.$apply();
           }, 100);
@@ -264,7 +264,7 @@
         var listener = setInterval(function(){
           if(chatClientService.selectedChat){
             chatClientService.selectedChat.participantList.forEach(function(participant){
-                if(participant.participantId == chatClientService.chatClient.chatClientOwner){
+                if(participant.participantId == chatClientService.chatClient().chatClientOwner){
                     self.isChatClientOwnerGroupMember = true;
                 }
             });
@@ -272,8 +272,8 @@
           }
         },10);
         //
-        // chatClientService.chatClient.chatList[$stateParams.chatIndex].participantList.forEach(function(participant){
-        //     if(participant.participantId == chatClientService.chatClient.chatClientOwner){
+        // chatClientService.chatClient().chatList[$stateParams.chatIndex].participantList.forEach(function(participant){
+        //     if(participant.participantId == chatClientService.chatClient().chatClientOwner){
         //         self.isChatClientOwnerGroupMember = true;
         //     }
         // });

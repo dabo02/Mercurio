@@ -51,7 +51,7 @@
         self.logoutButtonClicked = function(){
 
             authenticationService.logout();
-            chatClientService.chatClient = null;
+            //chatClientService.chatClient() = null;
             phoneService.phone = null;
             crmService.crmManager = null;
         }

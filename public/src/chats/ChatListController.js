@@ -5,10 +5,10 @@
 
     'use strict';
 
-    angular.module('mercurio').controller('ChatListController', ['$scope', '$state', 'chatClientService', '$mdDialog', function($scope, $state, chatClientService, $mdDialog){
+    angular.module('mercurio').controller('ChatListController', ['$scope', '$state', 'chatClientService', '$mdDialog', '$rootScope', function($scope, $state, chatClientService, $mdDialog, $rootScope){
 
         var self = this;
-        self.chatClient = chatClientService.chatClient;
+        self.chatClient = chatClientService.chatClient();
         self.chatClientService = chatClientService;
 
         self.topDirections = ['left', 'up'];
@@ -28,14 +28,15 @@
         }
 
         self.viewChat = function(chatIndex){
-            chatClientService.selectedChat = chatClientService.chatClient.chatList[chatIndex];
+            //chatClientService.selectedChat = chatClientService.chatClient().chatList[chatIndex];
+            chatClientService.selectedChat = $rootScope.chatList[chatIndex];
             localStorage.setItem('chatSaved', JSON.stringify(chatClientService.selectedChat));
-            $state.go('chat', {'chatIndex' : chatIndex, 'chatClientOwner' : chatClientService.chatClient.chatClientOwner});
+            $state.go('chat', {'chatIndex' : chatIndex, 'chatClientOwner' : chatClientService.chatClient().chatClientOwner});
         }
 
         self.getTextPreviewClass = function(chat, index){
             //if($state.params.chatIndex == index){
-            //    chatClientService.chatClient.chatList[index].markAllMessagesAsRead(chatClientService.chatClient.chatClientOwner);
+            //    chatClientService.chatClient().chatList[index].markAllMessagesAsRead(chatClientService.chatClient().chatClientOwner);
             //    return;
             //}
 
@@ -45,7 +46,7 @@
                     "font-weight":"bold"
                 };
             }
-            //ng-if="chat.messageList[0].hasMessage[chatClientService.chatClient.chatClientOwner]"
+            //ng-if="chat.messageList[0].hasMessage[chatClientService.chatClient().chatClientOwner]"
         }
 
         self.showCreateChatDialog = function(event) {
@@ -71,14 +72,14 @@
 
             $mdDialog.show(confirm).then(function() {
                 //$scope.status = 'You decided to get rid of your debt.';
-                chatClientService.chatClient.deleteChats([chatIndex]);
+                chatClientService.chatClient().deleteChats([chatIndex]);
                 $state.go('dialer');
             }, function() {
                 //$scope.status = 'You decided to keep your debt.';
             });
         };
 
-        chatClientService.chatClient.setChatObserver(function () {
+        chatClientService.chatClient().setChatObserver(function () {
           setTimeout(function(){
           $scope.$apply();
           }, 100);

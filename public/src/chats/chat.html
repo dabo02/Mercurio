@@ -100,7 +100,7 @@
                             <md-dialog-content style="background-color: #b3b3b3">
                               <div layout="row" class="card card-1">
                                 <div id="wrapper">
-                                <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 180px; margin-left: 30%; margin-top: 2%" ng-src="{{chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar hover" fix-image-orientation="chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient.chatClientOwner"/>
+                                <img id="groupPicturePreview" style="border-radius: 50%; height: 180px; width: 180px; margin-left: 30%; margin-top: 2%" ng-src="{{chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient().chatClientOwner}}" class="md-avatar hover" fix-image-orientation="chatGroupCtrl.chatClientService.selectedChat | chatListAvatarFilter : chatGroupCtrl.chatClientService.chatClient().chatClientOwner"/>
                                 <md-button ng-show="chatGroupCtrl.checkIfChatClientOwnerIsAdmin()" style="background-color: grey; opacity: 0.8; position: absolute; margin-top: 2%; margin-left: -37.5%; width: 180px; height: 180px;" class="test md-fab">
                                   <input style="z-index: -1; opacity: 0; margin-left: -5%; width: 109%; min-height: 100%; margin-top: -50%; border-radius: 50%;"  onchange="angular.element(this).scope().groupPictureSelected(this)" type="file" ng-model="chatGroupCtrl.picture" name="groupImage" id="groupImage" accept="image/*"/>
                                   <h4 style="margin-top: -65%"> Change Group Icon <h4>
@@ -231,7 +231,7 @@
                                 </div>
                                 <!-- <div flex="80" flex-offset="10" layout="row" style="padding-top:3%" ng-controller="ChatController as chatCtrl">
                                     <md-input-container class=" md-icon-float md-block">
-                                        <md-checkbox md-no-ink ng-model="chatGroupCtrl.newMuteSetting" ng-value="chatGroupCtrl.chatClientService.chatClient.chatList[chatGroupCtrl.chatIndex].settings.mute"
+                                        <md-checkbox md-no-ink ng-model="chatGroupCtrl.newMuteSetting" ng-value="chatGroupCtrl.chatClientService.chatClient().chatList[chatGroupCtrl.chatIndex].settings.mute"
                                                      ng-change="chatGroupCtrl.muteSettingChanged();" aria-label="Mute Group">
                                             Mute Group
                                         </md-checkbox>
@@ -330,7 +330,7 @@
 
                             <md-list flex="90" flex-offset="5">
                                 <md-list-item class="md-1-line">
-                                    <img ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}" class="md-avatar" fix-image-orientation="selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient.chatClientOwner"/>
+                                    <img ng-src="{{selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient().chatClientOwner}}" class="md-avatar" fix-image-orientation="selectedChat | chatListAvatarFilter : chatCtrl.chatClientService.chatClient().chatClientOwner"/>
                                       <i style="color: green; padding-right: 2%;" ng-if="selectedChat.title.length === 0  && chatCtrl.getChatParticipantAvailability()== 0" class="fa fa-circle"></i>
                                       <i style="color: yellow; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 1" class="fa fa-circle"></i>
                                       <i style="color: red; padding-right: 2%;" ng-if="selectedChat.title.length === 0 && chatCtrl.getChatParticipantAvailability() == 2" class="fa fa-circle"></i>
@@ -343,10 +343,10 @@
                                                 {{selectedChat.title}}
                                         </h4>
                                         <h4 style= "color: white;" ng-controller = "ContactController as contactCtrl" ng-click = "contactCtrl.viewContactById(chatCtrl.getChatParticipantUserId())" ng-if="selectedChat.title.length === 0">
-                                            {{selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}
+                                            {{selectedChat | chatTitleFilter : chatCtrl.chatClientService.chatClient().chatClientOwner}}
                                         </h4>
                                       </a>
-                                      <h6 ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-hide="chatGroupCtrl.chatClientService.selectedChat.title.length > 0 && !chatGroupCtrl.checkIfChatClientOwnerIsMember()" style="color: white; position: absolute; margin-top: 4%;">{{selectedChat | isTypingFilter : chatCtrl.chatClientService.chatClient.chatClientOwner}}</h6>
+                                      <h6 ng-controller="ChatGroupDetailsController as chatGroupCtrl" ng-hide="chatGroupCtrl.chatClientService.selectedChat.title.length > 0 && !chatGroupCtrl.checkIfChatClientOwnerIsMember()" style="color: white; position: absolute; margin-top: 4%;">{{selectedChat | isTypingFilter : chatCtrl.chatClientService.chatClient().chatClientOwner}}</h6>
                                     </div>
                                       <img ng-click="chatCtrl.toggleMute(false)" ng-show = "selectedChat.settings.mute" style="position: absolute; width: 3%; margin-left: 83%" ng-src="images/ic_volume_off_black_24dp.png"/>
 
