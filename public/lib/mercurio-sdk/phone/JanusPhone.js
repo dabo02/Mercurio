@@ -58,7 +58,7 @@ function JanusPhone(userId, phoneInitializationObserver) {
 	self.localHasVideo = false;
 	self.recentCallList = [];
 	self.phoneOwner = userId;
-	self.doVideo = true;
+	self.doVideo = false;
 	self.currentCalls = [];
 	var pageNumber = 1;
 	var limit = 50;
