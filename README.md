@@ -216,3 +216,5 @@ Mercurio SDK via the following Angular JS services:
 * ChatClientService
 * CRMService
 * PhoneService
+
+## SMS Chat module in development branch is buggy
